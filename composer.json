@@ -1,0 +1,15 @@
+{
+  "name" : "Pacificnm App",
+  "description" : "Skeleton Application for ZF2",
+  "version" : "2.5",
+  "require" : {
+    "php" : ">=5.5",
+    "zendframework/zendframework" : "~2.5",
+    "zendframework/zend-developer-tools" : "dev-master",
+    "zendframework/zftool" : "dev-master",
+    "ghislainf/zf2-whoops": "dev-master"
+  },
+  "license" : "BSD-3-Clause",
+  "keywords" : [ "framework", "zf2" ],
+  "homepage" : "http://framework.zend.com/"
+}

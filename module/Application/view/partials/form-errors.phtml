@@ -1,0 +1,12 @@
+
+<?php if($this->errorMsg): ?>
+    <div class="alert alert-danger">
+        <p><?php echo $this->translate('There was a problem with the information you submited:'); ?></p>
+        <?php foreach($this->errorMsg as $filed => $error): ?>
+            <?php foreach($error as $type => $msg): ?>
+                <p><i class="fa fa-exclamation-triangle"></i> <?php echo $msg; ?></p>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
+        <p><?php echo $this->translate('Please correct the errors and try again'); ?></p>
+    </div>
+<?php endif; ?>

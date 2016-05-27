@@ -1,0 +1,100 @@
+<ul class="sidebar-menu">
+	<li class="header"><?php echo $this->translate('MAIN NAVIGATION'); ?></li>
+	<li><a href="" ><i class="fa fa-home"></i> <span><?php echo $this->translate('My Profile')?></span></a></li>
+	
+    <li class="header"><?php echo $this->translate('CLIENT NAVIGATION'); ?></li>
+    
+	<li class="treeview <?php if($this->activeMenuItem == 'client'):?>active<?php endif;?>">
+		<a href="#">
+			<i class="fa fa-table"></i> <span><?php echo $this->translate('Client'); ?></span>
+			<i class="fa fa-angle-left pull-right"></i>
+		</a>
+		<ul class="treeview-menu">
+			<li class="<?php if($this->activeSubMenuItem == 'client-index'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('client-index'); ?>" title="<?php echo $this->translate('Clients'); ?>">
+					<i class="fa fa-group"></i> <?php echo $this->translate('Clients'); ?>
+				</a>
+			</li>
+			
+			<!-- Client Create -->
+			<li class="<?php if($this->activeSubMenuItem == 'client-create'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('client-create'); ?>">
+					<i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?>
+				</a>
+			</li>
+			
+			<?php if($this->clientId): ?>
+			<!-- Client Home -->
+			<li class="<?php if($this->activeSubMenuItem == 'client-view'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('client-view', array('clientId' => $this->clientId)); ?>">
+					<i class="fa fa-home"></i> <?php echo $this->translate('Client Home')?>
+				</a>
+			</li>
+			
+			<!-- Edit Client -->
+			<li class="<?php if($this->activeSubMenuItem == 'client-update'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('client-update', array('clientId' => $this->clientId)); ?>">
+					<i class="fa fa-pencil"></i> <?php echo $this->translate('Edit Client')?>
+				</a>
+			</li>
+			
+			<!-- Hosts -->
+			<li class="<?php if($this->activeSubMenuItem == 'host-list'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('host-list', array('clientId' => $this->clientId)); ?>">
+					<i class="fa fa-desktop"></i> <?php echo $this->translate('Hosts')?>
+				</a>
+			</li>
+			
+			<!-- Invoice -->
+			<li class="<?php if($this->activeSubMenuItem == 'invoice-list'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('invoice-list', array('clientId' => $this->clientId)); ?>">
+					<i class="fa fa-credit-card"></i> <?php echo $this->translate('Invoices')?>
+				</a>
+			</li>
+			
+			<!-- Network -->
+			<li class="<?php if($this->activeSubMenuItem == 'network-list'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('network-list', array('clientId' => $this->clientId)); ?>">
+					<i class="fa fa-sitemap"></i> <?php echo $this->translate('Network')?>
+				</a>
+			</li>
+			
+			<!-- Password -->
+			<li class="<?php if($this->activeSubMenuItem == 'password-list'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('password-list', array('clientId' => $this->clientId)); ?>">
+					<i class="fa fa-lock"></i> <?php echo $this->translate('Passwords')?>
+				</a>
+			</li>
+			
+			<!-- Tasks -->
+			<li class="<?php if($this->activeSubMenuItem == 'task-list'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('task-list', array('clientId' => $this->clientId)); ?>">
+					<i class="fa fa-tasks"></i> <?php echo $this->translate('Tasks')?>
+				</a>
+			</li>
+			
+			<!-- Users -->
+			<li class="<?php if($this->activeSubMenuItem == 'user-list'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('user-list', array('clientId' => $this->clientId)); ?>">
+					<i class="fa fa-user"></i> <?php echo $this->translate('Users')?>
+				</a>
+			</li>
+			
+			
+			<!-- Workorders -->
+			<li class="<?php if($this->activeSubMenuItem == 'workorder-list'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('workorder-list', array('clientId' => $this->clientId)); ?>">
+					<i class="fa fa-wrench"></i> <?php echo $this->translate('Work Orders')?>
+				</a>
+			</li>
+			
+			
+			
+			<?php endif;?>
+		</ul>
+	</li>
+		
+	<li class="header"><?php echo $this->translate('ADMIN NAVIGATION'); ?></li>
+	
+</ul>
+<?php // \Zend\Debug\Debug::dump($this->acl->isAllowed('administrator', 'admin-home'));?>

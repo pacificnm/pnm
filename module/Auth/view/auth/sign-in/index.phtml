@@ -1,0 +1,18 @@
+<?php echo $this->form()->openTag($this->form); ?>
+<?php echo $this->partial('partials/form-errors.phtml', array('errorMsg' => $this->form->getMessages())); ?>
+
+<?php $element = $this->form->get('authEmail'); ?>
+<div class="form-group has-feedback <?php if($this->formElementErrors($element)) echo "has-error" ?>">
+	<?php echo $this->formElement($element); ?>
+	<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+</div>
+
+<?php $element = $this->form->get('authPassword'); ?>
+<div class="form-group has-feedback <?php if($this->formElementErrors($element)) echo "has-error" ?>">
+	<?php echo $this->formElement($element); ?>
+	<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+</div>
+
+
+<?php echo $this->formSubmit($this->form->get('submit')); ?>
+<?php echo $this->form()->closeTag(); ?>

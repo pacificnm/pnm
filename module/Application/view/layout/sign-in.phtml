@@ -1,0 +1,63 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+            ->prependStylesheet($this->basePath('dist/css/skins/_all-skins.min.css'))
+            ->prependStylesheet($this->basePath('dist/css/AdminLTE.min.css'))
+            ->prependStylesheet($this->basePath('plugins/jvectormap/jquery-jvectormap-1.2.2.css'))
+            ->prependStylesheet($this->basePath('font-awesome-4.6.3/css/font-awesome.min.css'))
+            ->prependStylesheet($this->basePath('bootstrap/css/bootstrap.min.css')) ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath('plugins/chartjs/Chart.min.js'))
+            ->prependFile($this->basePath('plugins/slimScroll/jquery.slimscroll.min.js'))
+            ->prependFile($this->basePath('plugins/jvectormap/jquery-jvectormap-world-mill-en.js'))
+            ->prependFile($this->basePath('plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'))
+            ->prependFile($this->basePath('plugins/sparkline/jquery.sparkline.min.js'))
+            ->prependFile($this->basePath('dist/js/app.min.js'))
+            ->prependFile($this->basePath('plugins/fastclick/fastclick.js'))
+            ->prependFile($this->basePath('bootstrap/js/bootstrap.min.js'))
+            ->prependFile($this->basePath('plugins/jQuery/jQuery-2.2.0.min.js'))
+            ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+
+    </head>
+    
+	<body class="hold-transition login-page">
+		<div class="login-box">
+			<div class="login-logo">
+				<a href="" title=""><b>Pacific</b> NM</a>
+			</div>
+			<div class="login-box-body">
+				<p class="login-box-msg"><?php echo $this->translate('Sign in to start your session');?></p>
+				<?php echo $this->content; ?>
+				<div class="social-auth-links text-center">
+					<p><?php echo $this->translate('- OR -'); ?></p>
+					<a href="#" title="<?php Echo $this->translate('Sign in using Facebook'); ?>" class="btn btn-block btn-social btn-facebook btn-flat">
+						<i class="fa fa-facebook"></i> <?php Echo $this->translate('Sign in using Facebook'); ?>
+					</a>
+					<a href="#" title="<?php echo $this->translate('Sign in using Google+'); ?>" class="btn btn-block btn-social btn-google btn-flat">
+						<i class="fa fa-google-plus"></i> <?php echo $this->translate('Sign in using Google+'); ?>
+					</a>
+				</div>
+				
+				<a href="#" title="<?php echo $this->translate('I forgot my password'); ?>"><?php echo $this->translate('I forgot my password'); ?></a><br>
+				<a href="#" title="<?php echo $this->translate('Register a new membership'); ?>" class="text-center"><?php echo $this->translate('Register a new membership'); ?></a>
+			</div>
+		</div>
+      <?php echo $this->inlineScript() ?>
+    </body>
+</html>
+    

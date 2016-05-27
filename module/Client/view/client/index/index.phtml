@@ -1,0 +1,37 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title"><?php echo $this->translate('Clients'); ?></h3>
+				<div class="box-tools">
+					<div class="input-group input-group-sm" style="width: 150px;">
+						<input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+						<div class="input-group-btn">
+							<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Client Name');?></th>
+							<th><?php echo $this->translate('Phone');?></th>
+						</tr>
+					</thead>
+					<tbody>
+                    <?php foreach($this->paginator as $clientEntity): ?>
+                    	<tr>
+                    		<td><a href="<?php echo $this->url('client-view', array('clientId' => $clientEntity->getClientId()));?>" title=""><?php echo $clientEntity->getClientName(); ?></a></td>
+                    		<td></td>
+                    	</tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+              
+            
+            </div>
+        </div>
+    </div>
+</div>
