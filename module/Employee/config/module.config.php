@@ -7,7 +7,9 @@ return array(
             'guest' => array(),
             'user' => array(),
             'employee' => array(
-                'employee-profile'
+                'employee-profile',
+                'employee-delete',
+                'employee-update'
             ),
             'accountant' => array(),
             'administrator' => array()
@@ -37,6 +39,28 @@ return array(
                     'route' => '/employee/profile',
                     'defaults' => array(
                         'controller' => 'Employee\Controller\Profile',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'employee-delete' => array(
+                'title' => 'Delete Employee',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/admin/employee/delete/[:employeeId]',
+                    'defaults' => array(
+                        'controller' => 'Employee\Controller\Delete',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'employee-update' => array(
+                'title' => 'Edit Employee',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/admin/employee/update/[:employeeId]',
+                    'defaults' => array(
+                        'controller' => 'Employee\Controller\Update',
                         'action' => 'index'
                     )
                 )

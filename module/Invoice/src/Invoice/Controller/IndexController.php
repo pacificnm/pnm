@@ -47,7 +47,8 @@ class IndexController extends BaseController
         
         // return View
         return new ViewModel(array(
-            'clientEntity' => $clientEntity
+            'clientEntity' => $clientEntity,
+            'clientId' => $id
         ));
     }
     

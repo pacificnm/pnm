@@ -70,12 +70,11 @@ return array(
     'service_manager' => array(
         'abstract_factories' => array(
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
-            'Zend\Log\LoggerAbstractServiceFactory',
-            
+            'Zend\Log\LoggerAbstractServiceFactory'
         ),
         'factories' => array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
-            'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+            'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory'
         )
     ),
     'translator' => array(
@@ -124,6 +123,59 @@ return array(
                 'route' => 'home',
                 'pages' => array(
                     array(
+                        'label' => 'Admin',
+                        'route' => 'admin-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Config',
+                                'route' => 'config-index',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Edit Config',
+                                        'route' => 'config-update',
+                                        'useRouteMatch' => true,
+                                    )
+                                )
+                            ),
+                            array(
+                                'label' => 'Auth',
+                                'route' => 'auth-index',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Create',
+                                        'route' => 'auth-create',
+                                        'useRouteMatch' => true,
+                                    ),
+                                    array(
+                                        'label' => 'View',
+                                        'route' => 'auth-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Update',
+                                                'route' => 'auth-update',
+                                                'useRouteMatch' => true,
+                                            ),
+                                            array(
+                                                'label' => 'Delete',
+                                                'route' => 'auth-delete',
+                                                'useRouteMatch' => true,
+                                            ),
+                                            array(
+                                                'label' => 'Reset Password',
+                                                'route' => 'auth-password',
+                                                'useRouteMatch' => true,
+                                            ),
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+                    ),
+                    array(
                         'label' => 'Clients',
                         'route' => 'client-index',
                         'useRouteMatch' => true,
@@ -136,54 +188,232 @@ return array(
                                     array(
                                         'label' => 'Edit Client',
                                         'route' => 'client-update',
-                                        'useRouteMatch' => true,
+                                        'useRouteMatch' => true
                                     ),
                                     array(
-                                        'label' => 'Client Hosts',
+                                        'label' => 'Hosts',
                                         'route' => 'host-list',
                                         'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'View Host',
+                                                'route' => 'host-view',
+                                                'useRouteMatch' => true,
+                                                'pages' => array(
+                                                    array(
+                                                        'label' => 'Edit Host',
+                                                        'route' => 'host-update',
+                                                        'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Host',
+                                                        'route' => 'host-delete',
+                                                        'useRouteMatch' => true
+                                                    )
+                                                )
+                                            ),
+                                            array(
+                                                'label' => 'Create Host',
+                                                'route' => 'host-create',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
                                     ),
                                     array(
-                                        'label' => 'Client Invoices',
+                                        'label' => 'Invoices',
                                         'route' => 'invoice-list',
                                         'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Create Invoice',
+                                                'route' => 'invoice-create',
+                                                'useRouteMatch' => true
+                                            ),
+                                            array(
+                                                'label' => 'View Invoice',
+                                                'route' => 'invoice-view',
+                                                'useRouteMatch' => true,
+                                                'pages' => array(
+                                                    array(
+                                                        'label' => 'Edit Invoice',
+                                                        'route' => 'invoice-update',
+                                                        'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Invoice',
+                                                        'route' => 'invoice-delete',
+                                                        'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Print Invoice',
+                                                        'route' => 'invoice-print',
+                                                        'useRouteMatch' => true
+                                                    )
+                                                )
+                                            )
+                                        )
                                     ),
                                     array(
-                                        'label' => 'Client Network Settings',
+                                        'label' => 'Network Settings',
                                         'route' => 'network-list',
                                         'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'View Network Setting',
+                                                'route' => 'network-view',
+                                                'useRouteMatch' => true,
+                                                'pages' => array(
+                                                    array(
+                                                        'label' => 'Edit Network Setting',
+                                                        'route' => 'network-update',
+                                                        'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Network Setting',
+                                                        'route' => 'network-delete',
+                                                        'useRouteMatch' => true
+                                                    )
+                                                )
+                                            ),
+                                            array(
+                                                'label' => 'Create Network Setting',
+                                                'route' => 'network-create',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
                                     ),
                                     array(
-                                        'label' => 'Client Passwords',
+                                        'label' => 'Passwords',
                                         'route' => 'password-list',
                                         'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'View Password',
+                                                'route' => 'password-view',
+                                                'useRouteMatch' => true,
+                                                'pages' => array(
+                                                    array(
+                                                        'label' => 'Edit Password',
+                                                        'route' => 'password-update',
+                                                        'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Password',
+                                                        'route' => 'password-delete',
+                                                        'useRouteMatch' => true
+                                                    )
+                                                )
+                                            ),
+                                            array(
+                                                'label' => 'Create Password',
+                                                'route' => 'password-create',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
                                     ),
                                     array(
-                                        'label' => 'Client Tasks',
+                                        'label' => 'Tasks',
                                         'route' => 'task-list',
                                         'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'View Task',
+                                                'route' => 'task-view',
+                                                'useRouteMatch' => true,
+                                                'pages' => array(
+                                                    array(
+                                                        'label' => 'Edit Task',
+                                                        'route' => 'task-update',
+                                                        'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Task',
+                                                        'route' => 'task-delete',
+                                                        'useRouteMatch' => true
+                                                    )
+                                                )
+                                            ),
+                                            array(
+                                                'label' => 'Create Task',
+                                                'route' => 'task-create',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
                                     ),
                                     array(
-                                        'label' => 'Client Users',
+                                        'label' => 'Users',
                                         'route' => 'user-list',
                                         'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Create User',
+                                                'route' => 'user-create',
+                                                'useRouteMatch' => true
+                                            ),
+                                            array(
+                                                'label' => 'View User',
+                                                'route' => 'user-view',
+                                                'useRouteMatch' => true,
+                                                'pages' => array(
+                                                    array(
+                                                        'label' => 'Edit User',
+                                                        'route' => 'user-update',
+                                                        'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete User',
+                                                        'route' => 'user-delete',
+                                                        'useRouteMatch' => true
+                                                    )
+                                                )
+                                            )
+                                        )
                                     ),
                                     array(
-                                        'label' => 'Client Work Orders',
+                                        'label' => 'Work Orders',
                                         'route' => 'workorder-list',
                                         'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Create Work Order',
+                                                'route' => 'workorder-create',
+                                                'useRouteMatch' => true,
+                                            ),
+                                            array(
+                                                'label' => 'View Work Order',
+                                                'route' => 'workorder-view',
+                                                'useRouteMatch' => true,
+                                                'pages' => array(
+                                                    array(
+                                                        'label' => 'Edit Work Order',
+                                                        'route' => 'workorder-update',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Work Order',
+                                                        'route' => 'workorder-delete',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'Print Work Order',
+                                                        'route' => 'workorder-print',
+                                                        'useRouteMatch' => true,
+                                                    )
+                                                )
+                                            )
+                                        )
                                     )
                                 )
                             ),
                             array(
                                 'label' => 'New Client',
                                 'route' => 'client-create',
-                                'useRouteMatch' => true,
+                                'useRouteMatch' => true
                             )
                         )
-                    ),
+                    )
                 )
-            ),
+            )
         )
     )
 );

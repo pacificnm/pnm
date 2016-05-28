@@ -98,11 +98,18 @@
   					</form>
   					
   					<!-- sidebar menu: : style can be found in sidebar.less -->
+  					<ul class="sidebar-menu">
+  					<?php //\Zend\Debug\Debug::dump($this->identity()); ?>
   					<?php if($this->identity()->getEmployeeId() > 0): ?>
+  						
   						<?php echo $this->EmployeeAsideMenu($this->clientId); ?>
+  						
+  						<?php echo $this->AdminAsideMenu(); ?>
+  						
   					<?php else:?>
   					
   					<?php endif;?>
+  					</ul>
   				</section>
   			</aside>
   			
@@ -115,6 +122,20 @@
   				</section>
   				
   				<section class="content">
+  					<?php
+                        $flash = $this->flashMessenger();
+                        $flash->setMessageOpenFormat('<div%s>
+                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                             &times;
+                         </button><p>')
+                         ->setMessageSeparatorString('<br />')
+                         ->setMessageCloseString('</p></div>');
+    
+                        echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                        echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                        echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                        echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                    ?>
         			<?php echo $this->content; ?>
         		</section>
         	</div>

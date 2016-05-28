@@ -7,13 +7,26 @@ use Zend\View\Model\ViewModel;
 
 class IndexController extends BaseController
 {
+    /**
+     * 
+     * @var ClientServiceInterface
+     */
     protected $clientService;
     
+    /**
+     * 
+     * @param ClientServiceInterface $clientService
+     */
     public function __construct(ClientServiceInterface $clientService)
     {
         $this->clientService = $clientService;
     }
     
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
+     */
     public function indexAction()
     {
         $id = $this->params()->fromRoute('clientId');
@@ -34,7 +47,8 @@ class IndexController extends BaseController
         
         // return View
         return new ViewModel(array(
-            'clientEntity' => $clientEntity
+            'clientEntity' => $clientEntity,
+            'clientId' => $id,
         ));
     }
 }

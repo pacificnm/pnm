@@ -7,7 +7,12 @@ return array(
             'guest' => array(),
             'user' => array(),
             'employee' => array(
-                'network-list'
+                'network-list',
+                'network-create',
+                'network-delete',
+                'network-update',
+                'network-view',
+                
             ),
             'accountant' => array(),
             'administrator' => array()
@@ -17,8 +22,13 @@ return array(
     // controllers
     'controllers' => array(
         'factories' => array(
-            'Network\Controller\Index' => 'Network\Controller\Factory\IndexControllerFactory'
+            'Network\Controller\Create' => 'Network\Controller\Factory\CreateControllerFactory',
+            'Network\Controller\Delete' => 'Network\Controller\Factory\DeleteControllerFactory',
+            'Network\Controller\Index' => 'Network\Controller\Factory\IndexControllerFactory',
+            'Network\Controller\Update' => 'Network\Controller\Factory\UpdateControllerFactory',
+            'Network\Controller\View' => 'Network\Controller\Factory\ViewControllerFactory'
         )
+        
     ),
     
     // service manager
@@ -47,6 +57,39 @@ return array(
                     'route' => '/client/[:clientId]/network/create',
                     'defaults' => array(
                         'controller' => 'Network\Controller\Create',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'network-view' => array(
+                'title' => 'View Network Setting',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/network/view/[:networkId]',
+                    'defaults' => array(
+                        'controller' => 'Network\Controller\View',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'network-update' => array(
+                'title' => 'Edit Network Setting',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/network/update/[:networkId]',
+                    'defaults' => array(
+                        'controller' => 'Network\Controller\Update',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'network-delete' => array(
+                'title' => 'Delete Network Setting',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/network/delete/[:networkId]',
+                    'defaults' => array(
+                        'controller' => 'Network\Controller\Delete',
                         'action' => 'index'
                     )
                 )

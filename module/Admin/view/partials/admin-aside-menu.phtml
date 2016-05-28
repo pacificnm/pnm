@@ -1,0 +1,32 @@
+<?php // \Zend\Debug\Debug::dump($this->acl->isAllowed($this->identity()->getAuthRole(), 'admin-index'));?>
+<li class="header"><?php echo $this->translate('ADMIN NAVIGATION'); ?></li>
+<li class="treeview <?php if($this->activeMenuItem == 'admin'):?>active<?php endif;?>">
+	<a href="#">
+		<i class="fa fa-cogs"></i> <span><?php echo $this->translate('Admin'); ?></span>
+		<i class="fa fa-angle-left pull-right"></i>
+	</a>
+	<ul class="treeview-menu">
+		<!--  Admin Home -->
+		<li class="<?php if($this->activeSubMenuItem == 'admin-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('admin-index'); ?>" title="<?php echo $this->translate('Home'); ?>">
+				<i class="fa fa-home"></i> <?php echo $this->translate('Home'); ?>
+			</a>
+		</li>
+		
+		<!-- config -->
+		<li class="<?php if($this->activeSubMenuItem == 'config-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('config-index'); ?>" title="<?php echo $this->translate('Config'); ?>">
+				<i class="fa fa-cog"></i> <?php echo $this->translate('Config'); ?>
+			</a>
+		</li>
+		
+		<!-- Auth -->
+		<li class="<?php if($this->activeSubMenuItem == 'auth-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('auth-index'); ?>" title="<?php echo $this->translate('Auth'); ?>">
+				<i class="fa fa-lock"></i> <?php echo $this->translate('Auth'); ?>
+			</a>
+		</li>
+		
+		<!-- Labor Rates -->
+	</ul>
+</li>

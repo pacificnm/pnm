@@ -8,7 +8,12 @@ return array(
             'guest' => array(),
             'user' => array(),
             'employee' => array(
-                'invoice-list'
+                'invoice-list',
+                'invoice-create',
+                'invoice-delete',
+                'invoice-print',
+                'invoice-update',
+                'invoice-view',
             ),
             'accountant' => array(),
             'administrator' => array()
@@ -18,7 +23,12 @@ return array(
     // controllers
     'controllers' => array(
         'factories' => array(
-            'Invoice\Controller\Index' => 'Invoice\Controller\Factory\IndexControllerFactory'
+            'Invoice\Controller\Create' => 'Invoice\Controller\Factory\CreateControllerFactory',
+            'Invoice\Controller\Delete' => 'Invoice\Controller\Factory\DeleteControllerFactory',
+            'Invoice\Controller\Index' => 'Invoice\Controller\Factory\IndexControllerFactory',
+            'Invoice\Controller\Print' => 'Invoice\Controller\Factory\PrintControllerFactory',
+            'Invoice\Controller\Update' => 'Invoice\Controller\Factory\UpdateControllerFactory',
+            'Invoice\Controller\View' => 'Invoice\Controller\Factory\ViewControllerFactory',
         )
     ),
     
@@ -51,7 +61,51 @@ return array(
                         'action' => 'index'
                     )
                 )
-            )
+            ),
+            'invoice-delete' => array(
+                'title' => 'Delete Invoice',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/invoice/delete/[:invoiceId]',
+                    'defaults' => array(
+                        'controller' => 'Invoice\Controller\Delete',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'invoice-print' => array(
+                'title' => 'Print Invoice',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/invoice/print/[:invoiceId]',
+                    'defaults' => array(
+                        'controller' => 'Invoice\Controller\Print',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'invoice-update' => array(
+                'title' => 'Edit Invoice',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/invoice/update/[:invoiceId]',
+                    'defaults' => array(
+                        'controller' => 'Invoice\Controller\Update',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'invoice-view' => array(
+                'title' => 'View Invoice',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/invoice/view/[:invoiceId]',
+                    'defaults' => array(
+                        'controller' => 'Invoice\Controller\View',
+                        'action' => 'index'
+                    )
+                )
+            ),
         )
     ),
     

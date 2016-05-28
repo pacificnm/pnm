@@ -9,7 +9,11 @@ return array(
                 'user-profile'
             ),
             'employee' => array(
-                'user-list'
+                'user-list',
+                'user-create',
+                'user-delete',
+                'user-update',
+                'user-view'
             ),
             'accountant' => array(),
             'administrator' => array()
@@ -19,15 +23,20 @@ return array(
     'controllers' => array(
         'factories' => array(
             'User\Controller\Profile' => 'User\Controller\Factory\ProfileControllerFactory',
+            'User\Controller\Create' => 'User\Controller\Factory\CreateControllerFactory',
+            'User\Controller\Delete' => 'User\Controller\Factory\DeleteControllerFactory',
             'User\Controller\Index' => 'User\Controller\Factory\IndexControllerFactory',
+            'User\Controller\Update' => 'User\Controller\Factory\UpdateControllerFactory',
+            'User\Controller\View' => 'User\Controller\Factory\ViewControllerFactory'
         )
+        
     ),
     
     // service manager
     'service_manager' => array(
         'factories' => array(
             'User\Service\UserServiceInterface' => 'User\Service\Factory\UserServiceFactory',
-            'User\Mapper\UserMapperInterface' => 'User\Mapper\Factory\UserMapperFactory',
+            'User\Mapper\UserMapperInterface' => 'User\Mapper\Factory\UserMapperFactory'
         )
     ),
     
@@ -44,7 +53,7 @@ return array(
                     )
                 )
             ),
-    
+            
             'user-list' => array(
                 'title' => 'Client Users',
                 'type' => 'segment',
@@ -67,13 +76,46 @@ return array(
                     )
                 )
             ),
+            'user-delete' => array(
+                'title' => 'Delete User',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/user/delete/[:userId]',
+                    'defaults' => array(
+                        'controller' => 'User\Controller\Delete',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'user-update' => array(
+                'title' => 'Edit User',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/user/update/[:userId]',
+                    'defaults' => array(
+                        'controller' => 'User\Controller\Update',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'user-view' => array(
+                'title' => 'View User',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/user/view/[:userId]',
+                    'defaults' => array(
+                        'controller' => 'User\Controller\View',
+                        'action' => 'index'
+                    )
+                )
+            )
         )
     ),
     
     // view manager
-        'view_manager' => array(
-            'template_path_stack' => array(
-                __DIR__ . '/../view'
-            )
+    'view_manager' => array(
+        'template_path_stack' => array(
+            __DIR__ . '/../view'
         )
+    )
 );

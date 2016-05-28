@@ -30,6 +30,8 @@ return array(
         'Workorder',
         'Auth',
         'Task',
+        'Admin',
+        'Config',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

@@ -1,6 +1,9 @@
 <?php
 namespace User\Entity;
 
+use Client\Entity\ClientEntity;
+use Location\Entity\LocationEntity;
+
 class UserEntity implements UserEntityInterface
 {
 
@@ -9,6 +12,18 @@ class UserEntity implements UserEntityInterface
      * @var number
      */
     protected $userId;
+
+    /**
+     *
+     * @var number
+     */
+    protected $clientId;
+
+    /**
+     *
+     * @var number
+     */
+    protected $locationId;
 
     /**
      *
@@ -48,11 +63,41 @@ class UserEntity implements UserEntityInterface
 
     /**
      *
+     * @var ClientEntity
+     */
+    protected $clientEntity;
+
+    /**
+     *
+     * @var LocationEntity
+     */
+    protected $locationEntity;
+
+    /**
+     *
      * @return the $userId
      */
     public function getUserId()
     {
         return $this->userId;
+    }
+
+    /**
+     *
+     * @return the $clientId
+     */
+    public function getClientId()
+    {
+        return $this->clientId;
+    }
+
+    /**
+     *
+     * @return the $locationId
+     */
+    public function getLocationId()
+    {
+        return $this->locationId;
     }
 
     /**
@@ -111,11 +156,47 @@ class UserEntity implements UserEntityInterface
 
     /**
      *
+     * @return the $clientEntity
+     */
+    public function getClientEntity()
+    {
+        return $this->clientEntity;
+    }
+
+    /**
+     *
+     * @return the $locationEntity
+     */
+    public function getLocationEntity()
+    {
+        return $this->locationEntity;
+    }
+
+    /**
+     *
      * @param number $userId            
      */
     public function setUserId($userId)
     {
         $this->userId = $userId;
+    }
+
+    /**
+     *
+     * @param number $clientId            
+     */
+    public function setClientId($clientId)
+    {
+        $this->clientId = $clientId;
+    }
+
+    /**
+     *
+     * @param number $locationId            
+     */
+    public function setLocationId($locationId)
+    {
+        $this->locationId = $locationId;
     }
 
     /**
@@ -171,6 +252,22 @@ class UserEntity implements UserEntityInterface
     {
         $this->userType = $userType;
     }
-}
 
-?>
+    /**
+     *
+     * @param \Client\Entity\ClientEntity $clientEntity            
+     */
+    public function setClientEntity($clientEntity)
+    {
+        $this->clientEntity = $clientEntity;
+    }
+
+    /**
+     *
+     * @param \Location\Entity\LocationEntity $locationEntity            
+     */
+    public function setLocationEntity($locationEntity)
+    {
+        $this->locationEntity = $locationEntity;
+    }
+}

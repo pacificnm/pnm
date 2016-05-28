@@ -3,6 +3,8 @@ namespace Auth\Hydrator;
 
 use Zend\Stdlib\Hydrator\ClassMethods;
 use Auth\Entity\AuthEntity;
+use Employee\Entity\EmployeeEntity;
+use User\Entity\UserEntity;
 
 class AuthHydrator extends ClassMethods
 {
@@ -28,7 +30,15 @@ class AuthHydrator extends ClassMethods
         }
     
         parent::hydrate($data, $object);
-    
+        
+        $employeeEntity = parent::hydrate($data, new EmployeeEntity());
+        
+        $object->setEmployeeEntity($employeeEntity);
+        
+        $userEntity = parent::hydrate($data, new UserEntity());
+        
+        $object->setUserEntity($userEntity);
+        
         return $object;
     }
     

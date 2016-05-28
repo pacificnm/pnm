@@ -7,7 +7,11 @@ return array(
             'guest' => array(),
             'user' => array(),
             'employee' => array(
-                'task-list'
+                'task-list',
+                'task-create',
+                'task-delete',
+                'task-update',
+                'task-view',
             ),
             'accountant' => array(),
             'administrator' => array()
@@ -17,7 +21,11 @@ return array(
     // controllers
     'controllers' => array(
         'factories' => array(
-            'Task\Controller\Index' => 'Task\Controller\Factory\IndexControllerFactory'
+            'Task\Controller\Create' => 'Task\Controller\Factory\CreateControllerFactory',
+            'Task\Controller\Delete' => 'Task\Controller\Factory\DeleteControllerFactory',
+            'Task\Controller\Index' => 'Task\Controller\Factory\IndexControllerFactory',
+            'Task\Controller\Update' => 'Task\Controller\Factory\UpdateControllerFactory',
+            'Task\Controller\View' => 'Task\Controller\Factory\ViewControllerFactory',
         )
     ),
     
@@ -47,6 +55,39 @@ return array(
                     'route' => '/client/[:clientId]/task/create',
                     'defaults' => array(
                         'controller' => 'Task\Controller\Create',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'task-delete' => array(
+                'title' => 'Delete Task',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/task/delete/[:taskId]',
+                    'defaults' => array(
+                        'controller' => 'Task\Controller\Delete',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'task-update' => array(
+                'title' => 'Edit Task',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/task/update/[:taskId]',
+                    'defaults' => array(
+                        'controller' => 'Task\Controller\Update',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'task-view' => array(
+                'title' => 'View Task',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/task/view/[:taskId]',
+                    'defaults' => array(
+                        'controller' => 'Task\Controller\View',
                         'action' => 'index'
                     )
                 )

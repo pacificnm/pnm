@@ -12,6 +12,18 @@ interface UserEntityInterface
 
     /**
      *
+     * @return the $clientId
+     */
+    public function getClientId();
+
+    /**
+     *
+     * @return the $locationId
+     */
+    public function getLocationId();
+
+    /**
+     *
      * @return the $userStatus
      */
     public function getUserStatus();
@@ -48,9 +60,33 @@ interface UserEntityInterface
 
     /**
      *
+     * @return the $clientEntity
+     */
+    public function getClientEntity();
+
+    /**
+     *
+     * @return the $locationEntity
+     */
+    public function getLocationEntity();
+
+    /**
+     *
      * @param number $userId            
      */
     public function setUserId($userId);
+
+    /**
+     *
+     * @param number $clientId            
+     */
+    public function setClientId($clientId);
+
+    /**
+     *
+     * @param number $locationId            
+     */
+    public function setLocationId($locationId);
 
     /**
      *
@@ -87,4 +123,16 @@ interface UserEntityInterface
      * @param string $userType            
      */
     public function setUserType($userType);
+
+    /**
+     *
+     * @param \Client\Entity\ClientEntity $clientEntity            
+     */
+    public function setClientEntity($clientEntity);
+
+    /**
+     *
+     * @param \Location\Entity\LocationEntity $locationEntity            
+     */
+    public function setLocationEntity($locationEntity);
 }

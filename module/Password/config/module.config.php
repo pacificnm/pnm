@@ -7,7 +7,11 @@ return array(
             'guest' => array(),
             'user' => array(),
             'employee' => array(
-                'password-list'
+                'password-list',
+                'password-create',
+                'password-delete',
+                'password-update',
+                'password-view'
             ),
             'accountant' => array(),
             'administrator' => array()
@@ -17,7 +21,11 @@ return array(
     // controllers
     'controllers' => array(
         'factories' => array(
-            'Password\Controller\Index' => 'Password\Controller\Factory\IndexControllerFactory'
+            'Password\Controller\Create' => 'Password\Controller\Factory\CreateControllerFactory',
+            'Password\Controller\Delete' => 'Password\Controller\Factory\DeleteControllerFactory',
+            'Password\Controller\Index' => 'Password\Controller\Factory\IndexControllerFactory',
+            'Password\Controller\Update' => 'Password\Controller\Factory\UpdateControllerFactory',
+            'Password\Controller\View' => 'Password\Controller\Factory\ViewControllerFactory'
         )
     ),
     
@@ -40,6 +48,50 @@ return array(
                     )
                 )
             ),
+            'password-create' => array(
+                'title' => 'Create Password',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/password/create',
+                    'defaults' => array(
+                        'controller' => 'Password\Controller\Create',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'password-delete' => array(
+                'title' => 'Delete Password',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/password/delete/[:passwordId]',
+                    'defaults' => array(
+                        'controller' => 'Password\Controller\Delete',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'password-update' => array(
+                'title' => 'Edit Password',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/password/update/[:passwordId]',
+                    'defaults' => array(
+                        'controller' => 'Password\Controller\Update',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'password-view' => array(
+                'title' => 'View Password',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/password/view/[:passwordId]',
+                    'defaults' => array(
+                        'controller' => 'Password\Controller\View',
+                        'action' => 'index'
+                    )
+                )
+            )
         )
     ),
     

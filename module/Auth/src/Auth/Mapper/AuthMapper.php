@@ -70,13 +70,12 @@ class AuthMapper implements AuthMapperInterface
         
         $select = $sql->select('auth');
         
+        
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
         $paginatorAdapter = new DbSelect($select, $this->readAdapter, $resultSetPrototype);
         
         $paginator = new Paginator($paginatorAdapter);
-        
-        $paginator->getIterator()->buffer();
         
         return $paginator;
     }
@@ -120,8 +119,9 @@ class AuthMapper implements AuthMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Auth\Mapper\AuthMapperInterface::getAuthByEmail()
      */
     public function getAuthByEmail($authEmail)
@@ -141,17 +141,17 @@ class AuthMapper implements AuthMapperInterface
         $result = $stmt->execute();
         
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
+            
             $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
-        
+            
             $resultSet->buffer();
-        
+            
             return $resultSet->initialize($result)->current();
         }
         
         return array();
     }
-    
+
     /**
      *
      * {@inheritDoc}
@@ -163,6 +163,26 @@ class AuthMapper implements AuthMapperInterface
         $sql = new Sql($this->readAdapter);
         
         $select = $sql->select('auth');
+        
+        // join employee
+        $select->join('employee', 'employee.employee_id = auth.employee_id', array(
+            'employee_title',
+            'employee_im',
+            'employee_image',
+            'employee_status'
+        ), 'left');
+        
+        // join user
+        $select->join('user', 'user.user_id = auth.user_id', array(
+            'client_id',
+            'location_id',
+            'user_status',
+            'user_name_first',
+            'user_name_last',
+            'user_job_title',
+            'user_email',
+            'user_type'
+        ), 'left');
         
         $select->where(array(
             'auth.auth_id = ?' => $id

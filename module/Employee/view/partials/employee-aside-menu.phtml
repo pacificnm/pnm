@@ -1,4 +1,4 @@
-<ul class="sidebar-menu">
+
 	<li class="header"><?php echo $this->translate('MAIN NAVIGATION'); ?></li>
 	<li><a href="" ><i class="fa fa-home"></i> <span><?php echo $this->translate('My Profile')?></span></a></li>
 	
@@ -23,6 +23,7 @@
 				</a>
 			</li>
 			
+			<!-- Client Menu -->
 			<?php if($this->clientId): ?>
 			<!-- Client Home -->
 			<li class="<?php if($this->activeSubMenuItem == 'client-view'):?>active<?php endif;?>">
@@ -87,14 +88,7 @@
 					<i class="fa fa-wrench"></i> <?php echo $this->translate('Work Orders')?>
 				</a>
 			</li>
-			
-			
-			
 			<?php endif;?>
 		</ul>
 	</li>
 		
-	<li class="header"><?php echo $this->translate('ADMIN NAVIGATION'); ?></li>
-	
-</ul>
-<?php // \Zend\Debug\Debug::dump($this->acl->isAllowed('administrator', 'admin-home'));?>
