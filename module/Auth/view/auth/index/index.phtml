@@ -29,7 +29,7 @@
 							<td><?php echo $authEntity->getAuthName(); ?></td>
 							<td><?php echo $authEntity->getAuthType(); ?></td>
 							<td><?php echo ucwords($authEntity->getAuthRole()); ?></td>
-							<td><?php echo ($authEntity->getAuthLastLogin() > 0) ? $authEntity->getAuthLastLogin() : $this->translate('Never Signed In'); ?></td>
+							<td><?php echo ($authEntity->getAuthLastLogin() > 0) ? date($this->appConfig()->getConfigDateShort(), $authEntity->getAuthLastLogin()) : $this->translate('Never Signed In'); ?></td>
 							<td class="text-right">
 								<a href="<?php echo $this->url('auth-delete', array('authId' => $authEntity->getAuthId())); ?>" title="<?php echo $this->translate('Delete this auth'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
 								<a href="<?php echo $this->url('auth-update', array('authId' => $authEntity->getAuthId())); ?>" title="<?php echo $this->translate('Edit this auth'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>

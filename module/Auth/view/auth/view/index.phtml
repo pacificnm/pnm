@@ -24,7 +24,7 @@
  				 	</li>
  				 	<li class="list-group-item">
  				 		<b><?php echo $this->translate('Last Sign In'); ?></b> 
- 				 			<a class="pull-right"><?php echo ($this->authEntity->getAuthLastLogin() > 0) ? $this->authEntity->getAuthLastLogin() : $this->translate('Never Signed In'); ?></a>
+ 				 			<a class="pull-right"><?php echo ($this->authEntity->getAuthLastLogin() > 0) ? date($this->appConfig()->getConfigDateLong(), $this->authEntity->getAuthLastLogin()) : $this->translate('Never Signed In'); ?></a>
  				 	</li>
  				 	<li class="list-group-item">
  				 		<b><?php echo $this->translate('Ip Address');?></b> <a class="pull-right"><?php echo ($this->authEntity->getAuthLastIp() != null) ? $this->authEntity->getAuthLastIp() : $this->translate('Never Signed In'); ?></a>
@@ -56,7 +56,8 @@
 			</div>
 			<div class="box-body box-profile">
 				<?php if($this->authEntity->getAuthType() == 'Employee'): ?>
-					<h3 class="profile-username"><?php echo $this->authEntity->getAuthName(); ?></h3>
+					<h3 class="profile-username">
+						<a href="<?php echo $this->url('employee-view', array('employeeId' => $this->authEntity->getEmployeeId())); ?>" title="<?php echo $this->translate('View this employee'); ?>"><?php echo $this->authEntity->getAuthName(); ?></a></h3>
 					<p class="text-muted"><?php echo $this->authEntity->getAuthEmail(); ?></p>
 					<ul class="list-group list-group-unbordered">
 						<li class="list-group-item">

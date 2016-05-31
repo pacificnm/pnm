@@ -15,6 +15,10 @@ class IndexControllerFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return new IndexController();
+        $realServiceLocator = $serviceLocator->getServiceLocator();
+        
+        $configService = $realServiceLocator->get('Config\Service\ConfigServiceInterface');
+        
+        return new IndexController($configService);
     }
 }

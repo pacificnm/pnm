@@ -1,0 +1,38 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-dollar"></i>
+					<?php echo $this->translate('Labor'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('labor-create');?>" title="<?php echo $this->translate('New'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+				</div>
+			</div>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Labor Rate'); ?></th>
+							<th><?php echo $this->translate('Amount'); ?></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->paginator as $laborEntity): ?>
+						<tr>
+							<td><a href="<?php echo $this->url('labor-view', array('laborId' => $laborEntity->getLaborId())); ?>" title="<?php echo $this->translate('View labor rate'); ?>"><?php echo $laborEntity->getLaborName(); ?></a></td>
+							<td><?php echo $this->currencyFormat($laborEntity->getLaborAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang());?></td>
+							<td class="text-right">
+								<a href="<?php echo $this->url('labor-delete', array('laborId' => $laborEntity->getLaborId())); ?>" title="<?php echo $this->translate('Delete this labor rate'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+								<a href="<?php echo $this->url('labor-update', array('laborId' => $laborEntity->getLaborId())); ?>" title="<?php echo $this->translate('Edit this labor rate'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+							</td>
+						</tr>
+					<?php endforeach; ?>	
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

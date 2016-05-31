@@ -19,6 +19,8 @@ class IndexControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new IndexController($clientService);
+        $invoiceService = $realServiceLocator->get('Invoice\Service\InvoiceServiceInterface');
+        
+        return new IndexController($clientService, $invoiceService);
     }
 }

@@ -3,8 +3,8 @@
 		<div class="info-box">
 			<span class="info-box-icon bg-aqua"><i class="fa fa-wrench fa-fw"></i></span>
 			<div class="info-box-content">
-				<span class="info-box-text">Work Orders</span>
-				<span class="info-box-number">0</span>
+				<span class="info-box-text"><?php echo $this->translate('Work Orders')?></span>
+				<span class="info-box-number"><?php echo $this->workorderEntitys->getTotalItemCount(); ?></span>
 			</div>
 		</div>
 	</div>
@@ -157,14 +157,39 @@
 		<!-- Work Orders -->
 		<div class="box box-primary">
 			<div class="box-header with-border">
-				<h3 class="box-title"><i class="fa fa-wrench"></i> Active Work Orders</h3>
+				<h3 class="box-title"><i class="fa fa-wrench"></i> <?php echo $this->translate('Active Work Orders'); ?></h3>
 				<div class="box-tools pull-right">
-					<button class="btn btn-box-tool" ng-click="createWorkorder(clientId)"><i class="fa fa-plus"></i> New</button>
+					<a href="<?php echo $this->url('workorder-create', array('clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Create new work order'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
 				</div>
 			</div>
+			<?php if($this->workorderEntitys->getTotalItemCount() == 0):?>
 			<div class="box-body">
-			
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no active work orders.'); ?></p>
+				</div>
 			</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Work Order #'); ?></th>
+							<th><?php echo $this->translate('Description'); ?></th>
+							<th><?php echo $this->translate('Scheduled'); ?></th>	
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->workorderEntitys as $workorderEntity): ?>
+						<tr>
+							<td><a href="<?php echo $this->url('workorder-view', array('clientId' => $this->clientId, 'workorderId' => $workorderEntity->getWorkorderId()));?>" title="<?php echo $this->translate('View this work order'); ?>"><?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?></a></td>
+							<td><?php echo $workorderEntity->getWorkorderDescription(); ?></td>
+							<td><?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderDateScheduled()); ?></td>
+						</tr>
+					<?php endforeach;?>	
+					</tbody>
+				</table>
+			</div>
+			<?php endif; ?>
 		</div>
 		
 		<!-- invoices -->

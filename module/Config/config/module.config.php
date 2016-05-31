@@ -25,7 +25,10 @@ return array(
     
     // service manager
     'service_manager' => array(
-        'factories' => array()
+        'factories' => array(
+            'Config\Mapper\ConfigMapperInterface' => 'Config\Mapper\Factory\ConfigMapperFactory',
+            'Config\Service\ConfigServiceInterface' => 'Config\Service\Factory\ConfigServiceFactory',
+        )
     ),
     
     // router
@@ -53,6 +56,16 @@ return array(
                     )
                 )
             )
+        )
+    ),
+    
+    // view helpers
+    'view_helpers' => array(
+        'factories' => array(
+            'AppConfig' => 'Config\View\Helper\Factory\AppConfigFactory'
+        ),
+        'invokables' => array(
+            
         )
     ),
     

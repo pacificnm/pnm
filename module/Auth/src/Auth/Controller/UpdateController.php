@@ -54,7 +54,7 @@ class UpdateController extends BaseController
         $authEntity = $this->authService->get($authId);
         
         if(! $authEntity) {
-            $this->flashmessenger()->addErrorMessage('Unable to find the auth ' . $id);
+            $this->flashmessenger()->addErrorMessage('Unable to find the auth ' . $authId);
             
             return $this->redirect()->toRoute('auth-index');
         }

@@ -27,6 +27,18 @@
 			</a>
 		</li>
 		
+		<!-- Employees -->
+		<li class="<?php if($this->activeSubMenuItem == 'employee-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('employee-index'); ?>" title="<?php echo $this->translate('Employees'); ?>">
+				<i class="fa fa-user"></i> <?php echo $this->translate('Employees'); ?>
+			</a>
+		</li>
+		
 		<!-- Labor Rates -->
+		<li class="<?php if($this->activeSubMenuItem == 'labor-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('labor-index'); ?>" title="<?php echo $this->translate('Labor Rates'); ?>">
+				<i class="fa fa-dollar"></i> <?php echo $this->translate('Labor Rates'); ?>
+			</a>
+		</li>
 	</ul>
 </li>

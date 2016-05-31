@@ -4,6 +4,7 @@ namespace Client\Controller;
 use Application\Controller\BaseController;
 use Client\Service\ClientServiceInterface;
 use Zend\View\Model\ViewModel;
+use Workorder\Service\WorkorderServiceInterface;
 
 class ViewController extends BaseController
 {
@@ -15,21 +16,37 @@ class ViewController extends BaseController
     protected $clientService;
 
     /**
-     *
-     * @param ClientServiceInterface $clientService            
+     * 
+     * @var WorkorderServiceInterface
      */
-    public function __construct(ClientServiceInterface $clientService)
+    protected $workorderService;
+    
+    /**
+     * 
+     * @param ClientServiceInterface $clientService
+     * @param WorkorderServiceInterface $workorderService
+     */
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService)
     {
         $this->clientService = $clientService;
+        
+        $this->workorderService = $workorderService;
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
+     */
     public function indexAction()
     {
         $id = $this->params()->fromRoute('clientId');
         
         $clientEntity = $this->clientService->get($id);
         
-        if (! $clientEntity) {}
+        if (! $clientEntity) {
+            
+        }
         
         $this->layout()->setVariable('clientId', $id);
         
@@ -39,8 +56,17 @@ class ViewController extends BaseController
         
         $this->setHeadTitle($clientEntity->getClientName());
         
+        $filter = array(
+            'clientId' => $id,
+            'workorderStatus' => 'Active'
+        );
+        
+        $workorderEntitys = $this->workorderService->getAll($filter);
+        
         return new ViewModel(array(
-            'clientEntity' => $clientEntity
+            'clientEntity' => $clientEntity,
+            'clientId' => $id,
+            'workorderEntitys' => $workorderEntitys
         ));
     }
 }

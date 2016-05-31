@@ -10,6 +10,71 @@
 					<a href="<?php echo $this->url('config-update');?>" title="<?php echo $this->translate('Edit'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 				</div>
 			</div>
+			<div class="box-body">
+				<h3 class="profile-username"><?php echo $this->translate('Application Config'); ?></h3>
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Version'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigVersion();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Site'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigHttpAddress();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Date Long'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigDateLong();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Date Short'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigDateShort();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Language'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigLang();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Currency'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCurrency();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Copyright Year Start'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCopyYear();?></a>
+					</li>
+				</ul>
+				<h3 class="profile-username"><?php echo $this->translate('Company Settings'); ?></h3>
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Company Name')?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCompanyName();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Company Short Name')?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCompanyNameShort();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Company Abreviation')?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCompanyNameAbv();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Street')?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCompanyStreet();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Street Cont.')?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCompanyStreetCont();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('City')?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCompanyCity();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('State')?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCompanyState();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Postal Code')?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCompanyPostal();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Phone Number')?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCompanyPhone();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Phone Number Alt.')?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCompanyPhoneAlt();?></a>
+					</li>
+				</ul>
+				<h3 class="profile-username"><?php echo $this->translate('Email Settings'); ?></h3>
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Default E-Mail')?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCompanyName();?></a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>

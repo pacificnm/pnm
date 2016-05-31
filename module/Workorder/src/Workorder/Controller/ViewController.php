@@ -40,11 +40,13 @@ class ViewController extends BaseController
         $this->layout()->setVariable('pageTitle', 'View Work Order');
     
         $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
-    
-        $this->setHeadTitle($clientEntity->getClientName());
-    
+
         $this->layout()->setVariable('activeMenuItem', 'client');
     
+        $this->layout()->setVariable('activeSubMenuItem', 'workorder-list');
+        
+        $this->setHeadTitle($clientEntity->getClientName());
+        
         // return View
         return new ViewModel(array(
             'clientEntity' => $clientEntity,

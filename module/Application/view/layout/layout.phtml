@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle($this->translate('PNM'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headTitle($this->configEntity->getConfigCompanyNameShort())->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -41,9 +41,9 @@
 				<!-- Logo -->
 				<a href="<?php echo $this->url('home'); ?>" class="logo">
 	                <!-- mini logo for sidebar mini 50x50 pixels -->
-					<span class="logo-mini"><b>P</b>NM</span>
+					<span class="logo-mini"><b><?php echo $this->configEntity->getConfigCompanyNameAbv(); ?></b></span>
                     <!-- logo for regular state and mobile devices -->
-      				<span class="logo-lg"><b>Pacific</b> NM</span>
+      				<span class="logo-lg"><b><?php echo $this->configEntity->getConfigCompanyNameShort(); ?></b></span>
     			</a>
     			
     			<!-- Header Navbar: style can be found in header.less -->
@@ -142,9 +142,9 @@
         	
             <footer class="main-footer">
             	<div class="pull-right hidden-xs">
-            		<b><?php echo $this->translate('Version'); ?></b> 2.5.0
+            		<b><?php echo $this->translate('Version'); ?></b> <?php echo $this->configEntity->getConfigVersion();?>
             	</div>
-            	<strong><?php echo $this->translate('Copyright'); ?> &copy; 2003-<?php echo date("Y"); ?> <a href="http://www.pacificnm.com">Pacific Network Management</a>.</strong> <?php echo $this->translate('All rights reserved'); ?>.
+            	<strong><?php echo $this->translate('Copyright'); ?> &copy; <?php echo $this->configEntity->getConfigCopyYear(); ?>-<?php echo date("Y"); ?> <a href="http://<?php echo $this->configEntity->getConfigHttpAddress(); ?>"><?php echo $this->configEntity->getConfigCompanyName(); ?></a>.</strong> <?php echo $this->translate('All rights reserved'); ?>.
             </footer>
             
             <!-- Control Sidebar -->

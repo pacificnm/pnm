@@ -76,8 +76,6 @@ class EmployeeMapper implements EmployeeMapperInterface
         
         $paginator = new Paginator($paginatorAdapter);
         
-        $paginator->getIterator()->buffer();
-        
         return $paginator;
     }
 
@@ -96,6 +94,16 @@ class EmployeeMapper implements EmployeeMapperInterface
         $select->where(array(
             'employee.employee_id = ?' => $id
         ));
+        
+        $select->join('auth', 'auth.employee_id = employee.employee_id', array(
+            'auth_role',
+            'auth_email',
+            'auth_name',
+            'auth_type',
+            'auth_last_login',
+            'auth_last_ip',
+            'auth_id'
+        ), 'left');
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         

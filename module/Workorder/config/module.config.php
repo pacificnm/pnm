@@ -34,7 +34,10 @@ return array(
     
     // service manager
     'service_manager' => array(
-        'factories' => array()
+        'factories' => array(
+            'Workorder\Service\WorkorderServiceInterface' => 'Workorder\Service\Factory\WorkorderServiceFactory',
+            'Workorder\Mapper\WorkorderMapperInterface' => 'Workorder\Mapper\Factory\WorkorderMapperFactory',
+        )
     ),
     
     // router

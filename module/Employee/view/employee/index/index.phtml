@@ -1,0 +1,42 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-user"></i>
+					<?php echo $this->translate('Employees'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('employee-create');?>" title="<?php echo $this->translate('New'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+				</div>
+			</div>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Name'); ?></th>
+							<th><?php echo $this->translate('Title'); ?></th>
+							<th><?php echo $this->translate('E-Mail'); ?></th>
+							<th><?php echo $this->translate('Status'); ?></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->paginator as $employeeEntity): ?>
+						<tr>
+							<td><a href="<?php echo $this->url('employee-view', array('employeeId' => $employeeEntity->getEmployeeId())); ?>" title="<?php echo $this->translate('View this employee'); ?>"><?php echo $employeeEntity->getEmployeeName();?></a></td>
+							<td><?php echo $employeeEntity->getEmployeeTitle(); ?></td>
+							<td><?php echo $employeeEntity->getEmployeeEmail(); ?></td>
+							<td><?php echo $employeeEntity->getEmployeeStatus(); ?></td>
+							<td class="text-right">
+								<a href="<?php echo $this->url('employee-delete', array('employeeId' => $employeeEntity->getEmployeeId())); ?>" title="<?php echo $this->translate('Delete this employee'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+								<a href="<?php echo $this->url('employee-update', array('employeeId' => $employeeEntity->getEmployeeId())); ?>" title="<?php echo $this->translate('Edit this employee'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

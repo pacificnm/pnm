@@ -92,6 +92,14 @@ return array(
             'Application\Controller\Index' => Controller\IndexController::class
         )
     ),
+    
+    // view helpers
+    'view_helpers' => array(
+        'invokables' => array(
+            'Paginator'    => 'Application\View\Helper\Paginator'
+        ),
+    ),
+    
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions' => true,
@@ -135,6 +143,64 @@ return array(
                                     array(
                                         'label' => 'Edit Config',
                                         'route' => 'config-update',
+                                        'useRouteMatch' => true,
+                                    )
+                                )
+                            ),
+                            array(
+                                'label' => 'Labor Rates',
+                                'route' => 'labor-index',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'View Labor Rate',
+                                        'route' => 'labor-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Edit Labor Rate',
+                                                'route' => 'labor-update',
+                                                'useRouteMatch' => true,
+                                            ),
+                                            array(
+                                                'label' => 'Delete Labor Rate',
+                                                'route' => 'labor-delete',
+                                                'useRouteMatch' => true,
+                                            )
+                                        ) 
+                                    ),
+                                    array(
+                                        'label' => 'Create Labor Rate',
+                                        'route' => 'labor-create',
+                                        'useRouteMatch' => true,
+                                    )
+                                )
+                            ),
+                            array(
+                                'label' => 'Employee',
+                                'route' => 'employee-index',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'View Employee',
+                                        'route' => 'employee-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Edit Employee',
+                                                'route' => 'employee-update',
+                                                'useRouteMatch' => true,
+                                            ),
+                                            array(
+                                                'label' => 'Delete Employee',
+                                                'route' => 'employee-delete',
+                                                'useRouteMatch' => true,
+                                            )
+                                        )
+                                    ),
+                                    array(
+                                        'label' => 'Create Employee',
+                                        'route' => 'employee-create',
                                         'useRouteMatch' => true,
                                     )
                                 )

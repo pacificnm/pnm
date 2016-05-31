@@ -19,6 +19,8 @@ class ViewControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new ViewController($clientService);
+        $workorderService = $realServiceLocator->get('Workorder\Service\WorkorderServiceInterface');
+        
+        return new ViewController($clientService, $workorderService);
     }
 }

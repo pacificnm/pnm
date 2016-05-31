@@ -7,9 +7,105 @@
 					<?php echo $this->translate('Invoices'); ?>
 				</h3>
 				<div class="box-tools">
-					<a href="<?php echo $this->url('invoice-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create Invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+					<form class="form-inline">
+    				
+    					<div class="form-group">
+            				<select class="form-control input-sm" name="invoiceStatus" id="invoiceStatus">
+            					<option value=""><?php echo $this->translate('Status'); ?></option>
+            					<option value="Paid" <?php if($this->invoiceStatus == 'Paid'):?> selected <?php endif?>><?php echo $this->translate('Paid'); ?></option>
+            					<option value="Void" <?php if($this->invoiceStatus == 'Void'):?> selected <?php endif?>><?php echo $this->translate('Void'); ?></option>
+            					<option value="Un-Paid" <?php if($this->invoiceStatus == 'Un-Paid'):?> selected <?php endif?>><?php echo $this->translate('Un-Paid'); ?></option>
+            				</select>
+        				</div>
+        					
+    					<div class="form-group">
+    						<div class="input-group input-group-sm" style="width: 250px;">
+    							<input type="text" name="keyword" id="keyword" class="form-control pull-right" placeholder="Search" value="<?php echo $this->keyword; ?>">
+        						<div class="input-group-btn">
+        							<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+        						</div>
+    						</div>
+    					</div>
+    					
+    					<div class="form-group">
+    						<a href="<?php echo $this->url('invoice-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create Invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+    					</div>
+    				</form>
 				</div>
 			</div>
+			<?php if($this->paginator->count() == 0): ?>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> 
+					<?php if($this->workorderStatus):?>
+						<?php echo $this->translate("There where no {$this->workorderStatus} work orders found"); ?>
+						<?php if($this->keyword): ?>
+							<?php echo $this->translate("searching with {$this->keyword}"); ?>
+						<?php endif;?>
+					<?php else:?>
+						<?php echo $this->translate('There where no work orders found'); ?>
+						<?php if($this->keyword): ?>
+							<?php echo $this->translate("searching with {$this->keyword}"); ?>
+						<?php endif;?>
+					<?php endif; ?>
+				</div>
+			</div>
+			<?php else: ?>
+			<div class="box-body">
+				<ul class="list-group list-group-unbordered">
+					<?php foreach($this->paginator as $invoiceEntity): ?>
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-12">
+								<h3 class="profile-username">
+									<a href="<?php echo $this->url('invoice-view', array('clientId' => $this->clientId, 'invoiceId' => $invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('View this Invoice'); ?>">
+										<?php echo $this->translate('Invoice #');?> <?php echo $invoiceEntity->getInvoiceId(); ?>
+									</a>
+									<span class="pull-right badge"><?php echo $invoiceEntity->getInvoiceStatus(); ?></span>
+								</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-3">
+								<b><?php echo $this->translate('Invoice Date'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateShort(), $invoiceEntity->getInvoiceDate()); ?>
+							</div>
+							<div class="col-xs-12 col-sm-3">
+								<b><?php echo $this->translate('Period Start'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateShort(), $invoiceEntity->getInvoiceDateStart()); ?>
+							</div>
+							<div class="col-xs-12 col-sm-3">
+								<b><?php echo $this->translate('Period End'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateShort(), $invoiceEntity->getInvoiceDateEnd()); ?>
+							</div>
+							<div class="col-xs-12 col-sm-3">
+								<b><?php echo $this->translate('Paid'); ?>:</b> <?php echo  ($invoiceEntity->getInvoiceStatus() != 'Paid')? $this->translate('Not Paid') : date($this->appConfig()->getConfigDateShort(), $invoiceEntity->getInvoiceDatePaid()); ?>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-3">
+								<b><?php echo $this->translate('Invoice Total'); ?>:</b> <?php echo $this->currencyFormat($invoiceEntity->getInvoiceTotal(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()) ;?>
+							</div>
+							<div class="col-xs-12 col-sm-6">
+								<b><?php echo $this->translate('Invoice Balance'); ?>:</b> <?php echo $this->currencyFormat($invoiceEntity->getInvoiceBalance(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()) ;?>
+							</div>
+							<div class="col-xs-12 col-sm-3">
+								<b><?php echo $this->translate('Amount Paid'); ?>:</b> <?php echo $this->currencyFormat($invoiceEntity->getInvoicePayment(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()) ;?>
+							</div>
+						</div>
+					</li>
+					<?php endforeach;?>
+				</ul>
+				
+			<?php if($this->pageCount > 1): ?>
+			<div class="box-footer">
+				<?php echo $this->Paginator(
+	                        $this->itemCountPerPage,
+	                        $this->itemCount,
+	                        $this->pageCount,
+	                        $this->page,
+	                        $this->routeParams,
+	                        $this->queryParams); ?>
+			</div>
+			<?php endif; ?>
+			<?php endif;?>
 		</div>
 	</div>
 </div>

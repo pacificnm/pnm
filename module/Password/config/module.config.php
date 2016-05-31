@@ -31,7 +31,10 @@ return array(
     
     // service manager
     'service_manager' => array(
-        'factories' => array()
+        'factories' => array(
+            'Password\Mapper\PasswordMapperInterface' => 'Password\Mapper\Factory\PasswordMapperFactory',
+            'Password\Service\PasswordServiceInterface' => 'Password\Service\Factory\PasswordServiceFactory'
+        )
     ),
     
     // router
@@ -93,6 +96,14 @@ return array(
                 )
             )
         )
+    ),
+    
+    // view helpers
+    'view_helpers' => array(
+        'factories' => array(
+            'Decrypt' => 'Password\View\Helper\Factory\DecryptFactory'
+        ),
+        'invokables' => array() 
     ),
     
     // view manager

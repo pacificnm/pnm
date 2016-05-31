@@ -19,6 +19,10 @@ class ViewControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new ViewController($clientService);
+        $passwordService = $realServiceLocator->get('Password\Service\PasswordServiceInterface');
+        
+        $config = $realServiceLocator->get('config');
+        
+        return new ViewController($clientService, $passwordService, $config);
     }
 }

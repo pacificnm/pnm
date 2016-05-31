@@ -32,6 +32,11 @@ return array(
         'Task',
         'Admin',
         'Config',
+        'WorkorderEmployee',
+        'WorkorderNote',
+        'WorkorderPart',
+        'WorkorderTime',
+        'WorkorderFile',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

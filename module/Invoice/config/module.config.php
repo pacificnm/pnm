@@ -34,7 +34,10 @@ return array(
     
     // service manager
     'service_manager' => array(
-        'factories' => array()
+        'factories' => array(
+            'Invoice\Service\InvoiceServiceInterface' => 'Invoice\Service\Factory\InvoiceServiceFactory',
+            'Invoice\Mapper\InvoiceMapperInterface' => 'Invoice\Mapper\Factory\InvoiceMapperFactory'
+        )
     ),
     
     // router

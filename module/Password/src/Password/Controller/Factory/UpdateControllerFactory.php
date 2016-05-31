@@ -4,6 +4,7 @@ namespace Password\Controller\Factory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Password\Controller\UpdateController;
+use Password\Form\PasswordForm;
 
 class UpdateControllerFactory implements FactoryInterface
 {
@@ -19,6 +20,12 @@ class UpdateControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new UpdateController($clientService);
+        $passwordService = $realServiceLocator->get('Password\Service\PasswordServiceInterface');
+        
+        $passwordForm = new PasswordForm();
+        
+        $config = $realServiceLocator->get('config');
+        
+        return new UpdateController($clientService, $passwordService, $passwordForm, $config);
     }
 }

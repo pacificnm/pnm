@@ -10,6 +10,49 @@
 					<a href="<?php echo $this->url('password-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create new password'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
 				</div>
 			</div>
+			<?php if($this->paginator->count() == 0): ?>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There where no passwords found.'); ?>
+				</div>
+			</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Location'); ?></th>
+							<th><?php echo $this->translate('Title'); ?></th>
+							<th><?php echo $this->translate('Username'); ?></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->paginator as $passwordEntity): ?>
+						<tr>
+							<td><a href="<?php echo $this->url('password-view', array('passwordId' => $passwordEntity->getPasswordId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('View this password')?>"><?php echo $passwordEntity->getPasswordLocation(); ?></a></td>
+							<td><?php echo $passwordEntity->getPasswordTitle(); ?></td>
+							<td><?php echo $passwordEntity->getPasswordUsername(); ?></td>
+							<td class="text-right">
+								<a href="<?php echo $this->url('password-delete', array('passwordId' => $passwordEntity->getPasswordId(), 'clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Delete this password'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+								<a href="<?php echo $this->url('password-update', array('passwordId' => $passwordEntity->getPasswordId(), 'clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Edit this password'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+				
+			</div>
+			<div class="box-footer">
+					<?php echo $this->Paginator(
+	                        $this->itemCountPerPage,
+	                        $this->itemCount,
+	                        $this->pageCount,
+	                        $this->page,
+	                        $this->routeParams,
+	                        $this->queryParams); ?>
+			</div>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

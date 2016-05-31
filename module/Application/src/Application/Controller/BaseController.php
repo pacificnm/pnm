@@ -31,9 +31,7 @@ class BaseController extends AbstractActionController
     public function onDispatch(MvcEvent $e)
     {
         $router = $e->getRouteMatch();
-    
-        
-        
+
         $controller = $router->getParam('controller');
     
         $moduleArray = explode('\\', $controller);
@@ -43,8 +41,6 @@ class BaseController extends AbstractActionController
         $serviceLocator = $this->getServiceLocator();
     
         $config = $serviceLocator->get('Config');
-    
-        
         
         // check if we have an identity
         if (! $this->identity() || ! $this->identity() instanceof AuthEntity) {
@@ -75,8 +71,8 @@ class BaseController extends AbstractActionController
                 $allResources = array();
     
                 $roles = $config[$module]['acl'];
-    
-    
+        
+                // loop though roles and create resources
                 foreach ($roles as $role => $resources) {
                     // add roles
                     $role = new GenericRole($role);
@@ -107,8 +103,6 @@ class BaseController extends AbstractActionController
                     ->toRoute()
                     ->setStatusCode(403);
                 }
-    
-    
             } else {
                 throw new \Exception('Config is missing acl definition.');
             }
@@ -116,6 +110,16 @@ class BaseController extends AbstractActionController
             throw new \Exception('Config is missing module definition');
         }
     
+        // load db config
+        $configService = $serviceLocator->get('Config\Service\ConfigServiceInterface');
+        
+        $configEntity = $configService->get(1);
+        
+        $this->layout()->setVariable('configEntity', $configEntity);
+        
+        $this->configEntity = $configEntity;
+        
+        // return parent dispatch
         return parent::onDispatch($e);
     }
     
@@ -134,6 +138,10 @@ class BaseController extends AbstractActionController
         return false;
     }
     
+    /**
+     * 
+     * @param string $title
+     */
     protected function setHeadTitle($title = '')
     {
         if(!empty($title)){
