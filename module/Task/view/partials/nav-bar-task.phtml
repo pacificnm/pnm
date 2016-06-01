@@ -1,13 +1,21 @@
 <li class="dropdown tasks-menu">
 	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 		<i class="fa fa-flag-o"></i>
-		<span class="label label-danger">0</span>
+		<span class="label label-danger"><?php echo $this->taksEntitys->getTotalItemCount(); ?></span>
 	</a>
 	<ul class="dropdown-menu">
-		<li class="header">You have 0 tasks</li>
+		<li class="header"><?php echo $this->translate('You have')?> <?php echo $this->taksEntitys->getTotalItemCount(); ?> <?php echo $this->translate('tasks'); ?></li>
 		<li>
 			<ul class="menu">
-				<li></li>
+			<?php if($this->taksEntitys->getTotalItemCount() != 0):?>
+				<?php foreach($this->taksEntitys as $taskEntity): ?>
+				<li>
+					<a href="<?php echo $this->url('task-view', array('clientId' => $taskEntity->getClientId(), 'taskId' => $taskEntity->getTaskId()));?>" title="<?php echo $this->translate('View this task'); ?>">
+						<?php echo $taskEntity->getTaskTitle(); ?>
+					</a>
+				</li>
+				<?php endforeach;?>
+				<?php endif;?>
 			</ul>
 		</li>
 	</ul>

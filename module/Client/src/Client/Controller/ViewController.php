@@ -5,6 +5,8 @@ use Application\Controller\BaseController;
 use Client\Service\ClientServiceInterface;
 use Zend\View\Model\ViewModel;
 use Workorder\Service\WorkorderServiceInterface;
+use Invoice\Service\InvoiceServiceInterface;
+use Task\Service\TaskServiceInterface;
 
 class ViewController extends BaseController
 {
@@ -23,14 +25,32 @@ class ViewController extends BaseController
     
     /**
      * 
+     * @var InvoiceServiceInterface
+     */
+    protected $invoiceService;
+    
+    /**
+     * 
+     * @var TaskServiceInterface
+     */
+    protected $taskService;
+    
+    /**
+     * 
      * @param ClientServiceInterface $clientService
      * @param WorkorderServiceInterface $workorderService
+     * @param InvoiceServiceInterface $invoiceService
+     * @param TaskServiceInterface $taskService
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService)
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, InvoiceServiceInterface $invoiceService, TaskServiceInterface $taskService)
     {
         $this->clientService = $clientService;
         
         $this->workorderService = $workorderService;
+        
+        $this->invoiceService = $invoiceService;
+        
+        $this->taskService = $taskService;
     }
 
     /**
@@ -63,10 +83,42 @@ class ViewController extends BaseController
         
         $workorderEntitys = $this->workorderService->getAll($filter);
         
+        $workorderTotalCount = $this->workorderService->getClientTotalCount($id, 'Closed');
+        
+        $workorderLaborTotal = $this->workorderService->getClientTotalLabor($id);
+        
+        $workorderPartTotal = $this->workorderService->getClientTotalPart($id);
+        
+        $workorderRevenuTotal = $workorderLaborTotal + $workorderPartTotal;
+        
+        // invoice
+        $filter = array(
+            'clientId' => $id,
+            'invoiceStatus' => 'Un-Paid'
+        );
+        
+        $invoiceEntitys = $this->invoiceService->getAll($filter);
+        
+        // task
+        $filter = array(
+            'clientId' => $id,
+            'taskStatus' => 'Active'
+        );
+        
+        $taskEntitys = $this->taskService->getAll($filter);
+        
+        // return view model
         return new ViewModel(array(
             'clientEntity' => $clientEntity,
             'clientId' => $id,
-            'workorderEntitys' => $workorderEntitys
+            'workorderEntitys' => $workorderEntitys,
+            'workorderTotalCount' => $workorderTotalCount,
+            'workorderLaborTotal' => $workorderLaborTotal,
+            'workorderPartTotal' => $workorderPartTotal,
+            'workorderRevenuTotal' => $workorderRevenuTotal,
+            'invoiceEntitys' => $invoiceEntitys,
+            'taskEntitys' => $taskEntitys
+            
         ));
     }
 }

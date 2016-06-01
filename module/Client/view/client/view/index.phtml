@@ -14,7 +14,7 @@
 			<span class="info-box-icon bg-red"><i class="fa fa-credit-card fa-fw"></i></span>
 			<div class="info-box-content">
 				<span class="info-box-text">Un-Paid Invoices</span>
-				<span class="info-box-number">0</span>
+				<span class="info-box-number"><?php echo $this->invoiceEntitys->getTotalItemCount();?></span>
 			</div>
 		</div>
 	</div>
@@ -36,8 +36,8 @@
 		<div class="info-box">
 			<span class="info-box-icon bg-yellow"><i class="fa fa-tasks f-fw"></i></span>
 			<div class="info-box-content">
-				<span class="info-box-text">Tasks</span>
-				<span class="info-box-number">0</span>
+				<span class="info-box-text"><?php echo $this->translate('Tasks'); ?></span>
+				<span class="info-box-number"><?php echo $this->taskEntitys->getTotalItemCount(); ?></span>
 			</div>
 		</div>
 	</div>
@@ -77,33 +77,29 @@
 				<div class="row">
 					<div class="col-sm-3 col-xs-6">
 						<div class="description-block border-right">
-							<span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 17%</span>
-							<h5 class="description-header">$35,210.43</h5>
-							<span class="description-text">TOTAL REVENUE</span>
+							<h5 class="description-header"><?php echo $this->currencyFormat($this->workorderLaborTotal, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></h5>
+							<span class="description-text"><?php echo $this->translate('TOTAL LABOR'); ?></span>
 						</div>
 					</div>
 					
 					<div class="col-sm-3 col-xs-6">
 						<div class="description-block border-right">
-							<span class="description-percentage text-yellow"><i class="fa fa-caret-left"></i> 0%</span>
-							<h5 class="description-header">$10,390.90</h5>
-							<span class="description-text">TOTAL COST</span>
+							<h5 class="description-header"><?php echo $this->currencyFormat($this->workorderPartTotal, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></h5>
+							<span class="description-text"><?php echo $this->translate('TOTAL PARTS'); ?></span>
 						</div>
 					</div>
 								
 					<div class="col-sm-3 col-xs-6">
 						<div class="description-block border-right">
-							<span class="description-percentage text-green"><i class="fa fa-caret-up"></i> 20%</span>
-							<h5 class="description-header">$24,813.53</h5>
-							<span class="description-text">TOTAL PROFIT</span>
+							<h5 class="description-header"><?php echo $this->currencyFormat($this->workorderRevenuTotal, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></h5>
+							<span class="description-text"><?php echo $this->translate('TOTAL REVENUE'); ?></span>
 						</div>
 					</div>
 								
 					<div class="col-sm-3 col-xs-6">
 						<div class="description-block">
-							<span class="description-percentage text-red"><i class="fa fa-caret-down"></i> 18%</span>
-							<h5 class="description-header">1200</h5>
-							<span class="description-text">WORK COMPLETIONS</span>
+							<h5 class="description-header"><?php echo $this->workorderTotalCount; ?></h5>
+							<span class="description-text"><?php echo $this->translate('WORK COMPLETIONS'); ?></span>
 						</div>
 					</div>	
 				</div>
@@ -143,14 +139,45 @@
 		<!-- tasks -->
 		<div class="box box-warning">
 			<div class="box-header with-border">
-				<h3 class="box-title"><i class="fa fa-tasks f-fw"></i> Open Tasks</h3>
+				<h3 class="box-title"><i class="fa fa-tasks f-fw"></i> <?php echo $this->translate('Active Tasks'); ?></h3>
 				<div class="box-tools pull-right">
 					<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
 				</div>
 			</div>
+			<?php if($this->taskEntitys->getTotalItemCount() == 0):?>
 			<div class="box-body">
-			
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no active tasks.'); ?></p>
+				</div>
 			</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Task Title'); ?></th>
+							<th><?php echo $this->translate('Start'); ?></th>
+							<th><?php echo $this->translate('End'); ?></th>
+							<th><?php echo $this->translate('Priority'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->taskEntitys as $taskEntity): ?>
+						<tr>
+							<td>
+								<a href="<?php echo $this->url('task-view', array('clientId' => $this->clientId, 'taskId' => $taskEntity->getTaskId())); ?>" title="<?php echo $this->translate('View this task'); ?>">
+									<?php echo $taskEntity->getTaskTitle(); ?>
+								</a>
+							</td>
+							<td><?php echo date($this->appConfig()->getConfigDateLong(), $taskEntity->getTaskDateStart()); ?></td>
+							<td><?php echo date($this->appConfig()->getConfigDateLong(), $taskEntity->getTaskDateEnd()); ?></td>
+							<td><?php echo $taskEntity->getTaskPriority(); ?></td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+			</div>
+			<?php endif; ?>
 		</div>
 	</div>
 	<div class="col-sm-8 col-xs-12">
@@ -195,14 +222,39 @@
 		<!-- invoices -->
 		<div class="box box-danger">
     		<div class="box-header with-border">
-    			<h3 class="box-title"><i class="fa fa-credit-card"></i> Un-Paid Invoices</h3>
+    			<h3 class="box-title"><i class="fa fa-credit-card"></i> <?php echo $this->translate('Un-Paid Invoices'); ?></h3>
 				<div class="box-tools pull-right">
-					<button class="btn btn-box-tool"><i class="fa fa-plus"></i> New</button>
+					<button class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></button>
 				</div>
     		</div>
+    		<?php if($this->invoiceEntitys->getTotalItemCount() == 0):?>
     		<div class="box-body">
-			
+    			<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no un-paid invoices.'); ?></p>
+				</div>
+    		</div>
+    		<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+    			<table class="table table-hover">
+    				<thead>
+    					<tr>
+    						<th><?php echo $this->translate('Invoice #'); ?></th>
+    						<th><?php echo $this->translate('Date'); ?></th>
+    						<th><?php echo $this->translate('Amount'); ?></th>
+    					</tr>
+    				</thead>
+    				<tbody>
+    				<?php foreach($this->invoiceEntitys as $invoiceEntity): ?>
+    					<tr>
+    						<td><a href="<?php echo $this->url('invoice-view', array('clientId' => $this->clientId, 'invoiceId' => $invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('View this invoice'); ?>"><?php echo $this->translate('Invoice #');?><?php echo $invoiceEntity->getInvoiceId(); ?></a></td>
+    						<td><?php echo date($this->appConfig()->getConfigDateShort(), $invoiceEntity->getInvoiceDate()); ?></td>
+    						<td class="text-right"><?php echo $this->currencyFormat($invoiceEntity->getInvoiceTotal(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+    					</tr>
+    				<?php endforeach; ?>
+    				</tbody>
+    			</table>
 			</div>
+			<?php endif;?>
 		</div>
 		
 	</div>

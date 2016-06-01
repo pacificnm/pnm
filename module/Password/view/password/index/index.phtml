@@ -10,48 +10,62 @@
 					<a href="<?php echo $this->url('password-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create new password'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
 				</div>
 			</div>
-			<?php if($this->paginator->count() == 0): ?>
 			<div class="box-body">
-				<div class="alert alert-info">
-					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There where no passwords found.'); ?>
-				</div>
-			</div>
-			<?php else: ?>
-			<div class="box-body table-responsive no-padding">
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th><?php echo $this->translate('Location'); ?></th>
-							<th><?php echo $this->translate('Title'); ?></th>
-							<th><?php echo $this->translate('Username'); ?></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+    					<form class="form-inline">
+        					<div class="input-group input-group-sm" style="width: 250px;">
+        						<input type="text" name="keyword" id="keyword" class="form-control pull-right" placeholder="Search" value="<?php echo $this->keyword; ?>">
+            					<div class="input-group-btn">
+            						<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            					</div>
+        					</div>
+        				</form>
+        			</li>
+        			<?php if($this->paginator->count() == 0): ?>
+        			<li class="list-group-item">
+        				<div class="alert alert-info">
+        					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There where no passwords found.'); ?>
+        				</div>
+        			</li>
+        			<?php else: ?>
 					<?php foreach($this->paginator as $passwordEntity): ?>
-						<tr>
-							<td><a href="<?php echo $this->url('password-view', array('passwordId' => $passwordEntity->getPasswordId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('View this password')?>"><?php echo $passwordEntity->getPasswordLocation(); ?></a></td>
-							<td><?php echo $passwordEntity->getPasswordTitle(); ?></td>
-							<td><?php echo $passwordEntity->getPasswordUsername(); ?></td>
-							<td class="text-right">
-								<a href="<?php echo $this->url('password-delete', array('passwordId' => $passwordEntity->getPasswordId(), 'clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Delete this password'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
-								<a href="<?php echo $this->url('password-update', array('passwordId' => $passwordEntity->getPasswordId(), 'clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Edit this password'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
-							</td>
-						</tr>
+						<li class="list-group-item">
+							<div class="row">
+    							<div class="col-xs-12">
+    								<h3 class="profile-username">
+    									<a href="<?php echo $this->url('password-view', array('passwordId' => $passwordEntity->getPasswordId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('View this password')?>">
+    										<?php echo $passwordEntity->getPasswordLocation(); ?>
+    									</a>
+    								</h3>
+    							</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-6">
+									<b><?php echo $this->translate('Title'); ?>:</b> <?php echo $passwordEntity->getPasswordTitle(); ?>
+								</div>
+								<div class="col-xs-12 col-sm-6">
+									<b><?php echo $this->translate('Username'); ?>:</b> <?php echo $passwordEntity->getPasswordUsername(); ?>
+								</div>
+							</div>
+						</li>
 					<?php endforeach; ?>
-					</tbody>
-				</table>
-				
-			</div>
-			<div class="box-footer">
-					<?php echo $this->Paginator(
+					
+				</ul>
+				<?php if($this->pageCount > 1): ?>
+				<div class="row">
+					<div class="col-xs-12">
+						<?php echo $this->Paginator(
 	                        $this->itemCountPerPage,
 	                        $this->itemCount,
 	                        $this->pageCount,
 	                        $this->page,
 	                        $this->routeParams,
 	                        $this->queryParams); ?>
+					</div>
+				</div>
 			</div>
+			<?php endif; ?>
 			<?php endif; ?>
 		</div>
 	</div>

@@ -37,7 +37,16 @@ class IndexController extends BaseController
         // count per page
         $countPerPage = $this->params()->fromQuery('count-per-page', 24);
         
-        $filter = array();
+        // clientStatus
+        $clientStatus = $this->params()->fromQuery('clientStatus', 'Active');
+        
+        // keyword
+        $keyword = $this->params()->fromQuery('keyword', null);
+        
+        $filter = array(
+            'clientStatus' => $clientStatus,
+            'keyword' => $keyword
+        );
         
         $paginator = $this->clientService->getAll($filter);
         
@@ -47,6 +56,7 @@ class IndexController extends BaseController
         
         $this->layout()->setVariable('pageTitle', 'Clients');
         
+        
         // return view model
         return new ViewModel(array(
             'paginator' => $paginator,
@@ -54,7 +64,9 @@ class IndexController extends BaseController
             'itemCount' => $paginator->getTotalItemCount(),
             'pageCount' => $paginator->count(),
             'queryParams' => $this->params()->fromQuery(),
-            'routeParams' => array()
+            'routeParams' => array(),
+            'clientStatus' => $clientStatus,
+            'keyword' => $keyword
         ));
     }
 }

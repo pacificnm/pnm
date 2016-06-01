@@ -65,4 +65,34 @@ class WorkorderService implements WorkorderServiceInterface
     {
         return $this->mapper->delete($workorderEntity);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Workorder\Service\WorkorderServiceInterface::getClientTotalCount()
+     */
+    public function getClientTotalCount($clientId, $status)
+    {
+        return $this->mapper->getClientTotalCount($clientId, $status);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Workorder\Service\WorkorderServiceInterface::getClientTotalLabor()
+     */
+    public function getClientTotalLabor($clientId) 
+    {
+        return $this->mapper->getClientTotalLabor($clientId);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Workorder\Service\WorkorderServiceInterface::getClientTotalPart()
+     */
+    public function getClientTotalPart($clientId)
+    {
+        return $this->mapper->getClientTotalPart($clientId);
+    }
 }

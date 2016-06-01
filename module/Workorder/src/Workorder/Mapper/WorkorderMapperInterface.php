@@ -22,6 +22,28 @@ interface WorkorderMapperInterface
 
     /**
      *
+     * @param number $clientId            
+     * @param string $status            
+     * @return number
+     */
+    public function getClientTotalCount($clientId, $status);
+
+    /**
+     *
+     * @param number $clientId            
+     * @return float
+     */
+    public function getClientTotalLabor($clientId);
+
+    /**
+     *
+     * @param number $clientId            
+     * @return float
+     */
+    public function getClientTotalPart($clientId);
+
+    /**
+     *
      * @param WorkorderEntity $workorderEntity            
      * @return WorkorderEntity
      */

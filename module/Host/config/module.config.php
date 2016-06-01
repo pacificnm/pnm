@@ -31,7 +31,10 @@ return array(
     
     // service manager
     'service_manager' => array(
-        'factories' => array()
+        'factories' => array(
+            'Host\Service\HostServiceInterface' => 'Host\Service\Factory\HostServiceFactory',
+            'Host\Mapper\HostMapperInterface' => 'Host\Mapper\Factory\HostMapperFactory',
+        )
     ),
     
     // router

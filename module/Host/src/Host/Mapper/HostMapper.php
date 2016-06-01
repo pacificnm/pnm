@@ -1,5 +1,5 @@
 <?php
-namespace User\Mapper;
+namespace Host\Mapper;
 
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\Adapter\Driver\ResultInterface;
@@ -11,9 +11,9 @@ use Zend\Db\Sql\Update;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\DbSelect;
-use User\Entity\UserEntity;
+use Host\Entity\HostEntity;
 
-class UserMapper implements UserMapperInterface
+class HostMapper implements HostMapperInterface
 {
 
     /**
@@ -36,7 +36,7 @@ class UserMapper implements UserMapperInterface
 
     /**
      *
-     * @var UserEntity
+     * @var HostEntity
      */
     protected $prototype;
 
@@ -45,9 +45,9 @@ class UserMapper implements UserMapperInterface
      * @param AdapterInterface $readAdapter            
      * @param AdapterInterface $writeAdapter            
      * @param HydratorInterface $hydrator            
-     * @param UserEntity $prototype            
+     * @param HostEntity $prototype            
      */
-    public function __construct(AdapterInterface $readAdapter, AdapterInterface $writeAdapter, HydratorInterface $hydrator, UserEntity $prototype)
+    public function __construct(AdapterInterface $readAdapter, AdapterInterface $writeAdapter, HydratorInterface $hydrator, HostEntity $prototype)
     {
         $this->readAdapter = $readAdapter;
         
@@ -62,18 +62,18 @@ class UserMapper implements UserMapperInterface
      *
      * {@inheritDoc}
      *
-     * @see \User\Mapper\UserMapperInterface::getAll()
+     * @see \Host\Mapper\HostMapperInterface::getAll()
      */
     public function getAll($filter)
     {
         $sql = new Sql($this->readAdapter);
         
-        $select = $sql->select('user');
+        $select = $sql->select('host');
         
         // client id
         if (array_key_exists('clientId', $filter) && ! empty($filter['clientId'])) {
             $select->where(array(
-                'user.client_id = ?' => $filter['clientId']
+                'host.client_Id = ?' => $filter['clientId']
             ));
         }
         
@@ -90,16 +90,16 @@ class UserMapper implements UserMapperInterface
      *
      * {@inheritDoc}
      *
-     * @see \User\Mapper\UserMapperInterface::get()
+     * @see \Host\Mapper\HostMapperInterface::get()
      */
     public function get($id)
     {
         $sql = new Sql($this->readAdapter);
         
-        $select = $sql->select('user');
+        $select = $sql->select('host');
         
         $select->where(array(
-            'user.user_id = ?' => $id
+            'host.host_id = ?' => $id
         ));
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
@@ -124,25 +124,25 @@ class UserMapper implements UserMapperInterface
      *
      * {@inheritDoc}
      *
-     * @see \User\Mapper\UserMapperInterface::save()
+     * @see \Host\Mapper\HostMapperInterface::save()
      */
-    public function save(UserEntity $userEntity)
+    public function save(HostEntity $hostEntity)
     {
-        $postData = $this->hydrator->extract($userEntity);
+        $postData = $this->hydrator->extract($hostEntity);
         
-        if ($userEntity->getUserId()) {
+        if ($hostEntity->getHostId()) {
             
             // ID present, it's an Update
-            $action = new Update('user');
+            $action = new Update('host');
             
             $action->set($postData);
             
             $action->where(array(
-                'user.user_id = ?' => $userEntity->getUserId()
+                'host.host_id = ?' => $hostEntity->getHostId()
             ));
         } else {
             // ID NOT present, it's an Insert
-            $action = new Insert('user');
+            $action = new Insert('host');
             
             $action->values($postData);
         }
@@ -158,10 +158,10 @@ class UserMapper implements UserMapperInterface
             
             if ($newId) {
                 // When a value has been generated, set it on the object
-                $userEntity->setUserId($newId);
+                $hostEntity->setHostId($newId);
             }
             
-            return $userEntity;
+            return $hostEntity;
         }
         
         throw new \Exception("Database error");
@@ -171,14 +171,14 @@ class UserMapper implements UserMapperInterface
      *
      * {@inheritDoc}
      *
-     * @see \User\Mapper\UserMapperInterface::delete()
+     * @see \Host\Mapper\HostMapperInterface::delete()
      */
-    public function delete(UserEntity $userEntity)
+    public function delete(HostEntity $hostEntity)
     {
-        $action = new Delete('user');
+        $action = new Delete('host');
         
         $action->where(array(
-            'user.user_id = ?' => $userEntity->getUserId()
+            'host.host_id = ?' => $hostEntity->getHostId()
         ));
         
         $sql = new Sql($this->writeAdapter);

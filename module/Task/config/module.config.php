@@ -11,7 +11,7 @@ return array(
                 'task-create',
                 'task-delete',
                 'task-update',
-                'task-view',
+                'task-view'
             ),
             'accountant' => array(),
             'administrator' => array()
@@ -25,14 +25,18 @@ return array(
             'Task\Controller\Delete' => 'Task\Controller\Factory\DeleteControllerFactory',
             'Task\Controller\Index' => 'Task\Controller\Factory\IndexControllerFactory',
             'Task\Controller\Update' => 'Task\Controller\Factory\UpdateControllerFactory',
-            'Task\Controller\View' => 'Task\Controller\Factory\ViewControllerFactory',
+            'Task\Controller\View' => 'Task\Controller\Factory\ViewControllerFactory'
         )
     ),
     
     // service manager
     'service_manager' => array(
-        'factories' => array()
-    ),
+        'factories' => array(
+            'Task\Service\TaskServiceInterface' => 'Task\Service\Factory\TaskServiceFactory',
+            'Task\Mapper\TaskMapperInterface' => 'Task\Mapper\Factory\TaskMapperFactory'
+        )
+    )
+    ,
     
     // router
     'router' => array(
@@ -97,9 +101,10 @@ return array(
     
     // view helpers
     'view_helpers' => array(
-        'invokables' => array(
-            'NavBarTask' => 'Task\View\Helper\NavBarTask'
-        )
+        'factories' => array(
+            'NavBarTask' => 'Task\View\Helper\Factory\NavBarTaskFactory'
+        ),
+        'invokables' => array()
     ),
     
     // view manager

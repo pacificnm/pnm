@@ -10,6 +10,94 @@
 					<a href="<?php echo $this->url('user-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create new user'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
 				</div>
 			</div>
+			<div class="box-body">
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<form class="form-inline">
+                			<div class="row">
+                				<div class="col-xs-12">
+                				
+                					<div class="form-group">
+                        				<select class="form-control input-sm" name="userStatus" id="userStatus">
+                        					<option value=""><?php echo $this->translate('Status'); ?></option>
+                        					<option value="Active" <?php if($this->userStatus == 'Active'):?> selected <?php endif?>><?php echo $this->translate('Active'); ?></option>
+                        					<option value="Closed" <?php if($this->userStatus == 'Closed'):?> selected <?php endif?>><?php echo $this->translate('Closed'); ?></option>
+                        				</select>
+                    				</div>
+                    				
+                    				<div class="form-group">
+                						<div class="input-group input-group-sm">
+                							<input type="text" name="keyword" id="keyword" class="form-control pull-right" placeholder="<?php echo $this->translate('Search'); ?>" value="<?php echo $this->keyword; ?>">
+                    						<div class="input-group-btn">
+                    							<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    						</div>
+                						</div>
+                					</div>
+                				</div>
+                			</div>
+                		</form>
+					</li>
+					
+					<?php if($this->paginator->count() == 0): ?>
+					<li class="list-group-item">
+						<div class="alert alert-info">
+        					<p><i class="fa fa-info-circle"></i> 
+        					<?php if($this->userStatus):?>
+        						<?php echo $this->translate("There where no {$this->userStatus} users found"); ?>
+        						<?php if($this->keyword): ?>
+        							<?php echo $this->translate("searching with {$this->keyword}"); ?>
+        						<?php endif;?>
+        					<?php else:?>
+        						<?php echo $this->translate('There where no users found'); ?>
+        						<?php if($this->keyword): ?>
+        							<?php echo $this->translate("searching with {$this->keyword}"); ?>
+        						<?php endif;?>
+        					<?php endif; ?>
+        				</div>
+					</li>
+					<?php else: ?>
+					<?php foreach($this->paginator as $userEntity): ?>
+    				<li class="list-group-item">
+    					<div class="row">
+                        	<div class="col-xs-12">
+                        		<h3 class="profile-username">
+                        			<a href="<?php echo $this->url('user-view', array('clientId' => $this->clientId, 'userId' => $userEntity->getUserId())); ?>" title="<?php echo $this->translate('View this user'); ?>">
+                        				<?php echo $userEntity->getUserNameFirst(); ?> <?php echo $userEntity->getUserNameLast(); ?>
+                        			</a>
+                        			<span class="pull-right badge"><?php echo $userEntity->getUserStatus(); ?></span>
+                        		</h3>
+                        	</div>
+                        </div>
+                        <div class="row">
+                        	<div class="col-xs-12 col-sm-3">
+                        		<b><?php echo $this->translate('Type'); ?>:</b> <?php echo $userEntity->getUserType(); ?>
+                        	</div>
+                        	<div class="col-xs-12 col-sm-3">
+                        		<b><?php echo $this->translate('Job Title'); ?>:</b> <?php echo $userEntity->getUserJobTitle(); ?>
+                        	</div>
+                        	<div class="col-xs-12 col-sm-4">
+                        		<b><?php echo $this->translate('E-Mail'); ?>:</b> <?php echo $userEntity->getUserEmail(); ?>
+                        	</div>
+                        	
+                        </div>
+    				</li>
+    				<?php endforeach; ?>
+					<?php endif;?>
+				</ul>
+				<?php if($this->pageCount > 1): ?>
+				<div class="row">
+					<div class="col-xs-12">
+    				<?php echo $this->Paginator(
+    	                        $this->itemCountPerPage,
+    	                        $this->itemCount,
+    	                        $this->pageCount,
+    	                        $this->page,
+    	                        $this->routeParams,
+    	                        $this->queryParams); ?>
+    	        	</div>
+    			</div>
+				<?php endif; ?>
+			</div>
 		</div>
 	</div>
 </div>

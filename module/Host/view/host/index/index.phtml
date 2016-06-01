@@ -10,6 +10,77 @@
 					<a href="<?php echo $this->url('host-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create new host'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
 				</div>
 			</div>
+			<div class="box-body">
+    			<ul class="list-group list-group-unbordered">
+    				<li class="list-group-item">
+            			<form class="form-inline">
+                			<div class="row">
+                				<div class="col-xs-12">
+                				
+                					<div class="form-group">
+                        				<select class="form-control input-sm" name="hostStatus" id="hostStatus">
+                        					<option value=""><?php echo $this->translate('Status'); ?></option>
+                        					<option value="Active" <?php if($this->hostStatus == 'Active'):?> selected <?php endif?>><?php echo $this->translate('Active'); ?></option>
+                        					<option value="Closed" <?php if($this->hostStatus == 'Closed'):?> selected <?php endif?>><?php echo $this->translate('Closed'); ?></option>
+                        				</select>
+                    				</div>
+                    				
+                    				<div class="form-group">
+                						<div class="input-group input-group-sm">
+                							<input type="text" name="keyword" id="keyword" class="form-control pull-right" placeholder="<?php echo $this->translate('Search'); ?>" value="<?php echo $this->keyword; ?>">
+                    						<div class="input-group-btn">
+                    							<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    						</div>
+                						</div>
+                					</div>
+                				
+                				</div>
+                			</div>
+                		</form>
+            		</li>
+            		<?php if($this->paginator->count() == 0): ?>
+					<li class="list-group-item">
+        				<div class="alert alert-info">
+        					<p><i class="fa fa-info-circle"></i> 
+        					<?php if($this->hostStatus):?>
+        						<?php echo $this->translate("There where no {$this->hostStatus} hosts found"); ?>
+        						<?php if($this->keyword): ?>
+        							<?php echo $this->translate("searching with {$this->keyword}"); ?>
+        						<?php endif;?>
+        					<?php else:?>
+        						<?php echo $this->translate('There where no hosts found'); ?>
+        						<?php if($this->keyword): ?>
+        							<?php echo $this->translate("searching with {$this->keyword}"); ?>
+        						<?php endif;?>
+        					<?php endif; ?>
+        				</div>
+					</li>
+					<?php else: ?>
+            		<?php foreach($this->paginator as $hostEntity): ?>
+    				<li class="list-group-item">
+    					<div class="row">
+    						<div class="col-xs-12">
+    							<h3 class="profile-username">
+    								<a href="<?php echo $this->url('host-view', array('clientId' => $this->clientId, 'hostId' => $hostEntity->getHostId())); ?>" title="<?php echo $this->translate('View this host'); ?>">
+    									<?php echo $hostEntity->getHostName(); ?>
+    								</a>
+    								<span class="pull-right badge"><?php echo $hostEntity->getHostStatus(); ?></span>
+    							</h3>
+    						</div>
+    					</div>
+    					<div class="row">
+    						<div class="col-xs-12 col-sm-4">
+    							<b><?php echo $this->translate('Host Type'); ?>:</b> <?php echo $hostEntity->getHostType(); ?>
+    						</div>
+    						<div class="col-xs-12 col-sm-4">
+    							<b><?php echo $this->translate('Host IP'); ?>:</b> <?php echo $hostEntity->getHostIp(); ?>
+    						</div>
+    					</div>
+    				</li>
+    				<?php endforeach;?>
+            		<?php endif; ?>
+    			</ul>
+    		</div>
 		</div>
 	</div>
 </div>

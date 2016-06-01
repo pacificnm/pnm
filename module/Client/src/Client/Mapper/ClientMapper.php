@@ -68,13 +68,27 @@ class ClientMapper implements ClientMapperInterface
         
         $select = $sql->select('client');
         
+        // clientStatus
+        if(array_key_exists('clientStatus', $filter) && ! empty($filter['clientStatus'])) {
+            $select->where(array('client.client_status =? ' => $filter['clientStatus']));
+        }
+        
+        // keyword
+        if(array_key_exists('keyword', $filter) && ! empty($filter['keyword'])) {
+            if(is_numeric($filter['keyword'])) {
+                $select->where(array('client.client_id = ?' => $filter['keyword']));
+            } else {
+                $select->where->like('client.client_name', $filter['keyword'] . "%");
+            }
+        }
+        
+        $select->order('client.client_name');
+        
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
         $paginatorAdapter = new DbSelect($select, $this->readAdapter, $resultSetPrototype);
         
         $paginator = new Paginator($paginatorAdapter);
-        
-        //$paginator->getIterator()->buffer();
         
         return $paginator;
     }

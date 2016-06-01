@@ -1,27 +1,25 @@
 <?php
-namespace Task\Controller\Factory;
+namespace Task\View\Helper\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Task\Controller\IndexController;
+use Task\View\Helper\NavBarTask;
 
-class IndexControllerFactory implements FactoryInterface
+class NavBarTaskFactory implements FactoryInterface
 {
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Zend\ServiceManager\FactoryInterface::createService()
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
-        $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
-        
         $taskService = $realServiceLocator->get('Task\Service\TaskServiceInterface');
         
-        return new IndexController($clientService, $taskService);
+        return new NavBarTask($taskService);
     }
 }
-

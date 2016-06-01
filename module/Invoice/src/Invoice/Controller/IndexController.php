@@ -78,6 +78,8 @@ class IndexController extends BaseController
         
         $paginator->setItemCountPerPage($countPerPage);
         
+        
+        
         // return View
         return new ViewModel(array(
             'clientEntity' => $clientEntity,

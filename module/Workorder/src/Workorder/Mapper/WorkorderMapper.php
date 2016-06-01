@@ -12,6 +12,7 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\DbSelect;
 use Workorder\Entity\WorkorderEntity;
+use Zend\Db\ResultSet\ResultSet;
 
 class WorkorderMapper implements WorkorderMapperInterface
 {
@@ -138,6 +139,111 @@ class WorkorderMapper implements WorkorderMapperInterface
         return array();
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Workorder\Mapper\WorkorderMapperInterface::getClientTotalCount()
+     */
+    public function getClientTotalCount($clientId, $status)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder');
+        
+        $select->columns(array('workorder_count' => new \Zend\Db\Sql\Expression('COUNT(*)')));
+        
+        $select->where(array('client_id = ?' => $clientId));
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new ResultSet();
+            
+            $resultSet->initialize($result);
+            
+            $row = $resultSet->current();
+            
+           return $row['workorder_count'];
+        }
+        
+        return 0;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Workorder\Mapper\WorkorderMapperInterface::getClientTotalLabor()
+     */
+    public function getClientTotalLabor($clientId)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder');
+        
+        $select->columns(array('workorder_labor_total' => new \Zend\Db\Sql\Expression('SUM(workorder_labor)')));
+        
+        $select->where(array('client_id = ?' => $clientId));
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new ResultSet();
+        
+            $resultSet->initialize($result);
+        
+            $row = $resultSet->current();
+        
+            return $row['workorder_labor_total'];
+        }
+        
+        return 0;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Workorder\Mapper\WorkorderMapperInterface::getClientTotalPart()
+     */
+    public function getClientTotalPart($clientId)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder');
+        
+        $select->columns(array('workorder_part_total' => new \Zend\Db\Sql\Expression('SUM(workorder_parts)')));
+        
+        $select->where(array('client_id = ?' => $clientId));
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new ResultSet();
+        
+            $resultSet->initialize($result);
+        
+            $row = $resultSet->current();
+        
+            return $row['workorder_part_total'];
+        }
+        
+        return 0;
+    }
+    
     /**
      *
      * {@inheritDoc}
