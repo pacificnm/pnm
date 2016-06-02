@@ -50,9 +50,9 @@ class InvoiceService implements InvoiceServiceInterface
      *
      * @see \Invoice\Service\InvoiceServiceInterface::save()
      */
-    public function save(InvoiceEntity $invoiceEntity)
+    public function save(InvoiceEntity $entity)
     {
-        return $this->mapper->save($invoiceEntity);
+        return $this->mapper->save($entity);
     }
 
     /**
@@ -61,8 +61,8 @@ class InvoiceService implements InvoiceServiceInterface
      *
      * @see \Invoice\Service\InvoiceServiceInterface::delete()
      */
-    public function delete(InvoiceEntity $invoiceEntity)
+    public function delete(InvoiceEntity $entity)
     {
-        return $this->mapper->delete($invoiceEntity);
+        return $this->mapper->delete($entity);
     }
 }

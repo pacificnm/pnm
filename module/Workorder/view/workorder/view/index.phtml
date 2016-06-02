@@ -1,13 +1,280 @@
 <div class="row">
 	<div class="col-xs-12">
-		<div class="box box-primary">
+		<div class="box <?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>box-primary<?php else: ?>box-danger<?php endif; ?>">
 			<div class="box-header">
 				<h3 class="box-title">
 					<i class="fa fa-wrench"></i>
 					<?php echo $this->translate('View Work Order'); ?>
 				</h3>
-				<div class="box-tools"></div>
+				<div class="box-tools hidden-xs">
+					<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
+					<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
+					<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-dollar"></i> <?php echo $this->translate('Credit'); ?></a>
+					<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-check-circle"></i> <?php echo $this->translate('Complete'); ?></a>
+					<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+					<?php endif;?>
+					
+					<a href="<?php echo $this->url('workorder-update', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Edit this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+				</div>
+			</div>
+			<div class="box-body">
+				<h3 class="profile-username">
+					<?php echo $this->translate('Work Order #'); ?> <?php echo $this->workorderEntity->getWorkorderId(); ?>
+					<span class="pull-right badge"><?php echo $this->workorderEntity->getWorkorderStatus(); ?></span>
+				</h3>
+				<p class="text-muted"><?php echo $this->workorderEntity->getWorkorderDescription(); ?></p>
+				<div class="row">
+					<div class="col-xs-12 col-sm-9">
+						<b><?php echo $this->translate('Location'); ?>:</b>
+						<?php if(! $this->workorderEntity->getLocationEntity()):?>
+							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing location.')?></span>
+						<?php else: ?>
+							<?php $locationEntity = $this->workorderEntity->getLocationEntity(); ?>
+						<a href="<?php echo $this->url('location-view', array('clientId' => $this->clientId, 'locationId' => $locationEntity->getLocationId())); ?>" title="<?php echo $this->translate('View this location'); ?>">
+							<?php echo $locationEntity->getLocationStreet();?> <?php echo $locationEntity->getLocationCity(); ?>, <?php echo $locationEntity->getLocationState();?> <?php echo $locationEntity->getLocationZip(); ?>
+						</a>
+						<?php endif; ?>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<b><?php echo $this->translate('Phone'); ?>:</b>
+						<?php if(! $this->workorderEntity->getPhoneEntity()) :?>
+							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing phone.')?></span>
+						<?php else: ?>
+							<?php $phoneEntity = $this->workorderEntity->getPhoneEntity(); ?>
+							<a href="<?php echo $this->url('phone-view', array('clientId' => $this->clientId, 'phoneId' => $phoneEntity->getPhoneId())); ?>" title="<?php echo $this->translate('View this phone');?>"><?php echo $phoneEntity->getPhoneNum();?></a>
+						<?php endif; ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<b><?php echo $this->translate('Scheduled')?>:</b> 
+						<?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateScheduled()); ?>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<b><?php echo $this->translate('Created'); ?>:</b>
+						<?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateCreate()); ?>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<b><?php echo $this->translate('Closed'); ?>:</b>
+						<?php if($this->workorderEntity->getWorkorderStatus() == "Closed"): ?>
+							<?php echo date($this->appConfig()->getConfigDateLong()); ?>
+						<?php else: ?>
+							<?php echo $this->translate($this->workorderEntity->getWorkorderStatus()); ?>
+						<?php endif;?>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<b><?php echo $this->translate('Contact'); ?>:</b>
+						<?php if(! $this->workorderEntity->getUserEntity()): ?>
+							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing contact.')?></span>
+						<?php else: ?>
+							<?php $userEntity = $this->workorderEntity->getUserEntity(); ?>
+							<a href="<?php echo $this->url('user-view', array('clientId' => $this->clientId, 'userId' => $userEntity->getUserId()));?>" title="<?php echo $this->translate('View this user'); ?>">
+								<?php echo $userEntity->getUserNameFirst(); ?> <?php echo $userEntity->getUserNameLast(); ?>
+							</a>
+						<?php endif;?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<b><?php echo $this->translate('Ends'); ?>:</b>
+						 <?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateEnd()); ?>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<b><?php echo $this->translate('Labor'); ?>:</b>
+						 <?php echo $this->currencyFormat($this->workorderEntity->getWorkorderLabor(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<b><?php echo $this->translate('Parts'); ?>:</b>
+						<?php echo $this->currencyFormat($this->workorderEntity->getWorkorderParts(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<b><?php echo $this->translate('Credit'); ?>:</b>
+						<?php echo $this->currencyFormat(0, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
+					</div>
+				</div>
+				
+			</div>
+			<div class="box-footer  visible-xs">
+				<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
+    			<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
+    			<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-dollar"></i> <?php echo $this->translate('Credit'); ?></a>
+    			<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-check-circle"></i> <?php echo $this->translate('Complete'); ?></a>
+    			<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+    			<?php endif;?>
+    			<a href="<?php echo $this->url('workorder-update', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Edit this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>		
 			</div>
 		</div>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-8">
+	
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title"><i class="fa fa-list-alt"></i> <?php echo $this->translate('Notes')?></h3>
+				<div class="box-tools">
+					<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
+					<a href="javascript:void(0);" data-toggle="modal" data-target="#noteModal" title="<?php echo $this->translate('Add new note'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+					<?php endif; ?>
+				</div>
+			</div>
+			<div class="box-body">
+    			<div class="alert alert-info">
+    				<i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no notes.'); ?>
+    			</div>
+    		</div>
+		</div>
+		
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title"><i class="fa fa-clock-o"></i> <?php echo $this->translate('Times')?></h3>
+				<div class="box-tools">
+					<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
+					<a href="javascript:void(0);" data-toggle="modal" data-target="#timeModal" title="<?php echo $this->translate('Add new time'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+					<?php endif;?>
+				</div>
+			</div>
+			<div class="box-body">
+    			<div class="alert alert-info">
+    				<i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no times.'); ?>
+    			</div>
+    		</div>
+		</div>
+					
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title"><i class="fa fa-hdd-o"></i> <?php echo $this->translate('Parts')?></h3>
+				<div class="box-tools">
+					<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
+					<a href="javascript:void(0);" data-toggle="modal" data-target="#partModal" title="<?php echo $this->translate('Add new part'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+					<?php endif;?>
+				</div>
+			</div>
+			<div class="box-body">
+    			<div class="alert alert-info">
+    				<i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no parts.'); ?>
+    			</div>
+    		</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-4">
+		<div class="box box-primary">
+    		<div class="box-header">
+    			<h3 class="box-title"><i class="fa fa-user"></i> <?php echo $this->translate('Employee')?></h3>
+    			<div class="box-tools">
+    				<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
+    				<a href="javascript:void(0);" data-toggle="modal" data-target="#employeeModal" title="<?php echo $this->translate('Add new employee'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+    				<?php endif;?>
+    			</div>
+    		</div>
+    		<div class="box-body">
+    			<?php if($this->workorderEmployeEntitys->count() == 0): ?>
+    				<div class="alert alert-info">
+    					<i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no employees.'); ?>
+    				</div>
+    			<?php else:?>
+    			<ul class="list-group list-group-unbordered">
+    				<?php foreach($this->workorderEmployeEntitys as $workorderEmployeEntity): ?>
+    				<li class="list-group-item">
+    					<a href="" title="<?php echo $this->translate('View this employee');?>"><?php echo $workorderEmployeEntity->getEmployeeEntity()->getEmployeeName(); ?></a>
+    					<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
+    					<a href="" title="<?php echo $this->translate('Remove this employee'); ?>" class="btn btn-box-tool pull-right"><i class="fa fa-times"></i> <?php echo $this->translate('Remove'); ?></a>
+    					<?php endif; ?>
+    				</li>
+    				<?php endforeach; ?>
+    			</ul>
+    			<?php endif;?>
+    		</div>
+    	</div>
+    	
+    	<div class="box box-primary">
+    		<div class="box-header">
+    			<h3 class="box-title"><?php echo $this->translate('Files')?></h3>
+    			<div class="box-tools">
+    				<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
+    				<a href="" title="<?php echo $this->translate('Add new file'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+    				<?php endif;?>
+    			</div>
+    		</div>
+    		<div class="box-body">
+    			<div class="alert alert-info">
+    				<i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no files.'); ?>
+    			</div>
+    		</div>
+    	</div>
+	</div>
+</div>
+<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
+<!-- note modal -->
+<div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-list-alt"></i> <?php echo $this->translate('Work Order Note')?></h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- time modal -->
+<div class="modal fade" id="timeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-clock-o"></i> <?php echo $this->translate('Work Order Time')?></h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- part modal -->
+<div class="modal fade" id="partModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-hdd-o"></i> <?php echo $this->translate('Work Order Part')?></h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- employee modal -->
+<div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-user"></i> <?php echo $this->translate('Work Order Employee')?></h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif;?>

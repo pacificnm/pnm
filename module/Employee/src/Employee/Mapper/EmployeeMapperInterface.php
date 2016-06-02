@@ -22,15 +22,15 @@ interface EmployeeMapperInterface
 
     /**
      *
-     * @param EmployeeEntity $employeeEntity            
+     * @param EmployeeEntity $entity            
      * @return EmployeeEntity
      */
-    public function save(EmployeeEntity $employeeEntity);
+    public function save(EmployeeEntity $entity);
 
     /**
      *
-     * @param EmployeeEntity $employeeEntity            
+     * @param EmployeeEntity $entity            
      * @return boolean
      */
-    public function delete(EmployeeEntity $employeeEntity);
+    public function delete(EmployeeEntity $entity);
 }

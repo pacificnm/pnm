@@ -22,17 +22,17 @@ interface WorkorderServiceInterface
 
     /**
      *
-     * @param WorkorderEntity $workorderEntity            
+     * @param WorkorderEntity $entity            
      * @return WorkorderEntity
      */
-    public function save(WorkorderEntity $workorderEntity);
+    public function save(WorkorderEntity $entity);
 
     /**
      *
-     * @param WorkorderEntity $workorderEntity            
+     * @param WorkorderEntity $entity            
      * @return boolean
      */
-    public function delete(WorkorderEntity $workorderEntity);
+    public function delete(WorkorderEntity $entity);
     
     /**
      * 

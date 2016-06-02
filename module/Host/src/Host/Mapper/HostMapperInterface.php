@@ -22,15 +22,15 @@ interface HostMapperInterface
 
     /**
      *
-     * @param HostEntity $hostEntity            
+     * @param HostEntity $entity            
      * @return HostEntity
      */
-    public function save(HostEntity $hostEntity);
+    public function save(HostEntity $entity);
 
     /**
      *
-     * @param HostEntity $hostEntity            
+     * @param HostEntity $entity            
      * @return boolean
      */
-    public function delete(HostEntity $hostEntity);
+    public function delete(HostEntity $entity);
 }

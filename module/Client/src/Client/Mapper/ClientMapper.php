@@ -131,11 +131,11 @@ class ClientMapper implements ClientMapperInterface
      * {@inheritDoc}
      * @see \Client\Mapper\ClientMapperInterface::save()
      */
-    public function save(ClientEntity $clientEntity)
+    public function save(ClientEntity $entity)
     {
-        $postData = $this->hydrator->extract($clientEntity);
+        $postData = $this->hydrator->extract($entity);
         
-        if ($clientEntity->getClientId()) {
+        if ($entity->getClientId()) {
         
             // ID present, it's an Update
             $action = new Update('client');
@@ -143,7 +143,7 @@ class ClientMapper implements ClientMapperInterface
             $action->set($postData);
         
             $action->where(array(
-                'client.client_id = ?' => $clientEntity->getClientId()
+                'client.client_id = ?' => $entity->getClientId()
             ));
         } else {
             // ID NOT present, it's an Insert
@@ -163,10 +163,10 @@ class ClientMapper implements ClientMapperInterface
         
             if ($newId) {
                 // When a value has been generated, set it on the object
-                $clientEntity->setClientId($newId);
+                $entity->setClientId($newId);
             }
         
-            return $clientEntity;
+            return $entity;
         }
         
         throw new \Exception("Database error");
@@ -177,12 +177,12 @@ class ClientMapper implements ClientMapperInterface
      * {@inheritDoc}
      * @see \Client\Mapper\ClientMapperInterface::delete()
      */
-    public function delete(ClientEntity $clientEntity)
+    public function delete(ClientEntity $entity)
     {
         $action = new Delete('client');
         
         $action->where(array(
-            'client.client_id = ?' => $clientEntity->getClientId()
+            'client.client_id = ?' => $entity->getClientId()
         ));
         
         $sql = new Sql($this->writeAdapter);

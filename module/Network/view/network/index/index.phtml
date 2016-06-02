@@ -10,6 +10,55 @@
 					<a href="<?php echo $this->url('network-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create network setting'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
 				</div>
 			</div>
+			<div class="box-body">
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<form class="form-inline">
+        					<div class="input-group input-group-sm" style="width: 250px;">
+        						<input type="text" name="keyword" id="keyword" class="form-control pull-right" placeholder="Search" value="<?php echo $this->keyword; ?>">
+            					<div class="input-group-btn">
+            						<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            					</div>
+        					</div>
+        				</form>
+					</li>
+					<?php if($this->paginator->count() == 0): ?>
+					<li class="list-group-item">
+        				<div class="alert alert-info">
+        					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There where no network settings found.'); ?>
+        				</div>
+        			</li>
+					<?php else: ?>
+					<?php foreach($this->paginator as $entity): ?>
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-12">
+								<h3 class="profile-username">
+									<a href="<?php echo $this->url('view-network', array('clientId' => $this->clientId, 'networkId' => $entity->getNetworkId())); ?>" title="<?php echo $this->translate('View this network setting'); ?>" class="profile-username">
+									</a>
+								</h3>
+							</div>
+						</div>
+					</li>
+					<?php endforeach;?>
+					<?php endif; ?>
+				</ul>
+				
+				<?php if($this->pageCount > 1): ?>
+				<div class="row">
+					<div class="col-xs-12">
+						<?php echo $this->Paginator(
+	                        $this->itemCountPerPage,
+	                        $this->itemCount,
+	                        $this->pageCount,
+	                        $this->page,
+	                        $this->routeParams,
+	                        $this->queryParams); ?>
+					</div>
+				</div>
+				<?php endif; ?>
+				
+			</div>
 		</div>
 	</div>
 </div>

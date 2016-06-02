@@ -21,15 +21,15 @@ interface InvoiceMapperInterface
     
     /**
      *
-     * @param InvoiceEntity $invoiceEntity
+     * @param InvoiceEntity $entity
      * @return InvoiceEntity
      */
-    public function save(InvoiceEntity $invoiceEntity);
+    public function save(InvoiceEntity $entity);
     
     /**
      *
-     * @param InvoiceEntity $invoiceEntity
+     * @param InvoiceEntity $entity
      * @return boolean
      */
-    public function delete(InvoiceEntity $invoiceEntity);
+    public function delete(InvoiceEntity $entity);
 }

@@ -22,15 +22,15 @@ interface LaborMapperInterface
 
     /**
      *
-     * @param LaborEntity $laborEntity            
+     * @param LaborEntity $entity            
      * @return LaborEntity
      */
-    public function save(LaborEntity $laborEntity);
+    public function save(LaborEntity $entity);
 
     /**
      *
-     * @param LaborEntity $laborEntity            
+     * @param LaborEntity $entity            
      * @return boolean
      */
-    public function delete(LaborEntity $laborEntity);
+    public function delete(LaborEntity $entity);
 }

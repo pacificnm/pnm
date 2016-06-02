@@ -36,15 +36,15 @@ interface AuthMapperInterface
     
     /**
      *
-     * @param AuthEntity $authEntity            
+     * @param AuthEntity $entity            
      * @return AuthEntity
      */
-    public function save(AuthEntity $authEntity);
+    public function save(AuthEntity $entity);
 
     /**
      *
-     * @param AuthEntity $authEntity            
+     * @param AuthEntity $entity            
      * @return boolean
      */
-    public function delete(AuthEntity $authEntity);
+    public function delete(AuthEntity $entity);
 }

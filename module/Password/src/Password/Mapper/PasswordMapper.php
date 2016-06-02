@@ -126,11 +126,11 @@ class PasswordMapper implements PasswordMapperInterface
      *
      * @see \Password\Mapper\PasswordMapperInterface::save()
      */
-    public function save(PasswordEntity $passwordEntity)
+    public function save(PasswordEntity $entity)
     {
-        $postData = $this->hydrator->extract($passwordEntity);
+        $postData = $this->hydrator->extract($entity);
         
-        if ($passwordEntity->getPasswordId()) {
+        if ($entity->getPasswordId()) {
             
             // ID present, it's an Update
             $action = new Update('password');
@@ -138,7 +138,7 @@ class PasswordMapper implements PasswordMapperInterface
             $action->set($postData);
             
             $action->where(array(
-                'password.password_id = ?' => $passwordEntity->getPasswordId()
+                'password.password_id = ?' => $entity->getPasswordId()
             ));
         } else {
             // ID NOT present, it's an Insert
@@ -158,10 +158,10 @@ class PasswordMapper implements PasswordMapperInterface
             
             if ($newId) {
                 // When a value has been generated, set it on the object
-                $passwordEntity->setPasswordId($newId);
+                $entity->setPasswordId($newId);
             }
             
-            return $passwordEntity;
+            return $entity;
         }
         
         throw new \Exception("Database error");
@@ -173,12 +173,12 @@ class PasswordMapper implements PasswordMapperInterface
      *
      * @see \Password\Mapper\PasswordMapperInterface::delete()
      */
-    public function delete(PasswordEntity $passwordEntity)
+    public function delete(PasswordEntity $entity)
     {
         $action = new Delete('password');
         
         $action->where(array(
-            'password.password_id = ?' => $passwordEntity->getPasswordId()
+            'password.password_id = ?' => $entity->getPasswordId()
         ));
         
         $sql = new Sql($this->writeAdapter);

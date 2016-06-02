@@ -35,7 +35,7 @@ class LaborMapper implements LaborMapperInterface
     
     /**
      *
-     * @var AuthEntity
+     * @var LaborEntity
      */
     protected $prototype;
     
@@ -44,7 +44,7 @@ class LaborMapper implements LaborMapperInterface
      * @param AdapterInterface $readAdapter
      * @param AdapterInterface $writeAdapter
      * @param HydratorInterface $hydrator
-     * @param AuthEntity $prototype
+     * @param LaborEntity $prototype
      */
     public function __construct(AdapterInterface $readAdapter, AdapterInterface $writeAdapter, HydratorInterface $hydrator, LaborEntity $prototype)
     {
@@ -117,11 +117,11 @@ class LaborMapper implements LaborMapperInterface
      * {@inheritDoc}
      * @see \Labor\Mapper\LaborMapperInterface::save()
      */
-    public function save(LaborEntity $laborEntity)
+    public function save(LaborEntity $entity)
     {
-        $postData = $this->hydrator->extract($laborEntity);
+        $postData = $this->hydrator->extract($entity);
         
-        if ($laborEntity->getLaborId()) {
+        if ($entity->getLaborId()) {
         
             // ID present, it's an Update
             $action = new Update('labor');
@@ -129,7 +129,7 @@ class LaborMapper implements LaborMapperInterface
             $action->set($postData);
         
             $action->where(array(
-                'labor.labor_id = ?' => $laborEntity->getLaborId()
+                'labor.labor_id = ?' => $entity->getLaborId()
             ));
         } else {
             // ID NOT present, it's an Insert
@@ -149,10 +149,10 @@ class LaborMapper implements LaborMapperInterface
         
             if ($newId) {
                 // When a value has been generated, set it on the object
-                $laborEntity->setLaborId($newId);
+                $entity->setLaborId($newId);
             }
         
-            return $laborEntity;
+            return $entity;
         }
         
         throw new \Exception("Database error");
@@ -163,12 +163,12 @@ class LaborMapper implements LaborMapperInterface
      * {@inheritDoc}
      * @see \Labor\Mapper\LaborMapperInterface::delete()
      */
-    public function delete(LaborEntity $laborEntity)
+    public function delete(LaborEntity $entity)
     {
         $action = new Delete('labor');
         
         $action->where(array(
-            'labor.labor_id = ?' => $laborEntity->getLaborId()
+            'labor.labor_id = ?' => $entity->getLaborId()
         ));
         
         $sql = new Sql($this->writeAdapter);

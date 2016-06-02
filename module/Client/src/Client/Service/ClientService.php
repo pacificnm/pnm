@@ -47,9 +47,9 @@ class ClientService implements ClientServiceInterface
      * {@inheritDoc}
      * @see \Client\Service\ClientServiceInterface::save()
      */
-    public function save(ClientEntity $clientEntity)
+    public function save(ClientEntity $entity)
     {
-        return $this->mapper->save($clientEntity);
+        return $this->mapper->save($entity);
     }
 
     /**
@@ -57,8 +57,8 @@ class ClientService implements ClientServiceInterface
      * {@inheritDoc}
      * @see \Client\Service\ClientServiceInterface::delete()
      */
-    public function delete(ClientEntity $clientEntity)
+    public function delete(ClientEntity $entity)
     {
-        return $this->mapper->delete($clientEntity);
+        return $this->mapper->delete($entity);
     }
 }

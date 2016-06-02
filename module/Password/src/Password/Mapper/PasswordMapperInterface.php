@@ -22,15 +22,15 @@ interface PasswordMapperInterface
 
     /**
      *
-     * @param PasswordEntity $passwordEntity            
+     * @param PasswordEntity $entity            
      * @return PasswordEntity
      */
-    public function save(PasswordEntity $passwordEntity);
+    public function save(PasswordEntity $entity);
 
     /**
      *
-     * @param PasswordEntity $passwordEntity            
+     * @param PasswordEntity $entity            
      * @return boolean
      */
-    public function delete(PasswordEntity $passwordEntity);
+    public function delete(PasswordEntity $entity);
 }

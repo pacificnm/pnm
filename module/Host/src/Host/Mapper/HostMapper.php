@@ -126,11 +126,11 @@ class HostMapper implements HostMapperInterface
      *
      * @see \Host\Mapper\HostMapperInterface::save()
      */
-    public function save(HostEntity $hostEntity)
+    public function save(HostEntity $entity)
     {
-        $postData = $this->hydrator->extract($hostEntity);
+        $postData = $this->hydrator->extract($entity);
         
-        if ($hostEntity->getHostId()) {
+        if ($entity->getHostId()) {
             
             // ID present, it's an Update
             $action = new Update('host');
@@ -138,7 +138,7 @@ class HostMapper implements HostMapperInterface
             $action->set($postData);
             
             $action->where(array(
-                'host.host_id = ?' => $hostEntity->getHostId()
+                'host.host_id = ?' => $entity->getHostId()
             ));
         } else {
             // ID NOT present, it's an Insert
@@ -158,10 +158,10 @@ class HostMapper implements HostMapperInterface
             
             if ($newId) {
                 // When a value has been generated, set it on the object
-                $hostEntity->setHostId($newId);
+                $entity->setHostId($newId);
             }
             
-            return $hostEntity;
+            return $entity;
         }
         
         throw new \Exception("Database error");
@@ -173,12 +173,12 @@ class HostMapper implements HostMapperInterface
      *
      * @see \Host\Mapper\HostMapperInterface::delete()
      */
-    public function delete(HostEntity $hostEntity)
+    public function delete(HostEntity $entity)
     {
         $action = new Delete('host');
         
         $action->where(array(
-            'host.host_id = ?' => $hostEntity->getHostId()
+            'host.host_id = ?' => $entity->getHostId()
         ));
         
         $sql = new Sql($this->writeAdapter);

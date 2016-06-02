@@ -37,6 +37,7 @@ return array(
         'factories' => array(
             'Workorder\Service\WorkorderServiceInterface' => 'Workorder\Service\Factory\WorkorderServiceFactory',
             'Workorder\Mapper\WorkorderMapperInterface' => 'Workorder\Mapper\Factory\WorkorderMapperFactory',
+            'Workorder\Form\WorkorderForm' => 'Workorder\Form\Factory\WorkorderFormFactory',
         )
     ),
     

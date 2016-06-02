@@ -19,6 +19,24 @@ class UpdateControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new UpdateController($clientService);
+        $workorderService = $realServiceLocator->get('Workorder\Service\WorkorderServiceInterface');
+        
+        $workorderEmployeeService = $realServiceLocator->get('WorkorderEmployee\Service\WorkorderEmployeeServiceInterface');
+        
+        $locationService = $realServiceLocator->get('Location\Service\LocationServiceInterface');
+        
+        $phoneService = $realServiceLocator->get('Phone\Service\PhoneServiceInterface');
+        
+        $userService = $realServiceLocator->get('User\Service\UserServiceInterface');
+                
+        $messageService = $realServiceLocator->get('Message\Service\MessageServiceInterface');
+     
+        $employeeService = $realServiceLocator->get('Employee\Service\EmployeeServiceInterface');
+        
+        $workorderForm = $realServiceLocator->get('Workorder\Form\WorkorderForm');
+        
+        $workorderEmployeeForm = $realServiceLocator->get('WorkorderEmployee\Form\WorkorderEmployeeForm');
+        
+        return new UpdateController($clientService, $workorderService, $workorderEmployeeService, $locationService, $phoneService, $userService, $messageService, $employeeService, $workorderForm, $workorderEmployeeForm);
     }
 }

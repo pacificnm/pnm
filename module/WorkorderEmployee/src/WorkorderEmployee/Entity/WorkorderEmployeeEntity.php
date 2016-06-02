@@ -1,5 +1,5 @@
 <?php
-namespace Workorder\Entity;
+namespace WorkorderEmployee\Entity;
 
 use Employee\Entity\EmployeeEntity;
 

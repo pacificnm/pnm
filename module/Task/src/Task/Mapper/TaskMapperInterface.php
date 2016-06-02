@@ -21,15 +21,15 @@ interface TaskMapperInterface
     
     /**
      *
-     * @param TaskEntity $taskEntity
+     * @param TaskEntity $entity
      * @return TaskEntity
      */
-    public function save(TaskEntity $taskEntity);
+    public function save(TaskEntity $entity);
     
     /**
      *
-     * @param TaskEntity $taskEntity
+     * @param TaskEntity $entity
      * @return boolean
      */
-    public function delete(TaskEntity $taskEntity);
+    public function delete(TaskEntity $entity);
 }

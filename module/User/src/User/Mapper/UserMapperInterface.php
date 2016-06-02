@@ -21,16 +21,23 @@ interface UserMapperInterface
     public function get($id);
 
     /**
-     *
-     * @param UserEntity $userEntity            
+     * 
+     * @param unknown $locationId
      * @return UserEntity
      */
-    public function save(UserEntity $userEntity);
+    public function getPrimaryUserByLocation($locationId);
+    
+    /**
+     *
+     * @param UserEntity $entity            
+     * @return UserEntity
+     */
+    public function save(UserEntity $entity);
 
     /**
      *
-     * @param UserEntity $userEntity            
+     * @param UserEntity $entity            
      * @return boolean
      */
-    public function delete(UserEntity $userEntity);
+    public function delete(UserEntity $entity);
 }

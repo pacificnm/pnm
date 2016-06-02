@@ -50,9 +50,9 @@ class LaborService implements LaborServiceInterface
      *
      * @see \Labor\Service\LaborServiceInterface::save()
      */
-    public function save(LaborEntity $laborEntity)
+    public function save(LaborEntity $entity)
     {
-        return $this->mapper->save($laborEntity);
+        return $this->mapper->save($entity);
     }
 
     /**
@@ -61,8 +61,8 @@ class LaborService implements LaborServiceInterface
      *
      * @see \Labor\Service\LaborServiceInterface::delete()
      */
-    public function delete(LaborEntity $laborEntity)
+    public function delete(LaborEntity $entity)
     {
-        return $this->mapper->delete($laborEntity);
+        return $this->mapper->delete($entity);
     }
 }

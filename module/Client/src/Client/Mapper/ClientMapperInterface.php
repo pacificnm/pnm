@@ -22,15 +22,15 @@ interface ClientMapperInterface
 
     /**
      *
-     * @param ClientEntity $clientEntity            
+     * @param ClientEntity $entity            
      * @return ClientEntity
      */
-    public function save(ClientEntity $clientEntity);
+    public function save(ClientEntity $entity);
 
     /**
      *
-     * @param ClientEntity $clientEntity            
+     * @param ClientEntity $entity            
      * @return boolean
      */
-    public function delete(ClientEntity $clientEntity);
+    public function delete(ClientEntity $entity);
 }

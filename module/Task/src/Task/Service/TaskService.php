@@ -50,9 +50,9 @@ class TaskService implements TaskServiceInterface
      *
      * @see \Task\Service\TaskServiceInterface::save()
      */
-    public function save(TaskEntity $taskEntity)
+    public function save(TaskEntity $entity)
     {
-        return $this->mapper->save($taskEntity);
+        return $this->mapper->save($entity);
     }
 
     /**
@@ -61,8 +61,8 @@ class TaskService implements TaskServiceInterface
      *
      * @see \Task\Service\TaskServiceInterface::delete()
      */
-    public function delete(TaskEntity $taskEntity)
+    public function delete(TaskEntity $entity)
     {
-        return $this->mapper->delete($taskEntity);
+        return $this->mapper->delete($entity);
     }
 }

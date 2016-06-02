@@ -121,7 +121,31 @@ class WorkorderMapper implements WorkorderMapperInterface
             'workorder.workorder_id = ?' => $id
         ));
         
-        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        // join location
+        $select->join('location', 'workorder.location_id = location.location_id', array(
+            'location_type',
+            'location_street',
+            'location_city',
+            'location_state',
+            'location_zip',
+            'location_Status'
+        ), 'left');
+        
+        // join phone
+        $select->join('phone', 'phone.phone_id = workorder.phone_id', array(
+            'phone_type',
+            'phone_num'
+        ), 'left');
+        
+        // join user
+        $select->join('user', 'user.user_id = workorder.user_id', array(
+            'user_status',
+            'user_name_first',
+            'user_name_last',
+            'user_job_title',
+            'user_email',
+            'user_type'
+        ), 'left');
         
         $stmt = $sql->prepareStatementForSqlObject($select);
         
@@ -140,8 +164,9 @@ class WorkorderMapper implements WorkorderMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Workorder\Mapper\WorkorderMapperInterface::getClientTotalCount()
      */
     public function getClientTotalCount($clientId, $status)
@@ -150,9 +175,13 @@ class WorkorderMapper implements WorkorderMapperInterface
         
         $select = $sql->select('workorder');
         
-        $select->columns(array('workorder_count' => new \Zend\Db\Sql\Expression('COUNT(*)')));
+        $select->columns(array(
+            'workorder_count' => new \Zend\Db\Sql\Expression('COUNT(*)')
+        ));
         
-        $select->where(array('client_id = ?' => $clientId));
+        $select->where(array(
+            'client_id = ?' => $clientId
+        ));
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
@@ -161,22 +190,23 @@ class WorkorderMapper implements WorkorderMapperInterface
         $result = $stmt->execute();
         
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
+            
             $resultSet = new ResultSet();
             
             $resultSet->initialize($result);
             
             $row = $resultSet->current();
             
-           return $row['workorder_count'];
+            return $row['workorder_count'];
         }
         
         return 0;
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Workorder\Mapper\WorkorderMapperInterface::getClientTotalLabor()
      */
     public function getClientTotalLabor($clientId)
@@ -185,9 +215,13 @@ class WorkorderMapper implements WorkorderMapperInterface
         
         $select = $sql->select('workorder');
         
-        $select->columns(array('workorder_labor_total' => new \Zend\Db\Sql\Expression('SUM(workorder_labor)')));
+        $select->columns(array(
+            'workorder_labor_total' => new \Zend\Db\Sql\Expression('SUM(workorder_labor)')
+        ));
         
-        $select->where(array('client_id = ?' => $clientId));
+        $select->where(array(
+            'client_id = ?' => $clientId
+        ));
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
@@ -196,22 +230,23 @@ class WorkorderMapper implements WorkorderMapperInterface
         $result = $stmt->execute();
         
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
+            
             $resultSet = new ResultSet();
-        
+            
             $resultSet->initialize($result);
-        
+            
             $row = $resultSet->current();
-        
+            
             return $row['workorder_labor_total'];
         }
         
         return 0;
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Workorder\Mapper\WorkorderMapperInterface::getClientTotalPart()
      */
     public function getClientTotalPart($clientId)
@@ -220,9 +255,13 @@ class WorkorderMapper implements WorkorderMapperInterface
         
         $select = $sql->select('workorder');
         
-        $select->columns(array('workorder_part_total' => new \Zend\Db\Sql\Expression('SUM(workorder_parts)')));
+        $select->columns(array(
+            'workorder_part_total' => new \Zend\Db\Sql\Expression('SUM(workorder_parts)')
+        ));
         
-        $select->where(array('client_id = ?' => $clientId));
+        $select->where(array(
+            'client_id = ?' => $clientId
+        ));
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
@@ -231,30 +270,30 @@ class WorkorderMapper implements WorkorderMapperInterface
         $result = $stmt->execute();
         
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
+            
             $resultSet = new ResultSet();
-        
+            
             $resultSet->initialize($result);
-        
+            
             $row = $resultSet->current();
-        
+            
             return $row['workorder_part_total'];
         }
         
         return 0;
     }
-    
+
     /**
      *
      * {@inheritDoc}
      *
      * @see \Workorder\Mapper\WorkorderMapperInterface::save()
      */
-    public function save(WorkorderEntity $workorderEntity)
+    public function save(WorkorderEntity $entity)
     {
-        $postData = $this->hydrator->extract($workorderEntity);
+        $postData = $this->hydrator->extract($entity);
         
-        if ($workorderEntity->getWorkorderId()) {
+        if ($entity->getWorkorderId()) {
             
             // ID present, it's an Update
             $action = new Update('workorder');
@@ -262,7 +301,7 @@ class WorkorderMapper implements WorkorderMapperInterface
             $action->set($postData);
             
             $action->where(array(
-                'workorder.workorder_id = ?' => $workorderEntity->getWorkorderId()
+                'workorder.workorder_id = ?' => $entity->getWorkorderId()
             ));
         } else {
             // ID NOT present, it's an Insert
@@ -282,10 +321,10 @@ class WorkorderMapper implements WorkorderMapperInterface
             
             if ($newId) {
                 // When a value has been generated, set it on the object
-                $workorderEntity->setWorkorderId($newId);
+                $entity->setWorkorderId($newId);
             }
             
-            return $workorderEntity;
+            return $entity;
         }
         
         throw new \Exception("Database error");
@@ -297,12 +336,12 @@ class WorkorderMapper implements WorkorderMapperInterface
      *
      * @see \Workorder\Mapper\WorkorderMapperInterface::delete()
      */
-    public function delete(WorkorderEntity $workorderEntity)
+    public function delete(WorkorderEntity $entity)
     {
         $action = new Delete('workorder');
         
         $action->where(array(
-            'workorder.workorder_id = ?' => $workorderEntity->getWorkorderId()
+            'workorder.workorder_id = ?' => $entity->getWorkorderId()
         ));
         
         $sql = new Sql($this->writeAdapter);

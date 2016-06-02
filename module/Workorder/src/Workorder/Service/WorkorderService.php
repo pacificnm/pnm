@@ -50,9 +50,9 @@ class WorkorderService implements WorkorderServiceInterface
      *
      * @see \Workorder\Service\WorkorderServiceInterface::save()
      */
-    public function save(WorkorderEntity $workorderEntity)
+    public function save(WorkorderEntity $entity)
     {
-        return $this->mapper->save($workorderEntity);
+        return $this->mapper->save($entity);
     }
 
     /**
@@ -61,9 +61,9 @@ class WorkorderService implements WorkorderServiceInterface
      *
      * @see \Workorder\Service\WorkorderServiceInterface::delete()
      */
-    public function delete(WorkorderEntity $workorderEntity)
+    public function delete(WorkorderEntity $entity)
     {
-        return $this->mapper->delete($workorderEntity);
+        return $this->mapper->delete($entity);
     }
     
     /**

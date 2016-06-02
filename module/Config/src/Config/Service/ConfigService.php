@@ -47,9 +47,9 @@ class ConfigService implements ConfigServiceInterface
      * {@inheritDoc}
      * @see \Config\Service\ConfigServiceInterface::save()
      */
-    public function save(ConfigEntity $configEntity)
+    public function save(ConfigEntity $entity)
     {
-        return $this->mapper->save($configEntity);
+        return $this->mapper->save($entity);
     }
 
     /**
@@ -57,8 +57,8 @@ class ConfigService implements ConfigServiceInterface
      * {@inheritDoc}
      * @see \Config\Service\ConfigServiceInterface::delete()
      */
-    public function delete(ConfigEntity $configEntity)
+    public function delete(ConfigEntity $entity)
     {
-        return $this->mapper->delete($configEntity);
+        return $this->mapper->delete($entity);
     }
 }

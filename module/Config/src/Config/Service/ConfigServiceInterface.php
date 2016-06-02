@@ -21,15 +21,15 @@ interface ConfigServiceInterface
     
     /**
      *
-     * @param ConfigEntity $configEntity
+     * @param ConfigEntity $entity
      * @return ConfigEntity
      */
-    public function save(ConfigEntity $configEntity);
+    public function save(ConfigEntity $entity);
     
     /**
      *
-     * @param ConfigEntity $configEntity
+     * @param ConfigEntity $entity
      * @return boolean
      */
-    public function delete(ConfigEntity $configEntity);
+    public function delete(ConfigEntity $entity);
 }

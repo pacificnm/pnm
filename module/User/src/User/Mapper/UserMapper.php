@@ -121,16 +121,57 @@ class UserMapper implements UserMapperInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \User\Mapper\UserMapperInterface::getPrimaryUserByLocation()
+     */
+    public function getPrimaryUserByLocation($locationId)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('user');
+        
+        $select->where(array(
+            'user.location_id = ?' => $locationId
+        ));
+        
+        $select->where(array(
+            'user.user_type = ?' => 'Primary'
+        ));
+        
+        $select->where(array(
+            'user.user_status = ?' => 'Active'
+        ));
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+            $resultSet->buffer();
+        
+            return $resultSet->initialize($result)->current();
+        }
+        
+        return array();
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *
      * @see \User\Mapper\UserMapperInterface::save()
      */
-    public function save(UserEntity $userEntity)
+    public function save(UserEntity $entity)
     {
-        $postData = $this->hydrator->extract($userEntity);
+        $postData = $this->hydrator->extract($entity);
         
-        if ($userEntity->getUserId()) {
+        if ($entity->getUserId()) {
             
             // ID present, it's an Update
             $action = new Update('user');
@@ -138,7 +179,7 @@ class UserMapper implements UserMapperInterface
             $action->set($postData);
             
             $action->where(array(
-                'user.user_id = ?' => $userEntity->getUserId()
+                'user.user_id = ?' => $entity->getUserId()
             ));
         } else {
             // ID NOT present, it's an Insert
@@ -158,10 +199,10 @@ class UserMapper implements UserMapperInterface
             
             if ($newId) {
                 // When a value has been generated, set it on the object
-                $userEntity->setUserId($newId);
+                $entity->setUserId($newId);
             }
             
-            return $userEntity;
+            return $entity;
         }
         
         throw new \Exception("Database error");
@@ -173,12 +214,12 @@ class UserMapper implements UserMapperInterface
      *
      * @see \User\Mapper\UserMapperInterface::delete()
      */
-    public function delete(UserEntity $userEntity)
+    public function delete(UserEntity $entity)
     {
         $action = new Delete('user');
         
         $action->where(array(
-            'user.user_id = ?' => $userEntity->getUserId()
+            'user.user_id = ?' => $entity->getUserId()
         ));
         
         $sql = new Sql($this->writeAdapter);

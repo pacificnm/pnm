@@ -50,9 +50,9 @@ class HostService implements HostServiceInterface
      *
      * @see \Host\Service\HostServiceInterface::save()
      */
-    public function save(HostEntity $hostEntity)
+    public function save(HostEntity $entity)
     {
-        return $this->mapper->save($hostEntity);
+        return $this->mapper->save($entity);
     }
 
     /**
@@ -61,8 +61,8 @@ class HostService implements HostServiceInterface
      *
      * @see \Host\Service\HostServiceInterface::delete()
      */
-    public function delete(HostEntity $hostEntity)
+    public function delete(HostEntity $entity)
     {
-        return $this->mapper->delete($hostEntity);
+        return $this->mapper->delete($entity);
     }
 }

@@ -43,6 +43,16 @@ class UserService implements UserServiceInterface
     {
         return $this->mapper->get($id);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \User\Service\UserServiceInterface::getPrimaryUserByLocation()
+     */
+    public function getPrimaryUserByLocation($locationId)
+    {
+        return $this->mapper->getPrimaryUserByLocation($locationId);
+    }
 
     /**
      *
@@ -50,9 +60,9 @@ class UserService implements UserServiceInterface
      *
      * @see \User\Service\UserServiceInterface::save()
      */
-    public function save(UserEntity $userEntity)
+    public function save(UserEntity $entity)
     {
-        return $this->mapper->save($userEntity);
+        return $this->mapper->save($entity);
     }
 
     /**
@@ -61,8 +71,8 @@ class UserService implements UserServiceInterface
      *
      * @see \User\Service\UserServiceInterface::delete()
      */
-    public function delete(UserEntity $userEntity)
+    public function delete(UserEntity $entity)
     {
-        return $this->mapper->delete($userEntity);
+        return $this->mapper->delete($entity);
     }
 }

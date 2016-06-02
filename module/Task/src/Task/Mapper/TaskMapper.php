@@ -126,11 +126,11 @@ class TaskMapper implements TaskMapperInterface
      *
      * @see \Task\Mapper\TaskMapperInterface::save()
      */
-    public function save(TaskEntity $taskEntity)
+    public function save(TaskEntity $entity)
     {
-        $postData = $this->hydrator->extract($taskEntity);
+        $postData = $this->hydrator->extract($entity);
         
-        if ($taskEntity->getTaskId()) {
+        if ($entity->getTaskId()) {
             
             // ID present, it's an Update
             $action = new Update('task');
@@ -138,7 +138,7 @@ class TaskMapper implements TaskMapperInterface
             $action->set($postData);
             
             $action->where(array(
-                'task.task_id = ?' => $taskEntity->getTaskId()
+                'task.task_id = ?' => $entity->getTaskId()
             ));
         } else {
             // ID NOT present, it's an Insert
@@ -158,10 +158,10 @@ class TaskMapper implements TaskMapperInterface
             
             if ($newId) {
                 // When a value has been generated, set it on the object
-                $taskEntity->setTaskId($newId);
+                $entity->setTaskId($newId);
             }
             
-            return $taskEntity;
+            return $entity;
         }
         
         throw new \Exception("Database error");
@@ -173,12 +173,12 @@ class TaskMapper implements TaskMapperInterface
      *
      * @see \Task\Mapper\TaskMapperInterface::delete()
      */
-    public function delete(TaskEntity $taskEntity)
+    public function delete(TaskEntity $entity)
     {
         $action = new Delete('task');
         
         $action->where(array(
-            'task.task_id = ?' => $taskEntity->getTaskId()
+            'task.task_id = ?' => $entity->getTaskId()
         ));
         
         $sql = new Sql($this->writeAdapter);

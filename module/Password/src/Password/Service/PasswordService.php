@@ -50,9 +50,9 @@ class PasswordService implements PasswordServiceInterface
      *
      * @see \Password\Service\PasswordServiceInterface::save()
      */
-    public function save(PasswordEntity $passwordEntity)
+    public function save(PasswordEntity $entity)
     {
-        return $this->mapper->save($passwordEntity);
+        return $this->mapper->save($entity);
     }
 
     /**
@@ -61,8 +61,8 @@ class PasswordService implements PasswordServiceInterface
      *
      * @see \Password\Service\PasswordServiceInterface::delete()
      */
-    public function delete(PasswordEntity $passwordEntity)
+    public function delete(PasswordEntity $entity)
     {
-        return $this->mapper->delete($passwordEntity);
+        return $this->mapper->delete($entity);
     }
 }

@@ -119,11 +119,11 @@ class ConfigMapper implements ConfigMapperInterface
      *
      * @see \Config\Mapper\ConfigMapperInterface::save()
      */
-    public function save(ConfigEntity $configEntity)
+    public function save(ConfigEntity $entity)
     {
-        $postData = $this->hydrator->extract($configEntity);
+        $postData = $this->hydrator->extract($entity);
         
-        if ($configEntity->getConfigId()) {
+        if ($entity->getConfigId()) {
             
             // ID present, it's an Update
             $action = new Update('config');
@@ -131,7 +131,7 @@ class ConfigMapper implements ConfigMapperInterface
             $action->set($postData);
             
             $action->where(array(
-                'config.config_id = ?' => $configEntity->getConfigId()
+                'config.config_id = ?' => $entity->getConfigId()
             ));
         } else {
             // ID NOT present, it's an Insert
@@ -151,10 +151,10 @@ class ConfigMapper implements ConfigMapperInterface
             
             if ($newId) {
                 // When a value has been generated, set it on the object
-                $configEntity->setConfigId($newId);
+                $entity->setConfigId($newId);
             }
             
-            return $configEntity;
+            return $entity;
         }
         
         throw new \Exception("Database error");
@@ -166,12 +166,12 @@ class ConfigMapper implements ConfigMapperInterface
      *
      * @see \Config\Mapper\ConfigMapperInterface::delete()
      */
-    public function delete(ConfigEntity $configEntity)
+    public function delete(ConfigEntity $entity)
     {
         $action = new Delete('config');
         
         $action->where(array(
-            'config.config_id = ?' => $configEntity->getConfigId()
+            'config.config_id = ?' => $entity->getConfigId()
         ));
         
         $sql = new Sql($this->writeAdapter);

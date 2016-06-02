@@ -36,6 +36,9 @@ return array(
         'WorkorderNote',
         'WorkorderPart',
         'WorkorderTime',
+        'WorkorderFile',
+        'NetworkAttributeMap',
+        'NetworkAttribute',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

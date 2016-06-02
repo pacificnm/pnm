@@ -37,9 +37,9 @@ class AuthService implements AuthServiceInterface
      * {@inheritDoc}
      * @see \Auth\Service\AuthServiceInterface::getAuth()
      */
-    public function getAuth($authEmail, $authPassword)
+    public function getAuth($authEmail, $entity)
     {
-        return $this->mapper->getAuth($authEmail, $authPassword);
+        return $this->mapper->getAuth($authEmail, $entity);
     }
 
     /**

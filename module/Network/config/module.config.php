@@ -33,7 +33,10 @@ return array(
     
     // service manager
     'service_manager' => array(
-        'factories' => array()
+        'factories' => array(
+            'Network\Service\NetworkServiceInterface' => 'Network\Service\Factory\NetworkServiceFactory',
+            'Network\Mapper\NetworkMapperInterface' => 'Network\Mapper\Factory\NetworkMapperFactory',
+        )
     ),
     
     // router

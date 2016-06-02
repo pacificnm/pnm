@@ -212,11 +212,11 @@ class AuthMapper implements AuthMapperInterface
      *
      * @see \Auth\Mapper\AuthMapperInterface::save()
      */
-    public function save(AuthEntity $authEntity)
+    public function save(AuthEntity $entity)
     {
-        $postData = $this->hydrator->extract($authEntity);
+        $postData = $this->hydrator->extract($entity);
         
-        if ($authEntity->getAuthId()) {
+        if ($entity->getAuthId()) {
             
             // ID present, it's an Update
             $action = new Update('auth');
@@ -224,7 +224,7 @@ class AuthMapper implements AuthMapperInterface
             $action->set($postData);
             
             $action->where(array(
-                'auth.auth_id = ?' => $authEntity->getAuthId()
+                'auth.auth_id = ?' => $entity->getAuthId()
             ));
         } else {
             // ID NOT present, it's an Insert
@@ -244,10 +244,10 @@ class AuthMapper implements AuthMapperInterface
             
             if ($newId) {
                 // When a value has been generated, set it on the object
-                $authEntity->setAuthId($newId);
+                $entity->setAuthId($newId);
             }
             
-            return $authEntity;
+            return $entity;
         }
         
         throw new \Exception("Database error");
@@ -259,12 +259,12 @@ class AuthMapper implements AuthMapperInterface
      *
      * @see \Auth\Mapper\AuthMapperInterface::delete()
      */
-    public function delete(AuthEntity $authEntity)
+    public function delete(AuthEntity $entity)
     {
         $action = new Delete('auth');
         
         $action->where(array(
-            'auth.auth_id = ?' => $authEntity->getAuthId()
+            'auth.auth_id = ?' => $entity->getAuthId()
         ));
         
         $sql = new Sql($this->writeAdapter);

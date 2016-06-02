@@ -14,12 +14,17 @@ return array(
     
     // controllers
     'controllers' => array(
-        'factories' => array()
+        'factories' => array(
+            
+        )
     ),
     
     // service manager
     'service_manager' => array(
-        'factories' => array()
+        'factories' => array(
+            'Message\Service\MessageServiceInterface' => 'Message\Service\Factory\MessageServiceFactory',
+            'Message\Mapper\MessageMapperInterface' => 'Message\Mapper\Factory\MessageMapperFactory'
+        )
     ),
     
     // router

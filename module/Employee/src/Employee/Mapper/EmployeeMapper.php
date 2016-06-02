@@ -129,11 +129,11 @@ class EmployeeMapper implements EmployeeMapperInterface
      *
      * @see \Employee\Mapper\EmployeeMapperInterface::save()
      */
-    public function save(EmployeeEntity $employeeEntity)
+    public function save(EmployeeEntity $entity)
     {
-        $postData = $this->hydrator->extract($employeeEntity);
+        $postData = $this->hydrator->extract($entity);
         
-        if ($employeeEntity->getEmployeeId()) {
+        if ($entity->getEmployeeId()) {
             
             // ID present, it's an Update
             $action = new Update('employee');
@@ -141,7 +141,7 @@ class EmployeeMapper implements EmployeeMapperInterface
             $action->set($postData);
             
             $action->where(array(
-                'employee.employee_id = ?' => $employeeEntity->getEmployeeId()
+                'employee.employee_id = ?' => $entity->getEmployeeId()
             ));
         } else {
             // ID NOT present, it's an Insert
@@ -161,10 +161,10 @@ class EmployeeMapper implements EmployeeMapperInterface
             
             if ($newId) {
                 // When a value has been generated, set it on the object
-                $employeeEntity->setEmployeeId($newId);
+                $entity->setEmployeeId($newId);
             }
             
-            return $employeeEntity;
+            return $entity;
         }
         
         throw new \Exception("Database error");
@@ -176,12 +176,12 @@ class EmployeeMapper implements EmployeeMapperInterface
      *
      * @see \Employee\Mapper\EmployeeMapperInterface::delete()
      */
-    public function delete(EmployeeEntity $employeeEntity)
+    public function delete(EmployeeEntity $entity)
     {
         $action = new Delete('employee');
         
         $action->where(array(
-            'employee.employee_id = ?' => $employeeEntity->getEmployeeId()
+            'employee.employee_id = ?' => $entity->getEmployeeId()
         ));
         
         $sql = new Sql($this->writeAdapter);

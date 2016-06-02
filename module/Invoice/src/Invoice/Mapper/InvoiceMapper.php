@@ -133,11 +133,11 @@ class InvoiceMapper implements InvoiceMapperInterface
      *
      * @see \Invoice\Mapper\InvoiceMapperInterface::save()
      */
-    public function save(InvoiceEntity $invoiceEntity)
+    public function save(InvoiceEntity $entity)
     {
-        $postData = $this->hydrator->extract($invoiceEntity);
+        $postData = $this->hydrator->extract($entity);
         
-        if ($invoiceEntity->getInvoiceId()) {
+        if ($entity->getInvoiceId()) {
             
             // ID present, it's an Update
             $action = new Update('invoice');
@@ -145,7 +145,7 @@ class InvoiceMapper implements InvoiceMapperInterface
             $action->set($postData);
             
             $action->where(array(
-                'invoice.invoice_id = ?' => $invoiceEntity->getInvoiceId()
+                'invoice.invoice_id = ?' => $entity->getInvoiceId()
             ));
         } else {
             // ID NOT present, it's an Insert
@@ -165,10 +165,10 @@ class InvoiceMapper implements InvoiceMapperInterface
             
             if ($newId) {
                 // When a value has been generated, set it on the object
-                $invoiceEntity->setInvoiceId($newId);
+                $entity->setInvoiceId($newId);
             }
             
-            return $invoiceEntity;
+            return $entity;
         }
         
         throw new \Exception("Database error");
@@ -180,12 +180,12 @@ class InvoiceMapper implements InvoiceMapperInterface
      *
      * @see \Invoice\Mapper\InvoiceMapperInterface::delete()
      */
-    public function delete(InvoiceEntity $invoiceEntity)
+    public function delete(InvoiceEntity $entity)
     {
         $action = new Delete('invoice');
         
         $action->where(array(
-            'invoice.invoice_id = ?' => $invoiceEntity->getInvoiceId()
+            'invoice.invoice_id = ?' => $entity->getInvoiceId()
         ));
         
         $sql = new Sql($this->writeAdapter);

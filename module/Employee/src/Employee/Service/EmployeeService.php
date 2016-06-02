@@ -46,9 +46,9 @@ class EmployeeService implements EmployeeServiceInterface
      * {@inheritDoc}
      * @see \Employee\Service\EmployeeServiceInterface::save()
      */
-    public function save(EmployeeEntity $employeeEntity)
+    public function save(EmployeeEntity $entity)
     {
-        return $this->mapper->save($employeeEntity);
+        return $this->mapper->save($entity);
     }
 
     /**
@@ -56,8 +56,8 @@ class EmployeeService implements EmployeeServiceInterface
      * {@inheritDoc}
      * @see \Employee\Service\EmployeeServiceInterface::delete()
      */
-    public function delete(EmployeeEntity $employeeEntity)
+    public function delete(EmployeeEntity $entity)
     {
-        return $this->mapper->delete($employeeEntity);
+        return $this->mapper->delete($entity);
     }
 }
