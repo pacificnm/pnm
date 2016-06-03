@@ -11,8 +11,8 @@ use Zend\Db\Sql\Update;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\DbSelect;
-use Workorder\Entity\WorkorderEntity;
 use Zend\Db\ResultSet\ResultSet;
+use Workorder\Entity\WorkorderEntity;
 
 class WorkorderMapper implements WorkorderMapperInterface
 {
