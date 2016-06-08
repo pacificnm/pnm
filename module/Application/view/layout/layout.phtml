@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle($this->configEntity->getConfigCompanyNameShort())->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headTitle($this->appConfig()->getConfigCompanyNameShort())->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -48,9 +48,9 @@
 				<!-- Logo -->
 				<a href="<?php echo $this->url('home'); ?>" class="logo">
 	                <!-- mini logo for sidebar mini 50x50 pixels -->
-					<span class="logo-mini"><b><?php echo $this->configEntity->getConfigCompanyNameAbv(); ?></b></span>
+					<span class="logo-mini"><b><?php echo $this->appConfig()->getConfigCompanyNameAbv(); ?></b></span>
                     <!-- logo for regular state and mobile devices -->
-      				<span class="logo-lg"><b><?php echo $this->configEntity->getConfigCompanyNameShort(); ?></b></span>
+      				<span class="logo-lg"><b><?php echo $this->appConfig()->getConfigCompanyNameShort(); ?></b></span>
     			</a>
     			
     			<!-- Header Navbar: style can be found in header.less -->
@@ -149,14 +149,23 @@
         	
             <footer class="main-footer">
             	<div class="pull-right hidden-xs">
-            		<b><?php echo $this->translate('Version'); ?></b> <?php echo $this->configEntity->getConfigVersion();?>
+            		<b><?php echo $this->translate('Version'); ?></b> <?php echo $this->appConfig()->getConfigVersion();?>
             	</div>
-            	<strong><?php echo $this->translate('Copyright'); ?> &copy; <?php echo $this->configEntity->getConfigCopyYear(); ?>-<?php echo date("Y"); ?> <a href="http://<?php echo $this->configEntity->getConfigHttpAddress(); ?>"><?php echo $this->configEntity->getConfigCompanyName(); ?></a>.</strong> <?php echo $this->translate('All rights reserved'); ?>.
+            	<strong><?php echo $this->translate('Copyright'); ?> &copy; <?php echo $this->appConfig()->getConfigCopyYear(); ?>-<?php echo date("Y"); ?> <a href="http://<?php echo $this->appConfig()->getConfigHttpAddress(); ?>"><?php echo $this->appConfig()->getConfigCompanyName(); ?></a>.</strong> <?php echo $this->translate('All rights reserved'); ?>.
             </footer>
             
             <!-- Control Sidebar -->
   			<aside class="control-sidebar control-sidebar-dark">
-  			
+  				<!-- Create the tabs -->
+				<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+					<li><a href="#control-sidebar-favorite-tab" data-toggle="tab"><i class="fa fa-star"></i></a></li>
+					<li><a href="#control-sidebar-history-tab" data-toggle="tab"><i class="fa fa-history"></i></a></li>
+				</ul>
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<?php echo $this->favorites();?>
+					<?php echo $this->getAuthHistory(); ?>
+				</div>
   			</aside>
   			 <div class="control-sidebar-bg"></div>
   			 

@@ -39,6 +39,11 @@ return array(
         'WorkorderFile',
         'NetworkAttributeMap',
         'NetworkAttribute',
+        'NetworkAttributeValue',
+        'InvoiceItem',
+        'InvoiceOption',
+        'InvoicePayment',
+        'ClientFavorite',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

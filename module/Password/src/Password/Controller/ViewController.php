@@ -80,6 +80,11 @@ class ViewController extends BaseController
             ));
         }
         
+        // set history
+        $this->setHistory($this->getRequest()
+            ->getUri(), 'READ', $this->identity()
+            ->getAuthId(), 'View Client ' . $clientEntity->getClientName() . ' password ' . $passwordEntity->getPasswordTitle());
+        
         // set layout vars
         $this->layout()->setVariable('clientId', $id);
         

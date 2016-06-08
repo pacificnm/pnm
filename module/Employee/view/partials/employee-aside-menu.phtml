@@ -32,6 +32,13 @@
 				</a>
 			</li>
 			
+			<!-- Client Fav -->
+			<li class="<?php if($this->activeSubMenuItem == 'client-view'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('client-favorite-create', array('clientId' => $this->clientId)); ?>">
+					<i class="fa fa-star"></i> <?php echo $this->translate('Add To Favorite')?>
+				</a>
+			</li>
+			
 			<!-- Edit Client -->
 			<li class="<?php if($this->activeSubMenuItem == 'client-update'):?>active<?php endif;?>">
 				<a href="<?php echo $this->url('client-update', array('clientId' => $this->clientId)); ?>">

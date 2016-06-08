@@ -93,8 +93,9 @@ class PartMapper implements PartMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \WorkorderPart\Mapper\PartMapperInterface::get()
      */
     public function get($id)
@@ -124,8 +125,9 @@ class PartMapper implements PartMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \WorkorderPart\Mapper\PartMapperInterface::save()
      */
     public function save(PartEntity $entity)
@@ -133,19 +135,19 @@ class PartMapper implements PartMapperInterface
         $postData = $this->hydrator->extract($entity);
         
         if ($entity->getWorkorderPartsId()) {
-        
+            
             // ID present, it's an Update
             $action = new Update('workorder_parts');
-        
+            
             $action->set($postData);
-        
+            
             $action->where(array(
                 'workorder_parts.workorder_parts_id = ?' => $entity->getWorkorderPartsId()
             ));
         } else {
             // ID NOT present, it's an Insert
             $action = new Insert('workorder_parts');
-        
+            
             $action->values($postData);
         }
         
@@ -157,12 +159,12 @@ class PartMapper implements PartMapperInterface
         
         if ($result instanceof ResultInterface) {
             $newId = $result->getGeneratedValue();
-        
+            
             if ($newId) {
                 // When a value has been generated, set it on the object
                 $entity->setWorkorderPartsId($newId);
             }
-        
+            
             return $entity;
         }
         
@@ -170,8 +172,9 @@ class PartMapper implements PartMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \WorkorderPart\Mapper\PartMapperInterface::delete()
      */
     public function delete(PartEntity $entity)
@@ -179,7 +182,7 @@ class PartMapper implements PartMapperInterface
         $action = new Delete('workorder_parts');
         
         $action->where(array(
-            'workorder_parts.workorder_parts = ?' => $entity->getWorkorderPartsId()
+            'workorder_parts.workorder_parts_id = ?' => $entity->getWorkorderPartsId()
         ));
         
         $sql = new Sql($this->writeAdapter);

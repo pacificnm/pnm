@@ -195,6 +195,10 @@ class ConfigForm extends Form implements InputFilterProviderInterface
                     'F j, Y H:i a' => 'November 6, 2010 15:00 pm',
                     'M j, Y h:i a' => 'Nov 6, 2010 3:00 pm',
                     'M j, Y H:i a' => 'Nov 6, 2010 15:00 pm',
+                    'm-d-Y h:i a' => '11-6-2010 3:00 pm',
+                    'm-d-Y H:i a' => '11-6-2010 15:00 pm',
+                    'm/d/Y h:i a' => '11/6/2010 3:00 pm',
+                    'm/d/Y H:i a' => '11/6/2010 15:00 pm'
                 )
             ),
             'attributes' => array(

@@ -17,8 +17,20 @@ class TimeForm extends Form implements InputFilterProviderInterface
      */
     protected $employeeService;
     
+    /**
+     * 
+     * @var LaborServiceInterface
+     */
     protected $laborService;
     
+    /**
+     * 
+     * @param EmployeeServiceInterface $employeeService
+     * @param LaborServiceInterface $laborService
+     * @param string $name
+     * @param array $options
+     * @return \WorkorderTime\Form\TimeForm
+     */
     function __construct(EmployeeServiceInterface $employeeService, LaborServiceInterface $laborService, $name = 'workrder-note-form', $options = array())
     {
         $this->employeeService = $employeeService;

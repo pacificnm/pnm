@@ -43,6 +43,11 @@ class IndexController extends BaseController
         // keyword
         $keyword = $this->params()->fromQuery('keyword', null);
         
+        // set history
+        $this->setHistory($this->getRequest()
+            ->getUri(), 'READ', $this->identity()
+            ->getAuthId(), 'View Client List');
+        
         $filter = array(
             'clientStatus' => $clientStatus,
             'keyword' => $keyword

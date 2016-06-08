@@ -18,29 +18,29 @@ class ViewController extends BaseController
     protected $clientService;
 
     /**
-     * 
+     *
      * @var WorkorderServiceInterface
      */
     protected $workorderService;
-    
+
     /**
-     * 
+     *
      * @var InvoiceServiceInterface
      */
     protected $invoiceService;
-    
+
     /**
-     * 
+     *
      * @var TaskServiceInterface
      */
     protected $taskService;
-    
+
     /**
-     * 
-     * @param ClientServiceInterface $clientService
-     * @param WorkorderServiceInterface $workorderService
-     * @param InvoiceServiceInterface $invoiceService
-     * @param TaskServiceInterface $taskService
+     *
+     * @param ClientServiceInterface $clientService            
+     * @param WorkorderServiceInterface $workorderService            
+     * @param InvoiceServiceInterface $invoiceService            
+     * @param TaskServiceInterface $taskService            
      */
     public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, InvoiceServiceInterface $invoiceService, TaskServiceInterface $taskService)
     {
@@ -54,8 +54,9 @@ class ViewController extends BaseController
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
      */
     public function indexAction()
@@ -64,24 +65,28 @@ class ViewController extends BaseController
         
         $clientEntity = $this->clientService->get($id);
         
-        if (! $clientEntity) {
-            
-        }
+        if (! $clientEntity) {}
         
+        // set history
+        $this->setHistory($this->getRequest()
+            ->getUri(), 'READ', $this->identity()
+            ->getAuthId(), 'View Client ' . $clientEntity->getClientName());
+        
+        // set layout vars
         $this->layout()->setVariable('clientId', $id);
         
         $this->layout()->setVariable('pageTitle', 'View Client');
         
         $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
         
+        // set head title
         $this->setHeadTitle($clientEntity->getClientName());
         
-        $filter = array(
+        // get workorders
+        $workorderEntitys = $this->workorderService->getAll(array(
             'clientId' => $id,
             'workorderStatus' => 'Active'
-        );
-        
-        $workorderEntitys = $this->workorderService->getAll($filter);
+        ));
         
         $workorderTotalCount = $this->workorderService->getClientTotalCount($id, 'Closed');
         
@@ -118,7 +123,6 @@ class ViewController extends BaseController
             'workorderRevenuTotal' => $workorderRevenuTotal,
             'invoiceEntitys' => $invoiceEntitys,
             'taskEntitys' => $taskEntitys
-            
         ));
     }
 }

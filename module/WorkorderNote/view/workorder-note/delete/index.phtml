@@ -1,0 +1,30 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-wrench"></i>
+					<?php echo $this->translate('Delete Work Order Note'); ?>
+				</h3>
+				<div class="box-tools"></div>
+			</div>
+			<div class="box-body">
+				<div class="alert alert-warning">
+					<p><i class="fa fa-warning fa-fw"></i> <?php echo $this->translate('Are you sure you want to delete the following work order note?'); ?></p>
+				</div>
+				<?php $employeeEntity = $this->noteEntity->getEmployeeEntity(); ?>
+				<h3 class="profile-username"><?php echo $employeeEntity->getEmployeeName(); ?></h3>
+				<p class="text-muted"><?php echo date($this->appConfig()->getConfigDateShort(), $this->noteEntity->getWorkorderNotesDate()); ?></p>
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<?php echo $this->noteEntity->getWorkorderNotesNote(); ?>
+					</li>
+				</ul>
+				<form method="post">
+                     <input type="submit" name="delete_confirmation" class="btn btn-danger" value="yes">
+                     <input type="submit" name="delete_confirmation" class="btn btn-primary" value="no">
+                 </form>
+			</div>
+		</div>
+	</div>
+</div>

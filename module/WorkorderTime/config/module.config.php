@@ -6,7 +6,10 @@ return array(
         'acl' => array(
             'guest' => array(),
             'user' => array(),
-            'employee' => array(),
+            'employee' => array(
+                'workorder-time-create',
+                'workorder-time-delete'
+            ),
             'accountant' => array(),
             'administrator' => array()
         )
@@ -15,7 +18,8 @@ return array(
     // controllers
     'controllers' => array(
         'factories' => array(
-            'WorkorderTime\Controller\Create' => 'WorkorderTime\Controller\Factory\CreateControllerFactory'
+            'WorkorderTime\Controller\Create' => 'WorkorderTime\Controller\Factory\CreateControllerFactory',
+            'WorkorderTime\Controller\Delete' => 'WorkorderTime\Controller\Factory\DeleteControllerFactory'
         )
     ),
     
@@ -33,12 +37,23 @@ return array(
     'router' => array(
         'routes' => array(
             'workorder-time-create' => array(
-                'title' => 'Create Work Order',
+                'title' => 'Create Work Order Time',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/client/[:clientId]/work-order/[:workorderId]/work-order-time/create',
                     'defaults' => array(
                         'controller' => 'WorkorderTime\Controller\Create',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'workorder-time-delete' => array(
+                'title' => 'Delete Work Order Time',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/work-order/[:workorderId]/work-order-time/delete/[:workorderTimeId]',
+                    'defaults' => array(
+                        'controller' => 'WorkorderTime\Controller\Delete',
                         'action' => 'index'
                     )
                 )

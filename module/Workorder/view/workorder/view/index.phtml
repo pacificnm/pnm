@@ -8,9 +8,9 @@
 				</h3>
 				<div class="box-tools hidden-xs">
 					<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
-					<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
+					<a href="<?php echo $this->url('workorder-print', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" target="_blank" title="<?php echo $this->translate('Print this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
 					<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-dollar"></i> <?php echo $this->translate('Credit'); ?></a>
-					<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-check-circle"></i> <?php echo $this->translate('Complete'); ?></a>
+					<a href="javascript:void(0);" data-toggle="modal" data-target="#completeModal" title="<?php echo $this->translate('Complete this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-check-circle"></i> <?php echo $this->translate('Complete'); ?></a>
 					<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
 					<?php endif;?>
 					
@@ -23,79 +23,100 @@
 					<span class="pull-right badge"><?php echo $this->workorderEntity->getWorkorderStatus(); ?></span>
 				</h3>
 				<p><?php echo $this->workorderEntity->getWorkorderDescription(); ?></p>
+				<hr />
 				<div class="row">
 					<div class="col-xs-12 col-sm-9">
-						<b><?php echo $this->translate('Location'); ?>:</b>
-						<?php if(! $this->workorderEntity->getLocationEntity()):?>
-							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing location.')?></span>
-						<?php else: ?>
-							<?php $locationEntity = $this->workorderEntity->getLocationEntity(); ?>
-						<a href="<?php echo $this->url('location-view', array('clientId' => $this->clientId, 'locationId' => $locationEntity->getLocationId())); ?>" title="<?php echo $this->translate('View this location'); ?>">
-							<?php echo $locationEntity->getLocationStreet();?> <?php echo $locationEntity->getLocationCity(); ?>, <?php echo $locationEntity->getLocationState();?> <?php echo $locationEntity->getLocationZip(); ?>
-						</a>
+						<p>
+    						<b><?php echo $this->translate('Location'); ?>:</b>
+    						<?php if(! $this->workorderEntity->getLocationEntity()):?>
+    							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing location.')?></span>
+    						<?php else: ?>
+    							<?php $locationEntity = $this->workorderEntity->getLocationEntity(); ?>
+    						<a href="<?php echo $this->url('location-view', array('clientId' => $this->clientId, 'locationId' => $locationEntity->getLocationId())); ?>" title="<?php echo $this->translate('View this location'); ?>">
+    							<?php echo $locationEntity->getLocationStreet();?> <?php echo $locationEntity->getLocationCity(); ?>, <?php echo $locationEntity->getLocationState();?> <?php echo $locationEntity->getLocationZip(); ?>
+    						</a>
 						<?php endif; ?>
+						</p>
 					</div>
 					<div class="col-xs-12 col-sm-3">
-						<b><?php echo $this->translate('Phone'); ?>:</b>
-						<?php if(! $this->workorderEntity->getPhoneEntity()) :?>
-							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing phone.')?></span>
-						<?php else: ?>
-							<?php $phoneEntity = $this->workorderEntity->getPhoneEntity(); ?>
-							<a href="<?php echo $this->url('phone-view', array('clientId' => $this->clientId, 'phoneId' => $phoneEntity->getPhoneId())); ?>" title="<?php echo $this->translate('View this phone');?>"><?php echo $phoneEntity->getPhoneNum();?></a>
-						<?php endif; ?>
+						<p>
+    						<b><?php echo $this->translate('Phone'); ?>:</b>
+    						<?php if(! $this->workorderEntity->getPhoneEntity()) :?>
+    							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing phone.')?></span>
+    						<?php else: ?>
+    							<?php $phoneEntity = $this->workorderEntity->getPhoneEntity(); ?>
+    							<a href="<?php echo $this->url('phone-view', array('clientId' => $this->clientId, 'phoneId' => $phoneEntity->getPhoneId())); ?>" title="<?php echo $this->translate('View this phone');?>"><?php echo $phoneEntity->getPhoneNum();?></a>
+    						<?php endif; ?>
+						</p>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-3">
-						<b><?php echo $this->translate('Scheduled')?>:</b> 
-						<?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateScheduled()); ?>
+						<p>
+    						<b><?php echo $this->translate('Scheduled')?>:</b> 
+    						<?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateScheduled()); ?>
+						</p>
 					</div>
 					<div class="col-xs-12 col-sm-3">
-						<b><?php echo $this->translate('Created'); ?>:</b>
-						<?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateCreate()); ?>
+						<p>
+    						<b><?php echo $this->translate('Created'); ?>:</b>
+    						<?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateCreate()); ?>
+						</p>
 					</div>
 					<div class="col-xs-12 col-sm-3">
-						<b><?php echo $this->translate('Closed'); ?>:</b>
-						
-						<?php if($this->workorderEntity->getWorkorderStatus() == "Closed"): ?>
-							<?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateClose()); ?>
-						<?php else: ?>
-							
-							<?php echo $this->translate($this->workorderEntity->getWorkorderStatus()); ?>
-						<?php endif;?>
+						<p>
+    						<b><?php echo $this->translate('Closed'); ?>:</b>
+    						
+    						<?php if($this->workorderEntity->getWorkorderStatus() == "Closed"): ?>
+    							<?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateClose()); ?>
+    						<?php else: ?>
+    							
+    							<?php echo $this->translate($this->workorderEntity->getWorkorderStatus()); ?>
+    						<?php endif;?>
+    					</p>
 					</div>
 					<div class="col-xs-12 col-sm-3">
-						<b><?php echo $this->translate('Contact'); ?>:</b>
-						<?php if(! $this->workorderEntity->getUserEntity()): ?>
-							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing contact.')?></span>
-						<?php else: ?>
-							<?php $userEntity = $this->workorderEntity->getUserEntity(); ?>
-							<a href="<?php echo $this->url('user-view', array('clientId' => $this->clientId, 'userId' => $userEntity->getUserId()));?>" title="<?php echo $this->translate('View this user'); ?>">
-								<?php echo $userEntity->getUserNameFirst(); ?> <?php echo $userEntity->getUserNameLast(); ?>
-							</a>
-						<?php endif;?>
+						<p>
+    						<b><?php echo $this->translate('Contact'); ?>:</b>
+    						<?php if(! $this->workorderEntity->getUserEntity()): ?>
+    							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing contact.')?></span>
+    						<?php else: ?>
+    							<?php $userEntity = $this->workorderEntity->getUserEntity(); ?>
+    							<a href="<?php echo $this->url('user-view', array('clientId' => $this->clientId, 'userId' => $userEntity->getUserId()));?>" title="<?php echo $this->translate('View this user'); ?>">
+    								<?php echo $userEntity->getUserNameFirst(); ?> <?php echo $userEntity->getUserNameLast(); ?>
+    							</a>
+    						<?php endif;?>
+    					</p>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-sm-3">
-						<b><?php echo $this->translate('Ends'); ?>:</b>
-						 <?php if($this->workorderEntity->getWorkorderDateEnd() == 0):?>
-						 	<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing end date'); ?></span>
-						 <?php else: ?>
-						 <?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateEnd()); ?>
-						 <?php endif;?>
+						<p>
+    						<b><?php echo $this->translate('Ends'); ?>:</b>
+    						 <?php if($this->workorderEntity->getWorkorderDateEnd() == 0):?>
+    						 	<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing end date'); ?></span>
+    						 <?php else: ?>
+    						 <?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateEnd()); ?>
+    						 <?php endif;?>
+    						</p>
 					</div>
 					<div class="col-xs-12 col-sm-3">
-						<b><?php echo $this->translate('Labor'); ?>:</b>
-						 <?php echo $this->currencyFormat($this->workorderEntity->getWorkorderLabor(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
+						<p>
+							<b><?php echo $this->translate('Labor'); ?>:</b>
+						 	<?php echo $this->currencyFormat($this->workorderEntity->getWorkorderLabor(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
+						</p>
 					</div>
 					<div class="col-xs-12 col-sm-3">
-						<b><?php echo $this->translate('Parts'); ?>:</b>
-						<?php echo $this->currencyFormat($this->workorderEntity->getWorkorderParts(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
+						<p>
+							<b><?php echo $this->translate('Parts'); ?>:</b>
+							<?php echo $this->currencyFormat($this->workorderEntity->getWorkorderParts(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
+						</p>
 					</div>
 					<div class="col-xs-12 col-sm-3">
-						<b><?php echo $this->translate('Credit'); ?>:</b>
-						<?php echo $this->currencyFormat(0, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
+						<p>
+							<b><?php echo $this->translate('Credit'); ?>:</b>
+							<?php echo $this->currencyFormat(0, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
+						</p>
 					</div>
 				</div>
 				
@@ -146,7 +167,10 @@
     							<a href="" title="<?php echo $this->translate('View this employee'); ?>" class="small">
     								<i class="fa fa-user"></i> <?php echo $employeeEntity->getEmployeeName(); ?></a>
     							<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
-    							<a href="" title="<?php echo $this->translate('Edit this note'); ?>" class="btn btn-box-tool pull-right"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+    							<span class="pull-right">
+        							<a href="<?php echo $this->url('workorder-note-delete', array('clientId' => $this->clientId, 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderNotesId' => $noteEntity->getWorkorderNotesId())); ?>" title="<?php echo $this->translate('Delete this note'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+        							<a href="<?php echo $this->url('workorder-note-update', array('clientId' => $this->clientId, 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderNotesId' => $noteEntity->getWorkorderNotesId())); ?>" title="<?php echo $this->translate('Edit this note'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+    							</span>
     							<?php endif; ?>
     						</div>
     					</div>
@@ -179,13 +203,13 @@
     			<ul class="list-group list-group-unbordered">
     				<li class="list-group-item hidden-xs">
     					<div class="row">
-    						<div class="col-xs-12 col-sm-2">
+    						<div class="col-xs-12 col-sm-3">
     							<b><?php echo $this->translate('Employee'); ?></b>
     						</div>
-    						<div class="col-xs-12 col-sm-3">
+    						<div class="col-xs-12 col-sm-2">
     							<b><?php echo $this->translate('In'); ?></b>
     						</div>
-    						<div class="col-xs-12 col-sm-3">
+    						<div class="col-xs-12 col-sm-2">
     							<b><?php echo $this->translate('Out'); ?></b>
     						</div>
     						<div class="col-xs-12 col-sm-1">
@@ -201,17 +225,17 @@
     				</li>
     				<?php foreach($this->timeEntitys as $timeEntity): ?>
     				<li class="list-group-item">
-    					<div class="row">
-    						<div class="col-xs-12 col-sm-2">
+    					<div class="row small">
+    						<div class="col-xs-12 col-sm-3">
     							<?php $employeeEntity = $timeEntity->getEmployeeEntity(); ?>
     							<a href="" title="<?php echo $this->translate('View this employee'); ?>" class="">
     								<i class="fa fa-user"></i> <?php echo $employeeEntity->getEmployeeName(); ?>
     							</a>
     						</div>
-    						<div class="col-xs-12 col-sm-3 ">
+    						<div class="col-xs-12 col-sm-2">
     							<?php echo date($this->appConfig()->getConfigDateLong(), $timeEntity->getWorkorderTimeIn()); ?>
     						</div>
-    						<div class="col-xs-12 col-sm-3 ">
+    						<div class="col-xs-12 col-sm-2">
     							<?php echo date($this->appConfig()->getConfigDateLong(), $timeEntity->getWorkorderTimeOut()); ?>
     						</div>
     						<div class="col-xs-12 col-sm-1 ">
@@ -220,11 +244,16 @@
     						<div class="col-xs-12 col-sm-1 ">
     							<?php echo $this->currencyFormat($timeEntity->getLaborRate(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
     						</div>
-    						<div class="col-xs-12 col-sm-1 ">
+    						<div class="col-xs-12 col-sm-2">
     							<?php echo $this->currencyFormat(number_format(($timeEntity->getWorkorderTimeTotal() / 60) / 60, 2) *  $timeEntity->getLaborRate(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
     						</div>
     						<div class="col-xs-12 col-sm-1">
-    							<a href="" title="<?php echo $this->translate('Delete this time'); ?>" class="btn btn-box-tool pull-right" style="margin-top:-4px;"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+    							<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
+    							<a href="<?php echo $this->url('workorder-time-delete', array('clientId' => $this->clientId, 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderTimeId' => $timeEntity->getWorkorderTimeId())); ?>" 
+    								title="<?php echo $this->translate('Delete this time'); ?>" class="btn btn-box-tool pull-right" style="margin-top:-4px;">
+    								<i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?>
+    							</a>
+    							<?php endif; ?>
     						</div>
     					</div>
     				</li>
@@ -249,7 +278,51 @@
     				<i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no parts.'); ?>
     			</div>
     			<?php else:?>
-    			
+    			<ul class="list-group list-group-unbordered">
+    				<li class="list-group-item hidden-xs">
+    					<div class="row">
+    						<div class="col-xs-12 col-sm-1">
+    							<b><?php echo $this->translate('Qty');?></b>
+    						</div>
+    						<div class="col-xs-12 col-sm-8">
+    							<b><?php echo $this->translate('Description'); ?></b>
+    						</div>
+    						<div class="col-xs-12 col-sm-1">
+    							<b><?php echo $this->translate('Amount'); ?></b>
+    						</div>
+    						<div class="col-xs-12 col-sm-1">
+    							<b><?php echo $this->translate('Total'); ?></b>
+    						</div>
+    						<div class="col-xs-12 col-sm-1">
+    						
+    						</div>
+    					</div>
+    				</li>
+        			
+        			<?php foreach($this->partEntitys as $partEntity): ?>
+        			<li class="list-group-item hidden-xs">
+    					<div class="row">
+    						<div class="col-xs-12 col-sm-1">
+    							<?php echo $partEntity->getWorkorderPartsQty(); ?>
+    						</div>
+    						<div class="col-xs-12 col-sm-8">
+    							<?php echo $partEntity->getWorkorderPartsDescription(); ?>
+    						</div>
+    						<div class="col-xs-12 col-sm-1">
+    							<?php echo $partEntity->getWorkorderPartsAmount(); ?>
+    						</div>
+    						<div class="col-xs-12 col-sm-1">
+    							<?php echo $partEntity->getWorkorderPartsTotal(); ?>
+    						</div>
+    						<div class="col-xs-12 col-sm-1">
+    							<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
+    							<a href="<?php echo $this->url('workorder-part-delete', array('clientId' => $this->clientId, 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderPartId' => $partEntity->getWorkorderPartsId())); ?>" title="<?php echo $this->translate('Delete this part'); ?>" class="btn btn-box-tool pull-right"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+    							<?php endif; ?>
+    						</div>
+    					</div>
+    				</li>
+        			<?php endforeach;?>
+        		</ul>
     			<?php endif;?>
     		</div>
 		</div>
@@ -378,9 +451,52 @@
       <div class="modal-body">
         <?php echo $this->partial('partials/form-errors.phtml', array('errorMsg' => $this->timeForm->getMessages())); ?>
         
-        
+        <div class="row">
+        	<div class="col-xs-12 col-sm-6">
+				<?php $element = $this->timeForm->get('workorderTimeIn'); ?>
+				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+					<label class="control-label"><?php echo $element->getLabel() ?></label>
+					<?php echo $this->formElement($element); ?>
+					<?php if($this->formElementErrors($element)): ?>
+						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+					<?php endif; ?>
+				</div>
+           </div>
+         </div>
+         
+         <div class="row">
+        	<div class="col-xs-12 col-sm-6">
+				<?php $element = $this->timeForm->get('laborId'); ?>
+				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+					<label class="control-label"><?php echo $element->getLabel() ?></label>
+					<?php echo $this->formElement($element); ?>
+					<?php if($this->formElementErrors($element)): ?>
+						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+					<?php endif; ?>
+				</div>
+           </div>
+         </div>
+         
+         <div class="row">
+        	<div class="col-xs-12 col-sm-6">
+				<?php $element = $this->timeForm->get('employeeId'); ?>
+				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+					<label class="control-label"><?php echo $element->getLabel() ?></label>
+					<?php echo $this->formElement($element); ?>
+					<?php if($this->formElementErrors($element)): ?>
+						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+					<?php endif; ?>
+				</div>
+           </div>
+         </div>
+       
         <?php echo $this->formElement($this->timeForm->get('workorderId')); ?>
        	<?php echo $this->formElement($this->timeForm->get('workorderTimeId')); ?>
+       	<?php echo $this->formElement($this->timeForm->get('workorderTimeOut')); ?>
+       	<?php echo $this->formElement($this->timeForm->get('workorderTimeTotal')); ?>
+       	<?php echo $this->formElement($this->timeForm->get('laborName')); ?>
+       	<?php echo $this->formElement($this->timeForm->get('laborRate')); ?>
+       	<?php echo $this->formElement($this->timeForm->get('laborTotal')); ?>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
@@ -392,6 +508,7 @@
 <?php echo $this->form()->closeTag(); ?>
 
 <!-- part modal -->
+<?php echo $this->form()->openTag($this->partForm); ?>
 <div class="modal fade" id="partModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -400,14 +517,59 @@
         <h4 class="modal-title" id="myModalLabel"><i class="fa fa-hdd-o"></i> <?php echo $this->translate('Work Order Part')?></h4>
       </div>
       <div class="modal-body">
-        ...
+        <?php echo $this->partial('partials/form-errors.phtml', array('errorMsg' => $this->partForm->getMessages())); ?>
+        
+        <div class="row">
+        	<div class="col-xs-12 col-sm-2">
+				<?php $element = $this->partForm->get('workorderPartsQty'); ?>
+				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+					<label class="control-label"><?php echo $element->getLabel() ?></label>
+					<?php echo $this->formElement($element); ?>
+					<?php if($this->formElementErrors($element)): ?>
+						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+					<?php endif; ?>
+				</div>
+           </div>
+         </div>
+        
+        <div class="row">
+        	<div class="col-xs-12">
+				<?php $element = $this->partForm->get('workorderPartsDescription'); ?>
+				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+					<label class="control-label"><?php echo $element->getLabel() ?></label>
+					<?php echo $this->formElement($element); ?>
+					<?php if($this->formElementErrors($element)): ?>
+						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+					<?php endif; ?>
+				</div>
+           </div>
+         </div>
+         
+         <div class="row">
+        	<div class="col-xs-12 col-sm-2">
+				<?php $element = $this->partForm->get('workorderPartsAmount'); ?>
+				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+					<label class="control-label"><?php echo $element->getLabel() ?></label>
+					<?php echo $this->formElement($element); ?>
+					<?php if($this->formElementErrors($element)): ?>
+						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+					<?php endif; ?>
+				</div>
+           </div>
+         </div>
+        
+        <?php echo $this->formElement($this->partForm->get('workorderId')); ?>
+       	<?php echo $this->formElement($this->partForm->get('workorderPartsId')); ?>
+       	<?php echo $this->formElement($this->partForm->get('workorderPartsTotal')); ?>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+         <?php echo $this->formSubmit($this->partForm->get('submit')); ?>
       </div>
     </div>
   </div>
 </div>
+<?php echo $this->form()->closeTag(); ?>
 
 <!-- employee modal -->
 <div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -426,11 +588,49 @@
     </div>
   </div>
 </div>
+
+
+<!-- complete modal -->
+<?php echo $this->form()->openTag($this->completeForm); ?>
+<div class="modal fade" id="completeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-user"></i> <?php echo $this->translate('Complete Work Order')?></h4>
+      </div>
+      <div class="modal-body">
+        <?php echo $this->partial('partials/form-errors.phtml', array('errorMsg' => $this->completeForm->getMessages())); ?>
+        
+        <div class="row">
+        	<div class="col-xs-12 col-sm-4">
+				<?php $element = $this->completeForm->get('workorderDateClose'); ?>
+				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+					<label class="control-label"><?php echo $element->getLabel() ?></label>
+					<?php echo $this->formElement($element); ?>
+					<?php if($this->formElementErrors($element)): ?>
+						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+					<?php endif; ?>
+				</div>
+           </div>
+         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+        <?php echo $this->formSubmit($this->partForm->get('submit')); ?>
+      </div>
+    </div>
+  </div>
+</div>
+<?php echo $this->form()->closeTag(); ?>
 <?php endif;?>
+
 
 <script>
   $(function () {
 	  $('#workorderNotesDate').daterangepicker({singleDatePicker: true, format: 'MM/DD/YYYY'});
+	  $('#workorderDateClose').daterangepicker({singleDatePicker: true, format: 'MM/DD/YYYY'});
+	  $('#workorderTimeIn').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
 	  $("#workorderNotesNote").wysihtml5();
   });
  </script>

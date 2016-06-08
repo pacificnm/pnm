@@ -113,6 +113,15 @@ class NoteMapper implements NoteMapperInterface
         
         $select = $sql->select('workorder_notes');
         
+        $select->join('employee', 'employee.employee_id = workorder_notes.employee_id', array(
+            'employee_name',
+            'employee_title',
+            'employee_email',
+            'employee_im',
+            'employee_image',
+            'employee_status'
+        ), 'inner');
+        
         $select->where(array(
             'workorder_notes.workorder_notes_id = ?' => $id
         ));
@@ -127,7 +136,7 @@ class NoteMapper implements NoteMapperInterface
             
             $resultSet->buffer();
             
-            return $resultSet->initialize($result);
+            return $resultSet->initialize($result)->current();
         }
         
         return array();

@@ -117,6 +117,15 @@ class TimeMapper implements TimeMapperInterface
             'workorder_time.workorder_time_id = ?' => $id
         ));
         
+        $select->join('employee', 'employee.employee_id = workorder_time.employee_id', array(
+            'employee_name',
+            'employee_title',
+            'employee_email',
+            'employee_im',
+            'employee_image',
+            'employee_status'
+        ), 'inner');
+        
         $stmt = $sql->prepareStatementForSqlObject($select);
         
         $result = $stmt->execute();
@@ -127,7 +136,7 @@ class TimeMapper implements TimeMapperInterface
             
             $resultSet->buffer();
             
-            return $resultSet->initialize($result);
+            return $resultSet->initialize($result)->current();
         }
         
         return array();

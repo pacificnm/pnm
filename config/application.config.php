@@ -7,6 +7,8 @@
  */
 return array(
     'modules' => array(
+        'ZendDeveloperTools',
+        'BjyProfiler',
         'Application',
         'Acl',
         'Client',
@@ -40,8 +42,16 @@ return array(
         'NetworkAttributeMap',
         'NetworkAttribute',
         'NetworkAttributeValue',
+        'InvoiceItem',
+        'InvoiceOption',
+        'InvoicePayment',
+        'ClientFavorite',
+        'History',
     ),
     'module_listener_options' => array(
+        //'config_cache_enabled'     => true,
+        //'module_map_cache_enabled' => true,
+        //'cache_dir'                => 'data/cache/',
         'module_paths' => array(
             './module',
             './vendor',
@@ -49,5 +59,7 @@ return array(
         'config_glob_paths' => array(
             'config/autoload/{{,*.}global,{,*.}local}.php',
         ),
+        
     ),
+
 );

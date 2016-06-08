@@ -18,6 +18,8 @@ class ClientServiceFactory implements FactoryInterface
     {
         $mapper = $serviceLocator->get('Client\Mapper\ClientMapperInterface');
         
-        return new ClientService($mapper);
+        $memcached = $serviceLocator->get('memcached');
+        
+        return new ClientService($mapper, $memcached);
     }
 }

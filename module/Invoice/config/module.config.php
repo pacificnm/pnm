@@ -1,6 +1,5 @@
 <?php
 return array(
-    
     'Invoice' => array(
         'name' => 'Invoice',
         'version' => '2.5',

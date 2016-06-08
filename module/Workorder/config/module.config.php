@@ -13,6 +13,7 @@ return array(
                 'workorder-update',
                 'workorder-view',
                 'workorder-print',
+                'workorder-complete'
             ),
             'accountant' => array(),
             'administrator' => array()
@@ -27,7 +28,8 @@ return array(
             'Workorder\Controller\Index' => 'Workorder\Controller\Factory\IndexControllerFactory',
             'Workorder\Controller\Update' => 'Workorder\Controller\Factory\UpdateControllerFactory',
             'Workorder\Controller\View' => 'Workorder\Controller\Factory\ViewControllerFactory',
-            'Workorder\Controller\Print' => 'Workorder\Controller\Factory\PrintControllerFactory'
+            'Workorder\Controller\Print' => 'Workorder\Controller\Factory\PrintControllerFactory',
+            'Workorder\Controller\Complete' => 'Workorder\Controller\Factory\CompleteControllerFactory'
         )
         
     ),
@@ -106,6 +108,17 @@ return array(
                     'route' => '/client/[:clientId]/work-order/print/[:workorderId]',
                     'defaults' => array(
                         'controller' => 'Workorder\Controller\Print',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'workorder-complete' => array(
+                'title' => 'Complete Work Order',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/work-order/complete/[:workorderId]',
+                    'defaults' => array(
+                        'controller' => 'Workorder\Controller\Complete',
                         'action' => 'index'
                     )
                 )

@@ -49,7 +49,7 @@ class ClientMapper implements ClientMapperInterface
     public function __construct(AdapterInterface $readAdapter, AdapterInterface $writeAdapter, HydratorInterface $hydrator, ClientEntity $prototype)
     {
         $this->readAdapter = $readAdapter;
-    
+        
         $this->writeAdapter = $writeAdapter;
     
         $this->hydrator = $hydrator;

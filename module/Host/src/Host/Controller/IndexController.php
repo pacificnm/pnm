@@ -55,6 +55,11 @@ class IndexController extends BaseController
             return $this->redirect()->toRoute('client-list');
         }
         
+        // set history
+        $this->setHistory($this->getRequest()
+            ->getUri(), 'READ', $this->identity()
+            ->getAuthId(), 'View Client ' . $clientEntity->getClientName() . ' hosts');
+        
         $this->layout()->setVariable('clientId', $id);
         
         $this->layout()->setVariable('pageTitle', 'Hosts');

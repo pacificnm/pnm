@@ -90,7 +90,19 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => Controller\IndexController::class
+        ),
+        'factories' => array(
+            'Application\Controller\BaseController' => 'Application\Controller\Factory\BaseControllerFactory'
         )
+    ),
+    
+    'controller_plugins' => array(
+        'factories' => array(
+            'SetPageTitle' => 'Application\Controller\Plugin\Factory\SetPageTitleFactory',
+            'SetHeadTitle' => 'Application\Controller\Plugin\Factory\SetHeadTitleFactory',
+            'Acl' => 'Application\Controller\Plugin\Factory\AclFactory', 
+        ),
+        'invokables' => array()
     ),
     
     // view helpers
@@ -101,12 +113,13 @@ return array(
     ),
     
     'view_manager' => array(
-        'display_not_found_reason' => true,
+        'display_not_found_reason' => false,
         'display_exceptions' => true,
         'doctype' => 'HTML5',
         'not_found_template' => 'error/404',
         'exception_template' => 'error/index',
         'template_map' => array(
+            'error/layout'  => __DIR__ . '/../view/layout/error.phtml',
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
@@ -463,6 +476,26 @@ return array(
                                                     array(
                                                         'label' => 'Print Work Order',
                                                         'route' => 'workorder-print',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Time',
+                                                        'route' => 'workorder-time-delete',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Part',
+                                                        'route' => 'workorder-part-delete',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'Edit Note',
+                                                        'route' => 'workorder-note-update',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Note',
+                                                        'route' => 'workorder-note-delete',
                                                         'useRouteMatch' => true,
                                                     )
                                                 )

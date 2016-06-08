@@ -4,6 +4,10 @@ namespace Workorder\Controller;
 use Application\Controller\BaseController;
 use Client\Service\ClientServiceInterface;
 use Zend\View\Model\ViewModel;
+use Workorder\Service\WorkorderServiceInterface;
+use WorkorderNote\Service\NoteServiceInterface;
+use WorkorderTime\Service\TimeServiceInterface;
+use WorkorderPart\Service\PartServiceInterface;
 
 class PrintController extends BaseController
 {
@@ -13,13 +17,26 @@ class PrintController extends BaseController
      */
     protected $clientService;
     
-    /**
-     *
-     * @param ClientServiceInterface $clientService
-     */
-    public function __construct(ClientServiceInterface $clientService)
+    protected $workorderService;
+    
+    protected $noteService;
+    
+    protected $timeService;
+    
+    protected $partService;
+    
+    
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, NoteServiceInterface $noteService, TimeServiceInterface $timeService, PartServiceInterface $partService)
     {
         $this->clientService = $clientService;
+        
+        $this->workorderService = $workorderService;
+        
+        $this->noteService = $noteService;
+        
+        $this->timeService = $timeService;
+        
+        $this->partService = $partService;
     }
     
     /**
@@ -31,24 +48,53 @@ class PrintController extends BaseController
     {
         $id = $this->params()->fromRoute('clientId');
     
+        $workorderId = $this->params()->fromRoute('workorderId');
+        
         $clientEntity = $this->clientService->get($id);
     
-        if (! $clientEntity) {}
+        if (! $clientEntity) {
+            $this->flashmessenger()->addErrorMessage('Client was not found.');
+            
+            return $this->redirect()->toRoute('client-list');
+        }
     
-        $this->layout()->setVariable('clientId', $id);
-    
-        $this->layout()->setVariable('pageTitle', 'Print Work Order');
-    
-        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
-    
-        $this->setHeadTitle($clientEntity->getClientName());
-    
-        $this->layout()->setVariable('activeMenuItem', 'client');
+        $workorderEntity = $this->workorderService->get($workorderId);
+        
+        if (! $workorderEntity) {
+            $this->flashmessenger()->addErrorMessage('Work Order was not found.');
+        
+            return $this->redirect()->toRoute('workorder-list', array(
+                'clientId' => $id
+            ));
+        }
+        
+        // set history
+        $this->setHistory($this->getRequest()
+            ->getUri(), 'READ', $this->identity()
+            ->getAuthId(), 'View Client ' . $clientEntity->getClientName() . ' print work order #' . $workorderId);
+        
+        $noteEntitys = $this->noteService->getAll(array(
+            'workorderId' => $workorderId
+        ));
+        
+        $timeEntitys = $this->timeService->getAll(array(
+            'workorderId' => $workorderId
+        ));
+        
+        $partEntitys = $this->partService->getAll(array(
+            'workorderId' => $workorderId
+        ));
+        
+        $this->layout('/layout/print.phtml');
     
         // return View
         return new ViewModel(array(
             'clientEntity' => $clientEntity,
-            'clientId' => $id
+            'clientId' => $id,
+            'workorderEntity' => $workorderEntity,
+            'noteEntitys' => $noteEntitys,
+            'timeEntitys' => $timeEntitys,
+            'partEntitys' => $partEntitys
         ));
     }
 }

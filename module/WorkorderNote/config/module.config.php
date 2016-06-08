@@ -7,7 +7,9 @@ return array(
             'guest' => array(),
             'user' => array(),
             'employee' => array(
-                'workorder-note-create'
+                'workorder-note-create',
+                'workorder-note-update',
+                'workorder-note-delete'
             ),
             'accountant' => array(),
             'administrator' => array()
@@ -17,7 +19,9 @@ return array(
     // controllers
     'controllers' => array(
         'factories' => array(
-            'WorkorderNote\Controller\Create' => 'WorkorderNote\Controller\Factory\CreateControllerFactory'
+            'WorkorderNote\Controller\Create' => 'WorkorderNote\Controller\Factory\CreateControllerFactory',
+            'WorkorderNote\Controller\Update' => 'WorkorderNote\Controller\Factory\UpdateControllerFactory',
+            'WorkorderNote\Controller\Delete' => 'WorkorderNote\Controller\Factory\DeleteControllerFactory',
         )
     ),
     
@@ -26,7 +30,8 @@ return array(
         'factories' => array(
             'WorkorderNote\Mapper\NoteMapperInterface' => 'WorkorderNote\Mapper\Factory\NoteMapperFactory',
             'WorkorderNote\Service\NoteServiceInterface' => 'WorkorderNote\Service\Factory\NoteServiceFactory',
-            'WorkorderNote\Form\NoteForm' => 'WorkorderNote\Form\Factory\NoteFormFactory'
+            'WorkorderNote\Form\NoteForm' => 'WorkorderNote\Form\Factory\NoteFormFactory',
+            
         )
     ),
     
@@ -34,12 +39,34 @@ return array(
     'router' => array(
         'routes' => array(
             'workorder-note-create' => array(
-                'title' => 'Create Work Order',
+                'title' => 'Create Work Order Note',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/client/[:clientId]/work-order/[:workorderId]/work-order-note/create',
                     'defaults' => array(
                         'controller' => 'WorkorderNote\Controller\Create',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'workorder-note-update' => array(
+                'title' => 'Update Work Order Note',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/work-order/[:workorderId]/work-order-note/update/[:workorderNotesId]',
+                    'defaults' => array(
+                        'controller' => 'WorkorderNote\Controller\Update',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'workorder-note-delete' => array(
+                'title' => 'Delete Work Order Note',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/work-order/[:workorderId]/work-order-note/delete/[:workorderNotesId]',
+                    'defaults' => array(
+                        'controller' => 'WorkorderNote\Controller\Delete',
                         'action' => 'index'
                     )
                 )

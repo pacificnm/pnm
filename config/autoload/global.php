@@ -12,15 +12,15 @@
  */
 
 return array(
-     'db' => array(
-        // this is for primary adapter....
+    'db' => array(
+        // this is for primary adapter which is using the profiler
         'driver' => 'Pdo',
         'dsn' => 'mysql:dbname=pacificnm_core;host=db1',
         'driver_options' => array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),
         
-        // other adapter when it needed...
+        // read and write adapters used in all factories
         'adapters' => array(
             'db1' => array(
                 'driver' => 'Pdo',
@@ -35,18 +35,20 @@ return array(
                 'driver_options' => array(
                     PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
                 )
-            ),
+            )
         )
     ),
     
     'service_manager' => array(
-        // for primary db adapter that called
-        // by $sm->get('Zend\Db\Adapter\Adapter')
         'factories' => array(
-            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
-            
-        )
-        ,
+            'Zend\Db\Adapter\Adapter' => function ($sm) {
+                $config = $sm->get('config');
+                $adapter = new BjyProfiler\Db\Adapter\ProfilingAdapter($config['db']);
+                $adapter->setProfiler(new BjyProfiler\Db\Profiler\Profiler());
+                $adapter->injectProfilingStatementPrototype();
+                return $adapter;
+            }
+        ),
         // to allow other adapter to be called by
         // $sm->get('db1') or $sm->get('db2') based on the adapters config.
         'abstract_factories' => array(
@@ -56,10 +58,14 @@ return array(
         // identity
         'aliases' => array(
             'Zend\Authentication\AuthenticationService' => 'my_auth_service',
+            
+            // remove for production in order to use read/write db this aliase uses the profiler
+            'db1' => 'Zend\Db\Adapter\Adapter',
+            'db2' => 'Zend\Db\Adapter\Adapter',
         ),
         
         'invokables' => array(
-            'my_auth_service' => 'Zend\Authentication\AuthenticationService',
-        ),
-    ),
+            'my_auth_service' => 'Zend\Authentication\AuthenticationService'
+        )
+    )
 );

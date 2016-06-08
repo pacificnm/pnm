@@ -6,8 +6,258 @@
 					<i class="fa fa-credit-card"></i>
 					<?php echo $this->translate('View Invoice'); ?>
 				</h3>
-				<div class="box-tools"></div>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('invoice-print', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" target="_blank" title="<?php echo $this->translate('Print this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
+					<a href="javascript:void(0);" data-toggle="modal" data-target="#paymentModal" title="<?php echo $this->translate('Pay this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-dollar"></i> <?php echo $this->translate('Payment'); ?></a>
+					<a href="<?php echo $this->url('invoice-delete', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('Delete this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+              		<a href="<?php echo $this->url('invoice-update', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('Edit this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+				</div>
+			</div>
+			<div class="box-body">
+				<h3 class="profile-username">
+					<?php echo $this->translate('Invoice #'); ?><?php echo $this->invoiceEntity->getInvoiceId();?>
+					<span class="pull-right badge"><?php echo $this->translate($this->invoiceEntity->getInvoiceStatus()); ?></span>
+				</h3>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="box">
+							<div class="box-header">
+								<b><?php echo $this->translate('From'); ?>: <?php echo $this->appConfig()->getConfigCompanyName(); ?></b>
+							</div>
+							<div class="box-body">
+								<div class="row">
+									<div class="col-xs-12">
+										<p><?php echo $this->appConfig()->getConfigCompanyStreet(); ?></p>
+									</div>
+								</div>
+								<?php if(! empty($this->appConfig()->getConfigCompanyStreetCont())) :?>
+								<div class="row">
+									<div class="col-xs-12">
+										<p><?php echo $this->appConfig()->getConfigCompanyStreetCont(); ?></p>
+									</div>
+								</div>
+								<?php endif;?>
+								
+								<div class="row">
+									<div class="col-xs-12">
+										<p><?php echo $this->appConfig()->getConfigCompanyCity(); ?>, <?php echo $this->appConfig()->getConfigCompanyState(); ?> <?php echo $this->appConfig()->getConfigCompanyPostal(); ?></p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12">
+										<p><?php echo $this->appConfig()->getConfigCompanyPhone(); ?></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="box">
+							<div class="box-header">
+								<b><?php echo $this->translate('To'); ?>: <?php echo $this->clientEntity->getClientName(); ?></b>
+							</div>
+							<div class="box-body">
+							
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Invoice Date'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateShort(), $this->invoiceEntity->getInvoiceDate()); ?></p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Period Start'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateShort(), $this->invoiceEntity->getInvoiceDateStart()); ?></p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Period End'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateShort(), $this->invoiceEntity->getInvoiceDateEnd() ); ?></p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<?php if($this->invoiceEntity->getInvoiceStatus() == 'Paid'): ?>
+						<p><b><?php echo $this->translate('Paid'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateShort(), $this->invoiceEntity->getInvoiceDatePaid()); ?></p>
+						<?php else: ?>
+						<p class="text-danger"><b><?php echo $this->translate('Not Paid'); ?></b></p>
+						<?php endif;?>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-12">
+						<p><b><?php echo $this->translate('Terms'); ?>:</b> <?php echo $this->optionEntity->getInvoiceOptionTerms(); ?></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<p><b><?php echo $this->translate('Memo'); ?>:</b> <?php echo $this->optionEntity->getInvoiceOptionMemo(); ?></p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-credit-card"></i>
+					<?php echo $this->translate('Invoice Items'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="javascript:void(0);" data-toggle="modal" data-target="#itemModal" title="<?php echo $this->translate('Add item this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+				</div>
+			</div>
+			
+			<?php if($this->itemEntitys->count() == 0): ?>
+			<div class="box-body">
+				<div class="alert alert-danger">
+					<p><i class="fa fa-warning"></i> <?php echo $this->translate('This invoice has no items.'); ?></p>
+				</div>
+			</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+              		<thead>
+              			<tr>
+              				<th class="col-xs-1"><?php echo $this->translate('Qty'); ?></th>
+              				<th><?php echo $this->translate('Description'); ?></th>
+              				<th class="col-xs-1 text-right"><?php echo $this->translate('Amount'); ?></th>
+              				<th class="col-xs-1 text-right"><?php echo $this->translate('Sub Total'); ?></th>
+              				<th class="col-xs-1"></th>
+              			</tr>
+              		</thead>
+              		<tbody>
+              		<?php foreach($this->itemEntitys as $itemEntity): ?>
+              			<tr>
+              				<td><?php echo $itemEntity->getInvoiceItemQty(); ?></td>
+              				<td><?php echo $itemEntity->getInvoiceItemDescrip(); ?></td>
+              				<td class="text-right"><?php echo $this->currencyFormat($itemEntity->getInvoiceItemAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+              				<td class="text-right"><?php echo $this->currencyFormat($itemEntity->getInvoiceItemTotal(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+              				<td class="text-right" nowrap>
+              					<a href="" title="<?php echo $this->translate('Delete this invoice item'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+              					<a href="" title="<?php echo $this->translate('Edit this invoice item'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+              				</td>
+              			</tr>
+              		<?php endforeach; ?>
+              		</tbody>
+              		<tfoot>
+              			<tr>
+              				<th colspan="3" class="text-right"><?php echo $this->translate('Sub Total'); ?></th>
+              				<td class="text-right"><?php echo $this->currencyFormat($this->invoiceEntity->getInvoiceSubtotal(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+              				<td></td>
+              			</tr>
+              			<?php if($this->optionEntity->getInvoiceOptionEnableDiscount()): ?>
+              			<tr>
+              				<th colspan="3" class="text-right"><?php echo $this->translate('Discount'); ?></th>
+              				<td class="text-right"><?php echo $this->currencyFormat($this->invoiceEntity->getInvoiceDiscount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+              				<td></td>
+              			</tr>
+              			<?php endif; ?>
+              			<?php if($this->optionEntity->getInvoiceOptionEnableTax()): ?>
+              			<tr>
+              				<th colspan="3" class="text-right"><?php echo $this->translate('Tax'); ?></th>
+              				<td class="text-right"><?php echo $this->currencyFormat($this->invoiceEntity->getInvoiceTax(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+              				<td></td>
+              			</tr>
+              			<?php endif; ?>
+              			<tr>
+              				<th colspan="3" class="text-right"><?php echo $this->translate('Total'); ?></th>
+              				<td class="text-right"><?php echo $this->currencyFormat($this->invoiceEntity->getInvoiceTotal(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+              				<td></td>
+              			</tr>
+              			<tr>
+              				<th colspan="3" class="text-right"><?php echo $this->translate('Payment'); ?></th>
+              				<td class="text-right"><?php echo $this->currencyFormat($this->invoiceEntity->getInvoicePayment(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+              				<td></td>
+              			</tr>
+              			<tr>
+              				<th colspan="3" class="text-right"><?php echo $this->translate('Balance'); ?></th>
+              				<td class="text-right"><?php echo $this->currencyFormat($this->invoiceEntity->getInvoiceBalance(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+              				<td class="text-right">
+              					
+              				</td>
+              			</tr>
+              		</tfoot>
+             	</table>
+            </div>
+			<?php endif; ?>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-credit-card"></i>
+					<?php echo $this->translate('Payments'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="javascript:void(0);" data-toggle="modal" data-target="#paymentModal" title="<?php echo $this->translate('Pay this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-dollar"></i> <?php echo $this->translate('Payment'); ?></a>
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No payment has been made.'); ?></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-credit-card"></i>
+					<?php echo $this->translate('Work Orders'); ?>
+				</h3>
+			</div>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No work order mapped to this invoice.'); ?></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- payment modal -->
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-dollar"></i> <?php echo $this->translate('Payment')?></h4>
+      </div>
+      <div class="modal-body">
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- item modal -->
+<div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-credit-card"></i> <?php echo $this->translate('Add Item To Invoice')?></h4>
+      </div>
+      <div class="modal-body">
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+      </div>
+    </div>
+  </div>
 </div>

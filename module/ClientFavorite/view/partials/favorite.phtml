@@ -1,0 +1,20 @@
+<div class="tab-pane active" id="control-sidebar-favorite-tab">
+	<h3 class="control-sidebar-heading"><?php echo $this->translate('Favorite Clients'); ?></h3>
+	<?php if($this->favoriteEntitys->count() == 0): ?>
+	<div class="alert alert-info">
+		<p><i class="fa fa-warning"></i> <?php echo $this->translate('You do not have any favorites.')?></p>	
+	</div>
+	<?php else: ?>
+	<ul class="control-sidebar-menu">
+		<?php foreach($this->favoriteEntitys as $favoriteEntity):?>
+		<li>
+			<a href="<?php echo $this->url('client-view', array('clientId' => $favoriteEntity->getClientId())); ?>" title="<?php echo $this->translate('View this client'); ?>">
+				<?php echo $favoriteEntity->getClientEntity()->getClientName(); ?>
+			</a>
+			
+			
+		</li>
+		<?php endforeach; ?>
+	</ul>
+	<?php endif;?>
+</div>

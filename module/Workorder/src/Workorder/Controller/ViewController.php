@@ -11,6 +11,8 @@ use WorkorderTime\Service\TimeServiceInterface;
 use WorkorderPart\Service\PartServiceInterface;
 use WorkorderNote\Form\NoteForm;
 use WorkorderTime\Form\TimeForm;
+use WorkorderPart\Form\PartForm;
+use Workorder\Form\CompleteForm;
 
 class ViewController extends BaseController
 {
@@ -57,9 +59,38 @@ class ViewController extends BaseController
      */
     protected $noteForm;
 
+    /**
+     *
+     * @var TimeForm
+     */
     protected $timeForm;
 
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, NoteServiceInterface $noteService, TimeServiceInterface $timeService, PartServiceInterface $partService, NoteForm $noteForm, TimeForm $timeForm)
+    /**
+     *
+     * @var PartForm
+     */
+    protected $partForm;
+
+    /**
+     *
+     * @var CompleteForm
+     */
+    protected $completeForm;
+
+    /**
+     *
+     * @param ClientServiceInterface $clientService            
+     * @param WorkorderServiceInterface $workorderService            
+     * @param WorkorderEmployeeServiceInterface $workorderEmployeeService            
+     * @param NoteServiceInterface $noteService            
+     * @param TimeServiceInterface $timeService            
+     * @param PartServiceInterface $partService            
+     * @param NoteForm $noteForm            
+     * @param TimeForm $timeForm            
+     * @param PartForm $partForm            
+     * @param CompleteForm $completeForm            
+     */
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, NoteServiceInterface $noteService, TimeServiceInterface $timeService, PartServiceInterface $partService, NoteForm $noteForm, TimeForm $timeForm, PartForm $partForm, CompleteForm $completeForm)
     {
         $this->clientService = $clientService;
         
@@ -76,6 +107,10 @@ class ViewController extends BaseController
         $this->noteForm = $noteForm;
         
         $this->timeForm = $timeForm;
+        
+        $this->partForm = $partForm;
+        
+        $this->completeForm = $completeForm;
     }
 
     /**
@@ -107,6 +142,11 @@ class ViewController extends BaseController
                 'clientId' => $id
             ));
         }
+        
+        // set history
+        $this->setHistory($this->getRequest()
+            ->getUri(), 'READ', $this->identity()
+            ->getAuthId(), 'View Client ' . $clientEntity->getClientName() . ' work order #' . $workorderId);
         
         $this->layout()->setVariable('clientId', $id);
         
@@ -140,11 +180,11 @@ class ViewController extends BaseController
         
         $this->timeForm->get('workorderTimeTotal')->setValue(0);
         
-        $this->timeForm->get('laborName')->setValue(null);
+        $this->timeForm->get('laborName')->setValue('not set');
         
-        $this->timeForm->get('laborRate')->setValue(null);
+        $this->timeForm->get('laborRate')->setValue(0);
         
-        $this->timeForm->get('laborTotal')->setValue(null);
+        $this->timeForm->get('laborTotal')->setValue(0);
         
         $this->timeForm->setAttribute('action', $this->url()
             ->fromRoute('workorder-time-create', array(
@@ -152,7 +192,25 @@ class ViewController extends BaseController
             'workorderId' => $workorderId
         )));
         
+        // part form
+        $this->partForm->get('workorderPartsId')->setValue(0);
         
+        $this->partForm->get('workorderId')->setValue($workorderId);
+        
+        $this->partForm->get('workorderPartsTotal')->setValue(0);
+        
+        $this->partForm->setAttribute('action', $this->url()
+            ->fromRoute('workorder-part-create', array(
+            'clientId' => $id,
+            'workorderId' => $workorderId
+        )));
+        
+        // complete form
+        $this->completeForm->setAttribute('action', $this->url()
+            ->fromRoute('workorder-complete', array(
+            'clientId' => $id,
+            'workorderId' => $workorderId
+        )));
         
         // employees
         $workorderEmployeEntitys = $this->workorderEmployeeService->getAll(array(
@@ -181,7 +239,9 @@ class ViewController extends BaseController
             'timeEntitys' => $timeEntitys,
             'partEntitys' => $partEntitys,
             'noteForm' => $this->noteForm,
-            'timeForm' => $this->timeForm
+            'timeForm' => $this->timeForm,
+            'partForm' => $this->partForm,
+            'completeForm' => $this->completeForm
         ));
     }
 }

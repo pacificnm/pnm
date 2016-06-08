@@ -23,15 +23,15 @@ return array(
             'Client\Controller\Index' => 'Client\Controller\Factory\IndexControllerFactory',
             'Client\Controller\View' => 'Client\Controller\Factory\ViewControllerFactory',
             'Client\Controller\Create' => 'Client\Controller\Factory\CreateControllerFactory',
-            'Client\Controller\Update' => 'Client\Controller\Factory\UpdateControllerFactory',
-            
+            'Client\Controller\Update' => 'Client\Controller\Factory\UpdateControllerFactory'
         )
+        
     ),
     
     // service manager
     'service_manager' => array(
         'factories' => array(
-           'Client\Mapper\ClientMapperInterface' => 'Client\Mapper\Factory\ClientMapperFactory',
+            'Client\Mapper\ClientMapperInterface' => 'Client\Mapper\Factory\ClientMapperFactory',
             'Client\Service\ClientServiceInterface' => 'Client\Service\Factory\ClientServiceFactory'
         )
     ),
@@ -52,7 +52,7 @@ return array(
             ),
             
             'client-index' => array(
-                'title' => 'List CLients',
+                'title' => 'List Clients',
                 'type' => 'literal',
                 'options' => array(
                     'route' => '/client',
@@ -87,15 +87,15 @@ return array(
                 )
             )
         )
-    
-    ),
+    )
+    ,
     
     // view helpers
-        'view_helpers' => array(
-            'invokables' => array(
-                
-            )
-        ),
+    'view_helpers' => array(
+        'invokables' => array()
+
+        
+    ),
     
     // view manager
     'view_manager' => array(

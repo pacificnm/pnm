@@ -17,6 +17,8 @@ class ConfigServiceFactory implements FactoryInterface
     {
         $mapper = $serviceLocator->get('Config\Mapper\ConfigMapperInterface');
         
-        return new ConfigService($mapper);
+        $memcached = $serviceLocator->get('memcached');
+        
+        return new ConfigService($mapper, $memcached);
     }
 }

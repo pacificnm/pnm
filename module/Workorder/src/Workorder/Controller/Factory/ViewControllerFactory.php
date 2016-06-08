@@ -4,6 +4,8 @@ namespace Workorder\Controller\Factory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Workorder\Controller\ViewController;
+use WorkorderPart\Form\PartForm;
+use Workorder\Form\CompleteForm;
 
 class ViewControllerFactory implements FactoryInterface
 {
@@ -33,6 +35,10 @@ class ViewControllerFactory implements FactoryInterface
         
         $timeForm = $realServiceLocator->get('WorkorderTime\Form\TimeForm');
         
-        return new ViewController($clientService, $workorderService, $workorderEmployeeService, $noteService, $timeService, $partService, $noteForm, $timeForm);
+        $partForm = new PartForm();
+        
+        $completeForm = new CompleteForm();
+        
+        return new ViewController($clientService, $workorderService, $workorderEmployeeService, $noteService, $timeService, $partService, $noteForm, $timeForm, $partForm, $completeForm);
     }
 }

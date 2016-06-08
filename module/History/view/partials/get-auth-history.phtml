@@ -1,0 +1,18 @@
+<div class="tab-pane" id="control-sidebar-history-tab">
+	<h3 class="control-sidebar-heading"><?php echo $this->translate('History'); ?></h3>
+	<?php if($this->historyEntitys->count() == 0): ?>
+	<div class="alert alert-info">
+		<p><i class="fa fa-warning"></i> <?php echo $this->translate('You do not have any history.')?></p>	
+	</div>
+	<?php else: ?>
+	<ul class="control-sidebar-menu small">
+	<?php foreach($this->historyEntitys as $historyEntity): ?>
+		<li>
+			<a href="<?php echo $historyEntity->getHistoryUrl(); ?>" title="<?php echo $this->translate('View this history'); ?>">
+				<?php echo $historyEntity->getHistoryNote(); ?>
+			</a>
+		</li>
+	<?php endforeach; ?>
+	</ul>
+	<?php endif; ?>
+</div>

@@ -1,6 +1,7 @@
 <?php
 namespace Config\Service;
 
+use Zend\Cache\Storage\Adapter\Memcached;
 use Config\Entity\ConfigEntity;
 use Config\Mapper\ConfigMapperInterface;
 
@@ -8,23 +9,33 @@ class ConfigService implements ConfigServiceInterface
 {
 
     /**
-     * 
+     *
      * @var ConfigMapperInterface
      */
     protected $mapper;
 
     /**
      * 
-     * @param ConfigMapperInterface $mapper
+     * @var Memcached
      */
-    public function __construct(ConfigMapperInterface $mapper)
+    protected $memcached;
+
+    /**
+     *
+     * @param ConfigMapperInterface $mapper            
+     * @param Memcached $memcached            
+     */
+    public function __construct(ConfigMapperInterface $mapper, Memcached $memcached)
     {
         $this->mapper = $mapper;
+        
+        $this->memcached = $memcached;
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Config\Service\ConfigServiceInterface::getAll()
      */
     public function getAll($filter)
@@ -33,18 +44,31 @@ class ConfigService implements ConfigServiceInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Config\Service\ConfigServiceInterface::get()
      */
     public function get($id)
     {
-        return $this->mapper->get($id);
+        $key = 'config-service-get-' . $id;
+        
+        $configEntity = $this->memcached->getItem($key);
+        
+        if (! $configEntity) {
+            
+            $configEntity = $this->mapper->get($id);
+            
+            $this->memcached->setItem($key, $configEntity);
+        }
+        
+        return $configEntity;
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Config\Service\ConfigServiceInterface::save()
      */
     public function save(ConfigEntity $entity)
@@ -53,8 +77,9 @@ class ConfigService implements ConfigServiceInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Config\Service\ConfigServiceInterface::delete()
      */
     public function delete(ConfigEntity $entity)
