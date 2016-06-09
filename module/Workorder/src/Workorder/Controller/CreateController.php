@@ -237,6 +237,8 @@ class CreateController extends BaseController
         
         $form->get('workorderDateClose')->setValue(0);
         
+        $form->get('invoiceId')->setValue(0);
+        
         // return View
         return new ViewModel(array(
             'clientEntity' => $clientEntity,

@@ -131,7 +131,6 @@ class CompleteController extends BaseController
             $this->completeForm->setData($postData);
             if ($this->completeForm->isValid()) {
                 
-                \Zend\Debug\Debug::dump($this->completeForm->getData());
                 
                 $workorderDateClose = strtotime($postData['workorderDateClose']);
                 
@@ -140,6 +139,17 @@ class CompleteController extends BaseController
                 $workorderEntity->setWorkorderStatus('Closed');
                 
                 $this->workorderService->save($workorderEntity);
+                
+                // if we are not creating an invoice. 
+                if($postData['createInvoice'] == 0) {
+                    $this->flashmessenger()->addSuccessMessage('The work order was completed.');
+                    
+                    // redirect to view invoice
+                    return $this->redirect()->toRoute('workorder-view', array(
+                        'clientId' => $id,
+                        'workorderId' => $workorderEntity->getWorkorderId()
+                    ));
+                }
                 
                 $invoiceBalance = $workorderEntity->getWorkorderLabor() + $workorderEntity->getWorkorderParts();
                 

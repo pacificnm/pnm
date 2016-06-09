@@ -4,6 +4,7 @@ namespace Invoice\Controller\Factory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Invoice\Controller\ViewController;
+use InvoiceItem\Form\ItemForm;
 
 
 class ViewControllerFactory implements FactoryInterface
@@ -26,6 +27,16 @@ class ViewControllerFactory implements FactoryInterface
         
         $optionService = $realServiceLocator->get('InvoiceOption\Service\OptionServiceInterface');
         
-        return new ViewController($clientService, $invoiceService, $itemService, $optionService);
+        $paymentService = $realServiceLocator->get('InvoicePayment\Service\PaymentServiceInterface');
+        
+        $locationService = $realServiceLocator->get('Location\Service\LocationServiceInterface');
+        
+        $phoneService = $realServiceLocator->get('Phone\Service\PhoneServiceInterface');
+        
+        $itemForm = new ItemForm();
+        
+        $paymentForm = $realServiceLocator->get('InvoicePayment\Form\PaymentForm');
+        
+        return new ViewController($clientService, $invoiceService, $itemService, $optionService, $paymentService, $locationService, $phoneService, $itemForm, $paymentForm);
     }
 }

@@ -1,0 +1,35 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-cog"></i>
+					<?php echo $this->translate('Invoice Options'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('invoice-option-update');?>" title="<?php echo $this->translate('Edit'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+				</div>
+			</div>
+			<div class="box-body">
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Enable Tax'); ?></b>
+						<a class="pull-right"><?php echo ($this->optionsEntity->getInvoiceOptionEnableTax() == 1) ? $this->translate('Yes') : $this->translate('No'); ?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Enable Discount'); ?></b>
+						<a class="pull-right"><?php echo ($this->optionsEntity->getInvoiceOptionEnableDiscount() == 1) ? $this->translate('Yes') : $this->translate('No'); ?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Invoice Terms'); ?></b>
+						<a class="pull-right"><?php echo $this->optionsEntity->getInvoiceOptionTerms(); ?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Invoice Memo'); ?></b>
+						<a class="pull-right"><?php echo $this->optionsEntity->getInvoiceOptionMemo(); ?></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

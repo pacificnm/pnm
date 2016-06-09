@@ -21,6 +21,13 @@ interface LocationServiceInterface
     public function get($id);
 
     /**
+     * 
+     * @param number $clientId
+     * @return LocationEntity
+     */
+    public function getClientBillingLocation($clientId);
+    
+    /**
      *
      * @param LocationEntity $entity            
      * @return LocationEntity

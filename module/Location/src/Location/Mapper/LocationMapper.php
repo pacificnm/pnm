@@ -126,6 +126,43 @@ class LocationMapper implements LocationMapperInterface
         
         return array();
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Location\Mapper\LocationMapperInterface::getClientLocationByType()
+     */
+    public function getClientLocationByType($clientId, $locationType)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('location');
+        
+        $select->where(array(
+            'location.client_id = ?' => $clientId
+        ));
+        
+        $select->where(array(
+            'location.location_type = ?' => $locationType
+        ));
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+            $resultSet->buffer();
+        
+            return $resultSet->initialize($result)->current();
+        }
+        
+        return array();
+    }
 
     /**
      *

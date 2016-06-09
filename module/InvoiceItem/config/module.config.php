@@ -6,7 +6,10 @@ return array(
         'acl' => array(
             'guest' => array(),
             'user' => array(),
-            'employee' => array(),
+            'employee' => array(
+                'invoice-item-create',
+                'invoice-item-delete'
+            ),
             'accountant' => array(),
             'administrator' => array()
         )
@@ -14,7 +17,10 @@ return array(
     
     // controllers
     'controllers' => array(
-        'factories' => array()
+        'factories' => array(
+            'InvoiceItem\Controller\Create' => 'InvoiceItem\Controller\Factory\CreateControllerFactory',
+            'InvoiceItem\Controller\Delete' => 'InvoiceItem\Controller\Factory\DeleteControllerFactory'
+        )
     ),
     
     // service manager
@@ -27,7 +33,30 @@ return array(
     
     // router
     'router' => array(
-        'routes' => array()
+        'routes' => array(
+            'invoice-item-create' => array(
+                'title' => 'Create Invoice Item',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/invoice/[:invoiceId]/invoice-item/create',
+                    'defaults' => array(
+                        'controller' => 'InvoiceItem\Controller\Create',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'invoice-item-delete' => array(
+                'title' => 'Delete Invoice Item',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/invoice/[:invoiceId]/invoice-item/delete/[:invoiceItemId]',
+                    'defaults' => array(
+                        'controller' => 'InvoiceItem\Controller\Delete',
+                        'action' => 'index'
+                    )
+                )
+            ),
+        )
     ),
     
     // view manager

@@ -12,6 +12,7 @@ return array(
                 'invoice-delete',
                 'invoice-print',
                 'invoice-update',
+                'invoice-workorder',
                 'invoice-view',
             ),
             'accountant' => array(),
@@ -28,6 +29,7 @@ return array(
             'Invoice\Controller\Print' => 'Invoice\Controller\Factory\PrintControllerFactory',
             'Invoice\Controller\Update' => 'Invoice\Controller\Factory\UpdateControllerFactory',
             'Invoice\Controller\View' => 'Invoice\Controller\Factory\ViewControllerFactory',
+            'Invoice\Controller\Workorder' => 'Invoice\Controller\Factory\WorkorderControllerFactory'
         )
     ),
     
@@ -93,6 +95,17 @@ return array(
                     'route' => '/client/[:clientId]/invoice/update/[:invoiceId]',
                     'defaults' => array(
                         'controller' => 'Invoice\Controller\Update',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'invoice-workorder' => array(
+                'title' => 'Add Work Order',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/invoice/work-order/[:invoiceId]',
+                    'defaults' => array(
+                        'controller' => 'Invoice\Controller\Workorder',
                         'action' => 'index'
                     )
                 )

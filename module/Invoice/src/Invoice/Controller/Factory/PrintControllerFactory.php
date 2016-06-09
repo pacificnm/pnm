@@ -9,8 +9,9 @@ class PrintControllerFactory implements FactoryInterface
 {
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Zend\ServiceManager\FactoryInterface::createService()
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -19,6 +20,16 @@ class PrintControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new PrintController($clientService);
+        $invoiceService = $realServiceLocator->get('Invoice\Service\InvoiceServiceInterface');
+        
+        $itemService = $realServiceLocator->get('InvoiceItem\Service\ItemServiceInterface');
+        
+        $optionService = $realServiceLocator->get('InvoiceOption\Service\OptionServiceInterface');
+        
+        $locationService = $realServiceLocator->get('Location\Service\LocationServiceInterface');
+        
+        $phoneService = $realServiceLocator->get('Phone\Service\PhoneServiceInterface');
+        
+        return new PrintController($clientService, $invoiceService, $itemService, $optionService, $locationService, $phoneService);
     }
 }

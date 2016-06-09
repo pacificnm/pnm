@@ -7,6 +7,11 @@ use Zend\View\Model\ViewModel;
 use Invoice\Service\InvoiceServiceInterface;
 use InvoiceItem\Service\ItemServiceInterface;
 use InvoiceOption\Service\OptionServiceInterface;
+use InvoiceItem\Form\ItemForm;
+use InvoicePayment\Form\PaymentForm;
+use Location\Service\LocationServiceInterface;
+use Phone\Service\PhoneServiceInterface;
+use InvoicePayment\Service\PaymentServiceInterface;
 
 class ViewController extends BaseController
 {
@@ -37,12 +42,47 @@ class ViewController extends BaseController
 
     /**
      *
+     * @var PaymentServiceInterface
+     */
+    protected $paymentService;
+
+    /**
+     *
+     * @var LocationServiceInterface
+     */
+    protected $locationService;
+
+    /**
+     *
+     * @var PhoneServiceInterface
+     */
+    protected $phoneService;
+
+    /**
+     *
+     * @var ItemForm
+     */
+    protected $itemForm;
+
+    /**
+     *
+     * @var PaymentForm
+     */
+    protected $paymentForm;
+
+    /**
+     *
      * @param ClientServiceInterface $clientService            
      * @param InvoiceServiceInterface $invoiceService            
      * @param ItemServiceInterface $itemService            
      * @param OptionServiceInterface $optionService            
+     * @param PaymentServiceInterface $paymentService            
+     * @param LocationServiceInterface $locationService            
+     * @param PhoneServiceInterface $phoneService            
+     * @param ItemForm $itemForm            
+     * @param PaymentForm $paymentForm            
      */
-    public function __construct(ClientServiceInterface $clientService, InvoiceServiceInterface $invoiceService, ItemServiceInterface $itemService, OptionServiceInterface $optionService)
+    public function __construct(ClientServiceInterface $clientService, InvoiceServiceInterface $invoiceService, ItemServiceInterface $itemService, OptionServiceInterface $optionService, PaymentServiceInterface $paymentService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, ItemForm $itemForm, PaymentForm $paymentForm)
     {
         $this->clientService = $clientService;
         
@@ -51,6 +91,16 @@ class ViewController extends BaseController
         $this->itemService = $itemService;
         
         $this->optionService = $optionService;
+        
+        $this->paymentService = $paymentService;
+        
+        $this->locationService = $locationService;
+        
+        $this->phoneService = $phoneService;
+        
+        $this->itemForm = $itemForm;
+        
+        $this->paymentForm = $paymentForm;
     }
 
     /**
@@ -65,6 +115,7 @@ class ViewController extends BaseController
         
         $invoiceId = $this->params()->fromRoute('invoiceId');
         
+        // get client
         $clientEntity = $this->clientService->get($id);
         
         if (! $clientEntity) {
@@ -73,6 +124,7 @@ class ViewController extends BaseController
             return $this->redirect()->toRoute('client-list');
         }
         
+        // get invoice
         $invoiceEntity = $this->invoiceService->get($invoiceId);
         
         if (! $invoiceEntity) {
@@ -88,12 +140,54 @@ class ViewController extends BaseController
             ->getUri(), 'READ', $this->identity()
             ->getAuthId(), 'View Client ' . $clientEntity->getClientName() . ' invoice #' . $invoiceId);
         
+        // get items
         $itemEntitys = $this->itemService->getAll(array(
             'invoiceId' => $invoiceId
         ));
         
+        // get invoice options
         $optionEntity = $this->optionService->get(1);
         
+        // get payments
+        $paymentEntitys = $this->paymentService->getInvoicePayments($invoiceId);
+        
+        // get billing location
+        $locationEntity = $this->locationService->getClientBillingLocation($id);
+        
+        // get location phone
+        $phoneEntity = $this->phoneService->getPrimaryPhoneByLocation($locationEntity->getLocationId());
+        
+        // item form
+        $this->itemForm->get('invoiceItemId')->setValue(0);
+        
+        $this->itemForm->get('invoiceId')->setValue($invoiceId);
+        
+        $this->itemForm->get('invoiceItemDate')->setValue(time());
+        
+        $this->itemForm->get('invoiceItemTotal')->setValue(0);
+        
+        $this->itemForm->setAttribute('action', $this->url()
+            ->fromRoute('invoice-item-create', array(
+            'clientId' => $id,
+            'invoiceId' => $invoiceId
+        )));
+        
+        // payment form
+        $this->paymentForm->get('invoicePaymentId')->setValue(0);
+        
+        $this->paymentForm->get('invoiceId')->setValue($invoiceId);
+        
+        $this->paymentForm->get('invoicePaymentDate')->setValue(date("m/d/Y"));
+        
+        $this->paymentForm->get('invoicePaymentAmount')->setValue($invoiceEntity->getInvoiceTotal());
+        
+        $this->paymentForm->setAttribute('action', $this->url()
+            ->fromRoute('invoice-payment-create', array(
+            'clientId' => $id,
+            'invoiceId' => $invoiceId
+        )));
+        
+        // set up layout
         $this->layout()->setVariable('clientId', $id);
         
         $this->layout()->setVariable('pageTitle', 'View Invoice');
@@ -112,7 +206,12 @@ class ViewController extends BaseController
             'clientId' => $id,
             'invoiceEntity' => $invoiceEntity,
             'itemEntitys' => $itemEntitys,
-            'optionEntity' => $optionEntity
+            'paymentEntitys' => $paymentEntitys,
+            'optionEntity' => $optionEntity,
+            'locationEntity' => $locationEntity,
+            'phoneEntity' => $phoneEntity,
+            'itemForm' => $this->itemForm,
+            'paymentForm' => $this->paymentForm
         ));
     }
 }

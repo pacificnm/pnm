@@ -24,6 +24,11 @@ class IndexController extends BaseController
     
     public function indexAction()
     {
+        // set history
+        $this->setHistory($this->getRequest()
+            ->getUri(), 'READ', $this->identity()
+            ->getAuthId(), 'Admin Labor Rates');
+        
         $this->layout()->setVariable('pageTitle', 'Labor');
         
         $this->layout()->setVariable('pageSubTitle', '');

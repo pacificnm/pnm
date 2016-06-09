@@ -58,7 +58,7 @@ class DeleteController extends BaseController
                 
                 $this->flashmessenger()->addSuccessMessage('The auth was deleted');
                 
-                return $this->redirect()->toRoute('auth-list');
+                return $this->redirect()->toRoute('auth-index');
             }
             
             return $this->redirect()->toRoute('auth-view', array('authId' => $authEntity->getAuthId()));

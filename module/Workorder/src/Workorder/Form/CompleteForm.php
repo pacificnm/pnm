@@ -24,6 +24,21 @@ class CompleteForm extends Form implements InputFilterProviderInterface
             )
         ));
         
+        // createInvoice
+        $this->add(array(
+            'type' => 'Checkbox',
+            'name' => 'createInvoice',
+            'options' => array(
+                'label' => 'Create Invoice',
+                'use_hidden_element' => true,
+                'checked_value' => '1',
+                'unchecked_value' => '0'
+            ),
+            'attributes' => array(
+                'id' => 'createInvoice'
+            )
+        ));
+        
         // button
         $this->add(array(
             'name' => 'submit',

@@ -27,7 +27,7 @@ class OptionEntity
      * @var string
      */
     protected $invoiceOptionMemo;
-
+    
     /**
      *
      * @var string

@@ -25,7 +25,6 @@ return array(
         'Network',
         'Notification',
         'Password',
-        'Payment',
         'Phone',
         'User',
         'Vendor',
@@ -47,11 +46,10 @@ return array(
         'InvoicePayment',
         'ClientFavorite',
         'History',
+        'Install',
+        'PaymentOption',
     ),
     'module_listener_options' => array(
-        //'config_cache_enabled'     => true,
-        //'module_map_cache_enabled' => true,
-        //'cache_dir'                => 'data/cache/',
         'module_paths' => array(
             './module',
             './vendor',
@@ -59,7 +57,5 @@ return array(
         'config_glob_paths' => array(
             'config/autoload/{{,*.}global,{,*.}local}.php',
         ),
-        
     ),
-
 );

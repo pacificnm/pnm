@@ -65,4 +65,15 @@ class LocationService implements LocationServiceInterface
     {
         return $this->mapper->delete($entity);
     }
+    
+    public function getClientBillingLocation($clientId)
+    {
+        $locationEntity = $this->mapper->getClientLocationByType($clientId, 'Billing');
+        
+        if(! $locationEntity) {
+            $locationEntity = $this->mapper->getClientLocationByType($clientId, 'Primary');
+        }
+        
+        return $locationEntity;
+    }
 }

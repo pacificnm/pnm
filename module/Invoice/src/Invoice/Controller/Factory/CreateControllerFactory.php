@@ -4,13 +4,15 @@ namespace Invoice\Controller\Factory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Invoice\Controller\CreateController;
+use Invoice\Form\InvoiceForm;
 
 class CreateControllerFactory implements FactoryInterface
 {
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Zend\ServiceManager\FactoryInterface::createService()
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -19,6 +21,10 @@ class CreateControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new CreateController($clientService);
+        $invoiceService = $realServiceLocator->get('Invoice\Service\InvoiceServiceInterface');
+        
+        $invoiceForm = new InvoiceForm();
+        
+        return new CreateController($clientService, $invoiceService, $invoiceForm);
     }
 }

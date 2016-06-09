@@ -21,6 +21,14 @@ interface LocationMapperInterface
     public function get($id);
 
     /**
+     * 
+     * @param number $clientId
+     * @param string $locationType
+     * @return LocationEntity
+     */
+    public function getClientLocationByType($clientId, $locationType);
+    
+    /**
      *
      * @param LocationEntity $entity            
      * @return LocationEntity

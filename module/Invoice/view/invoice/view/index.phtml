@@ -8,8 +8,10 @@
 				</h3>
 				<div class="box-tools">
 					<a href="<?php echo $this->url('invoice-print', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" target="_blank" title="<?php echo $this->translate('Print this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
+					<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
 					<a href="javascript:void(0);" data-toggle="modal" data-target="#paymentModal" title="<?php echo $this->translate('Pay this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-dollar"></i> <?php echo $this->translate('Payment'); ?></a>
 					<a href="<?php echo $this->url('invoice-delete', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('Delete this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+              		<?php endif; ?>
               		<a href="<?php echo $this->url('invoice-update', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('Edit this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 				</div>
 			</div>
@@ -57,7 +59,28 @@
 								<b><?php echo $this->translate('To'); ?>: <?php echo $this->clientEntity->getClientName(); ?></b>
 							</div>
 							<div class="box-body">
-							
+								<div class="row">
+									<div class="col-xs-12">
+										<p><?php echo $this->locationEntity->getLocationStreet(); ?></p>
+									</div>
+								</div>
+								<?php if(! empty($this->locationEntity->getLocationStreetCont())) :?>
+								<div class="row">
+									<div class="col-xs-12">
+										<p><?php echo $this->locationEntity->getLocationStreetCont(); ?></p>
+									</div>
+								</div>
+								<?php endif;?>
+								<div class="row">
+									<div class="col-xs-12">
+										<p><?php echo $this->locationEntity->getLocationCity(); ?>, <?php echo $this->locationEntity->getLocationState(); ?> <?php echo $this->locationEntity->getLocationZip(); ?></p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12">
+										<p><?php echo $this->phoneEntity->getPhoneNum(); ?></p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -106,7 +129,9 @@
 					<?php echo $this->translate('Invoice Items'); ?>
 				</h3>
 				<div class="box-tools">
+					<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
 					<a href="javascript:void(0);" data-toggle="modal" data-target="#itemModal" title="<?php echo $this->translate('Add item this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+					<?php endif; ?>
 				</div>
 			</div>
 			
@@ -136,9 +161,11 @@
               				<td class="text-right"><?php echo $this->currencyFormat($itemEntity->getInvoiceItemAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
               				<td class="text-right"><?php echo $this->currencyFormat($itemEntity->getInvoiceItemTotal(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
               				<td class="text-right" nowrap>
-              					<a href="" title="<?php echo $this->translate('Delete this invoice item'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
-              					<a href="" title="<?php echo $this->translate('Edit this invoice item'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+              				<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
+              					<a href="<?php echo $this->url('invoice-item-delete', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId(), 'invoiceItemId' => $itemEntity->getInvoiceItemId())); ?>" title="<?php echo $this->translate('Delete this invoice item'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+              				<?php endif; ?>
               				</td>
+              				
               			</tr>
               		<?php endforeach; ?>
               		</tbody>
@@ -196,14 +223,47 @@
 					<?php echo $this->translate('Payments'); ?>
 				</h3>
 				<div class="box-tools">
+					<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
 					<a href="javascript:void(0);" data-toggle="modal" data-target="#paymentModal" title="<?php echo $this->translate('Pay this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-dollar"></i> <?php echo $this->translate('Payment'); ?></a>
+					<?php endif; ?>
 				</div>
 			</div>
+			<?php if($this->paymentEntitys->count() == 0): ?>
 			<div class="box-body">
 				<div class="alert alert-info">
 					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No payment has been made.'); ?></p>
 				</div>
 			</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+              		<thead>
+              			<tr>
+              				<th><?php echo $this->translate('Date'); ?></th>
+              				<th><?php echo $this->translate('Method'); ?></th>
+              				<th><?php echo $this->translate('Detail'); ?></th>	
+              				<th><?php echo $this->translate('Amount'); ?></th>
+              				<th></th>
+              			</tr>
+              		</thead>
+              		<tbody>
+              		<?php foreach ($this->paymentEntitys as $paymentEntity): ?>
+              			<tr>
+              				<td><?php echo date($this->appConfig()->getConfigDateShort(), $paymentEntity->getInvoicePaymentDate()); ?></td>
+              				<td><?php echo $paymentEntity->getOptionEntity()->getPaymentOptionName(); ?></td>
+              				<td><?php echo $paymentEntity->getInvoicePaymentDetail(); ?></td>
+              				<td><?php echo $this->currencyFormat($paymentEntity->getInvoicePaymentAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+              				<td class="text-right">
+              					<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
+              					<a href="<?php echo $this->url('invoice-payemnt-delete', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId(), 'invoicePaymentId' => $paymentEntity->getInvoicePaymentId()));?>" title="<?php echo $this->translate('Dleete this payment.'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('delete'); ?></a>
+              					<?php endif; ?>
+              				</td>
+              			</tr>
+              		<?php endforeach; ?>
+              		</tbody>
+              	</table>
+             </div>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>
@@ -216,6 +276,11 @@
 					<i class="fa fa-credit-card"></i>
 					<?php echo $this->translate('Work Orders'); ?>
 				</h3>
+				<div class="box-tools">
+					<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
+					<a href="<?php echo $this->url('invoice-workorder', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('Add a work order to this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('Add'); ?></a>
+					<?php endif; ?>
+				</div>
 			</div>
 			<div class="box-body">
 				<div class="alert alert-info">
@@ -227,6 +292,7 @@
 </div>
 
 <!-- payment modal -->
+<?php echo $this->form()->openTag($this->paymentForm); ?>
 <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -235,16 +301,74 @@
         <h4 class="modal-title" id="myModalLabel"><i class="fa fa-dollar"></i> <?php echo $this->translate('Payment')?></h4>
       </div>
       <div class="modal-body">
-      
+      		<?php echo $this->partial('partials/form-errors.phtml', array('errorMsg' => $this->paymentForm->getMessages())); ?>
+       	
+           	<div class="row">
+            	<div class="col-xs-12 col-sm-4">
+    				<?php $element = $this->paymentForm->get('invoicePaymentDate'); ?>
+    				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+    					<label class="control-label"><?php echo $element->getLabel() ?></label>
+    					<?php echo $this->formElement($element); ?>
+    					<?php if($this->formElementErrors($element)): ?>
+    						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+    					<?php endif; ?>
+    				</div>
+               </div>
+           </div>
+           
+           <div class="row">
+            	<div class="col-xs-12 col-sm-4">
+    				<?php $element = $this->paymentForm->get('paymentOptionId'); ?>
+    				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+    					<label class="control-label"><?php echo $element->getLabel() ?></label>
+    					<?php echo $this->formElement($element); ?>
+    					<?php if($this->formElementErrors($element)): ?>
+    						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+    					<?php endif; ?>
+    				</div>
+               </div>
+           </div>
+           
+           <div class="row">
+            	<div class="col-xs-12 col-sm-2">
+    				<?php $element = $this->paymentForm->get('invoicePaymentAmount'); ?>
+    				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+    					<label class="control-label"><?php echo $element->getLabel() ?></label>
+    					<?php echo $this->formElement($element); ?>
+    					<?php if($this->formElementErrors($element)): ?>
+    						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+    					<?php endif; ?>
+    				</div>
+               </div>
+           </div>
+           
+           <div class="row">
+            	<div class="col-xs-12 col-sm-2">
+    				<?php $element = $this->paymentForm->get('invoicePaymentDetail'); ?>
+    				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+    					<label class="control-label"><?php echo $element->getLabel() ?></label>
+    					<?php echo $this->formElement($element); ?>
+    					<?php if($this->formElementErrors($element)): ?>
+    						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+    					<?php endif; ?>
+    				</div>
+               </div>
+           </div>
+           
+          <?php echo $this->formElement($this->paymentForm->get('invoicePaymentId')); ?>
+          <?php echo $this->formElement($this->paymentForm->get('invoiceId')); ?>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+        <?php echo $this->formSubmit($this->itemForm->get('submit')); ?>
       </div>
     </div>
   </div>
 </div>
+<?php echo $this->form()->closeTag(); ?>
 
 <!-- item modal -->
+<?php echo $this->form()->openTag($this->itemForm); ?>
 <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -253,11 +377,61 @@
         <h4 class="modal-title" id="myModalLabel"><i class="fa fa-credit-card"></i> <?php echo $this->translate('Add Item To Invoice')?></h4>
       </div>
       <div class="modal-body">
-      
+      		<?php echo $this->partial('partials/form-errors.phtml', array('errorMsg' => $this->itemForm->getMessages())); ?>
+       	
+           	<div class="row">
+            	<div class="col-xs-12 col-sm-2">
+    				<?php $element = $this->itemForm->get('invoiceItemQty'); ?>
+    				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+    					<label class="control-label"><?php echo $element->getLabel() ?></label>
+    					<?php echo $this->formElement($element); ?>
+    					<?php if($this->formElementErrors($element)): ?>
+    						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+    					<?php endif; ?>
+    				</div>
+               </div>
+               
+               <div class="col-xs-12 col-sm-8">
+    				<?php $element = $this->itemForm->get('invoiceItemDescrip'); ?>
+    				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+    					<label class="control-label"><?php echo $element->getLabel() ?></label>
+    					<?php echo $this->formElement($element); ?>
+    					<?php if($this->formElementErrors($element)): ?>
+    						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+    					<?php endif; ?>
+    				</div>
+               </div>
+               
+               <div class="col-xs-12 col-sm-2">
+    				<?php $element = $this->itemForm->get('invoiceItemAmount'); ?>
+    				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+    					<label class="control-label"><?php echo $element->getLabel() ?></label>
+    					<?php echo $this->formElement($element); ?>
+    					<?php if($this->formElementErrors($element)): ?>
+    						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+    					<?php endif; ?>
+    				</div>
+               </div>
+               
+           </div>
+       
+       
+      		<?php echo $this->formElement($this->itemForm->get('invoiceItemId')); ?>
+       		<?php echo $this->formElement($this->itemForm->get('invoiceId')); ?>
+       		<?php echo $this->formElement($this->itemForm->get('invoiceItemTotal')); ?>
+       		<?php echo $this->formElement($this->itemForm->get('invoiceItemDate')); ?>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+        <?php echo $this->formSubmit($this->itemForm->get('submit')); ?>
       </div>
     </div>
   </div>
 </div>
+<?php echo $this->form()->closeTag(); ?>
+
+<script>
+  $(function () {
+	  $('#invoicePaymentDate').daterangepicker({singleDatePicker: true, format: 'MM/DD/YYYY'});
+  });
+ </script>

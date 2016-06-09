@@ -7,6 +7,8 @@
  */
 return array(
     'modules' => array(
+        'ZendDeveloperTools',
+        'BjyProfiler',
         'Application',
         'Acl',
         'Client',
@@ -23,7 +25,6 @@ return array(
         'Network',
         'Notification',
         'Password',
-        'Payment',
         'Phone',
         'User',
         'Vendor',
@@ -44,6 +45,8 @@ return array(
         'InvoiceOption',
         'InvoicePayment',
         'ClientFavorite',
+        'History',
+        'Install',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

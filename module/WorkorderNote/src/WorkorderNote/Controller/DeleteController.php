@@ -113,8 +113,7 @@ class DeleteController extends BaseController
             return $this->redirect()->toRoute('workorder-view', array(
                 'clientId' => $id,
                 'workorderId' => $workorderId
-            )
-            );
+            ));
         }
         
         // return View

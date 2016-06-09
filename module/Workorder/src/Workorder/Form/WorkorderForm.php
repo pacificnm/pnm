@@ -59,6 +59,12 @@ class WorkorderForm extends Form implements InputFilterProviderInterface
             'type' => 'hidden',
         ));
         
+        // invoiceId
+        $this->add(array(
+            'name' => 'invoiceId',
+            'type' => 'hidden',
+        ));
+        
         // workorderLabor
         $this->add(array(
             'name' => 'workorderLabor',

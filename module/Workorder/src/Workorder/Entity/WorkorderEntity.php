@@ -89,6 +89,12 @@ class WorkorderEntity
 
     /**
      *
+     * @var number
+     */
+    protected $invoiceId;
+
+    /**
+     *
      * @var ClientEntity
      */
     protected $clientEntity;
@@ -226,6 +232,15 @@ class WorkorderEntity
     public function getWorkorderDateClose()
     {
         return $this->workorderDateClose;
+    }
+
+    /**
+     *
+     * @return the $invoiceId
+     */
+    public function getInvoiceId()
+    {
+        return $this->invoiceId;
     }
 
     /**
@@ -379,6 +394,15 @@ class WorkorderEntity
     public function setWorkorderDateClose($workorderDateClose)
     {
         $this->workorderDateClose = $workorderDateClose;
+    }
+
+    /**
+     *
+     * @param number $invoiceId            
+     */
+    public function setInvoiceId($invoiceId)
+    {
+        $this->invoiceId = $invoiceId;
     }
 
     /**

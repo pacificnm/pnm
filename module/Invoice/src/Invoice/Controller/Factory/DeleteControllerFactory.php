@@ -9,8 +9,9 @@ class DeleteControllerFactory implements FactoryInterface
 {
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Zend\ServiceManager\FactoryInterface::createService()
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -19,6 +20,12 @@ class DeleteControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new DeleteController($clientService);
+        $invoiceService = $realServiceLocator->get('Invoice\Service\InvoiceServiceInterface');
+        
+        $itemService = $realServiceLocator->get('InvoiceItem\Service\ItemServiceInterface');
+        
+        $paymentService = $realServiceLocator->get('InvoicePayment\Service\PaymentServiceInterface');
+        
+        return new DeleteController($clientService, $invoiceService, $itemService, $paymentService);
     }
 }

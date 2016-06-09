@@ -40,5 +40,19 @@
 				<i class="fa fa-dollar"></i> <?php echo $this->translate('Labor Rates'); ?>
 			</a>
 		</li>
+		
+		<!-- Payment Options -->
+		<li class="<?php if($this->activeSubMenuItem == 'payment-option-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('payment-option-index'); ?>" title="<?php echo $this->translate('Payment Options'); ?>">
+				<i class="fa fa-dollar"></i> <?php echo $this->translate('Payment Options'); ?>
+			</a>
+		</li>
+		
+		<!-- Invoice Options -->
+		<li class="<?php if($this->activeSubMenuItem == 'invoice-option-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('invoice-option-index'); ?>" title="<?php echo $this->translate('Invoice Options'); ?>">
+				<i class="fa fa-dollar"></i> <?php echo $this->translate('Invoice Options'); ?>
+			</a>
+		</li>
 	</ul>
 </li>

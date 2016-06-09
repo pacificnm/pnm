@@ -161,6 +161,24 @@ return array(
                                 )
                             ),
                             array(
+                                'label' => 'Payment Options',
+                                'route' => 'payment-option-index',
+                                'useRouteMatch' => true,
+                                'pages' => array()
+                            ),
+                            array(
+                                'label' => 'Invoice Options',
+                                'route' => 'invoice-option-index',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Edit',
+                                        'route' => 'invoice-option-update',
+                                        'useRouteMatch' => true,
+                                    )
+                                )
+                            ),
+                            array(
                                 'label' => 'Labor Rates',
                                 'route' => 'labor-index',
                                 'useRouteMatch' => true,
@@ -326,6 +344,16 @@ return array(
                                                     array(
                                                         'label' => 'Print Invoice',
                                                         'route' => 'invoice-print',
+                                                        'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Payment',
+                                                        'route' => 'invoice-payemnt-delete',
+                                                        'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Invoice Item',
+                                                        'route' => 'invoice-item-delete',
                                                         'useRouteMatch' => true
                                                     )
                                                 )

@@ -1,0 +1,38 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-dollar"></i>
+					<?php echo $this->translate('Payment Options'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('payment-option-index');?>" title="<?php echo $this->translate('New'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+				</div>
+			</div>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Name'); ?></th>
+							<th><?php echo $this->translate('Enabled'); ?></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->optionEntitys as $optionEntitys): ?>
+						<tr>
+							<td><?php echo $optionEntitys->getPaymentOptionName();?></td>
+							<td><?php echo ($optionEntitys->getPaymentOptionEnabled() == 1) ? $this->translate('Yes') : $this->translate('No'); ?></td>
+							<td class="text-right">
+								<a href="<?php echo $this->url('payment-option-delete', array('paymentOptionId' => $optionEntitys->getPaymentOptionId())); ?>" title="<?php echo $this->translate('Delete this payment option'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+								<a href="<?php echo $this->url('payment-option-update', array('paymentOptionId' => $optionEntitys->getPaymentOptionId())); ?>" title="<?php echo $this->translate('Edit this payment option'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

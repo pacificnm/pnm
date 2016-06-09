@@ -602,6 +602,12 @@
       <div class="modal-body">
         <?php echo $this->partial('partials/form-errors.phtml', array('errorMsg' => $this->completeForm->getMessages())); ?>
         
+        <?php if($this->noteEntitys->count() == 0): ?>
+        <div class="alert alert-danger">
+        	<p><i class="fa fa-warning"></i> <?php echo $this->translate('This workorder has no notes, are you sure you want to close it?');?>
+        </div>
+        <?php endif;?>
+        
         <div class="row">
         	<div class="col-xs-12 col-sm-4">
 				<?php $element = $this->completeForm->get('workorderDateClose'); ?>
@@ -614,6 +620,20 @@
 				</div>
            </div>
          </div>
+         
+         <div class="row">
+			<div class="col-md-12">
+				<?php $element = $this->completeForm->get('createInvoice'); ?>
+					<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+    					<?php echo $this->formElement($element); ?>
+    					<label class="control-label"><?php echo $element->getLabel() ?></label>
+    					<?php if($this->formElementErrors($element)): ?>
+    						<span class="text-danger"><?php echo $this->formElementErrors($element) ?></span>
+    					<?php endif; ?>
+					</div>
+			</div>
+		</div>
+         
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>

@@ -31,19 +31,15 @@ class SetHistory extends AbstractPlugin
      */
     public function __invoke($uri, $action, $authId, $note)
     {
-        switch($action) {
-            case 'READ':
-                $entity = new HistoryEntity();
+        $entity = new HistoryEntity();
                 
                 $entity->setAuthId($authId);
-                $entity->setHistoryAction('READ');
+                $entity->setHistoryAction($action);
                 $entity->setHistoryNote($note);
                 $entity->setHistoryTime(time());
                 $entity->setHistoryUrl($uri);
                 
                 $this->historyService->save($entity);
-            break;
-        }
         
     }
 }

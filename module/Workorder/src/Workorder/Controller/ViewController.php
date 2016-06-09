@@ -165,6 +165,8 @@ class ViewController extends BaseController
         
         $this->noteForm->get('workorderNotesId')->setValue(0);
         
+        $this->noteForm->get('workorderNotesDate')->setValue(date("m/d/Y"));
+        
         $this->noteForm->setAttribute('Action', $this->url()
             ->fromRoute('workorder-note-create', array(
             'clientId' => $id,
@@ -206,6 +208,11 @@ class ViewController extends BaseController
         )));
         
         // complete form
+        
+        $this->completeForm->get('workorderDateClose')->setValue(date("m/d/Y"));
+        
+        $this->completeForm->get('createInvoice')->setValue(1);
+        
         $this->completeForm->setAttribute('action', $this->url()
             ->fromRoute('workorder-complete', array(
             'clientId' => $id,
