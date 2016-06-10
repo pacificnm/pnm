@@ -9,6 +9,7 @@ use InvoiceItem\Service\ItemServiceInterface;
 use InvoiceOption\Service\OptionServiceInterface;
 use Location\Service\LocationServiceInterface;
 use Phone\Service\PhoneServiceInterface;
+use Workorder\Service\WorkorderServiceInterface;
 
 class PrintController extends BaseController
 {
@@ -50,15 +51,22 @@ class PrintController extends BaseController
     protected $phoneService;
 
     /**
-     *
-     * @param ClientServiceInterface $clientService            
-     * @param InvoiceServiceInterface $invoiceService            
-     * @param ItemServiceInterface $itemService            
-     * @param OptionServiceInterface $optionService            
-     * @param LocationServiceInterface $locationService            
-     * @param PhoneServiceInterface $phoneService            
+     * 
+     * @var WorkorderServiceInterface
      */
-    public function __construct(ClientServiceInterface $clientService, InvoiceServiceInterface $invoiceService, ItemServiceInterface $itemService, OptionServiceInterface $optionService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService)
+    protected $workorderService;
+
+    /**
+     * 
+     * @param ClientServiceInterface $clientService
+     * @param InvoiceServiceInterface $invoiceService
+     * @param ItemServiceInterface $itemService
+     * @param OptionServiceInterface $optionService
+     * @param LocationServiceInterface $locationService
+     * @param PhoneServiceInterface $phoneService
+     * @param WorkorderServiceInterface $workorderService
+     */
+    public function __construct(ClientServiceInterface $clientService, InvoiceServiceInterface $invoiceService, ItemServiceInterface $itemService, OptionServiceInterface $optionService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, WorkorderServiceInterface $workorderService)
     {
         $this->clientService = $clientService;
         
@@ -71,6 +79,9 @@ class PrintController extends BaseController
         $this->locationService = $locationService;
         
         $this->phoneService = $phoneService;
+        
+        $this->workorderService = $workorderService;
+
     }
 
     /**
@@ -122,7 +133,14 @@ class PrintController extends BaseController
         // get location phone
         $phoneEntity = $this->phoneService->getPrimaryPhoneByLocation($locationEntity->getLocationId());
         
+        // get work orders
+        $workorderEntitys = $this->workorderService->getInvoiceWorkorders($invoiceId);
+        
         $this->layout('/layout/print.phtml');
+        
+        $this->setHeadTitle('Invoice ' . $invoiceId);
+        
+        $this->setHeadTitle($clientEntity->getClientName());
         
         // return View
         return new ViewModel(array(
@@ -133,6 +151,7 @@ class PrintController extends BaseController
             'optionEntity' => $optionEntity,
             'locationEntity' => $locationEntity,
             'phoneEntity' => $phoneEntity,
+            'workorderEntitys' => $workorderEntitys
         ));
     }
 }

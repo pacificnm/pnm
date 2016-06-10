@@ -6,6 +6,7 @@ use WorkorderTime\Service\TimeServiceInterface;
 use WorkorderTime\Form\TimeForm;
 use Labor\Service\LaborServiceInterface;
 use Workorder\Service\WorkorderServiceInterface;
+use WorkorderCredit\Service\CreditServiceInterface;
 
 class CreateController extends BaseController
 {
@@ -27,6 +28,14 @@ class CreateController extends BaseController
      * @var WorkorderServiceInterface
      */
     protected $workorderService;
+    
+    /**
+     * 
+     * @var CreditServiceInterface
+     */
+    protected $creditService;
+    
+    
     /**
      *
      * @var TimeForm
@@ -38,9 +47,10 @@ class CreateController extends BaseController
      * @param TimeServiceInterface $timeService
      * @param LaborServiceInterface $laborService
      * @param WorkorderServiceInterface $workorderService
+     * @param CreditServiceInterface $creditService
      * @param TimeForm $timeForm
      */
-    public function __construct(TimeServiceInterface $timeService, LaborServiceInterface $laborService, WorkorderServiceInterface $workorderService, TimeForm $timeForm)
+    public function __construct(TimeServiceInterface $timeService, LaborServiceInterface $laborService, WorkorderServiceInterface $workorderService, CreditServiceInterface $creditService, TimeForm $timeForm)
     {
         $this->timeService = $timeService;
         
@@ -49,6 +59,8 @@ class CreateController extends BaseController
         $this->laborService = $laborService;
         
         $this->workorderService = $workorderService;
+        
+        $this->creditService = $creditService;
     }
 
     /**
@@ -112,6 +124,19 @@ class CreateController extends BaseController
                 $workorderEntity->setWorkorderLabor($workorderEntity->getWorkorderLabor() + $entity->getLaborTotal());
                 
                 $this->workorderService->save($workorderEntity);
+                
+                // if we have credit subtract it
+                $creditEntity = $this->creditService->getWorkorderLaborCredit($workorderId);
+                
+                if($creditEntity) {
+                    if(($creditEntity->getWorkorderCreditAmountLeft() - $entity->getLaborTotal()) > 0) {
+                        $creditEntity->setWorkorderCreditAmountLeft($creditEntity->getWorkorderCreditAmountLeft() - $entity->getLaborTotal());
+                    } else {
+                        $creditEntity->setWorkorderCreditAmountLeft(0);
+                    }
+                    
+                    $this->creditService->save($creditEntity);
+                }
                 
                 // @todo send email notifications that labor was added
                 

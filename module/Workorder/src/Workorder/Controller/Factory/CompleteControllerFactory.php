@@ -32,8 +32,10 @@ class CompleteControllerFactory implements FactoryInterface
         
         $optionService = $realServiceLocator->get('InvoiceOption\Service\OptionServiceInterface');
         
+        $creditService = $realServiceLocator->get('WorkorderCredit\Service\CreditServiceInterface');
+        
         $completeForm = new CompleteForm();
         
-        return new CompleteController($clientService, $workorderService, $timeService, $partService, $invoiceService, $itemService, $optionService, $completeForm);
+        return new CompleteController($clientService, $workorderService, $timeService, $partService, $invoiceService, $itemService, $optionService, $creditService, $completeForm);
     }
 }

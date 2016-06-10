@@ -2,6 +2,7 @@
 namespace WorkorderPart\Service;
 
 use WorkorderPart\Entity\PartEntity;
+
 interface PartServiceInterface
 {
 
@@ -32,4 +33,11 @@ interface PartServiceInterface
      * @return boolean
      */
     public function delete(PartEntity $entity);
+
+    /**
+     *
+     * @param number $workorderId            
+     * @return PartEntity
+     */
+    public function getWorkorderParts($workorderId);
 }

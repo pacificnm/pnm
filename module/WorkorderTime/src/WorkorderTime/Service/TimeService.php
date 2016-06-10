@@ -65,4 +65,18 @@ class TimeService implements TimeServiceInterface
     {
         return $this->mapper->delete($entity);
     }
+
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderTime\Service\TimeServiceInterface::getWorkorderTimes()
+     */
+    public function getWorkorderTimes($workorderId)
+    {
+        $filter = array(
+            'workorderId' => $workorderId
+        );
+        
+        return $this->mapper->getAll($filter);
+    }
 }

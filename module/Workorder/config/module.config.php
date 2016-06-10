@@ -102,7 +102,7 @@ return array(
                 )
             ),
             'workorder-print' => array(
-                'title' => 'Print Work Order',
+                'title' => 'Print',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/client/[:clientId]/work-order/print/[:workorderId]',

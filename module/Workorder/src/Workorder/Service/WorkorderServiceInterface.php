@@ -55,4 +55,18 @@ interface WorkorderServiceInterface
      * @return float
      */
     public function getClientTotalPart($clientId);
+    
+    /**
+     *
+     * @param number $clientId
+     * @return WorkorderEntity
+     */
+    public function getClientUnInvoiced($clientId);
+    
+    /**
+     *
+     * @param number $invoiceId
+     * @return WorkorderEntity
+     */
+    public function getInvoiceWorkorders($invoiceId);
 }

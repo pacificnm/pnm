@@ -30,6 +30,10 @@ class PrintControllerFactory implements FactoryInterface
         
         $phoneService = $realServiceLocator->get('Phone\Service\PhoneServiceInterface');
         
-        return new PrintController($clientService, $invoiceService, $itemService, $optionService, $locationService, $phoneService);
+        $workorderService = $realServiceLocator->get('Workorder\Service\WorkorderServiceInterface');
+        
+        $noteService = $realServiceLocator->get('WorkorderNote\Service\NoteServiceInterface');
+        
+        return new PrintController($clientService, $invoiceService, $itemService, $optionService, $locationService, $phoneService, $workorderService, $noteService);
     }
 }

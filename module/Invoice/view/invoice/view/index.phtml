@@ -282,11 +282,36 @@
 					<?php endif; ?>
 				</div>
 			</div>
+			<?php if($this->workorderEntitys->count() == 0): ?>
 			<div class="box-body">
 				<div class="alert alert-info">
 					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No work order mapped to this invoice.'); ?></p>
 				</div>
 			</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+              		<thead>
+              			<tr>
+              				<th><?php echo $this->translate('Work Order'); ?></th>
+              				<th></th>
+              			</tr>
+              		</thead>
+              		<tbody>
+              		<?php foreach($this->workorderEntitys as $workorderEntity): ?>
+						<tr>
+							<td>
+								<a href="<?php echo $this->url('workorder-view', array('clientId' => $this->clientId, 'workorderId' => $workorderEntity->getWorkorderId()));?>" title="<?php echo $this->translate('View this work order');?>"><?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?></a>
+							</td>
+							<td class="text-right">
+								<a href="<?php echo $this->url('invoice-workorder-delete', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId(), 'workorderId' => $workorderEntity->getWorkorderId())); ?>" title="<?php echo $this->translate('Remove this work order from invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+							</td>
+						</tr>
+					<?php endforeach;?>
+              		</tbody>
+              	</table>
+              </div>
+			<?php endif;?>
 		</div>
 	</div>
 </div>

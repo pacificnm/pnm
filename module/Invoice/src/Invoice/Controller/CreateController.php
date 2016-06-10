@@ -103,6 +103,8 @@ class CreateController extends BaseController
         
         $this->invoiceForm->get('invoiceDateEnd')->setValue(date("m/d/Y"));
         
+        $this->invoiceForm->get('invoiceDatePaid')->setValue(0);
+        
         $this->invoiceForm->get('invoiceSubtotal')->setValue(0.00);
         
         $this->invoiceForm->get('invoiceTax')->setValue(0.00);

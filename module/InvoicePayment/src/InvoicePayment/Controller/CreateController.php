@@ -94,6 +94,7 @@ class CreateController extends BaseController
                 
                 $entity = $this->paymentForm->getData();
                 
+                $entity->setInvoicePaymentDate(strtotime($entity->getInvoicePaymentDate()));
                 
                 $this->paymentService->save($entity);
                 

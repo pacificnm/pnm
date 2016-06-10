@@ -61,6 +61,14 @@ return array(
         )
     ),
     
+    // view helpers
+    'view_helpers' => array(
+        'factories' => array(
+            'GetWorkorderTimes' => 'WorkorderTime\View\Helper\Factory\GetWorkorderTimesFactory'
+        ),
+        'invokables' => array()
+    ),
+    
     // view manager
     'view_manager' => array(
         'template_path_stack' => array(

@@ -13,6 +13,7 @@ return array(
                 'invoice-print',
                 'invoice-update',
                 'invoice-workorder',
+                'invoice-workorder-delete',
                 'invoice-view',
             ),
             'accountant' => array(),
@@ -37,7 +38,8 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'Invoice\Service\InvoiceServiceInterface' => 'Invoice\Service\Factory\InvoiceServiceFactory',
-            'Invoice\Mapper\InvoiceMapperInterface' => 'Invoice\Mapper\Factory\InvoiceMapperFactory'
+            'Invoice\Mapper\InvoiceMapperInterface' => 'Invoice\Mapper\Factory\InvoiceMapperFactory',
+            'Invoice\Form\WorkorderForm' => 'Invoice\Form\Factory\WorkorderFormFactory',
         )
     ),
     
@@ -78,7 +80,7 @@ return array(
                 )
             ),
             'invoice-print' => array(
-                'title' => 'Print Invoice',
+                'title' => 'Print',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/client/[:clientId]/invoice/print/[:invoiceId]',
@@ -103,10 +105,21 @@ return array(
                 'title' => 'Add Work Order',
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/client/[:clientId]/invoice/work-order/[:invoiceId]',
+                    'route' => '/client/[:clientId]/invoice/[:invoiceId]/work-order/create',
                     'defaults' => array(
                         'controller' => 'Invoice\Controller\Workorder',
                         'action' => 'index'
+                    )
+                )
+            ),
+            'invoice-workorder-delete' => array(
+                'title' => 'Add Work Order',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/invoice/[:invoiceId]/work-order/[:workorderId]/delete',
+                    'defaults' => array(
+                        'controller' => 'Invoice\Controller\Workorder',
+                        'action' => 'delete'
                     )
                 )
             ),

@@ -23,8 +23,10 @@ class CreateControllerFactory implements FactoryInterface
         
         $workorderService = $realServiceLocator->get('Workorder\Service\WorkorderServiceInterface');
         
+        $creditService = $realServiceLocator->get('WorkorderCredit\Service\CreditServiceInterface');
+        
         $partForm = new PartForm();
         
-        return new CreateController($partService, $workorderService, $partForm);
+        return new CreateController($partService, $workorderService, $creditService, $partForm);
     }
 }

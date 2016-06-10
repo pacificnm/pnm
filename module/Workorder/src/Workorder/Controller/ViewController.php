@@ -6,13 +6,12 @@ use Client\Service\ClientServiceInterface;
 use Zend\View\Model\ViewModel;
 use Workorder\Service\WorkorderServiceInterface;
 use WorkorderEmployee\Service\WorkorderEmployeeServiceInterface;
-use WorkorderNote\Service\NoteServiceInterface;
-use WorkorderTime\Service\TimeServiceInterface;
-use WorkorderPart\Service\PartServiceInterface;
 use WorkorderNote\Form\NoteForm;
 use WorkorderTime\Form\TimeForm;
 use WorkorderPart\Form\PartForm;
 use Workorder\Form\CompleteForm;
+use WorkorderCredit\Form\CreditForm;
+use WorkorderCredit\Service\CreditServiceInterface;
 
 class ViewController extends BaseController
 {
@@ -36,23 +35,11 @@ class ViewController extends BaseController
     protected $workorderEmployeeService;
 
     /**
-     *
-     * @var NoteServiceInterface
+     * 
+     * @var CreditServiceInterface
      */
-    protected $noteService;
-
-    /**
-     *
-     * @var TimeServiceInterface
-     */
-    protected $timeService;
-
-    /**
-     *
-     * @var PartServiceInterface
-     */
-    protected $partService;
-
+    protected $creditService;
+    
     /**
      *
      * @var NoteForm
@@ -79,18 +66,23 @@ class ViewController extends BaseController
 
     /**
      *
-     * @param ClientServiceInterface $clientService            
-     * @param WorkorderServiceInterface $workorderService            
-     * @param WorkorderEmployeeServiceInterface $workorderEmployeeService            
-     * @param NoteServiceInterface $noteService            
-     * @param TimeServiceInterface $timeService            
-     * @param PartServiceInterface $partService            
-     * @param NoteForm $noteForm            
-     * @param TimeForm $timeForm            
-     * @param PartForm $partForm            
-     * @param CompleteForm $completeForm            
+     * @var CreditForm
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, NoteServiceInterface $noteService, TimeServiceInterface $timeService, PartServiceInterface $partService, NoteForm $noteForm, TimeForm $timeForm, PartForm $partForm, CompleteForm $completeForm)
+    protected $creditForm;
+
+    /**
+     * 
+     * @param ClientServiceInterface $clientService
+     * @param WorkorderServiceInterface $workorderService
+     * @param WorkorderEmployeeServiceInterface $workorderEmployeeService
+     * @param CreditServiceInterface $creditService
+     * @param NoteForm $noteForm
+     * @param TimeForm $timeForm
+     * @param PartForm $partForm
+     * @param CompleteForm $completeForm
+     * @param CreditForm $creditForm
+     */
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, CreditServiceInterface $creditService, NoteForm $noteForm, TimeForm $timeForm, PartForm $partForm, CompleteForm $completeForm, CreditForm $creditForm)
     {
         $this->clientService = $clientService;
         
@@ -98,11 +90,7 @@ class ViewController extends BaseController
         
         $this->workorderEmployeeService = $workorderEmployeeService;
         
-        $this->noteService = $noteService;
-        
-        $this->timeService = $timeService;
-        
-        $this->partService = $partService;
+        $this->creditService = $creditService;
         
         $this->noteForm = $noteForm;
         
@@ -111,6 +99,8 @@ class ViewController extends BaseController
         $this->partForm = $partForm;
         
         $this->completeForm = $completeForm;
+        
+        $this->creditForm = $creditForm;
     }
 
     /**
@@ -208,7 +198,6 @@ class ViewController extends BaseController
         )));
         
         // complete form
-        
         $this->completeForm->get('workorderDateClose')->setValue(date("m/d/Y"));
         
         $this->completeForm->get('createInvoice')->setValue(1);
@@ -219,20 +208,23 @@ class ViewController extends BaseController
             'workorderId' => $workorderId
         )));
         
+        // credit form
+        $this->creditForm->get('workorderCreditId')->setValue(0);
+        
+        $this->creditForm->get('workorderId')->setValue($workorderId);
+        
+        $this->creditForm->get('workorderCreditDate')->setValue(time());
+        
+        $this->creditForm->get('workorderCreditAmountLeft')->setValue(0);
+        
+        $this->creditForm->setAttribute('action', $this->url()
+            ->fromRoute('workorder-credit-create', array(
+            'clientId' => $id,
+            'workorderId' => $workorderId
+        )));
+        
         // employees
         $workorderEmployeEntitys = $this->workorderEmployeeService->getAll(array(
-            'workorderId' => $workorderId
-        ));
-        
-        $noteEntitys = $this->noteService->getAll(array(
-            'workorderId' => $workorderId
-        ));
-        
-        $timeEntitys = $this->timeService->getAll(array(
-            'workorderId' => $workorderId
-        ));
-        
-        $partEntitys = $this->partService->getAll(array(
             'workorderId' => $workorderId
         ));
         
@@ -242,13 +234,12 @@ class ViewController extends BaseController
             'clientId' => $id,
             'workorderEntity' => $workorderEntity,
             'workorderEmployeEntitys' => $workorderEmployeEntitys,
-            'noteEntitys' => $noteEntitys,
-            'timeEntitys' => $timeEntitys,
-            'partEntitys' => $partEntitys,
+            'creditTotal' => $this->creditService->getWorkorderTotal($workorderId),
             'noteForm' => $this->noteForm,
             'timeForm' => $this->timeForm,
             'partForm' => $this->partForm,
-            'completeForm' => $this->completeForm
+            'completeForm' => $this->completeForm,
+            'creditForm' => $this->creditForm
         ));
     }
 }

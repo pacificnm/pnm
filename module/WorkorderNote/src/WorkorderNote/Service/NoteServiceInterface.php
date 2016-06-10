@@ -33,4 +33,11 @@ interface NoteServiceInterface
      * @return boolean
      */
     public function delete(NoteEntity $entity);
+    
+    /**
+     * 
+     * @param number $workorderId
+     * @return NoteEntity
+     */
+    public function getWorkorderNotes($workorderId);
 }

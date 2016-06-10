@@ -284,6 +284,93 @@ class WorkorderMapper implements WorkorderMapperInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \Workorder\Mapper\WorkorderMapperInterface::getClientUnInvoiced()
+     */
+    public function getClientUnInvoiced($clientId)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder');
+        
+        $select->where(array(
+            'workorder.client_id = ?' => $clientId
+        ));
+        
+        $select->where(array(
+            'workorder.invoice_id = ?' => 0
+        ));
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+            
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+            
+            $resultSet->buffer();
+            
+            return $resultSet->initialize($result);
+        }
+        
+        return array();
+    }
+
+    public function getInvoiceWorkorders($invoiceId)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder');
+        
+        $select->where(array(
+            'workorder.invoice_id = ?' => $invoiceId
+        ));
+        
+        // join location
+        $select->join('location', 'workorder.location_id = location.location_id', array(
+            'location_type',
+            'location_street',
+            'location_city',
+            'location_state',
+            'location_zip',
+            'location_Status'
+        ), 'left');
+        
+        // join phone
+        $select->join('phone', 'phone.phone_id = workorder.phone_id', array(
+            'phone_type',
+            'phone_num'
+        ), 'left');
+        
+        // join user
+        $select->join('user', 'user.user_id = workorder.user_id', array(
+            'user_status',
+            'user_name_first',
+            'user_name_last',
+            'user_job_title',
+            'user_email',
+            'user_type'
+        ), 'left');
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+            $resultSet->buffer();
+        
+            return $resultSet->initialize($result);
+        }
+        
+        return array();
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *

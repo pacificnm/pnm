@@ -5,6 +5,7 @@ use Application\Controller\BaseController;
 use WorkorderPart\Service\PartServiceInterface;
 use Workorder\Service\WorkorderServiceInterface;
 use WorkorderPart\Form\PartForm;
+use WorkorderCredit\Service\CreditServiceInterface;
 
 class CreateController extends BaseController
 {
@@ -22,23 +23,31 @@ class CreateController extends BaseController
     protected $workorderService;
 
     /**
+     * 
+     * @var CreditServiceInterface
+     */
+    protected $creditService;
+    /**
      *
      * @var partForm
      */
     protected $partForm;
 
     /**
-     *
-     * @param PartServiceInterface $partService            
-     * @param WorkorderServiceInterface $workorderService            
-     * @param PartForm $partForm            
+     * 
+     * @param PartServiceInterface $partService
+     * @param WorkorderServiceInterface $workorderService
+     * @param CreditServiceInterface $creditService
+     * @param PartForm $partForm
      */
-    public function __construct(PartServiceInterface $partService, WorkorderServiceInterface $workorderService, PartForm $partForm)
+    public function __construct(PartServiceInterface $partService, WorkorderServiceInterface $workorderService, CreditServiceInterface $creditService, PartForm $partForm)
     {   
         
         $this->partService = $partService;
         
         $this->workorderService = $workorderService;
+        
+        $this->creditService = $creditService;
         
         $this->partForm = $partForm;
     }
@@ -79,6 +88,20 @@ class CreateController extends BaseController
                 $workorderEntity->setWorkorderParts($workorderEntity->getWorkorderParts() + $entity->getWorkorderPartsTotal());
                 
                 $this->workorderService->save($workorderEntity);
+                
+                // if we have credit subtract it
+                $creditEntity = $this->creditService->getWorkorderPartCredit($workorderId);
+              
+                
+                if($creditEntity) {
+                    if(($creditEntity->getWorkorderCreditAmountLeft() - $entity->getWorkorderPartsTotal()) > 0) {
+                        $creditEntity->setWorkorderCreditAmountLeft($creditEntity->getWorkorderCreditAmountLeft() - $entity->getWorkorderPartsTotal());
+                    } else {
+                        $creditEntity->setWorkorderCreditAmountLeft(0);
+                    }
+                    
+                    $this->creditService->save($creditEntity);
+                }
                 
                 $this->flashmessenger()->addSuccessMessage('The work order part was saved.');
                 

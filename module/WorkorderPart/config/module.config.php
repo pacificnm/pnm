@@ -59,6 +59,14 @@ return array(
         )
     ),
     
+    // view helpers
+    'view_helpers' => array(
+        'factories' => array(
+            'GetWorkorderParts' => 'WorkorderPart\View\Helper\Factory\GetWorkorderPartsFactory'
+        ),
+        'invokables' => array()
+    ),
+    
     // view manager
     'view_manager' => array(
         'template_path_stack' => array(

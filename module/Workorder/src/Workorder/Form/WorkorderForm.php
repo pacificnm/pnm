@@ -170,6 +170,8 @@ class WorkorderForm extends Form implements InputFilterProviderInterface
                 'id' => 'locationId'
             )
         ));
+        
+        return $this;
     }
     
     /**

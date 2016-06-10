@@ -12,6 +12,7 @@ use InvoicePayment\Form\PaymentForm;
 use Location\Service\LocationServiceInterface;
 use Phone\Service\PhoneServiceInterface;
 use InvoicePayment\Service\PaymentServiceInterface;
+use Workorder\Service\WorkorderServiceInterface;
 
 class ViewController extends BaseController
 {
@@ -58,6 +59,8 @@ class ViewController extends BaseController
      */
     protected $phoneService;
 
+    protected $workorderService;
+    
     /**
      *
      * @var ItemForm
@@ -70,19 +73,8 @@ class ViewController extends BaseController
      */
     protected $paymentForm;
 
-    /**
-     *
-     * @param ClientServiceInterface $clientService            
-     * @param InvoiceServiceInterface $invoiceService            
-     * @param ItemServiceInterface $itemService            
-     * @param OptionServiceInterface $optionService            
-     * @param PaymentServiceInterface $paymentService            
-     * @param LocationServiceInterface $locationService            
-     * @param PhoneServiceInterface $phoneService            
-     * @param ItemForm $itemForm            
-     * @param PaymentForm $paymentForm            
-     */
-    public function __construct(ClientServiceInterface $clientService, InvoiceServiceInterface $invoiceService, ItemServiceInterface $itemService, OptionServiceInterface $optionService, PaymentServiceInterface $paymentService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, ItemForm $itemForm, PaymentForm $paymentForm)
+    
+    public function __construct(ClientServiceInterface $clientService, InvoiceServiceInterface $invoiceService, ItemServiceInterface $itemService, OptionServiceInterface $optionService, PaymentServiceInterface $paymentService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, WorkorderServiceInterface $workorderService, ItemForm $itemForm, PaymentForm $paymentForm)
     {
         $this->clientService = $clientService;
         
@@ -97,6 +89,8 @@ class ViewController extends BaseController
         $this->locationService = $locationService;
         
         $this->phoneService = $phoneService;
+        
+        $this->workorderService = $workorderService;
         
         $this->itemForm = $itemForm;
         
@@ -157,6 +151,9 @@ class ViewController extends BaseController
         // get location phone
         $phoneEntity = $this->phoneService->getPrimaryPhoneByLocation($locationEntity->getLocationId());
         
+        // get workorders
+        $workorderEntitys = $this->workorderService->getInvoiceWorkorders($invoiceId);
+        
         // item form
         $this->itemForm->get('invoiceItemId')->setValue(0);
         
@@ -210,6 +207,7 @@ class ViewController extends BaseController
             'optionEntity' => $optionEntity,
             'locationEntity' => $locationEntity,
             'phoneEntity' => $phoneEntity,
+            'workorderEntitys' => $workorderEntitys,
             'itemForm' => $this->itemForm,
             'paymentForm' => $this->paymentForm
         ));

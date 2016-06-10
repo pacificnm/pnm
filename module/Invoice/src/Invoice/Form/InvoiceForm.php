@@ -167,15 +167,9 @@ class InvoiceForm extends Form implements InputFilterProviderInterface
         // invoiceDatePaid
         $this->add(array(
             'name' => 'invoiceDatePaid',
-            'type' => 'Text',
-            'options' => array(
-                'label' => 'Date Paid:'
-            ),
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'invoiceDatePaid'
-            )
+            'type' => 'hidden'
         ));
+        
         
         // button
         $this->add(array(

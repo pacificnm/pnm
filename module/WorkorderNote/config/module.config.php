@@ -74,6 +74,14 @@ return array(
         )
     ),
     
+    // view helpers
+    'view_helpers' => array(
+        'factories' => array(
+            'GetWorkorderNotes' => 'WorkorderNote\View\Helper\Factory\GetWorkorderNotesFactory'
+        ),
+        'invokables' => array()
+    ),
+    
     // view manager
     'view_manager' => array(
         'template_path_stack' => array(

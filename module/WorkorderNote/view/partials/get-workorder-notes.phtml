@@ -1,0 +1,38 @@
+<?php if($this->noteEntitys->count() == 0): ?>
+	<div class="alert alert-info">
+    	<i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no notes.'); ?>
+    </div>
+<?php else: ?>
+    <ul class="list-group list-group-unbordered">
+    	<?php foreach($this->noteEntitys as $noteEntity): ?>
+    	<li class="list-group-item">
+    		<div class="row">
+    			<div class="col-xs-12">
+    				<p><?php echo $noteEntity->getWorkorderNotesNote(); ?></p>
+    			</div>
+    		</div>
+    		<div class="row">
+    			<div class="col-xs-12">
+    				<?php $employeeEntity = $noteEntity->getEmployeeEntity(); ?>
+    				<span class="text-muted small"><i class="fa fa-clock-o"></i> <?php echo date($this->appConfig()->getConfigDateShort(), $noteEntity->getWorkorderNotesDate()); ?></span> : 
+    				
+    				<?php if($this->displayLinks): ?>
+    				<a href="" title="<?php echo $this->translate('View this employee'); ?>" class="small">
+    					<i class="fa fa-user"></i> <?php echo $employeeEntity->getEmployeeName(); ?>
+    				</a>
+    				<?php else: ?>
+    					<i class="fa fa-user"></i> <?php echo $employeeEntity->getEmployeeName(); ?>
+    				<?php endif;?>
+    				
+    				<?php if($this->workorderEntity->getWorkorderStatus() == 'Active' && $this->displayLinks): ?>
+    				<span class="pull-right">
+        				<a href="<?php echo $this->url('workorder-note-delete', array('clientId' => $this->workorderEntity->getClientId(), 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderNotesId' => $noteEntity->getWorkorderNotesId())); ?>" title="<?php echo $this->translate('Delete this note'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+        				<a href="<?php echo $this->url('workorder-note-update', array('clientId' => $this->workorderEntity->getClientId(), 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderNotesId' => $noteEntity->getWorkorderNotesId())); ?>" title="<?php echo $this->translate('Edit this note'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+    				</span>   				
+    				<?php endif; ?>
+    			</div>
+    		</div>
+    	</li>
+    	<?php endforeach;?>
+    </ul>
+<?php endif; ?>

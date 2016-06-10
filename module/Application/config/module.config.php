@@ -355,6 +355,11 @@ return array(
                                                         'label' => 'Delete Invoice Item',
                                                         'route' => 'invoice-item-delete',
                                                         'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Add Work Order',
+                                                        'route' => 'invoice-workorder',
+                                                        'useRouteMatch' => true
                                                     )
                                                 )
                                             )

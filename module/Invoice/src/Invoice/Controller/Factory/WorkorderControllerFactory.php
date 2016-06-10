@@ -30,6 +30,8 @@ class WorkorderControllerFactory implements FactoryInterface
         
         $timeService = $realServiceLocator->get('WorkorderTime\Service\TimeServiceInterface');
         
-        return new WorkorderController($clientService, $invoiceService, $itemService, $workorderService, $partService, $timeService);
+        $workorderForm = $realServiceLocator->get('Invoice\Form\WorkorderForm');
+        
+        return new WorkorderController($clientService, $invoiceService, $itemService, $workorderService, $partService, $timeService, $workorderForm);
     }
 }

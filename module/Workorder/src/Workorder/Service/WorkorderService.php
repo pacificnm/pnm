@@ -95,4 +95,19 @@ class WorkorderService implements WorkorderServiceInterface
     {
         return $this->mapper->getClientTotalPart($clientId);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Workorder\Service\WorkorderServiceInterface::getClientUnInvoiced()
+     */
+    public function getClientUnInvoiced($clientId)
+    {
+        return $this->mapper->getClientUnInvoiced($clientId);
+    }
+    
+    public function getInvoiceWorkorders($invoiceId)
+    {
+        return $this->mapper->getInvoiceWorkorders($invoiceId);
+    }
 }

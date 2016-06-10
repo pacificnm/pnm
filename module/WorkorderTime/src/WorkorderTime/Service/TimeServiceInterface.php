@@ -33,4 +33,11 @@ interface TimeServiceInterface
      * @return boolean
      */
     public function delete(TimeEntity $entity);
+
+    /**
+     *
+     * @param number $workorderId            
+     * @return TimeEntity
+     */
+    public function getWorkorderTimes($workorderId);
 }

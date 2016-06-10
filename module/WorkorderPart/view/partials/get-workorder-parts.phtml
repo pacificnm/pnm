@@ -1,0 +1,49 @@
+<?php if($this->partEntitys->count() == 0): ?>
+<div class="alert alert-info">
+    <i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no parts.'); ?>
+</div>
+<?php else:?>
+<ul class="list-group list-group-unbordered">
+	<li class="list-group-item">
+    	<div class="row">
+   			<div class="col-xs-1">
+    			<b><?php echo $this->translate('Qty');?></b>
+    		</div>
+    		<div class="col-xs-8">
+    			<b><?php echo $this->translate('Description'); ?></b>
+    		</div>
+    		<div class="col-xs-1">
+    			<b><?php echo $this->translate('Amount'); ?></b>
+    		</div>
+    		<div class="col-xs-1">
+    			<b><?php echo $this->translate('Total'); ?></b>
+    		</div>
+    		<div class="col-xs-1"></div>
+    	</div>
+    </li>
+        			
+    <?php foreach($this->partEntitys as $partEntity): ?>
+    <li class="list-group-item">
+		<div class="row">
+    		<div class="col-xs-1">
+    			<?php echo $partEntity->getWorkorderPartsQty(); ?>
+    		</div>
+    		<div class="col-xs-8">
+    			<?php echo $partEntity->getWorkorderPartsDescription(); ?>
+    		</div>
+    		<div class="col-xs-1">
+    			<?php echo $partEntity->getWorkorderPartsAmount(); ?>
+    		</div>
+    		<div class="col-xs-1">
+    			<?php echo $partEntity->getWorkorderPartsTotal(); ?>
+    		</div>
+    		<div class="col-xs-1">
+    			<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
+    			<a href="<?php echo $this->url('workorder-part-delete', array('clientId' => $this->workorderEntity->getClientId(), 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderPartId' => $partEntity->getWorkorderPartsId())); ?>" title="<?php echo $this->translate('Delete this part'); ?>" class="btn btn-box-tool pull-right"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+    			<?php endif; ?>
+    		</div>
+    	</div>
+    </li>
+	<?php endforeach;?>
+</ul>
+<?php endif;?>

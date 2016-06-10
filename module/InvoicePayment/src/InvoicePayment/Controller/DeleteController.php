@@ -109,8 +109,10 @@ class DeleteController extends BaseController
                // clear payemnt from invocie
                $invoiceEntity->setInvoiceDatePaid(0);
                $invoiceEntity->setInvoiceStatus('Un-Paid');
-               $invoiceEntity->setInvoicePayment($invoiceEntity->getInvoicePayment() - $paymentEntity->getInvoicePaymentAmount());
                
+               $invoiceEntity->setInvoicePayment($invoiceEntity->getInvoicePayment() - $paymentEntity->getInvoicePaymentAmount());
+               $invoiceEntity->setInvoiceBalance($invoiceEntity->getInvoiceBalance() + $paymentEntity->getInvoicePaymentAmount());
+
                $this->invoiceService->save($invoiceEntity);
                
                $this->paymentService->delete($paymentEntity);

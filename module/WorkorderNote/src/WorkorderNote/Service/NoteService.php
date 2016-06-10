@@ -65,4 +65,11 @@ class NoteService implements NoteServiceInterface
     {
         return $this->mapper->delete($entity);
     }
+    
+    public function getWorkorderNotes($workorderId)
+    {
+        $filter = array('workorderId' => $workorderId);
+        
+        return $this->mapper->getAll($filter);
+    }
 }

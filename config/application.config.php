@@ -48,6 +48,7 @@ return array(
         'History',
         'Install',
         'PaymentOption',
+        'WorkorderCredit',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

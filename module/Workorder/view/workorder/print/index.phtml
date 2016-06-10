@@ -1,261 +1,116 @@
-<style type="text/css" media="print">
-  @page { size: landscape; }
-</style>
-<section class="invoice">
+<section class="invoice small">
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<?php echo $this->appConfig()->getConfigCompanyName();?>
-				<small class="pull-right"><?php echo $this->translate('Date'); ?>: <?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateScheduled()); ?></small>
+				<small class="pull-right"><?php echo $this->translate('Work Order #'); ?><?php echo $this->workorderEntity->getworkOrderId(); ?></small>
 			</h2>
 		</div>
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12">
-			<b><?php echo $this->translate('Work Order'); ?> #<?php echo $this->workorderEntity->getWorkorderId(); ?></b>
-			<span class="badge pull-right"><?php echo $this->translate($this->workorderEntity->getWorkorderStatus()); ?></span>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-12">
-			<p><?php echo $this->workorderEntity->getWorkorderDescription(); ?></p>
-		</div>
-	</div>
-	
-	<hr />
-	
-	<div class="row">
-		<div class="col-xs-9">
-			<p>
-				<b><?php echo $this->translate('Location'); ?>:</b>
-				<?php if(! $this->workorderEntity->getLocationEntity()):?>
-				<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing location.')?></span>
-				<?php else: ?>
-				<?php $locationEntity = $this->workorderEntity->getLocationEntity(); ?>
-    			<?php echo $locationEntity->getLocationStreet();?> <?php echo $locationEntity->getLocationCity(); ?>, <?php echo $locationEntity->getLocationState();?> <?php echo $locationEntity->getLocationZip(); ?>
-    			<?php endif; ?>
-			</p>
-		</div>
-		<div class="col-xs-3">
-			<p>
-				<b><?php echo $this->translate('Phone'); ?>:</b>
-				<?php if(! $this->workorderEntity->getPhoneEntity()) :?>
-				<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing phone.')?></span>
-				<?php else: ?>
-				<?php $phoneEntity = $this->workorderEntity->getPhoneEntity(); ?>
-				<?php echo $phoneEntity->getPhoneNum();?>
-				<?php endif; ?>
-			</p>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<p>
-    			<b><?php echo $this->translate('Scheduled')?>:</b> 
-    			<?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateScheduled()); ?>
-			</p>
-		</div>
-		<div class="col-xs-3">
-			<p>
-				<b><?php echo $this->translate('Created'); ?>:</b>
-    			<?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateCreate()); ?>
-			</p>
-		</div>
-		<div class="col-xs-3">
-			<p>
-				<b><?php echo $this->translate('Closed'); ?>:</b>
-				<?php if($this->workorderEntity->getWorkorderStatus() == "Closed"): ?>
-				<?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateClose()); ?>
-				<?php else: ?>
-				<?php echo $this->translate($this->workorderEntity->getWorkorderStatus()); ?>
-				<?php endif;?>
-			</p>
-		</div>
-		<div class="col-xs-3">
-			<p>
-    			<b><?php echo $this->translate('Contact'); ?>:</b>
-    			<?php if(! $this->workorderEntity->getUserEntity()): ?>
-    			<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing contact.')?></span>
-    			<?php else: ?>
-    			<?php $userEntity = $this->workorderEntity->getUserEntity(); ?>
-        		<?php echo $userEntity->getUserNameFirst(); ?> <?php echo $userEntity->getUserNameLast(); ?>
-        		<?php endif;?>
-			</p>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="col-xs-3">
-			<p>
-				<b><?php echo $this->translate('Ends'); ?>:</b>
-				<?php if($this->workorderEntity->getWorkorderDateEnd() == 0):?>
-				<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing end date'); ?></span>
-				<?php else: ?>
-				<?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateEnd()); ?>
-				<?php endif;?>
-			</p>
-		</div>
-		<div class="col-xs-3">
-			<p>
-				<b><?php echo $this->translate('Labor'); ?>:</b>
-				<?php echo $this->currencyFormat($this->workorderEntity->getWorkorderLabor(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
-			</p>
-		</div>
-		<div class="col-xs-3">
-			<p>
-				<b><?php echo $this->translate('Parts'); ?>:</b>
-				<?php echo $this->currencyFormat($this->workorderEntity->getWorkorderParts(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
-			</p>
-		</div>
-		<div class="col-xs-3">
-			<p>
-				<b><?php echo $this->translate('Credit'); ?>:</b>
-				<?php echo $this->currencyFormat(0, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
-			</p>
-		</div>
-	</div>
-	
-	<hr />
-	
-	<div class="row">
-		<div class="col-xs-12">
-		
-			<!--  notes -->
-			<b><?php echo $this->translate('Notes')?></b>
-    		<?php if($this->noteEntitys->count() == 0): ?>
-    		<div class="alert alert-info">
-    			<i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no notes.'); ?>
+			<div class="panel panel-default">
+    			<div class="panel-body">
+    				<div class="row">
+    					<div class="col-xs-6">
+    						<p><b><?php echo $this->translate('Scheduled'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateLong(), $this->workorderEntity->getWorkorderDateScheduled()); ?></p>
+    					</div>
+    					<div class="col-xs-6">
+    						<p><b><?php echo $this->translate('Status'); ?>:</b> <?php echo $this->workorderEntity->getWorkorderStatus(); ?></p>
+    					</div>
+    				</div>
+    				<div class="row">
+    					<div class="col-xs-6">
+    						<p><b><?php echo $this->translate('Contact'); ?>:</b> 
+    							<?php if(! $this->workorderEntity->getUserEntity()): ?>
+    							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing contact.')?></span>
+    						<?php else: ?>
+    							<?php $userEntity = $this->workorderEntity->getUserEntity(); ?>
+    								<?php echo $userEntity->getUserNameFirst(); ?> <?php echo $userEntity->getUserNameLast(); ?>
+    						<?php endif;?>
+    						
+    						</p>
+    					</div>
+    					<div class="col-xs-6">
+    						<p><b><?php echo $this->translate('Phone'); ?>:</b> 
+    							<?php if(! $this->workorderEntity->getPhoneEntity()) :?>
+    							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing phone.')?></span>
+    						<?php else: ?>
+    							<?php $phoneEntity = $this->workorderEntity->getPhoneEntity(); ?>
+    							<?php echo $phoneEntity->getPhoneNum();?>
+    						<?php endif; ?>
+    						
+    						</p>
+    					</div>
+    				</div>
+    				<div class="row">
+    					<div class="col-xs-6">
+    						<p><b><?php echo $this->translate('Labor'); ?>:</b> <?php echo $this->currencyFormat($this->workorderEntity->getWorkorderLabor(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></p>
+    					</div>
+    					<div class="col-xs-6">
+    						<p><b><?php echo $this->translate('Parts'); ?>:</b> <?php echo $this->currencyFormat($this->workorderEntity->getWorkorderParts(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></p>
+    					</div>
+    				</div>
+    				<div class="row">
+    					<div class="col-xs-12">
+    						<?php $locationEntity = $this->workorderEntity->getLocationEntity(); ?>
+    						<p><b><?php echo $this->translate('Location'); ?>:</b>
+    							<?php if($locationEntity): ?> 
+    							<?php echo $locationEntity->getLocationStreet();?> <?php echo $locationEntity->getLocationCity(); ?>, <?php echo $locationEntity->getLocationState();?> <?php echo $locationEntity->getLocationZip(); ?>
+    							<?php else: ?>
+    								<?php echo $this->translate('No location set');?>
+    							<?php endif;?>
+    						</p>
+    					</div>
+    				</div>
+    				<div class="row">
+    					<div class="col-xs-12">
+    						<?php echo $this->workorderEntity->getWorkorderDescription();?>
+    					</div>
+    				</div>
+    			</div>
     		</div>
-    		<?php else: ?>
-    		<ul class="list-group list-group-unbordered">
-    			<?php foreach($this->noteEntitys as $noteEntity): ?>
-    			<li class="list-group-item">
-    				<div class="row">
-    					<div class="col-xs-12">
-    						<p><?php echo $noteEntity->getWorkorderNotesNote(); ?></p>
-    					</div>
-    				</div>
-    				<div class="row">
-    					<div class="col-xs-12">
-    						<?php $employeeEntity = $noteEntity->getEmployeeEntity(); ?>
-    						<span class="text-muted small"><i class="fa fa-clock-o"></i> <?php echo date($this->appConfig()->getConfigDateShort(), $noteEntity->getWorkorderNotesDate()); ?></span> : 
-    						<i class="fa fa-user"></i> <?php echo $employeeEntity->getEmployeeName(); ?>
-    					</div>
-    				</div>
-    			</li>
-    			<?php endforeach;?>
-    		</ul>
-    		<?php endif; ?>
-    		
-    		<!-- times -->
-    		<b><?php echo $this->translate('Times')?></b>
-    		<?php if($this->timeEntitys->count() == 0): ?>
-    			<div class="alert alert-info">
-    				<i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no times.'); ?>
-    			</div>
-    			<?php else: ?>
-    			<ul class="list-group list-group-unbordered">
-    				<li class="list-group-item">
-    					<div class="row">
-    						<div class="col-xs-3">
-    							<b><?php echo $this->translate('Employee'); ?></b>
-    						</div>
-    						<div class="col-xs-2">
-    							<b><?php echo $this->translate('In'); ?></b>
-    						</div>
-    						<div class="col-xs-2">
-    							<b><?php echo $this->translate('Out'); ?></b>
-    						</div>
-    						<div class="col-xs-1">
-    							<b><?php echo $this->translate('Time'); ?></b>
-    						</div>
-    						<div class="col-xs-1">
-    							<b><?php echo $this->translate('Rate'); ?></b>
-    						</div>
-    						<div class="col-xs-1">
-    							<b><?php echo $this->translate('Total'); ?></b>
-    						</div>
-    					</div>
-    				</li>
-    				<?php foreach($this->timeEntitys as $timeEntity): ?>
-    					<?php $employeeEntity = $timeEntity->getEmployeeEntity(); ?>
-    				<li class="list-group-item">
-    					<div class="row small">
-    						<div class="col-xs-3">
-    							<?php echo $employeeEntity->getEmployeeName(); ?>
-    						</div>
-    						<div class="col-xs-2">
-    							<?php echo date($this->appConfig()->getConfigDateLong(), $timeEntity->getWorkorderTimeIn()); ?>
-    						</div>
-    						<div class="col-xs-2">
-    							<?php echo date($this->appConfig()->getConfigDateLong(), $timeEntity->getWorkorderTimeOut()); ?>
-    						</div>
-    						<div class="col-xs-1 ">
-    							<?php echo number_format(($timeEntity->getWorkorderTimeTotal() / 60) / 60, 2); ?>
-    						</div>
-    						<div class="col-xs-1 ">
-    							<?php echo $this->currencyFormat($timeEntity->getLaborRate(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
-    						</div>
-    						<div class="col-xs-2">
-    							<?php echo $this->currencyFormat(number_format(($timeEntity->getWorkorderTimeTotal() / 60) / 60, 2) *  $timeEntity->getLaborRate(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
-    						</div>
-    					</div>
-    				</li>
-    				<?php endforeach; ?>
-    			</ul>
-    			<?php endif;?>
-    			
-    			<!-- parts -->
-    			<b><?php echo $this->translate('Parts')?></b>
-    			<?php if($this->partEntitys->count() == 0): ?>
-    			<div class="alert alert-info">
-    				<i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no parts.'); ?>
-    			</div>
-    			<?php else:?>
-    			<ul class="list-group list-group-unbordered">
-    				<li class="list-group-item">
-    					<div class="row">
-    						<div class="col-xs-1">
-    							<b><?php echo $this->translate('Qty');?></b>
-    						</div>
-    						<div class="col-xs-8">
-    							<b><?php echo $this->translate('Description'); ?></b>
-    						</div>
-    						<div class="col-xs-1">
-    							<b><?php echo $this->translate('Amount'); ?></b>
-    						</div>
-    						<div class="col-xs-2">
-    							<b><?php echo $this->translate('Total'); ?></b>
-    						</div>
-    					</div>
-    				</li>
-        			
-        			<?php foreach($this->partEntitys as $partEntity): ?>
-        			<li class="list-group-item hidden-xs">
-    					<div class="row">
-    						<div class="col-xs-1">
-    							<?php echo $partEntity->getWorkorderPartsQty(); ?>
-    						</div>
-    						<div class="col-xs-8">
-    							<?php echo $partEntity->getWorkorderPartsDescription(); ?>
-    						</div>
-    						<div class="col-xs-1">
-    							<?php echo $partEntity->getWorkorderPartsAmount(); ?>
-    						</div>
-    						<div class="col-xs-2">
-    							<?php echo $partEntity->getWorkorderPartsTotal(); ?>
-    						</div>
-    					</div>
-    				</li>
-        			<?php endforeach;?>
-        		</ul>
-    			<?php endif;?>
-    			
-    			
-    	</div>
+		</div>
 	</div>
 	
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-list-alt"></i> <?php echo $this->translate('Notes')?>
+				</div>
+    			<div class="panel-body">
+    				<?php echo $this->getWorkorderNotes($this->workorderEntity, false); ?>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-clock-o"></i> <?php echo $this->translate('Times')?>
+				</div>
+    			<div class="panel-body">
+    				<?php echo $this->getWorkorderTimes($this->workorderEntity, false); ?>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-hdd-o"></i> <?php echo $this->translate('Parts')?>
+				</div>
+    			<div class="panel-body">
+    				<?php echo $this->getWorkorderParts($this->workorderEntity, false); ?>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+
 </section>

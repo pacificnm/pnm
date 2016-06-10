@@ -1,0 +1,45 @@
+<?php if($this->creditEntitys->count() == 0): ?>
+<div class="alert alert-info">
+	<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No work order credits'); ?></p>
+</div>
+<?php else: ?>
+<ul class="list-group list-group-unbordered small">
+	<li class="list-group-item">
+    	<div class="row">
+    		<div class="col-xs-2">
+    			<b><?php echo $this->translate('Date');?></b>
+    		</div>
+    		<div class="col-xs-2">
+    			<b><?php echo $this->translate('Type');?></b>
+    		</div>
+    		<div class="col-xs-2">
+    			<b><?php echo $this->translate('Amount');?></b>
+    		</div>
+    		<div class="col-xs-2">
+    			<b><?php echo $this->translate('Left');?></b>
+    		</div>
+    	</div>
+    </li>
+    <?php foreach($this->creditEntitys as $creditEntity): ?>
+    <li class="list-group-item">
+    	<div class="row">
+    		<div class="col-xs-2">
+    			<?php echo date($this->appConfig()->getConfigDateShort(), $creditEntity->getWorkorderCreditDate());?>
+    		</div>
+    		<div class="col-xs-2">
+    			<?php echo $creditEntity->getWorkorderCreditType();?>
+    		</div>
+    		<div class="col-xs-2">
+    			<?php echo $this->currencyFormat($creditEntity->getWorkorderCreditAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang());?>
+    		</div>
+    		<div class="col-xs-2">
+    			<?php echo $this->currencyFormat($creditEntity->getWorkorderCreditAmountLeft(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang());?>
+    		</div>
+    		<div class="col-xs-4 text-right">
+    		
+    		</div>
+    	</div>
+    </li>
+    <?php endforeach; ?>
+</ul>
+<?php endif;?>

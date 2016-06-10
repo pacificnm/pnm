@@ -12,6 +12,7 @@ use WorkorderPart\Service\PartServiceInterface;
 use Workorder\Form\CompleteForm;
 use Invoice\Entity\InvoiceEntity;
 use InvoiceItem\Entity\ItemEntity;
+use WorkorderCredit\Service\CreditServiceInterface;
 
 class CompleteController extends BaseController
 {
@@ -53,24 +54,36 @@ class CompleteController extends BaseController
     protected $itemService;
 
     /**
+     * 
+     * @var CreditServiceInterface
+     */
+    protected $creditService;
+    
+    /**
      *
      * @var OptionServiceInterface
      */
     protected $optionService;
 
+    /**
+     * 
+     * @var CompleteForm
+     */
     protected $completeForm;
 
     /**
-     *
-     * @param ClientServiceInterface $clientService            
-     * @param WorkorderServiceInterface $workorderService            
-     * @param TimeServiceInterface $timeService            
-     * @param PartServiceInterface $partService            
-     * @param InvoiceServiceInterface $invoiceService            
-     * @param ItemServiceInterface $itemService            
-     * @param OptionServiceInterface $optionService            
+     * 
+     * @param ClientServiceInterface $clientService
+     * @param WorkorderServiceInterface $workorderService
+     * @param TimeServiceInterface $timeService
+     * @param PartServiceInterface $partService
+     * @param InvoiceServiceInterface $invoiceService
+     * @param ItemServiceInterface $itemService
+     * @param OptionServiceInterface $optionService
+     * @param CreditServiceInterface $creditService
+     * @param CompleteForm $completeForm
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, TimeServiceInterface $timeService, PartServiceInterface $partService, InvoiceServiceInterface $invoiceService, ItemServiceInterface $itemService, OptionServiceInterface $optionService, CompleteForm $completeForm)
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, TimeServiceInterface $timeService, PartServiceInterface $partService, InvoiceServiceInterface $invoiceService, ItemServiceInterface $itemService, OptionServiceInterface $optionService, CreditServiceInterface $creditService, CompleteForm $completeForm)
     {
         $this->clientService = $clientService;
         
@@ -85,6 +98,8 @@ class CompleteController extends BaseController
         $this->itemService = $itemService;
         
         $this->optionService = $optionService;
+        
+        $this->creditService = $creditService;
         
         $this->completeForm = $completeForm;
     }
@@ -173,7 +188,6 @@ class CompleteController extends BaseController
                 
                 $invoiceEntity = $this->invoiceService->save($invoiceEntity);
                 
-                // check for balance forward
                 
                 // loop through labor add items
                 $laborEntitys = $this->timeService->getAll(array(
@@ -186,7 +200,7 @@ class CompleteController extends BaseController
                     
                     $itemEntity->setInvoiceId($invoiceEntity->getInvoiceId());
                     $itemEntity->setInvoiceItemQty($invoiceItemQty);
-                    $itemEntity->setInvoiceItemDescrip($laborEntity->getLaborName());
+                    $itemEntity->setInvoiceItemDescrip($laborEntity->getLaborName() . ' Work Order #' . $workorderId);
                     $itemEntity->setInvoiceItemAmount($laborEntity->getLaborRate());
                     $itemEntity->setInvoiceItemTotal($laborEntity->getLaborTotal());
                     $itemEntity->setInvoiceItemDate(time());
@@ -203,12 +217,45 @@ class CompleteController extends BaseController
                     
                     $itemEntity->setInvoiceId($invoiceEntity->getInvoiceId());
                     $itemEntity->setInvoiceItemQty($partEntity->getWorkorderPartsQty());
-                    $itemEntity->setInvoiceItemDescrip($partEntity->getWorkorderPartsDescription());
+                    $itemEntity->setInvoiceItemDescrip($partEntity->getWorkorderPartsDescription() . ' Work Order #' . $workorderId);
                     $itemEntity->setInvoiceItemAmount($partEntity->getWorkorderPartsAmount());
                     $itemEntity->setInvoiceItemTotal($partEntity->getWorkorderPartsTotal());
                     $itemEntity->setInvoiceItemDate(time());
                     $itemEntity = $this->itemService->save($itemEntity);
                 }
+                
+                // set credits and adjust the invoice if we have credits
+                $creditEntitys = $this->creditService->getWorkorderCredit($workorderId);
+                if($creditEntitys) {
+                    $creditTotal = 0;
+                    
+                    foreach($creditEntitys as $creditEntity) {
+                        $itemEntity = new ItemEntity();
+                        $itemEntity->setInvoiceId($invoiceEntity->getInvoiceId());
+                        $itemEntity->setInvoiceItemQty(1);
+                        $itemEntity->setInvoiceItemDescrip($creditEntity->getWorkorderCreditType() . ' credit ' . $creditEntity->getOptionEntity()->getPaymentOptionName() . ' ' . $creditEntity->getWorkorderCreditDetail());
+                        $itemEntity->setInvoiceItemAmount($creditEntity->getWorkorderCreditAmount());
+                        $itemEntity->setInvoiceItemTotal($creditEntity->getWorkorderCreditAmount());
+                        $itemEntity->setInvoiceItemDate($creditEntity->getWorkorderCreditDate());
+                        
+                        $itemEntity = $this->itemService->save($itemEntity);
+                        
+                        $creditTotal = $creditTotal + $creditEntity->getWorkorderCreditAmount();
+                    }
+                    
+                    // update invoice
+                    $invoiceEntity->setInvoiceSubtotal($invoiceEntity->getInvoiceSubtotal() - $creditTotal);
+                    $invoiceEntity->setInvoiceTotal($invoiceEntity->getInvoiceTotal() - $creditTotal);
+                    $invoiceEntity->setInvoiceBalance($invoiceEntity->getInvoiceBalance() - $creditTotal);
+                    
+                    $this->invoiceService->save($invoiceEntity);
+                }
+                
+                // set invoice
+                $workorderEntity->setInvoiceId($invoiceEntity->getInvoiceId());
+                
+                $this->workorderService->save($workorderEntity);
+                
                 
                 // save history
                 

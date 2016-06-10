@@ -1,4 +1,8 @@
-
+<style>
+@media print {
+    footer {page-break-after: always;}
+}
+</style>
 <section class="invoice small">
 	<div class="row">
 		<div class="col-xs-12">
@@ -198,5 +202,123 @@
 	
 </section>
 
+<footer></footer>
+<?php foreach($this->workorderEntitys as $workorderEntity): ?>
+<section class="invoice small">
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+				<?php echo $this->appConfig()->getConfigCompanyName();?>
+				<small class="pull-right"><?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getworkOrderId(); ?></small>
+			</h2>
+		</div>
+	</div>
 
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+    			<div class="panel-body">
+    				<div class="row">
+    					<div class="col-xs-6">
+    						<p><b><?php echo $this->translate('Scheduled'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderDateScheduled()); ?></p>
+    					</div>
+    					<div class="col-xs-6">
+    						<p><b><?php echo $this->translate('Status'); ?>:</b> <?php echo $workorderEntity->getWorkorderStatus(); ?></p>
+    					</div>
+    				</div>
+    				<div class="row">
+    					<div class="col-xs-6">
+    						<p><b><?php echo $this->translate('Contact'); ?>:</b> 
+    							<?php if(! $workorderEntity->getUserEntity()): ?>
+    							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing contact.')?></span>
+    						<?php else: ?>
+    							<?php $userEntity = $workorderEntity->getUserEntity(); ?>
+    								<?php echo $userEntity->getUserNameFirst(); ?> <?php echo $userEntity->getUserNameLast(); ?>
+    						<?php endif;?>
+    						
+    						</p>
+    					</div>
+    					<div class="col-xs-6">
+    						<p><b><?php echo $this->translate('Phone'); ?>:</b> 
+    							<?php if(! $workorderEntity->getPhoneEntity()) :?>
+    							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing phone.')?></span>
+    						<?php else: ?>
+    							<?php $phoneEntity = $workorderEntity->getPhoneEntity(); ?>
+    							<?php echo $phoneEntity->getPhoneNum();?>
+    						<?php endif; ?>
+    						
+    						</p>
+    					</div>
+    				</div>
+    				<div class="row">
+    					<div class="col-xs-6">
+    						<p><b><?php echo $this->translate('Labor'); ?>:</b> <?php echo $this->currencyFormat($workorderEntity->getWorkorderLabor(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></p>
+    					</div>
+    					<div class="col-xs-6">
+    						<p><b><?php echo $this->translate('Parts'); ?>:</b> <?php echo $this->currencyFormat($workorderEntity->getWorkorderParts(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></p>
+    					</div>
+    				</div>
+    				<div class="row">
+    					<div class="col-xs-12">
+    						<?php $locationEntity = $workorderEntity->getLocationEntity(); ?>
+    						<p><b><?php echo $this->translate('Location'); ?>:</b>
+    							<?php if($locationEntity): ?> 
+    							<?php echo $locationEntity->getLocationStreet();?> <?php echo $locationEntity->getLocationCity(); ?>, <?php echo $locationEntity->getLocationState();?> <?php echo $locationEntity->getLocationZip(); ?>
+    							<?php else: ?>
+    								<?php echo $this->translate('No location set');?>
+    							<?php endif;?>
+    						</p>
+    					</div>
+    				</div>
+    				<div class="row">
+    					<div class="col-xs-12">
+    						<?php echo $workorderEntity->getWorkorderDescription();?>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-list-alt"></i> <?php echo $this->translate('Notes')?>
+				</div>
+    			<div class="panel-body">
+    				<?php echo $this->getWorkorderNotes($workorderEntity, false); ?>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-clock-o"></i> <?php echo $this->translate('Times')?>
+				</div>
+    			<div class="panel-body">
+    				<?php echo $this->getWorkorderTimes($workorderEntity, false); ?>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<i class="fa fa-hdd-o"></i> <?php echo $this->translate('Parts')?>
+				</div>
+    			<div class="panel-body">
+    				<?php echo $this->getWorkorderParts($workorderEntity, false); ?>
+    			</div>
+    		</div>
+    	</div>
+    </div>
 
+</section>
+<footer></footer>
+<?php endforeach; ?>
