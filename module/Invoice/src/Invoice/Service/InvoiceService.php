@@ -65,4 +65,19 @@ class InvoiceService implements InvoiceServiceInterface
     {
         return $this->mapper->delete($entity);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Invoice\Service\InvoiceServiceInterface::getClientUnpaidInvoices()
+     */
+    public function getClientUnpaidInvoices($clientId)
+    {
+        $filter = array(
+            'clientId' => $clientId,
+            'invoiceStatus' => 'Un-Paid'
+        );
+        
+        return $this->mapper->getAll($filter);
+    }
 }

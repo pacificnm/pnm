@@ -121,8 +121,9 @@ class UserMapper implements UserMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \User\Mapper\UserMapperInterface::getPrimaryUserByLocation()
      */
     public function getPrimaryUserByLocation($locationId)
@@ -150,17 +151,81 @@ class UserMapper implements UserMapperInterface
         $result = $stmt->execute();
         
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
+            
             $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
-        
+            
             $resultSet->buffer();
-        
+            
             return $resultSet->initialize($result)->current();
         }
         
         return array();
     }
-    
+
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \User\Mapper\UserMapperInterface::getClientPrimaryUser()
+     */
+    public function getClientPrimaryUser($clientId)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('user');
+        
+        $select->join('location', 'location.location_id = user.location_id', array(
+            'location_type',
+            'location_street',
+            'location_street_2',
+            'location_city',
+            'location_state',
+            'location_zip',
+            'location_Status'
+        ), 'left');
+        
+        $select->join('phone', 'phone.location_id = location.location_id', array(
+            'phone_type',
+            'phone_num'
+        ), 'left');
+        
+        $select->where(array(
+            'user.client_id = ?' => $clientId
+        ));
+        
+        $select->where(array(
+            'user.user_status =  ?' => 'Active'
+        ));
+        
+        $select->where(array(
+            'user.user_type = ?' => 'Primary'
+        ));
+        
+        $select->where(array(
+            'location.location_type = ?' => 'Primary'
+        ));
+        
+        $select->where(array(
+            'phone.phone_type = ?' => 'Primary' 
+        ));
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+            
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+            
+            $resultSet->buffer();
+            
+            return $resultSet->initialize($result)->current();
+        }
+        
+        return array();
+    }
+
     /**
      *
      * {@inheritDoc}

@@ -16,6 +16,11 @@ class BaseController extends AbstractActionController
      */
     public function onDispatch(MvcEvent $e)
     {
+        // check if we are installed
+        if(! file_exists('data/install')) {
+            return $this->redirect()->toRoute('install-index');
+        }
+        
         // get router
         $router = $e->getRouteMatch();
 

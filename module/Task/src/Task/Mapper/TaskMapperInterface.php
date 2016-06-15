@@ -20,6 +20,13 @@ interface TaskMapperInterface
     public function get($id);
     
     /**
+     * 
+     * @param number $employeeId
+     * @return TaskEntity
+     */
+    public function getEmployeeReminders($employeeId);
+    
+    /**
      *
      * @param TaskEntity $entity
      * @return TaskEntity

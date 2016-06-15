@@ -6,8 +6,154 @@
 					<i class="fa fa-tasks"></i>
 					<?php echo $this->translate('View Task'); ?>
 				</h3>
-				<div class="box-tools"></div>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('task-delete', array('clientId' => $this->clientId, 'taskId' => $this->taskEntity->getTaskId()));?>" title="<?php echo $this->translate('Delete this task'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+					<a href="<?php echo $this->url('task-update', array('clientId' => $this->clientId, 'taskId' => $this->taskEntity->getTaskId()));?>" title="<?php echo $this->translate('Edit this task'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<p><b><?php echo $this->translate('Title'); ?>:</b><br />
+							<?php echo $this->taskEntity->getTaskTitle(); ?>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<p><b><?php echo $this->translate('Description'); ?>:</b><br />
+							<?php echo $this->taskEntity->getTaskDescription(); ?>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Start')?>:</b> 
+							<?php echo date($this->appConfig()->getConfigDateLong(), $this->taskEntity->getTaskDateStart()); ?>
+						</p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('End')?>:</b> 
+							<?php echo date($this->appConfig()->getConfigDateLong(), $this->taskEntity->getTaskDateEnd()); ?>
+						</p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Priority')?>:</b> 
+							<?php echo $this->taskEntity->getPriorityEntity()->getTaskPriorityValue(); ?>
+						</p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Status')?>:</b> 
+							<?php echo $this->taskEntity->getTaskStatus(); ?>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Employee'); ?>:</b> 
+						<?php $employeeEntity = $this->taskEntity->getEmployeeEntity(); ?>
+						<a href="" title="<?php echo $this->translate('View this employee'); ?>" class="small">
+    						<i class="fa fa-user"></i>  <?php echo $employeeEntity->getEmployeeName(); ?>
+    					</a>
+						
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Reminder');?>:</b> <?php echo date($this->appConfig()->getConfigDateLong(), $this->taskEntity->getTaskDateReminder()); ?></p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-tasks"></i>
+					<?php echo $this->translate('Notes'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="javascript:void(0);" data-toggle="modal" data-target="#noteModal"  title="<?php echo $this->translate('Create new note')?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+				</div>
+			</div>
+			<div class="box-body">
+				<?php if($this->noteEntitys->count() == 0): ?>
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no task notes.'); ?></p>
+				</div>
+				<?php else: ?>
+				<ul class="list-group list-group-unbordered">
+				<?php foreach($this->noteEntitys as $noteEntity): ?>
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-12">
+								<p><?php echo $noteEntity->getTaskNoteText(); ?></p>
+							</div>
+						</div>
+						<div class="row">
+    						<div class="col-xs-12">
+    							<span class="text-muted small"><i class="fa fa-clock-o"></i> <?php echo date($this->appConfig()->getConfigDateShort(), $noteEntity->getTaskNoteDate()); ?> :</span>
+    							<?php $employeeEntity = $noteEntity->getEmployeeEntity(); ?>
+    							
+    							<a href="" title="<?php echo $this->translate('View this employee'); ?>" class="small">
+    								<i class="fa fa-user"></i>  <?php echo $employeeEntity->getEmployeeName(); ?>
+    							</a>
+    							<span class="pull-right">
+                				<a href="<?php echo $this->url('task-note-delete', array('clientId' => $this->clientId, 'taskId' => $this->taskEntity->getTaskId(), 'taskNoteId' => $noteEntity->getTaskNoteId()))?>" title="<?php echo $this->translate('Delete this note'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+                				<a href="<?php echo $this->url('task-note-update', array('clientId' => $this->clientId, 'taskId' => $this->taskEntity->getTaskId(), 'taskNoteId' => $noteEntity->getTaskNoteId())); ?>" title="<?php echo $this->translate('Edit this note'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+            				</span>   				
+    						</div>
+    					</div>
+					</li>
+				<?php endforeach; ?>
+				</ul>
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
+</div>
+
+<?php echo $this->form()->openTag($this->noteForm); ?>
+<div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-list-alt"></i> <?php echo $this->translate('Note')?></h4>
+      </div>
+      <div class="modal-body">
+      	<?php echo $this->partial('partials/form-errors.phtml', array('errorMsg' => $this->noteForm->getMessages())); ?>
+      	
+      	<div class="row">
+        	<div class="col-xs-12">
+				<?php $element = $this->noteForm->get('taskNoteText'); ?>
+				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+					<label class="control-label"><?php echo $element->getLabel() ?></label>
+					<?php echo $this->formElement($element); ?>
+					<?php if($this->formElementErrors($element)): ?>
+						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+					<?php endif; ?>
+				</div>
+           </div>
+       </div>
+       
+       	<?php echo $this->formElement($this->noteForm->get('taskNoteId')); ?>
+       	<?php echo $this->formElement($this->noteForm->get('taskId')); ?>
+       		<?php echo $this->formElement($this->noteForm->get('employeeId')); ?>
+       		<?php echo $this->formElement($this->noteForm->get('taskNoteDate')); ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+        <?php echo $this->formSubmit($this->noteForm->get('submit')); ?>
+      </div>
+    </div>
+  </div>
+</div>
+<?php echo $this->form()->closeTag(); ?>
+<script>
+  $(function () {
+	  $("#taskNoteText").wysihtml5();
+  });
+ </script>

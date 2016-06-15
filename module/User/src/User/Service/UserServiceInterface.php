@@ -29,6 +29,13 @@ interface UserServiceInterface
 
     /**
      *
+     * @param number $clientId
+     * @return UserEntity
+     */
+    public function getClientPrimaryUser($clientId);
+    
+    /**
+     *
      * @param UserEntity $entity            
      * @return UserEntity
      */

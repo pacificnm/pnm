@@ -65,49 +65,75 @@ class WorkorderService implements WorkorderServiceInterface
     {
         return $this->mapper->delete($entity);
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Workorder\Service\WorkorderServiceInterface::getClientTotalCount()
      */
     public function getClientTotalCount($clientId, $status)
     {
         return $this->mapper->getClientTotalCount($clientId, $status);
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Workorder\Service\WorkorderServiceInterface::getClientTotalLabor()
      */
-    public function getClientTotalLabor($clientId) 
+    public function getClientTotalLabor($clientId)
     {
         return $this->mapper->getClientTotalLabor($clientId);
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Workorder\Service\WorkorderServiceInterface::getClientTotalPart()
      */
     public function getClientTotalPart($clientId)
     {
         return $this->mapper->getClientTotalPart($clientId);
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Workorder\Service\WorkorderServiceInterface::getClientUnInvoiced()
      */
     public function getClientUnInvoiced($clientId)
     {
         return $this->mapper->getClientUnInvoiced($clientId);
     }
-    
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     * @see \Workorder\Service\WorkorderServiceInterface::getInvoiceWorkorders()
+     */
     public function getInvoiceWorkorders($invoiceId)
     {
         return $this->mapper->getInvoiceWorkorders($invoiceId);
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     * @see \Workorder\Service\WorkorderServiceInterface::getClientActiveWorkOrders()
+     */
+    public function getClientActiveWorkOrders($clientId)
+    {
+        $filter = array(
+            'clientId' => $clientId,
+            'workorderStatus' => 'Active'
+        );
+        
+        return $this->mapper->getAll($filter);
     }
 }

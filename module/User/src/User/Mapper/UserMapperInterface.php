@@ -22,10 +22,17 @@ interface UserMapperInterface
 
     /**
      * 
-     * @param unknown $locationId
+     * @param number $locationId
      * @return UserEntity
      */
     public function getPrimaryUserByLocation($locationId);
+    
+    /**
+     * 
+     * @param number $clientId
+     * @return UserEntity
+     */
+    public function getClientPrimaryUser($clientId);
     
     /**
      *

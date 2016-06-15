@@ -3,6 +3,8 @@ namespace Task\Hydrator;
 
 use Zend\Stdlib\Hydrator\ClassMethods;
 use Task\Entity\TaskEntity;
+use Employee\Entity\EmployeeEntity;
+use TaskPriority\Entity\PriorityEntity;
 
 class TaskHydrator extends ClassMethods
 {
@@ -30,6 +32,15 @@ class TaskHydrator extends ClassMethods
         
         parent::hydrate($data, $object);
         
+        
+        $employeeEntity = parent::hydrate($data, new EmployeeEntity());
+        
+        $object->setEmployeeEntity($employeeEntity);
+        
+        $priorityEntity = parent::hydrate($data, new PriorityEntity());
+        
+        $object->setPriorityEntity($priorityEntity);
+        
         return $object;
     }
 
@@ -46,6 +57,12 @@ class TaskHydrator extends ClassMethods
         }
         
         $data = parent::extract($object);
+        
+        unset($data['employee_entity']);
+        
+        unset($data['client_entity']);
+        
+        unset($data['priority_entity']);
         
         return $data;
     }

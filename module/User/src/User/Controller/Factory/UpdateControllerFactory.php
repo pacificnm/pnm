@@ -19,6 +19,10 @@ class UpdateControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new UpdateController($clientService);
+        $userService = $realServiceLocator->get('User\Service\UserServiceInterface');
+        
+        $userForm = $realServiceLocator->get('User\Form\UserForm');
+        
+        return new UpdateController($clientService, $userService, $userForm);
     }
 }

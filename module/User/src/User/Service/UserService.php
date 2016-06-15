@@ -55,6 +55,16 @@ class UserService implements UserServiceInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \User\Service\UserServiceInterface::getClientPrimaryUser()
+     */
+    public function getClientPrimaryUser($clientId)
+    {
+        return $this->mapper->getClientPrimaryUser($clientId);
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *

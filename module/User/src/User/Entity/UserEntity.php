@@ -3,6 +3,7 @@ namespace User\Entity;
 
 use Client\Entity\ClientEntity;
 use Location\Entity\LocationEntity;
+use Phone\Entity\PhoneEntity;
 
 class UserEntity implements UserEntityInterface
 {
@@ -72,6 +73,12 @@ class UserEntity implements UserEntityInterface
      * @var LocationEntity
      */
     protected $locationEntity;
+
+    /**
+     *
+     * @var PhoneEntity
+     */
+    protected $phoneEntity;
 
     /**
      *
@@ -174,6 +181,15 @@ class UserEntity implements UserEntityInterface
 
     /**
      *
+     * @return the $phoneEntity
+     */
+    public function getPhoneEntity()
+    {
+        return $this->phoneEntity;
+    }
+
+    /**
+     *
      * @param number $userId            
      */
     public function setUserId($userId)
@@ -269,5 +285,14 @@ class UserEntity implements UserEntityInterface
     public function setLocationEntity($locationEntity)
     {
         $this->locationEntity = $locationEntity;
+    }
+
+    /**
+     *
+     * @param \Phone\Entity\PhoneEntity $phoneEntity            
+     */
+    public function setPhoneEntity($phoneEntity)
+    {
+        $this->phoneEntity = $phoneEntity;
     }
 }

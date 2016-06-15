@@ -8,6 +8,103 @@
 				</h3>
 				<div class="box-tools"></div>
 			</div>
+			<div class="box-body">
+				<?php echo $this->form()->openTag($this->form); ?>
+				<?php echo $this->partial('partials/form-errors.phtml', array('errorMsg' => $this->form->getMessages())); ?>
+				
+				<div class="row">
+              		<div class="col-xs-12 col-sm-6">
+						<?php $element = $this->form->get('userNameFirst'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		<div class="col-xs-12 col-sm-6">
+						<?php $element = $this->form->get('userNameLast'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-8">
+						<?php $element = $this->form->get('userJobTitle'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-6">
+						<?php $element = $this->form->get('locationId'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-5">
+						<?php $element = $this->form->get('userEmail'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-4">
+						<?php $element = $this->form->get('userType'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-4">
+						<?php $element = $this->form->get('userStatus'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<?php echo $this->formElement($this->form->get('clientId')); ?>
+              	<?php echo $this->formElement($this->form->get('userId')); ?>
+				<?php echo $this->formSubmit($this->form->get('submit')); ?>
+				<?php echo $this->form()->closeTag(); ?>
+			</div>
 		</div>
 	</div>
 </div>

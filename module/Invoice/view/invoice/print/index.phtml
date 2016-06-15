@@ -81,7 +81,15 @@
 			</div>
 		</div>
 	</div>
-				
+	<div class="row">
+		<div class="col-xs-5">
+			<p><b><?php echo $this->translate('Invoice Date'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateShort(), $this->invoiceEntity->getInvoiceDate()); ?>
+		</div>
+		<div class="col-xs-2"></div>
+		<div class="col-xs-5">
+			<p><b><?php echo $this->translate('Period'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateShort(), $this->invoiceEntity->getInvoiceDateStart()); ?> - <?php echo date($this->appConfig()->getConfigDateShort(), $this->invoiceEntity->getInvoiceDateEnd()); ?>
+		</div>
+	</div>	
     <div class="row">
     	<div class="col-xs-12">
     		

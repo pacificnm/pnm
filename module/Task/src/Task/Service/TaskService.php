@@ -45,6 +45,16 @@ class TaskService implements TaskServiceInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \Task\Service\TaskServiceInterface::getEmployeeReminders()
+     */
+    public function getEmployeeReminders($employeeId)
+    {
+        return $this->mapper->getEmployeeReminders($employeeId);
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *
@@ -64,5 +74,35 @@ class TaskService implements TaskServiceInterface
     public function delete(TaskEntity $entity)
     {
         return $this->mapper->delete($entity);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Task\Service\TaskServiceInterface::getClientActiveTasks()
+     */
+    public function getClientActiveTasks($clientId)
+    {
+        $filter = array(
+            'clientId' => $clientId,
+            'taskStatus' => 'Active'
+        );
+        
+        return $this->mapper->getAll($filter);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Task\Service\TaskServiceInterface::getEmployeeActiveTasks()
+     */
+    public function getEmployeeActiveTasks($employeeId)
+    {
+        $filter = array(
+            'employeeId' => $employeeId,
+            'taskStatus' => 'Active'
+        );
+        
+        return $this->mapper->getAll($filter);
     }
 }

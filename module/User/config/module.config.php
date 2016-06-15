@@ -36,7 +36,8 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'User\Service\UserServiceInterface' => 'User\Service\Factory\UserServiceFactory',
-            'User\Mapper\UserMapperInterface' => 'User\Mapper\Factory\UserMapperFactory'
+            'User\Mapper\UserMapperInterface' => 'User\Mapper\Factory\UserMapperFactory',
+            'User\Form\UserForm' => 'User\Form\Factory\UserFormFactory'
         )
     ),
     

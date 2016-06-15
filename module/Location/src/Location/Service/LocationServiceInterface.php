@@ -40,4 +40,11 @@ interface LocationServiceInterface
      * @return boolean
      */
     public function delete(LocationEntity $entity);
+    
+    /**
+     * 
+     * @param number $clientId
+     * @return LocationEntity
+     */
+    public function getClientLocations($clientId);
 }

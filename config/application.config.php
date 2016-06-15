@@ -49,6 +49,8 @@ return array(
         'Install',
         'PaymentOption',
         'WorkorderCredit',
+        'TaskNote',
+        'TaskPriority',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

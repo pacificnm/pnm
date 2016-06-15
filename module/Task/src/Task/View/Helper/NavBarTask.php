@@ -30,7 +30,7 @@ class NavBarTask extends AbstractHelper
     
         $partialHelper = $view->plugin('partial');
     
-        $taksEntitys = $this->taskService->getAll(array('employeeId' => $view->Identity()->getEmployeeId()));
+        $taksEntitys = $this->taskService->getEmployeeActiveTasks($view->Identity()->getEmployeeId());
         
         $data  = new \stdClass();
         

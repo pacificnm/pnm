@@ -3,10 +3,13 @@ namespace Task\Entity;
 
 use Employee\Entity\EmployeeEntity;
 use Client\Entity\ClientEntity;
+use TaskPriority\Entity\PriorityEntity;
+
 class TaskEntity
 {
+
     /**
-     * 
+     *
      * @var number
      */
     protected $taskId;
@@ -16,68 +19,75 @@ class TaskEntity
      * @var number
      */
     protected $employeeId;
-    
+
     /**
      *
      * @var number
      */
     protected $clientId;
-    
+
     /**
      *
      * @var number
      */
     protected $taskDateStart;
-    
+
     /**
      *
      * @var number
      */
     protected $taskDateEnd;
-    
+
     /**
-     * 
+     *
      * @var string
      */
     protected $taskStatus;
-    
+
     /**
      *
      * @var string
      */
     protected $taskPriority;
-    
+
     /**
      *
      * @var number
      */
     protected $taskDateReminder;
-    
+
     /**
      *
      * @var string
      */
     protected $taskTitle;
-    
+
     /**
      *
      * @var string
      */
     protected $taskDescription;
-    
+
     /**
-     * 
+     *
      * @var EmployeeEntity
      */
     protected $employeeEntity;
-    
+
     /**
-     * 
+     *
      * @var ClientEntity
      */
     protected $clientEntity;
-    
+
     /**
+     *
+     * @var PriorityEntity
+     */
+    protected $priorityEntity;
+
+    /**
+     *
      * @return the $taskId
      */
     public function getTaskId()
@@ -86,6 +96,7 @@ class TaskEntity
     }
 
     /**
+     *
      * @return the $employeeId
      */
     public function getEmployeeId()
@@ -94,6 +105,7 @@ class TaskEntity
     }
 
     /**
+     *
      * @return the $clientId
      */
     public function getClientId()
@@ -102,6 +114,7 @@ class TaskEntity
     }
 
     /**
+     *
      * @return the $taskDateStart
      */
     public function getTaskDateStart()
@@ -110,6 +123,7 @@ class TaskEntity
     }
 
     /**
+     *
      * @return the $taskDateEnd
      */
     public function getTaskDateEnd()
@@ -118,6 +132,7 @@ class TaskEntity
     }
 
     /**
+     *
      * @return the $taskStatus
      */
     public function getTaskStatus()
@@ -126,6 +141,7 @@ class TaskEntity
     }
 
     /**
+     *
      * @return the $taskPriority
      */
     public function getTaskPriority()
@@ -134,6 +150,7 @@ class TaskEntity
     }
 
     /**
+     *
      * @return the $taskDateReminder
      */
     public function getTaskDateReminder()
@@ -142,6 +159,7 @@ class TaskEntity
     }
 
     /**
+     *
      * @return the $taskTitle
      */
     public function getTaskTitle()
@@ -150,6 +168,7 @@ class TaskEntity
     }
 
     /**
+     *
      * @return the $taskDescription
      */
     public function getTaskDescription()
@@ -158,6 +177,7 @@ class TaskEntity
     }
 
     /**
+     *
      * @return the $employeeEntity
      */
     public function getEmployeeEntity()
@@ -166,6 +186,7 @@ class TaskEntity
     }
 
     /**
+     *
      * @return the $clientEntity
      */
     public function getClientEntity()
@@ -174,7 +195,17 @@ class TaskEntity
     }
 
     /**
-     * @param number $taskId
+     *
+     * @return the $priorityEntity
+     */
+    public function getPriorityEntity()
+    {
+        return $this->priorityEntity;
+    }
+
+    /**
+     *
+     * @param number $taskId            
      */
     public function setTaskId($taskId)
     {
@@ -182,7 +213,8 @@ class TaskEntity
     }
 
     /**
-     * @param number $employeeId
+     *
+     * @param number $employeeId            
      */
     public function setEmployeeId($employeeId)
     {
@@ -190,7 +222,8 @@ class TaskEntity
     }
 
     /**
-     * @param number $clientId
+     *
+     * @param number $clientId            
      */
     public function setClientId($clientId)
     {
@@ -198,7 +231,8 @@ class TaskEntity
     }
 
     /**
-     * @param number $taskDateStart
+     *
+     * @param number $taskDateStart            
      */
     public function setTaskDateStart($taskDateStart)
     {
@@ -206,7 +240,8 @@ class TaskEntity
     }
 
     /**
-     * @param number $taskDateEnd
+     *
+     * @param number $taskDateEnd            
      */
     public function setTaskDateEnd($taskDateEnd)
     {
@@ -214,7 +249,8 @@ class TaskEntity
     }
 
     /**
-     * @param string $taskStatus
+     *
+     * @param string $taskStatus            
      */
     public function setTaskStatus($taskStatus)
     {
@@ -222,7 +258,8 @@ class TaskEntity
     }
 
     /**
-     * @param string $taskPriority
+     *
+     * @param string $taskPriority            
      */
     public function setTaskPriority($taskPriority)
     {
@@ -230,7 +267,8 @@ class TaskEntity
     }
 
     /**
-     * @param number $taskDateReminder
+     *
+     * @param number $taskDateReminder            
      */
     public function setTaskDateReminder($taskDateReminder)
     {
@@ -238,7 +276,8 @@ class TaskEntity
     }
 
     /**
-     * @param string $taskTitle
+     *
+     * @param string $taskTitle            
      */
     public function setTaskTitle($taskTitle)
     {
@@ -246,7 +285,8 @@ class TaskEntity
     }
 
     /**
-     * @param string $taskDescription
+     *
+     * @param string $taskDescription            
      */
     public function setTaskDescription($taskDescription)
     {
@@ -254,7 +294,8 @@ class TaskEntity
     }
 
     /**
-     * @param \Employee\Entity\EmployeeEntity $employeeEntity
+     *
+     * @param \Employee\Entity\EmployeeEntity $employeeEntity            
      */
     public function setEmployeeEntity($employeeEntity)
     {
@@ -262,13 +303,20 @@ class TaskEntity
     }
 
     /**
-     * @param \Client\Entity\ClientEntity $clientEntity
+     *
+     * @param \Client\Entity\ClientEntity $clientEntity            
      */
     public function setClientEntity($clientEntity)
     {
         $this->clientEntity = $clientEntity;
     }
 
-    
-    
+    /**
+     *
+     * @param \TaskPriority\Entity\PriorityEntity $priorityEntity            
+     */
+    public function setPriorityEntity($priorityEntity)
+    {
+        $this->priorityEntity = $priorityEntity;
+    }
 }

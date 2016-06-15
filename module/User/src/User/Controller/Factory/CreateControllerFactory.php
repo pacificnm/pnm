@@ -20,6 +20,10 @@ class CreateControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new CreateController($clientService);
+        $userService = $realServiceLocator->get('User\Service\UserServiceInterface');
+        
+        $userForm = $realServiceLocator->get('User\Form\UserForm');
+        
+        return new CreateController($clientService, $userService, $userForm);
     }
 }

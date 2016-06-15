@@ -9,10 +9,10 @@ use Config\Entity\ConfigEntity;
 class ConfigForm extends Form implements InputFilterProviderInterface
 {
     /**
-     *
+     * 
      * @param string $name
      * @param array $options
-     * @return \Employee\Form\EmployeeForm
+     * @return \Config\Form\ConfigForm
      */
     function __construct($name = 'employee-form', $options = array())
     {

@@ -77,6 +77,28 @@ class TaskMapper implements TaskMapperInterface
             ));
         }
         
+        // task status
+        if (array_key_exists('taskStatus', $filter) && ! empty($filter['taskStatus'])) {
+            $select->where(array(
+                'task.task_status = ?' => $filter['taskStatus']
+            ));
+        }
+        
+        // join priority
+        $select->join('task_priority', 'task_priority.task_priority_id = task.task_priority', array(
+            'task_priority_value'
+        ), 'inner');
+        
+        // join employee
+        $select->join('employee', 'task.employee_id = employee.employee_id', array(
+            'employee_name',
+            'employee_title',
+            'employee_email',
+            'employee_im',
+            'employee_image',
+            'employee_status'
+        ), 'left');
+        
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
         $paginatorAdapter = new DbSelect($select, $this->readAdapter, $resultSetPrototype);
@@ -102,6 +124,21 @@ class TaskMapper implements TaskMapperInterface
             'task.task_id = ?' => $id
         ));
         
+        // join priority
+        $select->join('task_priority', 'task_priority.task_priority_id = task.task_priority', array(
+            'task_priority_value'
+        ), 'inner');
+        
+        // join employee
+        $select->join('employee', 'task.employee_id = employee.employee_id', array(
+            'employee_name',
+            'employee_title',
+            'employee_email',
+            'employee_im',
+            'employee_image',
+            'employee_status'
+        ), 'left');
+        
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
         $stmt = $sql->prepareStatementForSqlObject($select);
@@ -115,6 +152,48 @@ class TaskMapper implements TaskMapperInterface
             $resultSet->buffer();
             
             return $resultSet->initialize($result)->current();
+        }
+        
+        return array();
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Task\Mapper\TaskMapperInterface::getEmployeeReminders()
+     */
+    public function getEmployeeReminders($employeeId)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('task');
+        
+        $select->where(array(
+            'task.employee_id = ?' => $employeeId
+        ));
+        
+        $select->where(array(
+            'task.task_status = ?' =>
+            'Active'
+        ));
+        
+        $select->where->lessThanOrEqualTo('task_date_reminder', time());
+        
+        //echo $sql->getSqlstringForSqlObject($select); die ;
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+            
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+            
+            $resultSet->buffer();
+            
+            return $resultSet->initialize($result);
         }
         
         return array();

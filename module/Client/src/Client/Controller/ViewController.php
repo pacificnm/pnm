@@ -7,6 +7,8 @@ use Zend\View\Model\ViewModel;
 use Workorder\Service\WorkorderServiceInterface;
 use Invoice\Service\InvoiceServiceInterface;
 use Task\Service\TaskServiceInterface;
+use Location\Service\LocationServiceInterface;
+use User\Service\UserServiceInterface;
 
 class ViewController extends BaseController
 {
@@ -37,12 +39,26 @@ class ViewController extends BaseController
 
     /**
      *
+     * @var LocationServiceInterface
+     */
+    protected $locationService;
+
+    /**
+     *
+     * @var UserServiceInterface
+     */
+    protected $userService;
+
+    /**
+     *
      * @param ClientServiceInterface $clientService            
      * @param WorkorderServiceInterface $workorderService            
      * @param InvoiceServiceInterface $invoiceService            
      * @param TaskServiceInterface $taskService            
+     * @param LocationServiceInterface $locationService            
+     * @param UserServiceInterface $userService            
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, InvoiceServiceInterface $invoiceService, TaskServiceInterface $taskService)
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, InvoiceServiceInterface $invoiceService, TaskServiceInterface $taskService, LocationServiceInterface $locationService, UserServiceInterface $userService)
     {
         $this->clientService = $clientService;
         
@@ -51,6 +67,10 @@ class ViewController extends BaseController
         $this->invoiceService = $invoiceService;
         
         $this->taskService = $taskService;
+        
+        $this->locationService = $locationService;
+        
+        $this->userService = $userService;
     }
 
     /**
@@ -83,10 +103,7 @@ class ViewController extends BaseController
         $this->setHeadTitle($clientEntity->getClientName());
         
         // get workorders
-        $workorderEntitys = $this->workorderService->getAll(array(
-            'clientId' => $id,
-            'workorderStatus' => 'Active'
-        ));
+        $workorderEntitys = $this->workorderService->getClientActiveWorkOrders($id);
         
         $workorderTotalCount = $this->workorderService->getClientTotalCount($id, 'Closed');
         
@@ -96,21 +113,17 @@ class ViewController extends BaseController
         
         $workorderRevenuTotal = $workorderLaborTotal + $workorderPartTotal;
         
-        // invoice
-        $filter = array(
-            'clientId' => $id,
-            'invoiceStatus' => 'Un-Paid'
-        );
+        // get locations
+        $locationEntitys = $this->locationService->getClientLocations($id);
         
-        $invoiceEntitys = $this->invoiceService->getAll($filter);
+        // get un-paid invoices
+        $invoiceEntitys = $this->invoiceService->getClientUnpaidInvoices($id);
         
-        // task
-        $filter = array(
-            'clientId' => $id,
-            'taskStatus' => 'Active'
-        );
+        // get active tasks
+        $taskEntitys = $this->taskService->getClientActiveTasks($id);
         
-        $taskEntitys = $this->taskService->getAll($filter);
+        // get primary user
+        $userEntity = $this->userService->getClientPrimaryUser($id);
         
         // return view model
         return new ViewModel(array(
@@ -122,7 +135,9 @@ class ViewController extends BaseController
             'workorderPartTotal' => $workorderPartTotal,
             'workorderRevenuTotal' => $workorderRevenuTotal,
             'invoiceEntitys' => $invoiceEntitys,
-            'taskEntitys' => $taskEntitys
+            'taskEntitys' => $taskEntitys,
+            'locationEntitys' => $locationEntitys,
+            'userEntity' => $userEntity
         ));
     }
 }

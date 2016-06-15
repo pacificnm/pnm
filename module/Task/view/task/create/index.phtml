@@ -8,6 +8,126 @@
 				</h3>
 				<div class="box-tools"></div>
 			</div>
+			<div class="box-body">
+				<?php echo $this->form()->openTag($this->form); ?>
+				<?php echo $this->partial('partials/form-errors.phtml', array('errorMsg' => $this->form->getMessages())); ?>
+				
+				<div class="row">
+              		<div class="col-xs-12">
+						<?php $element = $this->form->get('taskTitle'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12">
+						<?php $element = $this->form->get('taskDescription'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-5">
+						<?php $element = $this->form->get('employeeId'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-4">
+						<?php $element = $this->form->get('taskDateStart'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-4">
+						<?php $element = $this->form->get('taskDateEnd'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-2">
+						<?php $element = $this->form->get('taskDateReminder'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-2">
+						<?php $element = $this->form->get('taskPriority'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-2">
+						<?php $element = $this->form->get('taskStatus'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+				
+				<?php echo $this->formElement($this->form->get('taskId')); ?>
+				<?php echo $this->formElement($this->form->get('clientId')); ?>
+				<?php echo $this->formSubmit($this->form->get('submit')); ?>
+				<?php echo $this->form()->closeTag(); ?>
+			</div>
 		</div>
 	</div>
 </div>
+<script>
+  $(function () {
+	  $('#taskDateStart').daterangepicker({timePicker: true, timePickerIncrement: 15,  "singleDatePicker": true, format: 'MM/DD/YYYY h:mm A'});
+	  $('#taskDateEnd').daterangepicker({timePicker: true, timePickerIncrement: 15,  "singleDatePicker": true, format: 'MM/DD/YYYY h:mm A'});
+	  $("#taskDescription").wysihtml5();
+  });
+ </script>

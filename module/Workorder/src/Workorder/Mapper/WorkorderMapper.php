@@ -13,6 +13,7 @@ use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\DbSelect;
 use Zend\Db\ResultSet\ResultSet;
 use Workorder\Entity\WorkorderEntity;
+use Zend\Db\Sql\Expression;
 
 class WorkorderMapper implements WorkorderMapperInterface
 {
@@ -95,6 +96,38 @@ class WorkorderMapper implements WorkorderMapperInterface
                 $select->where->like('workorder.workorder_description', $filter['keyword'] . "%");
             }
         }
+        
+        
+        // join location
+        $select->join('location', 'workorder.location_id = location.location_id', array(
+            'location_type',
+            'location_street',
+            'location_street_2',
+            'location_city',
+            'location_state',
+            'location_zip',
+            'location_Status'
+        ), 'left');
+        
+        // join phone
+        $select->join('phone', 'location.location_id = phone.phone_id', array(
+            'phone_type',
+            'phone_num'
+        ), 'left');
+        
+        
+        // join primary user
+        $exspresion = new Expression("location.location_id = user.location_id AND user.user_type = 'Primary' AND user.user_status = 'Active'");
+        $select->join('user', $exspresion, array(
+            'user_status',
+            'user_name_first',
+            'user_name_last',
+            'user_job_title',
+            'user_email',
+            'user_type'
+        ), 'left');
+        
+
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         

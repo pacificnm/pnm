@@ -6,7 +6,62 @@
 					<i class="fa fa-user"></i>
 					<?php echo $this->translate('View User'); ?>
 				</h3>
-				<div class="box-tools"></div>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('user-update', array('clientId' => $this->clientId, 'userId' => $this->userEntity->getUserId()));?>" title="<?php echo $this->translate('Edit this user'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Name');?>:</b> <?php echo $this->userEntity->getUserNameFirst(); ?> <?php echo $this->userEntity->getUserNameLast(); ?></p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Type');?>:</b> <?php echo $this->userEntity->getUserType(); ?></p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('E-Mail'); ?>:</b> <?php echo $this->userEntity->getUserEmail();?></p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Status');?>:</b> <?php echo $this->userEntity->getUserStatus();?></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-6">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-lock"></i> <?php echo $this->translate('Passwords'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="" title="" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('This user has no passwords'); ?></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-desktop"></i> <?php echo $this->translate('Hosts'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="" title="" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('This user is not assigned to any hosts'); ?></p>
+				</div>
 			</div>
 		</div>
 	</div>

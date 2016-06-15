@@ -49,6 +49,8 @@ class IndexController extends BaseController
         
         $clientEntity = $this->clientService->get($id);
         
+        $taskStatus = $this->params()->fromQuery('taskStatus', 'Active');
+        
         if (! $clientEntity) {
             $this->flashmessenger()->addErrorMessage('Client was not found.');
             
@@ -71,7 +73,8 @@ class IndexController extends BaseController
         $this->setHeadTitle($clientEntity->getClientName());
         
         $filter = array(
-            'clientId' => $id
+            'clientId' => $id,
+            'taskStatus' => $taskStatus
         );
         
         $paginator = $this->taskService->getAll($filter);
@@ -91,7 +94,8 @@ class IndexController extends BaseController
             'queryParams' => $this->params()->fromQuery(),
             'routeParams' => array(
                 'clientId' => $id
-            )
+            ),
+            'taskStatus' => $taskStatus
         ));
     }
 }

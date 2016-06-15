@@ -71,18 +71,28 @@
 								<b><?php echo $this->translate('Scheduled'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderDateScheduled()); ?>
 							</div>
 							<div class="col-xs-12 col-sm-4">
-								<b><?php echo $this->translate('Employee'); ?>:</b> 
+								<b><?php echo $this->translate('Ends'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderDateEnd()); ?>
 							</div>
 							<div class="col-xs-12 col-sm-4">
 								<b><?php echo $this->translate('Contact'); ?>:</b> 
+									<a href="<?php echo $this->url('user-view', array('clientId' => $this->clientId, 'userId' => $workorderEntity->getUserEntity()->getUserId()));?>" title="<?php echo $this->translate('View this user'); ?>">
+										<?php echo $workorderEntity->getUserEntity()->getUserNameFirst();?> <?php echo $workorderEntity->getUserEntity()->getUserNameLast();?>
+									</a>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-xs-12 col-sm-8">
 								<b><?php echo $this->translate('Location'); ?>:</b> 
+								<a href="" title="<?php echo $this->translate('View this location'); ?>">
+									<?php echo $workorderEntity->getLocationEntity()->getLocationStreet(); ?> 
+									<?php echo $workorderEntity->getLocationEntity()->getLocationCity(); ?>,
+									<?php echo $workorderEntity->getLocationEntity()->getLocationState(); ?>
+									<?php echo $workorderEntity->getLocationEntity()->getLocationZip(); ?>
+								</a>
 							</div>
 							<div class="col-xs-12 col-sm-4">
 								<b><?php echo $this->translate('Phone'); ?>:</b> 
+								<?php echo $workorderEntity->getPhoneEntity()->getPhoneNum(); ?>
 							</div>
 						</div>
 					</li>

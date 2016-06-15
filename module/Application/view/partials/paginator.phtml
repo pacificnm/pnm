@@ -5,13 +5,13 @@
 			 <?php if (isset($this->previous)): ?>
 				 <li>
 					 <a href="<?php echo $this->url($this->route, $this->routeParams , array('query' => array('page' => $this->previous) + $this->queryParams )); ?>">
-					 	<<
+					 	<i class="fa fa-angle-double-left"></i>
 					 </a>
 				 </li>
 			 <?php else: ?>
 				 <li class="disabled">
 					 <a>
-						 <<
+						<i class="fa fa-angle-double-left"></i>
 					 </a>
 				 </li>
 			 <?php endif; ?>
@@ -38,13 +38,13 @@
 				 <li>
 					 <a href="<?php echo $this->url($this->route,
     				$this->routeParams, array('query' => array('page' => $this->next) + $this->queryParams )); ?>">
-					 	>>
+					 	<i class="fa fa-angle-double-right"></i>
 					 </a>
 				 </li>
 			 <?php else: ?>
 				 <li class="disabled">
 					 <a>
-						 >>
+						 <i class="fa fa-angle-double-right"></i>
 					 </a>
 				 </li>
 			 <?php endif; ?>

@@ -3,6 +3,8 @@ namespace User\Hydrator;
 
 use Zend\Stdlib\Hydrator\ClassMethods;
 use User\Entity\UserEntity;
+use Phone\Entity\PhoneEntity;
+use Location\Entity\LocationEntity;
 
 class UserHydrator extends ClassMethods
 {
@@ -29,6 +31,14 @@ class UserHydrator extends ClassMethods
     
         parent::hydrate($data, $object);
     
+        $phoneEntity = parent::hydrate($data, new PhoneEntity());
+        
+        $locationEntity = parent::hydrate($data, new LocationEntity());
+        
+        $object->setPhoneEntity($phoneEntity);
+        
+        $object->setLocationEntity($locationEntity);
+        
         return $object;
     }
     
@@ -46,6 +56,12 @@ class UserHydrator extends ClassMethods
     
         $data = parent::extract($object);
     
+        unset($data['phone_entity']);
+        
+        unset($data['client_entity']);
+        
+        unset($data['location_entity']);
+        
         return $data;
     }
 }

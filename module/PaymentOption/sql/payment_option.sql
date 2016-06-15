@@ -16,6 +16,7 @@ INSERT INTO `payment_option` (`payment_option_id`, `payment_option_name`, `payme
 (1, 'Cash', 1),
 (2, 'Check', 1),
 (3, 'Credit Card', 0),
+(4, 'Pay Pal', 0);
 
 --
 -- Indexes for dumped tables
@@ -36,4 +37,4 @@ ALTER TABLE `payment_option`
 -- AUTO_INCREMENT for table `payment_option`
 --
 ALTER TABLE `payment_option`
-  MODIFY `payment_option_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `payment_option_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;

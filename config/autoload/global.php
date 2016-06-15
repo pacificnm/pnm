@@ -15,7 +15,6 @@ return array(
     'db' => array(
         // this is for primary adapter which is using the profiler
         'driver' => 'Pdo',
-        'dsn' => 'mysql:dbname=pacificnm_core;host=db1',
         'driver_options' => array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),
@@ -24,14 +23,12 @@ return array(
         'adapters' => array(
             'db1' => array(
                 'driver' => 'Pdo',
-                'dsn' => 'mysql:dbname=pacificnm_core;host=db1',
                 'driver_options' => array(
                     PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
                 )
             ),
             'db2' => array(
                 'driver' => 'Pdo',
-                'dsn' => 'mysql:dbname=pacificnm_core;host=db2',
                 'driver_options' => array(
                     PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
                 )

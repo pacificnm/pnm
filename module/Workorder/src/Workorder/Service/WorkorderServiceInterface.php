@@ -45,6 +45,13 @@ interface WorkorderServiceInterface
     /**
      * 
      * @param number $clientId
+     * @return boolean
+     */
+    public function getClientActiveWorkOrders($clientId);
+    
+    /**
+     * 
+     * @param number $clientId
      * @return float
      */
     public function getClientTotalLabor($clientId);

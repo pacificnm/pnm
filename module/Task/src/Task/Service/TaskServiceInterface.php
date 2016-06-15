@@ -22,6 +22,13 @@ interface TaskServiceInterface
 
     /**
      *
+     * @param number $employeeId
+     * @return TaskEntity
+     */
+    public function getEmployeeReminders($employeeId);
+    
+    /**
+     *
      * @param TaskEntity $entity            
      * @return TaskEntity
      */
@@ -33,4 +40,18 @@ interface TaskServiceInterface
      * @return boolean
      */
     public function delete(TaskEntity $entity);
+
+    /**
+     *
+     * @param number $clientId            
+     * @return TaskEntity
+     */
+    public function getClientActiveTasks($clientId);
+
+    /**
+     *
+     * @param number $employeeId            
+     * @return TaskEntity
+     */
+    public function getEmployeeActiveTasks($employeeId);
 }

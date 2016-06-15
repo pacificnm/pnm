@@ -442,6 +442,16 @@ return array(
                                                         'label' => 'Delete Task',
                                                         'route' => 'task-delete',
                                                         'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Edit Note',
+                                                        'route' => 'task-note-update',
+                                                        'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Note',
+                                                        'route' => 'task-note-delete',
+                                                        'useRouteMatch' => true
                                                     )
                                                 )
                                             ),

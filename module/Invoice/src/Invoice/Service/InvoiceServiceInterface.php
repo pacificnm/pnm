@@ -32,4 +32,11 @@ interface InvoiceServiceInterface
      * @return boolean
      */
     public function delete(InvoiceEntity $entity);
+    
+    /**
+     * 
+     * @param unknown $clientId
+     * @return InvoiceEntity
+     */
+    public function getClientUnpaidInvoices($clientId);
 }

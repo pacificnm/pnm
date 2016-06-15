@@ -74,7 +74,7 @@
 								<b><?php echo $this->translate('End')?>: </b> <?php echo date($this->appConfig()->getConfigDateLong(), $taskEntity->getTaskDateEnd()); ?>
 							</div>
 							<div class="col-xs-12 col-sm-4">
-								<b><?php echo $this->translate('Priority')?>: </b> <?php echo $taskEntity->getTaskPriority(); ?>
+								<b><?php echo $this->translate('Priority')?>: </b> <?php echo $taskEntity->getPriorityEntity()->getTaskPriorityValue(); ?>
 							</div>
 						</div>
 					</li>

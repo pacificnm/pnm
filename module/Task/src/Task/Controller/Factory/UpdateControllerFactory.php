@@ -19,6 +19,10 @@ class UpdateControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new UpdateController($clientService);
+        $taskService = $realServiceLocator->get('Task\Service\TaskServiceInterface');
+        
+        $taskForm = $realServiceLocator->get('Task\Form\TaskForm');
+        
+        return new UpdateController($clientService, $taskService, $taskForm);
     }
 }
