@@ -3,9 +3,9 @@ namespace Application\Controller\Plugin\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Application\Controller\Plugin\Acl;
+use Application\Controller\Plugin\ApplicationAcl;
 
-class AclFactory implements FactoryInterface
+class ApplicationAclFactory implements FactoryInterface
 {
 
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -14,6 +14,6 @@ class AclFactory implements FactoryInterface
         
         $config = $realServiceLocator->get('Config');
         
-        return new Acl($config);
+        return new ApplicationAcl($config);
     }
 }

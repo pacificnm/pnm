@@ -6,7 +6,7 @@ use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole;
 use Zend\Permissions\Acl\Resource\GenericResource;
 
-class Acl extends AbstractPlugin
+class ApplicationAcl extends AbstractPlugin
 {
 
     /**

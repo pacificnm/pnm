@@ -100,7 +100,7 @@ return array(
         'factories' => array(
             'SetPageTitle' => 'Application\Controller\Plugin\Factory\SetPageTitleFactory',
             'SetHeadTitle' => 'Application\Controller\Plugin\Factory\SetHeadTitleFactory',
-            'Acl' => 'Application\Controller\Plugin\Factory\AclFactory', 
+            'Acl' => 'Application\Controller\Plugin\Factory\ApplicationAclFactory', 
         ),
         'invokables' => array()
     ),
