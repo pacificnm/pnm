@@ -2,9 +2,9 @@
 namespace Application\Controller\Plugin;
 
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
-use \Zend\Permissions\Acl\Acl;
-use \Zend\Permissions\Acl\Role\GenericRole;
-use \Zend\Permissions\Acl\Resource\GenericResource;
+use Zend\Permissions\Acl\Acl;
+use Zend\Permissions\Acl\Role\GenericRole;
+use Zend\Permissions\Acl\Resource\GenericResource;
 
 class Acl extends AbstractPlugin
 {
