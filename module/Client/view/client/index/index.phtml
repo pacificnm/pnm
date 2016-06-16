@@ -70,9 +70,18 @@
                     	<div class="row">
                     		<div class="col-xs-12 col-sm-9">
                         		<b><?php echo $this->translate('Location'); ?>:</b>
+                        		<a href="" title="<?php echo $this->translate('View this location'); ?>">
+                        			<?php echo $clientEntity->getLocationEntity()->getLocationStreet(); ?>
+                        			<?php echo $clientEntity->getLocationEntity()->getLocationCity(); ?>,
+                        			<?php echo $clientEntity->getLocationEntity()->getLocationState(); ?>
+                        			<?php echo $clientEntity->getLocationEntity()->getLocationZip(); ?>
+                        		</a>
                         	</div>
                         	<div class="col-xs-12 col-sm-3">
                         		<b><?php echo $this->translate('Phone'); ?>:</b>
+                        		<a href="" title="<?php echo $this->translate('View this phone number'); ?>">
+                        			<?php echo $clientEntity->getPhoneEntity()->getPhoneNum(); ?>
+                        		</a>
                         	</div>
                     	</div>
                     </li>

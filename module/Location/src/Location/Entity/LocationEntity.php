@@ -12,6 +12,12 @@ class LocationEntity
 
     /**
      *
+     * @var number
+     */
+    protected $clientId;
+
+    /**
+     *
      * @var string
      */
     protected $locationType;
@@ -59,6 +65,15 @@ class LocationEntity
     public function getLocationId()
     {
         return $this->locationId;
+    }
+
+    /**
+     *
+     * @return the $clientId
+     */
+    public function getClientId()
+    {
+        return $this->clientId;
     }
 
     /**
@@ -131,6 +146,15 @@ class LocationEntity
     public function setLocationId($locationId)
     {
         $this->locationId = $locationId;
+    }
+
+    /**
+     *
+     * @param number $clientId            
+     */
+    public function setClientId($clientId)
+    {
+        $this->clientId = $clientId;
     }
 
     /**

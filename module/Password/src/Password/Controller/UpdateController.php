@@ -98,6 +98,8 @@ class UpdateController extends BaseController
     
         $this->layout()->setVariable('activeMenuItem', 'client');
         
+        $this->layout()->setVariable('activeSubMenuItem', 'password-list');
+        
         // set head title
         $this->setHeadTitle($clientEntity->getClientName());
     

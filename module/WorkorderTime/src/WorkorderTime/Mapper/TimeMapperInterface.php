@@ -32,4 +32,11 @@ interface TimeMapperInterface
      * @return boolean
      */
     public function delete(TimeEntity $entity);
+    
+    /**
+     * 
+     * @param unknown $clientId
+     * @return TimeEntity
+     */
+    public function getTotalByLabor($clientId);
 }

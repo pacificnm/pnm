@@ -176,7 +176,7 @@ class UserMapper implements UserMapperInterface
         $select->join('location', 'location.location_id = user.location_id', array(
             'location_type',
             'location_street',
-            'location_street_2',
+            'location_street_cont',
             'location_city',
             'location_state',
             'location_zip',

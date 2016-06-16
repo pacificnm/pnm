@@ -75,6 +75,12 @@ class LocationMapper implements LocationMapperInterface
             ));
         }
         
+        if (array_key_exists('locationStatus', $filter) && ! empty(($filter['locationStatus']))) {
+            $select->where(array(
+                'location.location_Status = ?' => $filter['locationStatus']
+            ));
+        }
+        
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
         $stmt = $sql->prepareStatementForSqlObject($select);
@@ -126,10 +132,11 @@ class LocationMapper implements LocationMapperInterface
         
         return array();
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Location\Mapper\LocationMapperInterface::getClientLocationByType()
      */
     public function getClientLocationByType($clientId, $locationType)
@@ -153,11 +160,11 @@ class LocationMapper implements LocationMapperInterface
         $result = $stmt->execute();
         
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
+            
             $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
-        
+            
             $resultSet->buffer();
-        
+            
             return $resultSet->initialize($result)->current();
         }
         

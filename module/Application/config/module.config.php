@@ -288,6 +288,23 @@ return array(
                                         'useRouteMatch' => true
                                     ),
                                     array(
+                                        'label' => 'Location',
+                                        'route' => 'location-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Edit Location',
+                                                'route' => 'location-update',
+                                                'useRouteMatch' => true,
+                                            ),
+                                        )
+                                    ),
+                                    array(
+                                        'label' => 'New Location',
+                                        'route' => 'location-create',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
                                         'label' => 'Hosts',
                                         'route' => 'host-list',
                                         'useRouteMatch' => true,

@@ -94,6 +94,8 @@ class ViewController extends BaseController
         
         $this->layout()->setVariable('activeMenuItem', 'client');
         
+        $this->layout()->setVariable('activeSubMenuItem', 'password-list');
+        
         // set page title
         $this->setHeadTitle($clientEntity->getClientName());
         

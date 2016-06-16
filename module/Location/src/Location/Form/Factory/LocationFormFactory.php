@@ -1,11 +1,11 @@
 <?php
-namespace User\Form\Factory;
+namespace Location\Form\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use User\Form\UserForm;
+use Location\Form\LocationForm;
 
-class UserFormFactory implements FactoryInterface
+class LocationFormFactory implements FactoryInterface
 {
 
     /**
@@ -17,8 +17,6 @@ class UserFormFactory implements FactoryInterface
     {
         $locationService = $serviceLocator->get('Location\Service\LocationServiceInterface');
         
-        $userService = $serviceLocator->get('User\Service\UserServiceInterface');
-        
-        return new UserForm($locationService, $userService);
+        return new LocationForm($locationService);
     }
 }

@@ -42,6 +42,11 @@ class ConfigController extends AbstractActionController
      */
     public function indexAction()
     {
+        if(is_file('data/install')) {
+            return $this->redirect()->toRoute('home');
+        }
+        
+        
         $this->layout('layout/install.phtml');
         
 

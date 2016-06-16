@@ -74,7 +74,8 @@ class LocationService implements LocationServiceInterface
     public function getClientLocations($clientId)
     {
         $filter = array(
-            'clientId' => $clientId
+            'clientId' => $clientId,
+            'locationStatus' => 'Active'
         );
         
         return $this->mapper->getAll($filter);
@@ -94,5 +95,31 @@ class LocationService implements LocationServiceInterface
         }
         
         return $locationEntity;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Location\Service\LocationServiceInterface::clientHasPrimaryLocation()
+     */
+    public function clientHasPrimaryLocation($clientId)
+    {
+        $locationEntity = $this->mapper->getClientLocationByType($clientId, 'Primary');
+        
+        if(! $locationEntity) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Location\Service\LocationServiceInterface::getClientLocationByType()
+     */
+    public function getClientLocationByType($clientId, $locationType)
+    {
+        return $this->mapper->getClientLocationByType($clientId, $locationType);
     }
 }

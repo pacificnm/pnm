@@ -52,11 +52,13 @@ class AdminController extends AbstractActionController
      */
     public function indexAction()
     {
+        if(is_file('data/install')) {
+            return $this->redirect()->toRoute('home');    
+        }
+        
         $this->layout('layout/install.phtml');
         
         $request = $this->getRequest();
-        
-        
         
         // if we have a post
         if ($request->isPost()) {

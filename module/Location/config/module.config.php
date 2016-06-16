@@ -6,7 +6,11 @@ return array(
         'acl' => array(
             'guest' => array(),
             'user' => array(),
-            'employee' => array(),
+            'employee' => array(
+                'location-update',
+                'location-view',
+                'location-create'
+            ),
             'accountant' => array(),
             'administrator' => array()
         )
@@ -14,7 +18,11 @@ return array(
     
     // controllers
     'controllers' => array(
-        'factories' => array()
+        'factories' => array(
+            'Location\Controller\Update' => 'Location\Controller\Factory\UpdateControllerFactory',
+            'Location\Controller\View' => 'Location\Controller\Factory\ViewControllerFactory',
+            'Location\Controller\Create' => 'Location\Controller\Factory\CreateControllerFactory'
+        )
     ),
     
     // service manager
@@ -22,6 +30,7 @@ return array(
         'factories' => array(
             'Location\Service\LocationServiceInterface' => 'Location\Service\Factory\LocationServiceFactory',
             'Location\Mapper\LocationMapperInterface' => 'Location\Mapper\Factory\LocationMapperFactory',
+            'Location\Form\LocationForm' => 'Location\Form\Factory\LocationFormFactory'
         )
     ),
     
@@ -35,6 +44,30 @@ return array(
                     'route' => '/client/[:clientId]/location/view/[:locationId]',
                     'defaults' => array(
                         'controller' => 'Location\Controller\View',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            
+            'location-update' => array(
+                'title' => 'View Location',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/location/update/[:locationId]',
+                    'defaults' => array(
+                        'controller' => 'Location\Controller\Update',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            
+            'location-create' => array(
+                'title' => 'New Location',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/location/create',
+                    'defaults' => array(
+                        'controller' => 'Location\Controller\Create',
                         'action' => 'index'
                     )
                 )

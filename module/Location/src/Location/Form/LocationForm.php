@@ -1,56 +1,42 @@
 <?php
-namespace User\Form;
+namespace Location\Form;
 
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
+use Location\Hydrator\LocationHydrator;
+use Location\Entity\LocationEntity;
 use Location\Service\LocationServiceInterface;
-use User\Hydrator\UserHydrator;
-use User\Entity\UserEntity;
-use User\Service\UserServiceInterface;
 
-class UserForm extends Form implements InputFilterProviderInterface
+class LocationForm extends Form implements InputFilterProviderInterface
 {
     /**
-     *
+     * 
      * @var LocationServiceInterface
      */
     protected $locationService;
     
-    /**
-     * 
-     * @var UserServiceInterface
-     */
-    protected $userService;
-    
-    /**
-     * 
-     * @var number
-     */
     protected $clientId;
     
     /**
      * 
      * @param LocationServiceInterface $locationService
-     * @param UserServiceInterface $userService
      * @param string $name
      * @param array $options
-     * @return \User\Form\UserForm
+     * @return \Location\Form\LocationForm
      */
-    function __construct(LocationServiceInterface $locationService, UserServiceInterface $userService, $name = 'user-form', $options = array())
+    function __construct(LocationServiceInterface $locationService, $name = 'location-form', $options = array())
     {
-        $this->locationService = $locationService;
-    
-        $this->userService = $userService;
-        
         parent::__construct($name, $options);
-    
-        $this->setHydrator(new UserHydrator(false));
-    
-        $this->setObject(new UserEntity());
         
-        // userId
+        $this->setHydrator(new LocationHydrator(false));
+        
+        $this->setObject(new LocationEntity());
+        
+        $this->locationService = $locationService;
+        
+        // locationId
         $this->add(array(
-            'name' => 'userId',
+            'name' => 'locationId',
             'type' => 'hidden'
         ));
         
@@ -60,90 +46,105 @@ class UserForm extends Form implements InputFilterProviderInterface
             'type' => 'hidden'
         ));
         
-        // userStatus
+        // locationType
         $this->add(array(
             'type' => 'Select',
-            'name' => 'userStatus',
-            'options' => array(
-                'label' => 'Status:',
-                'value_options' => array(
-                    'Active' => 'Active',
-                    'Deleted' => 'Deleted'
-                )
-            ),
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'userStatus'
-            )
-        ));
-        
-        // userNameFirst
-        $this->add(array(
-            'name' => 'userNameFirst',
-            'type' => 'Text',
-            'options' => array(
-                'label' => 'First Name:'
-            ),
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'userNameFirst'
-            )
-        ));
-        
-        // userNameLast
-        $this->add(array(
-            'name' => 'userNameLast',
-            'type' => 'Text',
-            'options' => array(
-                'label' => 'Last Name:'
-            ),
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'userNameLast'
-            )
-        ));
-        
-        // userJobTitle
-        $this->add(array(
-            'name' => 'userJobTitle',
-            'type' => 'Text',
-            'options' => array(
-                'label' => 'Job Title:'
-            ),
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'userJobTitle'
-            )
-        ));
-        
-        // userEmail
-        $this->add(array(
-            'name' => 'userEmail',
-            'type' => 'Text',
-            'options' => array(
-                'label' => 'E-Mail:'
-            ),
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'userEmail'
-            )
-        ));
-        
-        // userType
-        $this->add(array(
-            'type' => 'Select',
-            'name' => 'userType',
+            'name' => 'locationType',
             'options' => array(
                 'label' => 'Type:',
                 'value_options' => array(
                     'Primary' => 'Primary',
-                    'Logon' => 'Logon',
-                    'Staff' => 'Staff'
+                    'Branch Office' => 'Branch Office',
+                    'Billing' => 'Billing',
+                    'Shipping' => 'Shipping',
+                    'Service' => 'Service'
                 )
             ),
             'attributes' => array(
                 'class' => 'form-control',
-                'id' => 'userType'
+                'id' => 'locationType'
+            )
+        ));
+        
+        // locationStreet
+        $this->add(array(
+            'name' => 'locationStreet',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Street:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'locationStreet'
+            )
+        ));
+        
+        // locationStreet2
+        $this->add(array(
+            'name' => 'locationStreet2',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Street Cont:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'locationStreet2'
+            )
+        ));
+        
+        // locationCity
+        $this->add(array(
+            'name' => 'locationCity',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'City:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'locationCity'
+            )
+        ));
+        
+        // locationState
+        $this->add(array(
+            'name' => 'locationState',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'State:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'locationState'
+            )
+        ));
+        
+        // locationZip
+        $this->add(array(
+            'name' => 'locationZip',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Postal Code:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'locationZip'
+            )
+        ));
+        
+        // locationStatus
+        $this->add(array(
+            'type' => 'Select',
+            'name' => 'locationStatus',
+            'options' => array(
+                'label' => 'Status:',
+                'value_options' => array(
+                    'Active' => 'Active',
+                    'Closed' => 'Closed'
+                )
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'locationStatus'
             )
         ));
         
@@ -160,35 +161,18 @@ class UserForm extends Form implements InputFilterProviderInterface
         
         return $this;
     }
-    
-    public function getLocation()
-    {
-        // locationId
-        $this->add(array(
-            'type' => 'Select',
-            'name' => 'locationId',
-            'options' => array(
-                'label' => 'Location:',
-                'value_options' => $this->getLocationOptions()
-            ),
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'locationId'
-            )
-        ));
-    
-        return $this;
-    }
-    
+
     /**
+     *
      * {@inheritDoc}
+     *
      * @see \Zend\InputFilter\InputFilterProviderInterface::getInputFilterSpecification()
      */
     public function getInputFilterSpecification()
     {
         return array(
-            // userId
-            'userId' => array(
+            // locationId
+            'locationId' => array(
                 'required' => true,
                 'filters' => array(
                     array(
@@ -204,7 +188,7 @@ class UserForm extends Form implements InputFilterProviderInterface
                         'break_chain_on_failure' => true,
                         'options' => array(
                             'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => "The User Id is required and cannot be empty."
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Location Id is required and cannot be empty."
                             )
                         )
                     )
@@ -235,8 +219,8 @@ class UserForm extends Form implements InputFilterProviderInterface
                 )
             ),
             
-            // userStatus
-            'userStatus' => array(
+            // locationType
+            'locationType' => array(
                 'required' => true,
                 'filters' => array(
                     array(
@@ -252,15 +236,60 @@ class UserForm extends Form implements InputFilterProviderInterface
                         'break_chain_on_failure' => true,
                         'options' => array(
                             'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => "The User Status is required and cannot be empty."
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Location Type is required and cannot be empty."
+                            )
+                        )
+                    ),
+                    array(
+                        'name' => 'Location\Validator\HasPrimary',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'locationService' => $this->locationService,
+                            'clientId' => $this->clientId
+                        )
+                    )
+                )
+            ),
+            
+            // locationStreet
+            'locationStreet' => array(
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Location Street is required and cannot be empty."
                             )
                         )
                     )
                 )
             ),
             
-            // userNameFirst
-            'userNameFirst' => array(
+            // locationStreet2
+            'locationStreet2' => array(
+                'required' => false,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                )
+            ),
+            
+            // locationCity
+            'locationCity' => array(
                 'required' => true,
                 'filters' => array(
                     array(
@@ -276,15 +305,15 @@ class UserForm extends Form implements InputFilterProviderInterface
                         'break_chain_on_failure' => true,
                         'options' => array(
                             'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => "The User First Name is required and cannot be empty."
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Location City is required and cannot be empty."
                             )
                         )
                     )
                 )
             ),
             
-            // userNameLast
-            'userNameLast' => array(
+            // locationState
+            'locationState' => array(
                 'required' => true,
                 'filters' => array(
                     array(
@@ -300,15 +329,15 @@ class UserForm extends Form implements InputFilterProviderInterface
                         'break_chain_on_failure' => true,
                         'options' => array(
                             'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => "The User Last Name is required and cannot be empty."
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Location State is required and cannot be empty."
                             )
                         )
                     )
                 )
             ),
             
-            // userJobTitle
-            'userJobTitle' => array(
+            // locationZip
+            'locationZip' => array(
                 'required' => true,
                 'filters' => array(
                     array(
@@ -324,15 +353,15 @@ class UserForm extends Form implements InputFilterProviderInterface
                         'break_chain_on_failure' => true,
                         'options' => array(
                             'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => "The User Job Title is required and cannot be empty."
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Location Postal Code is required and cannot be empty."
                             )
                         )
                     )
                 )
             ),
             
-            // userEmail
-            'userEmail' => array(
+            // locationStatus
+            'locationStatus' => array(
                 'required' => true,
                 'filters' => array(
                     array(
@@ -348,77 +377,17 @@ class UserForm extends Form implements InputFilterProviderInterface
                         'break_chain_on_failure' => true,
                         'options' => array(
                             'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => "The User E-Mail is required and cannot be empty."
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Location Status is required and cannot be empty."
                             )
                         )
                     )
                 )
-            ),
-            
-            // userType
-            'userType' => array(
-                'required' => true,
-                'filters' => array(
-                    array(
-                        'name' => 'StripTags'
-                    ),
-                    array(
-                        'name' => 'StringTrim'
-                    )
-                ),
-                'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'break_chain_on_failure' => true,
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => "The User Type is required and cannot be empty."
-                            )
-                        )
-                    ),
-                    array(
-                        'name' => 'User\Validator\HasPrimary',
-                        'break_chain_on_failure' => true,
-                        'options' => array(
-                            'userService' => $this->userService    
-                        )
-                    )
-                )
-            ),
+            )
         );
-        
     }
     
-    /**
-     *
-     * @param number $clientId
-     * @return \Workorder\Form\WorkorderForm
-     */
     public function setClientId($clientId)
     {
         $this->clientId = $clientId;
-    
-        return $this;
     }
-    
-    /**
-     *
-     * @param number $clientId
-     * @return array
-     */
-    private function getLocationOptions()
-    {
-        $options = array();
-    
-        $entitys = $this->locationService->getAll(array(
-            'clientId' => $this->clientId
-        ));
-    
-        foreach ($entitys as $entity) {
-            $options[$entity->getLocationId()] = $entity->getLocationStreet() . ' ' . $entity->getLocationCity();
-        }
-    
-        return $options;
-    }
-
 }

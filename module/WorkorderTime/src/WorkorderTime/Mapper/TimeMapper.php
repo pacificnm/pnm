@@ -211,4 +211,49 @@ class TimeMapper implements TimeMapperInterface
         
         return (bool) $result->getAffectedRows();
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderTime\Mapper\TimeMapperInterface::getTotalByLabor()
+     */
+    public function getTotalByLabor($clientId)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder_time');
+        
+        $select->columns(array(
+            'workorder_labor_total' => new \Zend\Db\Sql\Expression('SUM(labor_total)'),
+            'labor_id',
+            'labor_name'
+        ));
+        
+        $select->join('workorder', 'workorder.workorder_id = workorder_time.workorder_id', array('client_id'), 'inner');
+        
+        $select->where(array(
+            'workorder.client_id = ?' => $clientId
+        ));
+        
+        $select->group('labor_id');
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new ResultSet();
+        
+            $resultSet->initialize($result);
+        
+            $resultSet->buffer();
+            
+            return $resultSet;
+        }
+        
+        return 0;
+    }
 }

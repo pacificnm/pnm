@@ -47,4 +47,19 @@ interface LocationServiceInterface
      * @return LocationEntity
      */
     public function getClientLocations($clientId);
+    
+    /**
+     *
+     * @param number $clientId
+     * @return boolean
+     */
+    public function clientHasPrimaryLocation($clientId);
+    
+    /**
+     *
+     * @param number $clientId
+     * @param string $locationType
+     * @return LocationEntity
+     */
+    public function getClientLocationByType($clientId, $locationType);
 }

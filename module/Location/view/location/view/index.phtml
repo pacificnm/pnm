@@ -1,0 +1,53 @@
+<style>
+  #map {
+    width: 500px;
+    height: 400px;
+    background-color: #CCC;
+  }
+</style>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-globe"></i>
+					<?php echo $this->translate('View Location'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('location-update', array('clientId' => $this->clientId, 'locationId' => $this->locationEntity->getLocationId())); ?>" title="<?php echo $this->translate('Edit this location'); ?>" class="btn btn-box-tool pull-right"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+							
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<h3 class="profile-username">
+    						<?php echo $this->locationEntity->getLocationStreet(); ?>
+    						<?php echo $this->locationEntity->getLocationCity()?>,
+    						<?php echo $this->locationEntity->getLocationState(); ?>
+    						<?php echo $this->locationEntity->getLocationZip(); ?>
+    					</h3>
+					</div>
+				</div>
+				
+				<script src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyBC1112_h290eQlVCqsTzr6IZimaommWNY&origin=Oslo+Norway&destination=Telemark+Norway&avoid=tolls|highways" async defer></script>
+				
+				<div class="row">
+					<div class="col-xs-12">
+						<div id="map"></div>
+						<script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+  function initMap() {
+	  var mapDiv = document.getElementById('map');
+	  var map = new google.maps.Map(mapDiv, {
+	      center: {lat: 44.540, lng: -78.546},
+	      zoom: 8
+	    });
+	}
+</script>

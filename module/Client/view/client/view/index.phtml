@@ -62,14 +62,7 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-						<p class="text-center"><strong>Sales By Labor Rate</strong></p>
-						<div class="progress-group">
-							<span class="progress-text">Basic Service Charge</span>
-							<span class="progress-number"><b>$780</b></span>
-							<div class="progress sm">
-								<div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
-							</div>
-						</div>
+						<?php echo $this->SalesByLabor($this->clientId); ?>
 					</div>
 				</div>
 			</div>
@@ -119,7 +112,13 @@
 				</div>
 			</div>
 			<div class="box-body">
+				<?php if(! $this->userEntity): ?>
+					<div class="alert alert-danger">
+						<p><i class="fa fa-warning"></i> <?php echo $this->translate('Missing primary user.'); ?></p>
+					</div>
+				<?php else: ?>
 				<div class="row">
+					
 					<div class="col-xs-12">
 						<p><b><?php echo $this->translate('Primary Contact')?>:</b> 
 							<a href="<?php echo $this->url('user-view', array('clientId' => $this->clientId, 'userId' => $this->userEntity->getUserId()));?>" title="<?php echo $this->translate('View this user'); ?>" class="pull-right">
@@ -128,8 +127,9 @@
 						</p>
 					</div>
 					<div class="col-xs-12">
+						
 						<p><b><?php echo $this->translate('Phone')?>:</b> 
-							<a class="pull-right"><?php echo $this->userEntity->getPhoneEntity()->getPhoneNum(); ?></a>
+							<a class="pull-right"><?php echo $this->clientEntity->getPhoneEntity()->getPhoneNum(); ?></a>
 						</p>
 					</div>
 					<div class="col-xs-12">
@@ -138,6 +138,9 @@
 						</p>
 					</div>
 				</div>
+				
+				
+				<?php endif; ?>
 			</div>
 		</div>
 		
@@ -146,7 +149,7 @@
 			<div class="box-header with-border">
 				<h3 class="box-title"><i class="fa fa-globe f-fw"></i> <?php echo $this->translate('Locations'); ?></h3>
 				<div class="box-tools pull-right">
-					<a href="" title="<?php echo $this->translate('Add new location');?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New');?></a>
+					<a href="<?php echo $this->url('location-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Add new location');?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New');?></a>
 				</div>
 			</div>
 			<?php if($this->locationEntitys->count() == 0):?>
@@ -168,7 +171,7 @@
 									<?php echo $locationEntity->getLocationState(); ?>
 									<?php echo $locationEntity->getLocationZip(); ?>
 								</a>
-								<a href="" title="<?php echo $this->translate('Edit this location'); ?>" class="btn btn-box-tool pull-right"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+								<a href="<?php echo $this->url('location-update', array('clientId' => $this->clientId, 'locationId' => $locationEntity->getLocationId())); ?>" title="<?php echo $this->translate('Edit this location'); ?>" class="btn btn-box-tool pull-right"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 							</td>
 						</tr>
 					<?php endforeach; ?>

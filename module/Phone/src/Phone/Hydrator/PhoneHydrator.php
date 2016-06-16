@@ -47,6 +47,8 @@ class PhoneHydrator extends ClassMethods
         
         $data = parent::extract($object);
         
+        unset($data['location_entity']);
+        
         return $data;
     }
 }

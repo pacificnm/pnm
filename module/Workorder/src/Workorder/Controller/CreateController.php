@@ -139,7 +139,7 @@ class CreateController extends BaseController
         
         $this->layout()->setVariable('activeMenuItem', 'client');
         
-        $this->layout()->setVariable('activeSubMenuItem', 'workorder-index');
+        $this->layout()->setVariable('activeSubMenuItem', 'workorder-list');
         
         $this->setHeadTitle($clientEntity->getClientName());
         

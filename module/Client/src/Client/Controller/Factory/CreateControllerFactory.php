@@ -4,6 +4,9 @@ namespace Client\Controller\Factory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Client\Controller\CreateController;
+use Client\Form\ClientForm;
+use Location\Form\LocationForm;
+use Phone\Form\PhoneForm;
 
 class CreateControllerFactory implements FactoryInterface
 {
@@ -19,6 +22,20 @@ class CreateControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new CreateController($clientService);
+        $userService = $realServiceLocator->get('User\Service\UserServiceInterface');
+        
+        $locationService = $realServiceLocator->get('Location\Service\LocationServiceInterface');
+        
+        $phoneService = $realServiceLocator->get('Phone\Service\PhoneServiceInterface');
+        
+        $clientForm = new ClientForm();
+        
+        $locationForm = new LocationForm();
+        
+        $phoneForm = new PhoneForm();
+        
+        $userForm =  $realServiceLocator->get('User\Form\UserForm');
+        
+        return new CreateController($clientService, $userService, $locationService, $phoneService, $clientForm, $locationForm, $phoneForm, $userForm);
     }
 }

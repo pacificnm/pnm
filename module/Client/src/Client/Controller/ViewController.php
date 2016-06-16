@@ -85,7 +85,10 @@ class ViewController extends BaseController
         
         $clientEntity = $this->clientService->get($id);
         
-        if (! $clientEntity) {}
+               
+        if (! $clientEntity) {
+            
+        }
         
         // set history
         $this->setHistory($this->getRequest()

@@ -24,6 +24,11 @@ class DatabaseController extends AbstractActionController
 
     public function indexAction()
     {
+        if(is_file('data/install')) {
+            return $this->redirect()->toRoute('home');
+        }
+        
+        
         // load all db files
         $it = new \RecursiveDirectoryIterator("module");
         

@@ -102,7 +102,7 @@ class WorkorderMapper implements WorkorderMapperInterface
         $select->join('location', 'workorder.location_id = location.location_id', array(
             'location_type',
             'location_street',
-            'location_street_2',
+            'location_street_cont',
             'location_city',
             'location_state',
             'location_zip',

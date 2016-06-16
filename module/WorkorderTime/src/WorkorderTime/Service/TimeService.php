@@ -79,4 +79,14 @@ class TimeService implements TimeServiceInterface
         
         return $this->mapper->getAll($filter);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderTime\Service\TimeServiceInterface::getTotalByLabor()
+     */
+    public function getTotalByLabor($clientId)
+    {
+        return $this->mapper->getTotalByLabor($clientId);
+    }
 }

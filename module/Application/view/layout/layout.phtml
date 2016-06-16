@@ -48,17 +48,18 @@
 			    success: function(resp) {
 				    taskEntitys = resp.taskEntitys;
 
-				    var str = $('#reminderBody').html();
-				    
-				    $(taskEntitys).each(function(index, element) {
-					    
-				    	str += '<a href="/client/'+element.client_id+'/task/view/'+element.task_id+'" title="<?php echo $this->translate('View this task'); ?>">'+element.task_title+'</a>';
-				    });
-				    
-				    $('#reminderBody').html(str);
-				    
-				    $("#reminderModal").modal('show');
-			        console.log(resp);
+				    if(! $.isEmptyObject(taskEntitys)) {
+    				    var str = $('#reminderBody').html();
+    				    
+    				    $(taskEntitys).each(function(index, element) {
+    					    
+    				    	str += '<a href="/client/'+element.client_id+'/task/view/'+element.task_id+'" title="<?php echo $this->translate('View this task'); ?>">'+element.task_title+'</a>';
+    				    });
+    				    
+    				    $('#reminderBody').html(str);
+    				    
+    				    $("#reminderModal").modal('show');
+				    }
 			    }
 			});
 		};

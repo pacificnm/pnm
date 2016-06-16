@@ -40,4 +40,11 @@ interface TimeServiceInterface
      * @return TimeEntity
      */
     public function getWorkorderTimes($workorderId);
+    
+    /**
+     * 
+     * @param number $clientId
+     * @return TimeEntity
+     */
+    public function getTotalByLabor($clientId);
 }

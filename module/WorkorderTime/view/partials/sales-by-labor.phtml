@@ -1,0 +1,12 @@
+<p class="text-center"><strong>Sales By Labor Rate</strong></p>
+<?php foreach($this->timeEntitys as $timeEntity): ?>
+
+<div class="progress-group">
+	<?php $percent = round(($timeEntity->workorder_labor_total / $this->total) * 100)?>
+	<span class="progress-text"><?php echo $timeEntity->labor_name; ?></span>
+	<span class="progress-number"><b><?php echo $timeEntity->workorder_labor_total; ?></b></span>
+	<div class="progress sm">
+		<div class="progress-bar progress-bar-aqua" style="width: <?php echo $percent?>%"></div>
+	</div>
+</div>
+<?php endforeach; ?>
