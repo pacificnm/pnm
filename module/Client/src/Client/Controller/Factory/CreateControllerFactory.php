@@ -30,7 +30,7 @@ class CreateControllerFactory implements FactoryInterface
         
         $clientForm = new ClientForm();
         
-        $locationForm = new LocationForm();
+        $locationForm = $realServiceLocator->get('Location\Form\LocationForm');
         
         $phoneForm = new PhoneForm();
         
