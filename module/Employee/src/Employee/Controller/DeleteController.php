@@ -67,8 +67,10 @@ class DeleteController extends BaseController
                 
                 $authEntity = $this->authService->get($employeeEntity->getAuthEntity()->getAuthId());
                 
-                $this->authService->delete($authEntity);
-        
+                if($authEntity) {
+                    $this->authService->delete($authEntity);
+                }
+                
                 $this->employeeService->delete($employeeEntity);
                 
                 $this->flashmessenger()->addSuccessMessage('The employee was deleted');

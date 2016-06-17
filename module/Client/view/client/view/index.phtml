@@ -11,7 +11,7 @@
 	
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="info-box">
-			<span class="info-box-icon bg-red"><i class="fa fa-credit-card fa-fw"></i></span>
+			<span class="info-box-icon bg-green"><i class="fa fa-credit-card fa-fw"></i></span>
 			<div class="info-box-content">
 				<span class="info-box-text">Un-Paid Invoices</span>
 				<span class="info-box-number"><?php echo $this->invoiceEntitys->getTotalItemCount();?></span>
@@ -24,7 +24,7 @@
 	
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="info-box">
-			<span class="info-box-icon bg-green"><i class="fa fa-warning fa-fw"></i></span>
+			<span class="info-box-icon bg-red"><i class="fa fa-bell fa-fw"></i></span>
 			<div class="info-box-content">
 				<span class="info-box-text">Host Alerts</span>
 				<span class="info-box-number">0</span>
@@ -34,7 +34,7 @@
 	
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="info-box">
-			<span class="info-box-icon bg-yellow"><i class="fa fa-tasks f-fw"></i></span>
+			<span class="info-box-icon bg-yellow"><i class="fa fa-flag f-fw"></i></span>
 			<div class="info-box-content">
 				<span class="info-box-text"><?php echo $this->translate('Tasks'); ?></span>
 				<span class="info-box-number"><?php echo $this->taskEntitys->getTotalItemCount(); ?></span>
@@ -184,7 +184,7 @@
 		<!-- tasks -->
 		<div class="box box-warning">
 			<div class="box-header with-border">
-				<h3 class="box-title"><i class="fa fa-tasks f-fw"></i> <?php echo $this->translate('Active Tasks'); ?></h3>
+				<h3 class="box-title"><i class="fa fa-flag f-fw"></i> <?php echo $this->translate('Active Tasks'); ?></h3>
 				<div class="box-tools pull-right">
 					<a href="<?php echo $this->url('task-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create new task'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
 				</div>
@@ -265,7 +265,7 @@
 		</div>
 		
 		<!-- invoices -->
-		<div class="box box-danger">
+		<div class="box box-success">
     		<div class="box-header with-border">
     			<h3 class="box-title"><i class="fa fa-credit-card"></i> <?php echo $this->translate('Un-Paid Invoices'); ?></h3>
 				<div class="box-tools pull-right">
@@ -302,5 +302,17 @@
 			<?php endif;?>
 		</div>
 		
+		<!-- Host Alerts -->
+		<div class="box box-danger">
+    		<div class="box-header with-border">
+    			<h3 class="box-title"><i class="fa fa-bell"></i> <?php echo $this->translate('Host Alerts'); ?></h3>
+				<div class="box-tools pull-right"></div>
+    		</div>
+    		<div class="box-body">
+    			<div class="alert alert-info">
+    				<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no host alerts'); ?></p>
+    			</div>
+    		</div>
+    	</div>
 	</div>
 </div>

@@ -10,7 +10,8 @@
 					<?php if(! $this->authEntity): ?>
 					<a href="<?php echo $this->url('auth-create', array(), array('query' => array('userId' => $this->userEntity->getUserId()))); ?>" title="<?php echo $this->translate('Grant this user access to the portal');?>" class="btn btn-box-tool"><i class="fa fa-lock"></i> <?php echo $this->translate('Grant Access'); ?></a>
 					<?php else: ?>
-					
+					<a href="<?php echo $this->url('auth-password', array('authId' => $this->authEntity->getAuthId())); ?>" title="<?php echo $this->translate('Reset user password')?>" class="btn btn-box-tool"><i class="fa fa-lock"></i> <?php echo $this->translate('Reset Password'); ?></a>
+					<a href="<?php echo $this->url('auth-delete', array('authId' => $this->authEntity->getAuthId())); ?>" title="<?php echo $this->translate('Revoke users access to the portal')?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Revoke Access'); ?></a>
 					<?php endif; ?>
 					<a href="<?php echo $this->url('user-update', array('clientId' => $this->clientId, 'userId' => $this->userEntity->getUserId()));?>" title="<?php echo $this->translate('Edit this user'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 				</div>
@@ -38,7 +39,18 @@
 						</div>
 					</div>
 					<?php else: ?>
-					
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Portal Type'); ?>:</b> <?php echo $this->authEntity->getAuthType(); ?></p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Role'); ?>: </b> <?php echo $this->authEntity->getAuthRole(); ?></p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Last Sign IN'); ?>: </b> <?php echo ($this->authEntity->getAuthLastLogin() ? date($this->appConfig()->getConfigDateLong(), $this->authEntity->getAuthLastLogin()) : $this->translate('Never Signed In')); ?></p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Ip'); ?>: </b> <?php echo $this->authEntity->getAuthLastIp(); ?></p>
+					</div>
 					<?php endif; ?>
 				</div>
 			</div>
