@@ -19,10 +19,15 @@
 						<b><?php echo $this->translate('E-Mail'); ?></b> <a class="pull-right"><?php echo $this->employeeEntity->getEmployeeEmail(); ?></a>
 					</li>
 					<li class="list-group-item">
-						<b><?php echo $this->translate('Phone'); ?></b>
+						<b><?php echo $this->translate('Phone'); ?></b> <a class="pull-right"><?php echo $this->employeeEntity->getEmployeePhone();?></a>
 					</li>
 					<li class="list-group-item">
-						<b><?php echo $this->translate('Birth Day'); ?></b>
+						<b><?php echo $this->translate('Adddress'); ?></b> <a class="pull-right">
+    							<?php echo $this->employeeEntity->getEmployeeStreet();?>
+    							<?php echo $this->employeeEntity->getEmployeeCity();?>,
+    							<?php echo $this->employeeEntity->getEmployeeState();?>
+    							<?php echo $this->employeeEntity->getEmployeePostal();?>
+    						</a>
 					</li>
 					<li class="list-group-item">
 						<b><?php echo $this->translate('Status'); ?></b> <a class="pull-right"><?php echo $this->employeeEntity->getEmployeeStatus(); ?></a>
@@ -70,23 +75,7 @@
 </div>
 
 <div class="row">
-	<div class="col-xs-12">
-		<div class="box box-primary">
-			<div class="box-header">
-				<h3 class="box-title">
-					<i class="fa fa-wrench"></i>
-					<?php echo $this->translate('Work Orders'); ?>
-				</h3>
-				<div class="box-tools">
-				
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-xs-12">
+	<div class="col-xs-12 col-sm-4 ">
 		<div class="box box-primary">
 			<div class="box-header">
 				<h3 class="box-title">
@@ -97,7 +86,87 @@
 				
 				</div>
 			</div>
+			<?php if($this->taskEntitys->getTotalItemCount() == 0): ?>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('You do not have any active tasks'); ?></p>
+				</div>
+			</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Task Title'); ?></th>
+							<th><?php echo $this->translate('Start'); ?></th>
+							<th><?php echo $this->translate('End'); ?></th>
+							<th><?php echo $this->translate('Priority'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->taskEntitys as $taskEntity): ?>
+						<tr>
+							<td>
+								<a href="<?php echo $this->url('task-view', array('clientId' => $this->clientId, 'taskId' => $taskEntity->getTaskId())); ?>" title="<?php echo $this->translate('View this task'); ?>">
+									<?php echo $taskEntity->getTaskTitle(); ?>
+								</a>
+							</td>
+							<td><?php echo date($this->appConfig()->getConfigDateLong(), $taskEntity->getTaskDateStart()); ?></td>
+							<td><?php echo date($this->appConfig()->getConfigDateLong(), $taskEntity->getTaskDateEnd()); ?></td>
+							<td><?php echo $taskEntity->getPriorityEntity()->getTaskPriorityValue(); ?></td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+			</div>
+			<?php endif;?>
+		</div>
+	
+	</div>
+	<div class="col-xs-12 col-sm-8">
+	
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-wrench"></i>
+					<?php echo $this->translate('Work Orders'); ?>
+				</h3>
+				<div class="box-tools">
+				
+				</div>
+			</div>
+			<?php if($this->workorderEntitys->getTotalItemCount() == 0): ?>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('You do not have any active work orders.'); ?></p>
+				</div>
+			</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Work Order #'); ?></th>
+							<th><?php echo $this->translate('Description'); ?></th>
+							<th><?php echo $this->translate('Scheduled'); ?></th>	
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->workorderEntitys as $workorderEntity): ?>
+						<tr>
+							<td><a href="<?php echo $this->url('workorder-view', array('clientId' => $workorderEntity->getWorkorderEntity()->getClientId(), 'workorderId' => $workorderEntity->getWorkorderId()));?>" title="<?php echo $this->translate('View this work order'); ?>"><?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?></a></td>
+							<td><?php echo $workorderEntity->getWorkorderEntity()->getWorkorderDescription(); ?></td>
+							<td><?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderEntity()->getWorkorderDateScheduled()); ?></td>
+						</tr>
+					<?php endforeach;?>	
+					</tbody>
+				</table>
+			</div>
+			<?php endif; ?>
 		</div>
 	</div>
+	
 </div>
+
+
 

@@ -7,6 +7,11 @@
 					<?php echo $this->translate('View User'); ?>
 				</h3>
 				<div class="box-tools">
+					<?php if(! $this->authEntity): ?>
+					<a href="<?php echo $this->url('auth-create', array(), array('query' => array('userId' => $this->userEntity->getUserId()))); ?>" title="<?php echo $this->translate('Grant this user access to the portal');?>" class="btn btn-box-tool"><i class="fa fa-lock"></i> <?php echo $this->translate('Grant Access'); ?></a>
+					<?php else: ?>
+					
+					<?php endif; ?>
 					<a href="<?php echo $this->url('user-update', array('clientId' => $this->clientId, 'userId' => $this->userEntity->getUserId()));?>" title="<?php echo $this->translate('Edit this user'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 				</div>
 			</div>
@@ -24,6 +29,17 @@
 					<div class="col-xs-12 col-sm-3">
 						<p><b><?php echo $this->translate('Status');?>:</b> <?php echo $this->userEntity->getUserStatus();?></p>
 					</div>
+				</div>
+				<div class="row">
+					<?php if(! $this->authEntity): ?>
+					<div class="col-xs-12">
+						<div class="alert alert-info">
+							<p><i class="fa fa-circle-info"></i> <?php echo $this->translate('This user is not allowed to access the portal');?></p>
+						</div>
+					</div>
+					<?php else: ?>
+					
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>

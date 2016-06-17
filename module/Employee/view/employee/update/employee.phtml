@@ -1,12 +1,12 @@
+
 <div class="row">
 	<div class="col-xs-12">
 		<div class="box box-primary">
 			<div class="box-header">
 				<h3 class="box-title">
-					<i class="fa fa-user"></i>
-					<?php echo $this->translate('Create Employee'); ?>
+					<i class="fa fa-pencil"></i>
+					<?php echo $this->translate('Edit My Profile');?>
 				</h3>
-				<div class="box-tools"></div>
 			</div>
 			<div class="box-body">
 				<?php echo $this->form()->openTag($this->form); ?>
@@ -26,7 +26,6 @@
 				
 				</ul>
 				<br />
-				
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane active" id="personal">
 						<div class="row">
@@ -67,51 +66,11 @@
         						</div>
                       		</div>
                       	</div>
-                      	
-                      	<div class="row">
-                      		<div class="col-xs-12">
-        						<?php $element = $this->form->get('authPassword'); ?>
-        						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
-        							<label class="control-label"><?php echo $element->getLabel() ?></label>
-        							<?php echo $this->formElement($element); ?>
-        							<?php if($this->formElementErrors($element)): ?>
-        								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
-        							<?php endif; ?>
-        						</div>
-                      		</div>
-                      	</div>
-                      	
-                      	<div class="row">
-                      		<div class="col-xs-12 col-sm-4">
-        						<?php $element = $this->form->get('authRole'); ?>
-        						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
-        							<label class="control-label"><?php echo $element->getLabel() ?></label>
-        							<?php echo $this->formElement($element); ?>
-        							<?php if($this->formElementErrors($element)): ?>
-        								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
-        							<?php endif; ?>
-        						</div>
-                      		</div>
-                      	</div>
-                      	
-                      	
-                      	<div class="row">
-                      		<div class="col-xs-12 col-sm-4">
-        						<?php $element = $this->form->get('employeeStatus'); ?>
-        						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
-        							<label class="control-label"><?php echo $element->getLabel() ?></label>
-        							<?php echo $this->formElement($element); ?>
-        							<?php if($this->formElementErrors($element)): ?>
-        								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
-        							<?php endif; ?>
-        						</div>
-                      		</div>
-                      	</div>
-				
 					</div>
 					
-					<div role="tabpanel" class="tab-pane" id="address">
-						<div class="row">
+					
+					 <div role="tabpanel" class="tab-pane" id="address">
+					 	<div class="row">
                       		<div class="col-xs-12">
         						<?php $element = $this->form->get('employeeEmail'); ?>
         						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
@@ -147,8 +106,9 @@
         						</div>
                       		</div>
                       	</div>
-					
-						<h3 class="profile-username"><?php echo $this->translate('Address'); ?></h3>
+                      	
+                      	
+                      	<h3 class="profile-username"><?php echo $this->translate('Address'); ?></h3>
                       	<div class="row">
                       		<div class="col-xs-12">
         						<?php $element = $this->form->get('employeeStreet'); ?>
@@ -207,8 +167,8 @@
         						</div>
                       		</div>
                       	</div>
-					
-						<div class="row">
+                      	
+                      	<div class="row">
                       		<div class="col-xs-12">
         						<?php $element = $this->form->get('employeeIm'); ?>
         						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
@@ -220,17 +180,19 @@
         						</div>
                       		</div>
                       	</div>
-					</div>
+					 
+					 </div>
 				</div>
+
 				
 				<?php echo $this->formElement($this->form->get('employeeId')); ?>
+				<?php echo $this->formElement($this->form->get('employeeStatus')); ?>
 				<?php echo $this->formSubmit($this->form->get('submit')); ?>
 				<?php echo $this->form()->closeTag(); ?>
 			</div>
 		</div>
 	</div>
 </div>
-
 <script>
 $('#myTabs a').click(function (e) {
 	  e.preventDefault()

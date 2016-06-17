@@ -8,6 +8,7 @@ return array(
             'user' => array(),
             'employee' => array(
                 'employee-profile',
+                'employee-profile-update'
             ),
             'accountant' => array(),
             'administrator' => array(
@@ -49,6 +50,16 @@ return array(
                     'defaults' => array(
                         'controller' => 'Employee\Controller\Profile',
                         'action' => 'index'
+                    )
+                )
+            ),
+            'employee-profile-update' => array(
+                'type' => 'literal',
+                'options' => array(
+                    'route' => '/employee/profile/update',
+                    'defaults' => array(
+                        'controller' => 'Employee\Controller\Update',
+                        'action' => 'employee'
                     )
                 )
             ),

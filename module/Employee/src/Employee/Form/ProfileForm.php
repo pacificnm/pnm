@@ -6,7 +6,7 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use Employee\Hydrator\EmployeeHydrator;
 use Employee\Entity\EmployeeEntity;
 
-class EmployeeCreateForm extends Form implements InputFilterProviderInterface
+class ProfileForm extends Form implements InputFilterProviderInterface
 {
 
     /**
@@ -159,7 +159,6 @@ class EmployeeCreateForm extends Form implements InputFilterProviderInterface
             )
         ));
         
-        
         // employeeIm
         $this->add(array(
             'name' => 'employeeIm',
@@ -188,54 +187,8 @@ class EmployeeCreateForm extends Form implements InputFilterProviderInterface
         
         // employeeStatus
         $this->add(array(
-            'type' => 'Select',
             'name' => 'employeeStatus',
-            'options' => array(
-                'label' => 'Status:',
-                'value_options' => array(
-                    'Active' => 'Active',
-                    'Closed' => 'Closed',
-                    'Deleted' => 'Deleted'
-                )
-            ),
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'employeeStatus'
-            )
-        ));
-        
-        // authRole
-        $this->add(array(
-            'type' => 'Select',
-            'name' => 'authRole',
-            'options' => array(
-                'label' => 'Role:',
-                'value_options' => array(
-                    'guest' => 'Guest',
-                    'user' => 'User',
-                    'employee' => 'Employee',
-                    'accountant' => 'Accountant',
-                    'administrator' => 'Administrator'
-                )
-            ),
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'authRole'
-            )
-        ));
-        
-        // authPassword
-        $this->add(array(
-            'name' => 'authPassword',
-            'type' => 'Password',
-            'options' => array(
-                'label' => 'Password:'
-            ),
-            'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'authPassword',
-                'placeholder' => 'Password'
-            )
+            'type' => 'hidden'
         ));
         
         // button
@@ -333,30 +286,6 @@ class EmployeeCreateForm extends Form implements InputFilterProviderInterface
                 )
             ),
             
-            // employeeEmail
-            'employeeEmail' => array(
-                'required' => true,
-                'filters' => array(
-                    array(
-                        'name' => 'StripTags'
-                    ),
-                    array(
-                        'name' => 'StringTrim'
-                    )
-                ),
-                'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'break_chain_on_failure' => true,
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Employee E-Mail is required and cannot be empty."
-                            )
-                        )
-                    )
-                )
-            ),
-            
             // employeeIm
             'employeeIm' => array(
                 'required' => false,
@@ -371,7 +300,7 @@ class EmployeeCreateForm extends Form implements InputFilterProviderInterface
             ),
             
             // employeeImage
-            'employeeImage' => array(
+            'employeeIm' => array(
                 'required' => false,
                 'filters' => array(
                     array(
@@ -401,54 +330,6 @@ class EmployeeCreateForm extends Form implements InputFilterProviderInterface
                         'options' => array(
                             'messages' => array(
                                 \Zend\Validator\NotEmpty::IS_EMPTY => "The Employee Status is required and cannot be empty."
-                            )
-                        )
-                    )
-                )
-            ),
-            
-            // authPassword
-            'authPassword' => array(
-                'required' => true,
-                'filters' => array(
-                    array(
-                        'name' => 'StripTags'
-                    ),
-                    array(
-                        'name' => 'StringTrim'
-                    )
-                ),
-                'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'break_chain_on_failure' => true,
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Auth Password is required and cannot be empty."
-                            )
-                        )
-                    )
-                )
-            ),
-            
-            // authRole
-            'authRole' => array(
-                'required' => true,
-                'filters' => array(
-                    array(
-                        'name' => 'StripTags'
-                    ),
-                    array(
-                        'name' => 'StringTrim'
-                    )
-                ),
-                'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'break_chain_on_failure' => true,
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Auth Role is required and cannot be empty."
                             )
                         )
                     )

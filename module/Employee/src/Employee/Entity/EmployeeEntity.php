@@ -25,11 +25,53 @@ class EmployeeEntity implements EmployeeEntityInterface
     protected $employeeTitle;
 
     /**
-     * 
+     *
      * @var string
      */
     protected $employeeEmail;
-    
+
+    /**
+     *
+     * @var string
+     */
+    protected $employeePhone;
+
+    /**
+     *
+     * @var string
+     */
+    protected $employeePhoneMobile;
+
+    /**
+     *
+     * @var string
+     */
+    protected $employeeStreet;
+
+    /**
+     *
+     * @var string
+     */
+    protected $employeeStreetCont;
+
+    /**
+     *
+     * @var string
+     */
+    protected $employeeCity;
+
+    /**
+     *
+     * @var unknown
+     */
+    protected $employeeState;
+
+    /**
+     *
+     * @var string
+     */
+    protected $employeePostal;
+
     /**
      *
      * @var string
@@ -53,22 +95,6 @@ class EmployeeEntity implements EmployeeEntityInterface
      * @var AuthEntity
      */
     protected $authEntity;
-
-    /**
-     * @return the $employeeEmail
-     */
-    public function getEmployeeEmail()
-    {
-        return $this->employeeEmail;
-    }
-
-    /**
-     * @param string $employeeEmail
-     */
-    public function setEmployeeEmail($employeeEmail)
-    {
-        $this->employeeEmail = $employeeEmail;
-    }
 
     /**
      *
@@ -95,6 +121,78 @@ class EmployeeEntity implements EmployeeEntityInterface
     public function getEmployeeTitle()
     {
         return $this->employeeTitle;
+    }
+
+    /**
+     *
+     * @return the $employeeEmail
+     */
+    public function getEmployeeEmail()
+    {
+        return $this->employeeEmail;
+    }
+
+    /**
+     *
+     * @return the $employeePhone
+     */
+    public function getEmployeePhone()
+    {
+        return $this->employeePhone;
+    }
+
+    /**
+     *
+     * @return the $employeePhoneMobile
+     */
+    public function getEmployeePhoneMobile()
+    {
+        return $this->employeePhoneMobile;
+    }
+
+    /**
+     *
+     * @return the $employeeStreet
+     */
+    public function getEmployeeStreet()
+    {
+        return $this->employeeStreet;
+    }
+
+    /**
+     *
+     * @return the $employeeStreetCont
+     */
+    public function getEmployeeStreetCont()
+    {
+        return $this->employeeStreetCont;
+    }
+
+    /**
+     *
+     * @return the $employeeCity
+     */
+    public function getEmployeeCity()
+    {
+        return $this->employeeCity;
+    }
+
+    /**
+     *
+     * @return the $employeeState
+     */
+    public function getEmployeeState()
+    {
+        return $this->employeeState;
+    }
+
+    /**
+     *
+     * @return the $employeePostal
+     */
+    public function getEmployeePostal()
+    {
+        return $this->employeePostal;
     }
 
     /**
@@ -158,6 +256,78 @@ class EmployeeEntity implements EmployeeEntityInterface
     public function setEmployeeTitle($employeeTitle)
     {
         $this->employeeTitle = $employeeTitle;
+    }
+
+    /**
+     *
+     * @param string $employeeEmail            
+     */
+    public function setEmployeeEmail($employeeEmail)
+    {
+        $this->employeeEmail = $employeeEmail;
+    }
+
+    /**
+     *
+     * @param string $employeePhone            
+     */
+    public function setEmployeePhone($employeePhone)
+    {
+        $this->employeePhone = $employeePhone;
+    }
+
+    /**
+     *
+     * @param string $employeePhoneMobile            
+     */
+    public function setEmployeePhoneMobile($employeePhoneMobile)
+    {
+        $this->employeePhoneMobile = $employeePhoneMobile;
+    }
+
+    /**
+     *
+     * @param string $employeeStreet            
+     */
+    public function setEmployeeStreet($employeeStreet)
+    {
+        $this->employeeStreet = $employeeStreet;
+    }
+
+    /**
+     *
+     * @param string $employeeStreetCont            
+     */
+    public function setEmployeeStreetCont($employeeStreetCont)
+    {
+        $this->employeeStreetCont = $employeeStreetCont;
+    }
+
+    /**
+     *
+     * @param string $employeeCity            
+     */
+    public function setEmployeeCity($employeeCity)
+    {
+        $this->employeeCity = $employeeCity;
+    }
+
+    /**
+     *
+     * @param \Employee\Entity\unknown $employeeState            
+     */
+    public function setEmployeeState($employeeState)
+    {
+        $this->employeeState = $employeeState;
+    }
+
+    /**
+     *
+     * @param string $employeePostal            
+     */
+    public function setEmployeePostal($employeePostal)
+    {
+        $this->employeePostal = $employeePostal;
     }
 
     /**

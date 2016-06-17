@@ -33,4 +33,12 @@ interface WorkorderEmployeeMapperInterface
      * @return boolean
      */
     public function delete(WorkorderEmployeeEntity $entity);
+    
+    /**
+     * 
+     * @param number $employeeId
+     * @param string $status
+     * @return WorkorderEmployeeEntity
+     */
+    public function getEmployeeWorkorders($employeeId, $status = 'Active');
 }

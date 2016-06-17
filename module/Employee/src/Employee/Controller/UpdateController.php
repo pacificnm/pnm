@@ -6,6 +6,7 @@ use Employee\Service\EmployeeServiceInterface;
 use Auth\Service\AuthServiceInterface;
 use Zend\View\Model\ViewModel;
 use Employee\Form\EmployeeForm;
+use Employee\Form\ProfileForm;
 
 
 class UpdateController extends BaseController
@@ -28,6 +29,12 @@ class UpdateController extends BaseController
      * @var EmployeeForm
      */
     protected $employeeForm;
+    
+    /**
+     * 
+     * @var ProfileForm
+     */
+    protected $profileForm;
 
     /**
      * 
@@ -35,13 +42,15 @@ class UpdateController extends BaseController
      * @param AuthServiceInterface $authService
      * @param EmployeeForm $employeeForm
      */
-    public function __construct(EmployeeServiceInterface $employeeService, AuthServiceInterface $authService, EmployeeForm $employeeForm)
+    public function __construct(EmployeeServiceInterface $employeeService, AuthServiceInterface $authService, EmployeeForm $employeeForm, ProfileForm $profileForm)
     {
         $this->employeeService = $employeeService;
         
         $this->authService = $authService;
         
         $this->employeeForm = $employeeForm;
+        
+        $this->profileForm = $profileForm;
     }
 
     /**
@@ -116,6 +125,58 @@ class UpdateController extends BaseController
         return new ViewModel(array(
             'employeeEntity' => $employeeEntity,
             'form' => $this->employeeForm
+        ));
+    }
+    
+    public function employeeAction()
+    {
+        $authEntity = $this->authService->get($this->identity()->getAuthId()); 
+        
+        $employeeEntity = $this->employeeService->get($this->identity()->getEmployeeId());
+        
+        $request = $this->getRequest();
+        
+        // if we have a post
+        if ($request->isPost()) {
+            // get post
+            $postData = $request->getPost();
+        
+            $this->profileForm->setData($postData);
+        
+            // if we are valid
+            if ($this->profileForm->isValid()) {
+        
+                $employeeEntity = $this->profileForm->getData();
+        
+                $employeeEntity = $this->employeeService->save($employeeEntity);
+        
+                $authEntity->setAuthEmail($employeeEntity->getEmployeeEmail());
+        
+                $authEntity->setAuthName($employeeEntity->getEmployeeName());
+        
+                $this->authService->save($authEntity);
+        
+                $this->flashmessenger()->addSuccessMessage('Your information was saved');
+        
+                return $this->redirect()->toRoute('employee-profile');
+            }
+        }
+        
+        
+        
+        $this->profileForm->bind($employeeEntity);
+        
+        $this->layout()->setVariable('pageTitle', 'My Profile');
+        
+        $this->layout()->setVariable('pageSubTitle', $this->identity()
+            ->getAuthName());
+        
+        $this->layout()->setVariable('activeMenuItem', 'employee');
+        
+        $this->layout()->setVariable('activeSubMenuItem', 'employee-profile');
+        
+        return new ViewModel(array(
+            'form' => $this->profileForm
         ));
     }
 }

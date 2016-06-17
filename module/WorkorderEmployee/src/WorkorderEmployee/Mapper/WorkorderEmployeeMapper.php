@@ -9,6 +9,8 @@ use Zend\Db\Sql\Delete;
 use Zend\Db\Sql\Insert;
 use Zend\Db\Sql\Update;
 use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Paginator\Paginator;
+use Zend\Paginator\Adapter\DbSelect;
 use WorkorderEmployee\Entity\WorkorderEmployeeEntity;
 
 class WorkorderEmployeeMapper implements WorkorderEmployeeMapperInterface
@@ -130,6 +132,49 @@ class WorkorderEmployeeMapper implements WorkorderEmployeeMapperInterface
         }
         
         return array();
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderEmployee\Mapper\WorkorderEmployeeMapperInterface::getEmployeeWorkorders()
+     */
+    public function getEmployeeWorkorders($employeeId, $status = 'Active')
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder_employee');
+        
+        $select->where(array(
+            'workorder_employee.employee_id = ?' => $employeeId
+        ));
+        
+        $select->where(array(
+            'workorder.workorder_status = ?' => $status
+        ));
+        
+        // join workorder
+        $select->join('workorder', 'workorder_employee_id = workorder.workorder_id', array(
+            'client_id',
+            'workorder_status',
+            'workorder_description',
+            'workorder_labor',
+            'workorder_parts',
+            'workorder_date_create',
+            'workorder_date_scheduled',
+            'workorder_date_end',
+            'workorder_date_close'
+        ), 'inner');
+        
+       
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $paginatorAdapter = new DbSelect($select, $this->readAdapter, $resultSetPrototype);
+        
+        $paginator = new Paginator($paginatorAdapter);
+        
+        return $paginator;
     }
 
     /**

@@ -47,11 +47,18 @@ class BaseController extends AbstractActionController
                 ->setStatusCode(403);
         }
       
+        if($this->identity()->getAuthRole() == 'administrator') {
+            $adminAcl = true;
+        } else {
+            $adminAcl = false;
+        }
         
         // set menu
         $this->layout()->setVariable('activeSubMenuItem', $router->getMatchedRouteName());
         
         $this->layout()->setVariable('activeMenuItem', strtolower($module));
+        
+        $this->layout()->setVariable('adminAcl', $adminAcl);
         
         // set page title
         $this->setPageTitle($router->getMatchedRouteName());

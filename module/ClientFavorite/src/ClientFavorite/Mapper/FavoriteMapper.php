@@ -105,6 +105,11 @@ class FavoriteMapper implements FavoriteMapperInterface
         
         $select = $sql->select('client_favorite');
         
+        $select->join('client', 'client_favorite.client_id = client.client_id', array(
+            'client_name',
+            'client_status'
+        ), 'inner');
+        
         $select->where(array(
             'client_favorite.client_favorite_id = ?' => $id
         ));

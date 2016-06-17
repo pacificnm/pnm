@@ -4,6 +4,8 @@ namespace Employee\Controller;
 use Application\Controller\BaseController;
 use Employee\Service\EmployeeServiceInterface;
 use Zend\View\Model\ViewModel;
+use Task\Service\TaskServiceInterface;
+use WorkorderEmployee\Service\WorkorderEmployeeServiceInterface;
 
 class ViewController extends BaseController
 {
@@ -15,12 +17,30 @@ class ViewController extends BaseController
     protected $employeeService;
 
     /**
-     *
-     * @param EmployeeServiceInterface $employeeService            
+     * 
+     * @var WorkorderEmployeeServiceInterface
      */
-    public function __construct(EmployeeServiceInterface $employeeService)
+    protected $workorderService;
+    
+    /**
+     * 
+     * @var TaskServiceInterface
+     */
+    protected $taskService;
+    
+/**
+ * 
+ * @param EmployeeServiceInterface $employeeService
+ * @param WorkorderServiceInterface $workorderService
+ * @param TaskServiceInterface $taskService
+ */
+    public function __construct(EmployeeServiceInterface $employeeService, WorkorderEmployeeServiceInterface $workorderService, TaskServiceInterface $taskService)
     {
         $this->employeeService = $employeeService;
+        
+        $this->workorderService = $workorderService;
+        
+        $this->taskService = $taskService;
     }
 
     /**
@@ -31,6 +51,8 @@ class ViewController extends BaseController
      */
     public function indexAction()
     {
+        
+        
         $this->layout()->setVariable('pageTitle', 'Employee');
         
         $this->layout()->setVariable('pageSubTitle', 'View');
@@ -43,16 +65,23 @@ class ViewController extends BaseController
         
         $employeeEntity = $this->employeeService->get($id);
         
+        
         if(! $employeeEntity) {
             $this->flashmessenger()->addErrorMessage('Unable to find the employee #' . $id);
             
             return $this->redirect()->toRoute('employee-index');
         }
         
+        $workorderEntitys = $this->workorderService->getEmployeeWorkorders($employeeEntity->getEmployeeId());
+        
+        $taskEntitys = $this->taskService->getEmployeeActiveTasks($employeeEntity->getEmployeeId());
+        
         
         
         return new ViewModel(array(
-            'employeeEntity' => $employeeEntity
+            'employeeEntity' => $employeeEntity,
+            'workorderEntitys' => $workorderEntitys,
+            'taskEntitys' => $taskEntitys
         ));
     }
 }

@@ -61,5 +61,14 @@ class WorkorderEmployeeService implements WorkorderEmployeeServiceInterface
         return $this->mapper->delete($entity);
     }
     
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderEmployee\Service\WorkorderEmployeeServiceInterface::getEmployeeWorkorders()
+     */
+    public function getEmployeeWorkorders($employeeId, $status = 'Active')
+    {
+        return $this->mapper->getEmployeeWorkorders($employeeId, $status);
+    }
    
 }

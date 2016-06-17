@@ -4,6 +4,7 @@ namespace Auth\Controller\Factory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Auth\Controller\CreateController;
+use Auth\Form\AuthCreateForm;
 
 class CreateControllerFactory implements FactoryInterface
 {
@@ -19,6 +20,10 @@ class CreateControllerFactory implements FactoryInterface
         
         $authService = $realServiceLocator->get('Auth\Service\AuthServiceInterface');
         
-        return new CreateController($authService);
+        $userService = $realServiceLocator->get('User\Service\UserServiceInterface');
+        
+        $authForm = new AuthCreateForm();
+        
+        return new CreateController($authService, $userService, $authForm);
     }
 }

@@ -5,6 +5,7 @@ use Application\Controller\BaseController;
 use Client\Service\ClientServiceInterface;
 use Zend\View\Model\ViewModel;
 use User\Service\UserServiceInterface;
+use Auth\Service\AuthServiceInterface;
 
 class ViewController extends BaseController
 {
@@ -22,15 +23,23 @@ class ViewController extends BaseController
     protected $userService;
 
     /**
+     * 
+     * @var AuthServiceInterface
+     */
+    protected $authService;
+    
+    /**
      *
      * @param ClientServiceInterface $clientService            
      * @param UserServiceInterface $userService            
      */
-    public function __construct(ClientServiceInterface $clientService, UserServiceInterface $userService)
+    public function __construct(ClientServiceInterface $clientService, UserServiceInterface $userService, AuthServiceInterface $authService)
     {
         $this->clientService = $clientService;
         
         $this->userService = $userService;
+        
+        $this->authService = $authService;
     }
 
     /**
@@ -63,6 +72,8 @@ class ViewController extends BaseController
             ));
         }
         
+        $authEntity = $this->authService->getAuthByEmail($userEntity->getUserEmail());
+        
         // set layout
         $this->layout()->setVariable('clientId', $id);
         
@@ -80,7 +91,8 @@ class ViewController extends BaseController
         return new ViewModel(array(
             'clientEntity' => $clientEntity,
             'clientId' => $id,
-            'userEntity' => $userEntity
+            'userEntity' => $userEntity,
+            'authEntity' => $authEntity
         ));
     }
 }

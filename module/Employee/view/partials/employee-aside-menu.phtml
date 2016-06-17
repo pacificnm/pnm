@@ -1,13 +1,32 @@
 
 	<li class="header"><?php echo $this->translate('MAIN NAVIGATION'); ?></li>
-	<li><a href="" ><i class="fa fa-home"></i> <span><?php echo $this->translate('My Profile')?></span></a></li>
+	
+	<li class="treeview <?php if($this->activeMenuItem == 'employee'):?>active<?php endif;?>">
+		<a href="#">
+			<i class="fa fa-table"></i> <span><?php echo $this->translate('My Profile'); ?></span>
+		</a>
+		<ul class="treeview-menu">
+			<!-- home -->
+			<li class="<?php if($this->activeSubMenuItem == 'employee-profile'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('employee-profile'); ?>" >
+					<i class="fa fa-home"></i> <span><?php echo $this->translate('Home')?></span>
+				</a>
+			</li>
+			
+			<!-- Client Favorites -->
+			<li class="<?php if($this->activeSubMenuItem == 'client-favorite-index'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('client-favorite-index'); ?>" >
+					<i class="fa fa-star"></i> <span><?php echo $this->translate('Client Favorites')?></span>
+				</a>
+			</li>
+		</ul>
+	</li>
 	
     <li class="header"><?php echo $this->translate('CLIENT NAVIGATION'); ?></li>
     
 	<li class="treeview <?php if($this->activeMenuItem == 'client'):?>active<?php endif;?>">
 		<a href="#">
 			<i class="fa fa-table"></i> <span><?php echo $this->translate('Client'); ?></span>
-			<i class="fa fa-angle-left pull-right"></i>
 		</a>
 		<ul class="treeview-menu">
 			<li class="<?php if($this->activeSubMenuItem == 'client-index'):?>active<?php endif;?>">

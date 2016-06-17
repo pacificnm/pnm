@@ -40,7 +40,7 @@ return array(
                 'title' => 'Favorite Clients',
                 'type' => 'literal',
                 'options' => array(
-                    'route' => '/client-favorite',
+                    'route' => '/employee/profile/client-favorite',
                     'defaults' => array(
                         'controller' => 'ClientFavorite\Controller\Index',
                         'action' => 'index'
@@ -52,7 +52,7 @@ return array(
                 'title' => 'Create Favorite Clients',
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/client-favorite/create/[:clientId]',
+                    'route' => '/employee/profile/client-favorite/create/[:clientId]',
                     'defaults' => array(
                         'controller' => 'ClientFavorite\Controller\Create',
                         'action' => 'index'

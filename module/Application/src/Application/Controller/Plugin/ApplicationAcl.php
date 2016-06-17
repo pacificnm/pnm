@@ -80,6 +80,8 @@ class ApplicationAcl extends AbstractPlugin
                 
                 $this->acl = $acl;
                 
+                
+                
                 return $this;
             } else {
                 throw new \Exception('Config is missing acl definition.');

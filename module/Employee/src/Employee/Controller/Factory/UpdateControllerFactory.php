@@ -5,6 +5,7 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Employee\Controller\UpdateController;
 use Employee\Form\EmployeeForm;
+use Employee\Form\ProfileForm;
 
 class UpdateControllerFactory implements FactoryInterface
 {
@@ -24,6 +25,8 @@ class UpdateControllerFactory implements FactoryInterface
         
         $employeeForm = new EmployeeForm();
         
-        return new UpdateController($employeeService, $authService, $employeeForm);
+        $profileForm = new ProfileForm();
+        
+        return new UpdateController($employeeService, $authService, $employeeForm, $profileForm);
     }
 }

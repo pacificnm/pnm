@@ -77,6 +77,13 @@ class TaskMapper implements TaskMapperInterface
             ));
         }
         
+        // employeeId
+        if (array_key_exists('employeeId', $filter) && ! empty($filter['employeeId'])) {
+            $select->where(array(
+                'task.employee_id = ?' => $filter['employeeId']
+            ));
+        }
+        
         // task status
         if (array_key_exists('taskStatus', $filter) && ! empty($filter['taskStatus'])) {
             $select->where(array(
@@ -158,8 +165,9 @@ class TaskMapper implements TaskMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Task\Mapper\TaskMapperInterface::getEmployeeReminders()
      */
     public function getEmployeeReminders($employeeId)
@@ -173,13 +181,12 @@ class TaskMapper implements TaskMapperInterface
         ));
         
         $select->where(array(
-            'task.task_status = ?' =>
-            'Active'
+            'task.task_status = ?' => 'Active'
         ));
         
         $select->where->lessThanOrEqualTo('task_date_reminder', time());
         
-        //echo $sql->getSqlstringForSqlObject($select); die ;
+        // echo $sql->getSqlstringForSqlObject($select); die ;
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         

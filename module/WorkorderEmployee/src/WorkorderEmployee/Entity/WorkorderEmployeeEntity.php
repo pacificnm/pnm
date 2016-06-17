@@ -2,6 +2,7 @@
 namespace WorkorderEmployee\Entity;
 
 use Employee\Entity\EmployeeEntity;
+use Workorder\Entity\WorkorderEntity;
 
 class WorkorderEmployeeEntity
 {
@@ -29,6 +30,12 @@ class WorkorderEmployeeEntity
      * @var EmployeeEntity
      */
     protected $employeeEntity;
+
+    /**
+     *
+     * @var WorkorderEntity
+     */
+    protected $workorderEntity;
 
     /**
      *
@@ -68,6 +75,15 @@ class WorkorderEmployeeEntity
 
     /**
      *
+     * @return the $workorderEntity
+     */
+    public function getWorkorderEntity()
+    {
+        return $this->workorderEntity;
+    }
+
+    /**
+     *
      * @param number $workorderEmployeeId            
      */
     public function setWorkorderEmployeeId($workorderEmployeeId)
@@ -100,5 +116,14 @@ class WorkorderEmployeeEntity
     public function setEmployeeEntity($employeeEntity)
     {
         $this->employeeEntity = $employeeEntity;
+    }
+
+    /**
+     *
+     * @param \Workorder\Entity\WorkorderEntity $workorderEntity            
+     */
+    public function setWorkorderEntity($workorderEntity)
+    {
+        $this->workorderEntity = $workorderEntity;
     }
 }

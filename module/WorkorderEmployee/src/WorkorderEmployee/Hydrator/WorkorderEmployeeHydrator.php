@@ -4,6 +4,7 @@ namespace WorkorderEmployee\Hydrator;
 use Zend\Stdlib\Hydrator\ClassMethods;
 use WorkorderEmployee\Entity\WorkorderEmployeeEntity;
 use Employee\Entity\EmployeeEntity;
+use Workorder\Entity\WorkorderEntity;
 
 class WorkorderEmployeeHydrator extends ClassMethods
 {
@@ -14,7 +15,6 @@ class WorkorderEmployeeHydrator extends ClassMethods
      */
     public function __construct($underscoreSeparatedKeys = true)
     {
-       
         parent::__construct($underscoreSeparatedKeys);
     }
 
@@ -26,7 +26,6 @@ class WorkorderEmployeeHydrator extends ClassMethods
      */
     public function hydrate(array $data, $object)
     {
-        
         if (! $object instanceof WorkorderEmployeeEntity) {
             return $object;
         }
@@ -36,6 +35,10 @@ class WorkorderEmployeeHydrator extends ClassMethods
         $employeeEntity = parent::hydrate($data, new EmployeeEntity());
         
         $object->setEmployeeEntity($employeeEntity);
+        
+        $workorderEntity = parent::hydrate($data, new WorkorderEntity());
+        
+        $object->setWorkorderEntity($workorderEntity);
         
         return $object;
     }
@@ -55,6 +58,8 @@ class WorkorderEmployeeHydrator extends ClassMethods
         $data = parent::extract($object);
         
         unset($data['employee_entity']);
+        
+        unset($data['workorder_entity']);
         
         return $data;
     }

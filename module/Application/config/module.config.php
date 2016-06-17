@@ -100,7 +100,7 @@ return array(
         'factories' => array(
             'SetPageTitle' => 'Application\Controller\Plugin\Factory\SetPageTitleFactory',
             'SetHeadTitle' => 'Application\Controller\Plugin\Factory\SetHeadTitleFactory',
-            'Acl' => 'Application\Controller\Plugin\Factory\ApplicationAclFactory', 
+            'Acl' => 'Application\Controller\Plugin\Factory\ApplicationAclFactory'
         ),
         'invokables' => array()
     ),
@@ -108,8 +108,8 @@ return array(
     // view helpers
     'view_helpers' => array(
         'invokables' => array(
-            'Paginator'    => 'Application\View\Helper\Paginator'
-        ),
+            'Paginator' => 'Application\View\Helper\Paginator'
+        )
     ),
     
     'view_manager' => array(
@@ -119,7 +119,7 @@ return array(
         'not_found_template' => 'error/404',
         'exception_template' => 'error/index',
         'template_map' => array(
-            'error/layout'  => __DIR__ . '/../view/layout/error.phtml',
+            'error/layout' => __DIR__ . '/../view/layout/error.phtml',
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
@@ -144,6 +144,31 @@ return array(
                 'route' => 'home',
                 'pages' => array(
                     array(
+                        'label' => 'My Profile',
+                        'route' => 'employee-profile',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Favorite Clients',
+                                'route' => 'client-favorite-index',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Delete',
+                                        'route' => 'client-favorite-delete',
+                                        'useRouteMatch' => true
+                                    )
+                                )
+                            ),
+                            array(
+                                'label' => 'Edit',
+                                'route' => 'employee-profile-update',
+                                'useRouteMatch' => true,
+                            ),
+                        )
+                    ),
+                    
+                    array(
                         'label' => 'Admin',
                         'route' => 'admin-index',
                         'useRouteMatch' => true,
@@ -156,7 +181,7 @@ return array(
                                     array(
                                         'label' => 'Edit Config',
                                         'route' => 'config-update',
-                                        'useRouteMatch' => true,
+                                        'useRouteMatch' => true
                                     )
                                 )
                             ),
@@ -174,7 +199,7 @@ return array(
                                     array(
                                         'label' => 'Edit',
                                         'route' => 'invoice-option-update',
-                                        'useRouteMatch' => true,
+                                        'useRouteMatch' => true
                                     )
                                 )
                             ),
@@ -191,19 +216,19 @@ return array(
                                             array(
                                                 'label' => 'Edit Labor Rate',
                                                 'route' => 'labor-update',
-                                                'useRouteMatch' => true,
+                                                'useRouteMatch' => true
                                             ),
                                             array(
                                                 'label' => 'Delete Labor Rate',
                                                 'route' => 'labor-delete',
-                                                'useRouteMatch' => true,
+                                                'useRouteMatch' => true
                                             )
-                                        ) 
+                                        )
                                     ),
                                     array(
                                         'label' => 'Create Labor Rate',
                                         'route' => 'labor-create',
-                                        'useRouteMatch' => true,
+                                        'useRouteMatch' => true
                                     )
                                 )
                             ),
@@ -220,19 +245,19 @@ return array(
                                             array(
                                                 'label' => 'Edit Employee',
                                                 'route' => 'employee-update',
-                                                'useRouteMatch' => true,
+                                                'useRouteMatch' => true
                                             ),
                                             array(
                                                 'label' => 'Delete Employee',
                                                 'route' => 'employee-delete',
-                                                'useRouteMatch' => true,
+                                                'useRouteMatch' => true
                                             )
                                         )
                                     ),
                                     array(
                                         'label' => 'Create Employee',
                                         'route' => 'employee-create',
-                                        'useRouteMatch' => true,
+                                        'useRouteMatch' => true
                                     )
                                 )
                             ),
@@ -244,7 +269,7 @@ return array(
                                     array(
                                         'label' => 'Create',
                                         'route' => 'auth-create',
-                                        'useRouteMatch' => true,
+                                        'useRouteMatch' => true
                                     ),
                                     array(
                                         'label' => 'View',
@@ -254,23 +279,23 @@ return array(
                                             array(
                                                 'label' => 'Update',
                                                 'route' => 'auth-update',
-                                                'useRouteMatch' => true,
+                                                'useRouteMatch' => true
                                             ),
                                             array(
                                                 'label' => 'Delete',
                                                 'route' => 'auth-delete',
-                                                'useRouteMatch' => true,
+                                                'useRouteMatch' => true
                                             ),
                                             array(
                                                 'label' => 'Reset Password',
                                                 'route' => 'auth-password',
-                                                'useRouteMatch' => true,
-                                            ),
+                                                'useRouteMatch' => true
+                                            )
                                         )
                                     )
                                 )
                             )
-                        ),
+                        )
                     ),
                     array(
                         'label' => 'Clients',
@@ -295,8 +320,8 @@ return array(
                                             array(
                                                 'label' => 'Edit Location',
                                                 'route' => 'location-update',
-                                                'useRouteMatch' => true,
-                                            ),
+                                                'useRouteMatch' => true
+                                            )
                                         )
                                     ),
                                     array(
@@ -516,7 +541,7 @@ return array(
                                             array(
                                                 'label' => 'Create Work Order',
                                                 'route' => 'workorder-create',
-                                                'useRouteMatch' => true,
+                                                'useRouteMatch' => true
                                             ),
                                             array(
                                                 'label' => 'View Work Order',
@@ -526,37 +551,37 @@ return array(
                                                     array(
                                                         'label' => 'Edit Work Order',
                                                         'route' => 'workorder-update',
-                                                        'useRouteMatch' => true,
+                                                        'useRouteMatch' => true
                                                     ),
                                                     array(
                                                         'label' => 'Delete Work Order',
                                                         'route' => 'workorder-delete',
-                                                        'useRouteMatch' => true,
+                                                        'useRouteMatch' => true
                                                     ),
                                                     array(
                                                         'label' => 'Print Work Order',
                                                         'route' => 'workorder-print',
-                                                        'useRouteMatch' => true,
+                                                        'useRouteMatch' => true
                                                     ),
                                                     array(
                                                         'label' => 'Delete Time',
                                                         'route' => 'workorder-time-delete',
-                                                        'useRouteMatch' => true,
+                                                        'useRouteMatch' => true
                                                     ),
                                                     array(
                                                         'label' => 'Delete Part',
                                                         'route' => 'workorder-part-delete',
-                                                        'useRouteMatch' => true,
+                                                        'useRouteMatch' => true
                                                     ),
                                                     array(
                                                         'label' => 'Edit Note',
                                                         'route' => 'workorder-note-update',
-                                                        'useRouteMatch' => true,
+                                                        'useRouteMatch' => true
                                                     ),
                                                     array(
                                                         'label' => 'Delete Note',
                                                         'route' => 'workorder-note-delete',
-                                                        'useRouteMatch' => true,
+                                                        'useRouteMatch' => true
                                                     )
                                                 )
                                             )

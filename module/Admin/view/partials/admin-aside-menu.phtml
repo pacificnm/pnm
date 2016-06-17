@@ -1,4 +1,4 @@
-<?php // \Zend\Debug\Debug::dump($this->acl->isAllowed($this->identity()->getAuthRole(), 'admin-index'));?>
+<?php if($this->adminAcl): ?>
 <li class="header"><?php echo $this->translate('ADMIN NAVIGATION'); ?></li>
 <li class="treeview <?php if($this->activeMenuItem == 'admin'):?>active<?php endif;?>">
 	<a href="#">
@@ -56,3 +56,4 @@
 		</li>
 	</ul>
 </li>
+<?php endif; ?>

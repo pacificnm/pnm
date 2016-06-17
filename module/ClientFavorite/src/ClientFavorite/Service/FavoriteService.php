@@ -65,4 +65,5 @@ class FavoriteService implements FavoriteServiceInterface
     {
         return $this->mapper->delete($entity);
     }
+   
 }
