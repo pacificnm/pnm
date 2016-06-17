@@ -65,7 +65,7 @@ return array(
     'view_helpers' => array(
         'factories' => array(
             'GetWorkorderTimes' => 'WorkorderTime\View\Helper\Factory\GetWorkorderTimesFactory',
-            'SalesByLabor' => 'WorkorderTime\View\Helper\Factory\SalesByLabor'
+            'SalesByLabor' => 'WorkorderTime\View\Helper\Factory\SalesByLaborFactory'
         ),
         'invokables' => array()
     ),

@@ -108,7 +108,7 @@
 			<div class="box-header with-border">
 				<h3 class="box-title"><i class="fa fa-user"></i> <?php echo $this->clientEntity->getClientName(); ?></h3>
 				<div class="box-tools pull-right">
-					<button class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></button>
+					<a href="<?php echo $this->url('client-update', array('clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Edit this client');?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 				</div>
 			</div>
 			<div class="box-body">

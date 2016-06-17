@@ -233,6 +233,33 @@ return array(
                                 )
                             ),
                             array(
+                                'label' => 'Host Types',
+                                'route' => 'host-type-index',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'View',
+                                        'route' => 'host-type-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Edit',
+                                                'route' => 'host-type-update',
+                                            ),
+                                            array(
+                                                'label' => 'Delete',
+                                                'route' => 'host-type-delete',
+                                            )
+                                        )
+                                    ),
+                                    array(
+                                        'label' => 'Create Host Type',
+                                        'route' => 'host-type-create',
+                                        'useRouteMatch' => true,
+                                    )
+                                )
+                            ),
+                            array(
                                 'label' => 'Employee',
                                 'route' => 'employee-index',
                                 'useRouteMatch' => true,

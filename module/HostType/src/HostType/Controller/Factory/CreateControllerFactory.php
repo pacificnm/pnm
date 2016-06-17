@@ -1,27 +1,28 @@
 <?php
-namespace Client\Controller\Factory;
+namespace HostType\Controller\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Client\Controller\UpdateController;
-use Client\Form\ClientForm;
+use HostType\Controller\CreateController;
+use HostType\Form\TypeForm;
 
-class UpdateControllerFactory implements FactoryInterface
+class CreateControllerFactory implements FactoryInterface
 {
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Zend\ServiceManager\FactoryInterface::createService()
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
-        $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
+        $typeService = $realServiceLocator->get('HostType\Service\TypeServiceInterface');
         
-        $clientForm = new ClientForm();
+        $typeForm = new TypeForm();
         
-        return new UpdateController($clientService, $clientForm);
+        return new CreateController($typeService, $typeForm);
     }
 }

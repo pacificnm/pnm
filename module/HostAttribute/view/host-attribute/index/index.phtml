@@ -1,0 +1,44 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-desktop"></i>
+					<?php echo $this->translate('Host Attribute Type'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('host-attribute-create');?>" title="<?php echo $this->translate('New'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="box-body table-responsive no-padding">
+    				<table class="table table-hover">
+    					<thead>
+    						<tr>
+    							<th><?php echo $this->translate('Attribute Name'); ?></th>
+    							<th><?php echo $this->translate('Attribute Type'); ?></th>
+    							<th></th>
+    						</tr>
+    					</thead>
+    					<tbody>
+    					<?php foreach($this->attributeEntitys as $attributeEntity): ?>
+    						<tr>
+    							<td>
+    								<a href="<?php echo $this->url('host-attribute-view', array('hostAttributeId' => $attributeEntity->getHostAttributeId()));?>" title="<?php echo $this->translate('View this attribute'); ?>">
+    									<?php echo $attributeEntity->getHostAttributeName(); ?>
+    								</a>
+    							</td>
+    							<td><?php echo ucfirst($attributeEntity->getHostAttributeType()); ?></td>
+    							<td class="text-right">
+    								<a href="<?php echo $this->url('host-attribute-delete', array('hostAttributeId' => $attributeEntity->getHostAttributeId())); ?>" title="<?php echo $this->translate('Delete this host attribute'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+									<a href="<?php echo $this->url('host-attribute-update', array('hostAttributeId' => $attributeEntity->getHostAttributeId())); ?>" title="<?php echo $this->translate('Edit this host attribute'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+    							</td>
+    						</tr>
+    					<?php endforeach; ?>
+    					</tbody>
+    				</table>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>

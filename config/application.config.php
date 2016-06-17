@@ -17,6 +17,7 @@ return array(
         'File',
         'Help',
         'Host',
+        'HostType',
         'Invoice',
         'Labor',
         'Location',
@@ -51,6 +52,7 @@ return array(
         'WorkorderCredit',
         'TaskNote',
         'TaskPriority',
+        'HostAttribute',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

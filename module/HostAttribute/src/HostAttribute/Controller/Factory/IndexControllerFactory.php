@@ -1,12 +1,11 @@
 <?php
-namespace Client\Controller\Factory;
+namespace HostAttribute\Controller\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Client\Controller\UpdateController;
-use Client\Form\ClientForm;
+use HostAttribute\Controller\IndexController;
 
-class UpdateControllerFactory implements FactoryInterface
+class IndexControllerFactory implements FactoryInterface
 {
 
     /**
@@ -18,10 +17,8 @@ class UpdateControllerFactory implements FactoryInterface
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
-        $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
+        $attributeService = $realServiceLocator->get('HostAttribute\Service\AttributeServiceInterface');
         
-        $clientForm = new ClientForm();
-        
-        return new UpdateController($clientService, $clientForm);
+        return new IndexController($attributeService);
     }
 }

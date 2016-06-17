@@ -1,10 +1,10 @@
 <?php
-namespace Client\Controller\Factory;
+namespace HostType\Controller\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Client\Controller\UpdateController;
-use Client\Form\ClientForm;
+use HostType\Controller\UpdateController;
+use HostType\Form\TypeForm;
 
 class UpdateControllerFactory implements FactoryInterface
 {
@@ -18,10 +18,10 @@ class UpdateControllerFactory implements FactoryInterface
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
-        $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
+        $typeService = $realServiceLocator->get('HostType\Service\TypeServiceInterface');
         
-        $clientForm = new ClientForm();
+        $typeForm = new TypeForm();
         
-        return new UpdateController($clientService, $clientForm);
+        return new UpdateController($typeService, $typeForm);
     }
 }

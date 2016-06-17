@@ -54,6 +54,20 @@
 				<i class="fa fa-dollar"></i> <?php echo $this->translate('Invoice Options'); ?>
 			</a>
 		</li>
+		
+		<!-- Host Types -->
+		<li class="<?php if($this->activeSubMenuItem == 'host-type-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('host-type-index'); ?>" title="<?php echo $this->translate('Host Types'); ?>">
+				<i class="fa fa-desktop"></i> <?php echo $this->translate('Host Types'); ?>
+			</a>
+		</li>
+		
+		<!-- Host Attributes -->
+		<li class="<?php if($this->activeSubMenuItem == 'host-attribute-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('host-attribute-index'); ?>" title="<?php echo $this->translate('Host Attributes'); ?>">
+				<i class="fa fa-desktop"></i> <?php echo $this->translate('Host Attributes'); ?>
+			</a>
+		</li>
 	</ul>
 </li>
 <?php endif; ?>

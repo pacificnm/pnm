@@ -1,25 +1,24 @@
 <?php
-namespace WorkorderTime\View\Helper\Factory;
+namespace HostType\Controller\Factory;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use WorkorderTime\View\Helper\SalesByLabor;
+use HostType\Controller\IndexController;
 
-class SalesByLabor implements FactoryInterface
+class IndexControllerFactory implements FactoryInterface
 {
 
     /**
-     *
+     * 
      * {@inheritDoc}
-     *
      * @see \Zend\ServiceManager\FactoryInterface::createService()
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
-        $timeService = $realServiceLocator->get('WorkorderTime\Service\TimeServiceInterface');
+        $typeService = $realServiceLocator->get('HostType\Service\TypeServiceInterface');
         
-        return new SalesByLabor($timeService);
+        return new IndexController($typeService);
     }
 }

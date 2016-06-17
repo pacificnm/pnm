@@ -1,0 +1,21 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-desktop"></i>
+					<?php echo $this->translate('Host Attribute Type'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('host-attribute-delete', array('hostAttributeId' => $this->attributeEntity->getHostAttributeId())); ?>" title="<?php echo $this->translate('Delete this host attribute'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+					<a href="<?php echo $this->url('host-attribute-update', array('hostAttributeId' => $this->attributeEntity->getHostAttributeId())); ?>" title="<?php echo $this->translate('Edit this host attribute'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+					
+				</div>
+			</div>
+			<div class="box-body">
+				<h3 class="profile-username"><?php echo $this->attributeEntity->getHostAttributeName(); ?></h3>
+				<p class="text-muted"><?php echo $this->attributeEntity->getHostAttributeType();?></p>
+			</div>
+		</div>
+	</div>
+</div>
