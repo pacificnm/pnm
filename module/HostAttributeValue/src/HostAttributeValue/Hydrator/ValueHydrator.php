@@ -1,9 +1,10 @@
 <?php
 namespace HostAttributeValue\Hydrator;
 
+use Zend\Stdlib\Hydrator\ClassMethods;
 use HostAttributeValue\Entity\ValueEntity;
 
-class ValueHydrator
+class ValueHydrator extends ClassMethods
 {
 
     /**

@@ -20,6 +20,8 @@ class ViewControllerFactory implements FactoryInterface
         
         $attributeService = $realServiceLocator->get('HostAttribute\Service\AttributeServiceInterface');
         
-        return new ViewController($attributeService);
+        $valueService = $realServiceLocator->get('HostAttributeValue\Service\ValueServiceInterface');
+        
+        return new ViewController($attributeService, $valueService);
     }
 }

@@ -33,4 +33,11 @@ interface ValueServiceInterface
      * @return boolean
      */
     public function delete(ValueEntity $entity);
+    
+    /**
+     * 
+     * @param number $attributeId
+     * @return ValueEntity
+     */
+    public function getAttributeValues($attributeId);
 }

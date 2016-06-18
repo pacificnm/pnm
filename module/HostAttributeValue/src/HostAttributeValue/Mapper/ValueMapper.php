@@ -8,6 +8,8 @@ use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Delete;
 use Zend\Db\Sql\Insert;
 use Zend\Db\Sql\Update;
+use Zend\Paginator\Paginator;
+use Zend\Paginator\Adapter\DbSelect;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use HostAttributeValue\Entity\ValueEntity;
 
@@ -68,20 +70,39 @@ class ValueMapper implements ValueMapperInterface
         
         $select = $sql->select('host_attribute_value');
         
-        $stmt = $sql->prepareStatementForSqlObject($select);
-        
-        $result = $stmt->execute();
-        
-        if ($result instanceof ResultInterface && $result->isQueryResult()) {
-            
-            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
-            
-            $resultSet->buffer();
-            
-            return $resultSet->initialize($result);
+        if(array_key_exists('hostAttributeId', $filter) && ! empty($filter['hostAttributeId'])) {
+            $select->where(array(
+                'host_attribute_value.host_attribute_id = ?' => $filter['hostAttributeId']
+            ));
         }
         
-        return array();
+        $select->order('host_attribute_value_name');
+        
+        if(array_key_exists('pagination', $filter) && $filter['pagination'] == 'off') {
+        
+            $stmt = $sql->prepareStatementForSqlObject($select);
+            
+            $result = $stmt->execute();
+            
+            if ($result instanceof ResultInterface && $result->isQueryResult()) {
+                
+                $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+                
+                $resultSet->buffer();
+                
+                return $resultSet->initialize($result);
+            }
+            
+            return array();
+        }
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $paginatorAdapter = new DbSelect($select, $this->readAdapter, $resultSetPrototype);
+        
+        $paginator = new Paginator($paginatorAdapter);
+        
+        return $paginator;
     }
 
     /**

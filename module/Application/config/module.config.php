@@ -265,7 +265,7 @@ return array(
                                 'useRouteMatch' => true,
                                 'pages' => array(
                                     array(
-                                        'label' => 'View',
+                                        'label' => 'View Attribute',
                                         'route' => 'host-attribute-view',
                                         'useRouteMatch' => true,
                                         'pages' => array(
@@ -276,6 +276,11 @@ return array(
                                             array(
                                                 'label' => 'Delete',
                                                 'route' => 'host-attribute-delete',
+                                            ),
+                                            array(
+                                                'label' => 'New Value',
+                                                'route' => 'host-attribute-value-create',
+                                                'useRouteMatch' => true,
                                             )
                                         )
                                     ),

@@ -34,6 +34,7 @@ return array(
         'factories' => array(
             'Host\Service\HostServiceInterface' => 'Host\Service\Factory\HostServiceFactory',
             'Host\Mapper\HostMapperInterface' => 'Host\Mapper\Factory\HostMapperFactory',
+            'Host\Form\HostForm' => 'Host\Form\Factory\HostFormFactory'
         )
     ),
     

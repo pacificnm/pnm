@@ -60,4 +60,18 @@ class ValueService implements ValueServiceInterface
     {
         return $this->mapper->delete($entity);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \HostAttributeValue\Service\ValueServiceInterface::getAttributeValues()
+     */
+    public function getAttributeValues($attributeId)
+    {
+        $filter = array(
+            'hostAttributeId' => $attributeId
+        );
+    
+        return $this->mapper->getAll($filter);
+    }
 }

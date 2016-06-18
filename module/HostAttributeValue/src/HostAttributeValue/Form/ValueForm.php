@@ -29,8 +29,9 @@ class ValueForm extends Form implements InputFilterProviderInterface
             'type' => 'hidden'
         ));
         
+        // hostAttributeId
         $this->add(array(
-            'name' => 'hostAttributeValueId',
+            'name' => 'hostAttributeId',
             'type' => 'hidden'
         ));
         
