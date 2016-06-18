@@ -7,6 +7,13 @@ CREATE TABLE `employee` (
   `employee_name` varchar(100) NOT NULL,
   `employee_title` varchar(60) DEFAULT NULL,
   `employee_email` varchar(200) NOT NULL,
+  `employee_phone` varchar(60) NOT NULL,
+  `employee_phone_mobile` varchar(60) DEFAULT NULL,
+  `employee_street` varchar(200) NOT NULL,
+  `employee_street_cont` varchar(200) DEFAULT NULL,
+  `employee_city` varchar(60) NOT NULL,
+  `employee_state` varchar(60) NOT NULL,
+  `employee_postal` varchar(60) NOT NULL,
   `employee_im` varchar(60) DEFAULT NULL,
   `employee_image` varchar(200) DEFAULT 'photo_60x60.jpg',
   `employee_status` enum('Active','Closed','Deleted') NOT NULL DEFAULT 'Active'
