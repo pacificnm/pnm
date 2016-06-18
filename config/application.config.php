@@ -53,6 +53,7 @@ return array(
         'TaskNote',
         'TaskPriority',
         'HostAttribute',
+        'HostAttributeValue',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

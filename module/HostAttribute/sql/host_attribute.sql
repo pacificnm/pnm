@@ -5,7 +5,7 @@
 CREATE TABLE `host_attribute` (
   `host_attribute_id` int(20) NOT NULL,
   `host_attribute_name` varchar(100) NOT NULL,
-  `host_attribute_type` enum('select','text','long text','boolen') NOT NULL
+  `host_attribute_type` enum('select','text','long text','boolen', 'password') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

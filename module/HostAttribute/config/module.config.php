@@ -41,7 +41,7 @@ return array(
     'router' => array(
         'routes' => array(
             'host-attribute-index' => array(
-                'title' => 'Host Types',
+                'title' => 'Host Attributes',
                 'type' => 'literal',
                 'options' => array(
                     'route' => '/admin/host-attribute',
@@ -52,7 +52,7 @@ return array(
                 )
             ),
             'host-attribute-create' => array(
-                'title' => 'Create Labor Rate',
+                'title' => 'Create Host Attributes',
                 'type' => 'literal',
                 'options' => array(
                     'route' => '/admin/host-attribute/create',
@@ -63,7 +63,7 @@ return array(
                 )
             ),
             'host-attribute-delete' => array(
-                'title' => 'Delete Labor Rate',
+                'title' => 'Delete Host Attributes',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/admin/host-attribute/delete/[:hostAttributeId]',
@@ -74,7 +74,7 @@ return array(
                 )
             ),
             'host-attribute-update' => array(
-                'title' => 'Edit Labor Rate',
+                'title' => 'Edit Host Attributes',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/admin/host-attribute/update/[:hostAttributeId]',
@@ -85,7 +85,7 @@ return array(
                 )
             ),
             'host-attribute-view' => array(
-                'title' => 'View Labor Rate',
+                'title' => 'View Host Attributes',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/admin/host-attribute/view/[:hostAttributeId]',

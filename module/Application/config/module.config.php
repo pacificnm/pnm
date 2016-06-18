@@ -260,6 +260,33 @@ return array(
                                 )
                             ),
                             array(
+                                'label' => 'Host Attributes',
+                                'route' => 'host-attribute-index',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'View',
+                                        'route' => 'host-attribute-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Edit',
+                                                'route' => 'host-attribute-update',
+                                            ),
+                                            array(
+                                                'label' => 'Delete',
+                                                'route' => 'host-attribute-delete',
+                                            )
+                                        )
+                                    ),
+                                    array(
+                                        'label' => 'Create',
+                                        'route' => 'host-attribute-create',
+                                        'useRouteMatch' => true,
+                                    )
+                                )
+                            ),
+                            array(
                                 'label' => 'Employee',
                                 'route' => 'employee-index',
                                 'useRouteMatch' => true,

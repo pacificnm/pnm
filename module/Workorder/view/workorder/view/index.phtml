@@ -124,10 +124,10 @@
 				
 			</div>
 			<div class="box-footer visible-xs">
-				<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
+				<a href="<?php echo $this->url('workorder-print', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Print this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
 				<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>  			
-    			<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-dollar"></i> <?php echo $this->translate('Credit'); ?></a>
-    			<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-check-circle"></i> <?php echo $this->translate('Complete'); ?></a>
+    			<a href="javascript:void(0);" data-toggle="modal" data-target="#creditModal" title="<?php echo $this->translate('Credit this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-dollar"></i> <?php echo $this->translate('Credit'); ?></a>
+    			<a href="javascript:void(0);" data-toggle="modal" data-target="#completeModal" title="<?php echo $this->translate('Complete this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-check-circle"></i> <?php echo $this->translate('Complete'); ?></a>
     			<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
     			<?php endif;?>
     			<a href="<?php echo $this->url('workorder-update', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Edit this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>		

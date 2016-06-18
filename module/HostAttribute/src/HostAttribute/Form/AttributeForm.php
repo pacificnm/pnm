@@ -1,7 +1,6 @@
 <?php
 namespace HostAttribute\Form;
 
-
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use HostAttribute\Hydrator\AttributeHydrator;
@@ -51,7 +50,8 @@ class AttributeForm extends Form implements InputFilterProviderInterface
                     'select' => 'select',
                     'text' => 'text',
                     'long text' => 'long tex',
-                    'boolen' => 'boolen'
+                    'boolen' => 'boolen',
+                    'password' => 'password'
                 ),
             ),
             'attributes' => array(
