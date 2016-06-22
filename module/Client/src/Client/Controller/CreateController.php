@@ -12,6 +12,7 @@ use Location\Form\LocationForm;
 use Phone\Form\PhoneForm;
 use User\Form\UserForm;
 use Account\Service\AccountService;
+use ClientAccount\Service\AccountService as ClientAccountServiceInterface;
 use Account\Entity\AccountEntity;
 
 class CreateController extends BaseController
@@ -84,13 +85,13 @@ class CreateController extends BaseController
      * @param LocationServiceInterface $locationService            
      * @param PhoneServiceInterface $phoneService            
      * @param AccountService $accountService            
-     * @param \ClientAccount\Service\AccountService $clientAccountService            
+     * @param ClientAccountServiceInterface $clientAccountService            
      * @param ClientForm $clientForm            
      * @param LocationForm $locationForm            
      * @param PhoneForm $phoneForm            
      * @param UserForm $userForm            
      */
-    public function __construct(ClientServiceInterface $clientService, UserServiceInterface $userService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, AccountService $accountService, \ClientAccount\Service\AccountService $clientAccountService, ClientForm $clientForm, LocationForm $locationForm, PhoneForm $phoneForm, UserForm $userForm)
+    public function __construct(ClientServiceInterface $clientService, UserServiceInterface $userService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, AccountService $accountService, ClientAccountServiceInterface $clientAccountService, ClientForm $clientForm, LocationForm $locationForm, PhoneForm $phoneForm, UserForm $userForm)
     {
         $this->clientService = $clientService;
         
