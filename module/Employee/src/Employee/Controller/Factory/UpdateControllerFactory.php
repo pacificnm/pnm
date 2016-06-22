@@ -6,6 +6,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Employee\Controller\UpdateController;
 use Employee\Form\EmployeeForm;
 use Employee\Form\ProfileForm;
+use Employee\Form\PasswordForm;
+
 
 class UpdateControllerFactory implements FactoryInterface
 {
@@ -27,6 +29,8 @@ class UpdateControllerFactory implements FactoryInterface
         
         $profileForm = new ProfileForm();
         
-        return new UpdateController($employeeService, $authService, $employeeForm, $profileForm);
+        $passwordForm = $realServiceLocator->get('Employee\Form\PasswordForm');
+        
+        return new UpdateController($employeeService, $authService, $employeeForm, $profileForm, $passwordForm);
     }
 }

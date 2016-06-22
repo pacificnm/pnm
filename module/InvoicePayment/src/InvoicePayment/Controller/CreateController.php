@@ -6,11 +6,14 @@ use Invoice\Service\InvoiceServiceInterface;
 use InvoicePayment\Service\PaymentServiceInterface;
 use InvoicePayment\Form\PaymentForm;
 use Client\Service\ClientServiceInterface;
+use ClientAccount\Service\AccountServiceInterface;
+use AccountLedger\Service\LedgerServiceInterface;
 
 class CreateController extends BaseController
 {
+
     /**
-     * 
+     *
      * @var ClientServiceInterface
      */
     protected $clientService;
@@ -29,24 +32,51 @@ class CreateController extends BaseController
 
     /**
      *
+     * @var AccountServiceInterface
+     */
+    protected $clientAccountService;
+
+    /**
+     *
+     * @var \Account\Service\AccountServiceInterface
+     */
+    protected $accountService;
+
+    /**
+     *
+     * @var LedgerServiceInterface
+     */
+    protected $ledgerService;
+
+    /**
+     *
      * @var PaymentForm
      */
     protected $paymentForm;
 
     /**
-     * 
-     * @param ClientServiceInterface $clientService
-     * @param InvoiceServiceInterface $invoiceService
-     * @param PaymentServiceInterface $paymentService
-     * @param PaymentForm $paymentForm
+     *
+     * @param ClientServiceInterface $clientService            
+     * @param InvoiceServiceInterface $invoiceService            
+     * @param PaymentServiceInterface $paymentService            
+     * @param AccountServiceInterface $clientAccountService            
+     * @param \Account\Service\AccountServiceInterface $accountService            
+     * @param LedgerServiceInterface $ledgerService            
+     * @param PaymentForm $paymentForm            
      */
-    public function __construct(ClientServiceInterface $clientService, InvoiceServiceInterface $invoiceService, PaymentServiceInterface $paymentService, PaymentForm $paymentForm)
+    public function __construct(ClientServiceInterface $clientService, InvoiceServiceInterface $invoiceService, PaymentServiceInterface $paymentService, AccountServiceInterface $clientAccountService, \Account\Service\AccountServiceInterface $accountService, LedgerServiceInterface $ledgerService, PaymentForm $paymentForm)
     {
         $this->clientService = $clientService;
         
         $this->invoiceService = $invoiceService;
         
         $this->paymentService = $paymentService;
+        
+        $this->clientAccountService = $clientAccountService;
+        
+        $this->accountService = $accountService;
+        
+        $this->ledgerService = $ledgerService;
         
         $this->paymentForm = $paymentForm;
     }
@@ -67,7 +97,7 @@ class CreateController extends BaseController
         
         if (! $clientEntity) {
             $this->flashmessenger()->addErrorMessage('Client was not found.');
-        
+            
             return $this->redirect()->toRoute('client-list');
         }
         
@@ -75,9 +105,21 @@ class CreateController extends BaseController
         
         if (! $invoiceEntity) {
             $this->flashmessenger()->addErrorMessage('Invoice was not found.');
-        
+            
             return $this->redirect()->toRoute('invoice-list', array(
                 'clientId' => $id
+            ));
+        }
+        
+        // get client account
+        $clientAccountEntity = $this->clientAccountService->getClientAccount($clientEntity->getClientId());
+        
+        if (! $clientAccountEntity) {
+            $this->flashMessenger()->addErrorMessage('Client is missing an account to recieve payments');
+            
+            return $this->redirect()->toRoute('invoice-view', array(
+                'clientId' => $id,
+                'invoiceId' => $invoiceId
             ));
         }
         
@@ -87,16 +129,27 @@ class CreateController extends BaseController
         if ($request->isPost()) {
             
             $postData = $request->getPost();
-        
+            
             $this->paymentForm->setData($postData);
-        
+            
             if ($this->paymentForm->isValid()) {
                 
                 $entity = $this->paymentForm->getData();
                 
+                $accountEntity = $this->accountService->get($entity->getAccountId());
+                
+                if (! $accountEntity) {
+                    $this->flashMessenger()->addErrorMessage('cannot find payment account');
+                    
+                    return $this->redirect()->toRoute('invoice-view', array(
+                        'clientId' => $id,
+                        'invoiceId' => $invoiceId
+                    ));
+                }
+                                
                 $entity->setInvoicePaymentDate(strtotime($entity->getInvoicePaymentDate()));
                 
-                $this->paymentService->save($entity);
+                $payemntEntity = $this->paymentService->save($entity);
                 
                 // update invoice
                 $invoiceEntity->setInvoiceDatePaid(time());
@@ -106,6 +159,30 @@ class CreateController extends BaseController
                 
                 $this->invoiceService->save($invoiceEntity);
                 
+                
+                // save payment account
+                $accountLedgerBalance = $accountEntity->getAccountBalance() + $entity->getInvoicePaymentAmount();
+                
+                $this->ledgerService->createLedgerEntry($accountEntity->getAccountId(), $clientAccountEntity->getAccountId(), 'Deposit', $entity->getInvoicePaymentAmount(), 0, $accountLedgerBalance, $invoiceId, $payemntEntity->getInvoicePaymentId());
+                
+                $accountEntity->setAccountBalance($accountLedgerBalance);
+                
+                $this->accountService->save($accountEntity);
+                
+                
+                
+                // save client account
+                $accountLedgerBalance = $clientAccountEntity->getAccountEntity()->getAccountBalance() + ($invoiceEntity->getInvoiceTotal() - $entity->getInvoicePaymentAmount());
+                
+                $this->ledgerService->createLedgerEntry($clientAccountEntity->getAccountId(), $accountEntity->getAccountId(), 'Transfer', 0, $entity->getInvoicePaymentAmount(), $accountLedgerBalance, $invoiceId, $payemntEntity->getInvoicePaymentId());
+                
+                $clientAccountEntity->getAccountEntity()->setAccountBalance($accountLedgerBalance);
+                
+                $this->accountService->save($clientAccountEntity->getAccountEntity());
+                
+                
+                
+                // set flash
                 $this->flashmessenger()->addSuccessMessage('The payment was saved.');
                 
                 return $this->redirect()->toRoute('invoice-view', array(

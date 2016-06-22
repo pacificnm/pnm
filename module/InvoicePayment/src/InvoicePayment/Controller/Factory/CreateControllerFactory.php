@@ -24,8 +24,14 @@ class CreateControllerFactory implements FactoryInterface
         
         $paymentService = $realServiceLocator->get('InvoicePayment\Service\PaymentServiceInterface');
         
+        $clientAccountService = $realServiceLocator->get('ClientAccount\Service\AccountServiceInterface');
+        
+        $accountService = $realServiceLocator->get('Account\Service\AccountServiceInterface');
+        
+        $ledgerService = $realServiceLocator->get('AccountLedger\Service\LedgerServiceInterface');
+        
         $paymentForm = $realServiceLocator->get('InvoicePayment\Form\PaymentForm');
         
-        return new CreateController($clientService, $invoiceService, $paymentService, $paymentForm);
+        return new CreateController($clientService, $invoiceService, $paymentService, $clientAccountService, $accountService, $ledgerService, $paymentForm);
     }
 }

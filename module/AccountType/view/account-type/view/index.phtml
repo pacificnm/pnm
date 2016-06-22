@@ -1,0 +1,38 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-bank"></i>
+					<?php echo $this->translate('Account Types'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('account-type-delete', array('accountTypeId' => $this->typeEntity->getAccountTypeId())); ?>" title="<?php echo $this->translate('Delete this labor rate'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+					<a href="<?php echo $this->url('account-type-update', array('accountTypeId' => $this->typeEntity->getAccountTypeId())); ?>" title="<?php echo $this->translate('Edit this labor rate'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+				</div>
+			</div>
+			<div class="box-body">
+				<h3 class="profile-username"><?php echo $this->typeEntity->getAccountTypeName(); ?></h3>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-bank"></i>
+					<?php echo $this->translate('Accounts'); ?>
+				</h3>
+				<div class="box-tools"></div>
+			</div>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no accounts of this type'); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

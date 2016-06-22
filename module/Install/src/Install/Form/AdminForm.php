@@ -28,6 +28,43 @@ class AdminForm extends Form implements InputFilterProviderInterface
             'type' => 'hidden'
         ));
         
+        // employeePhone
+        $this->add(array(
+            'name' => 'employeePhone',
+            'type' => 'hidden'
+        ));
+        
+        // employeeStreet
+        $this->add(array(
+            'name' => 'employeeStreet',
+            'type' => 'hidden'
+        ));
+        
+        // employeeStreetCont
+        $this->add(array(
+            'name' => 'employeeStreetCont',
+            'type' => 'hidden'
+        ));
+        
+        // employeeCity
+        $this->add(array(
+            'name' => 'employeeCity',
+            'type' => 'hidden'
+        ));
+        
+        // employeeState
+        $this->add(array(
+            'name' => 'employeeState',
+            'type' => 'hidden'
+        ));
+        
+        // employeePostal
+        $this->add(array(
+            'name' => 'employeePostal',
+            'type' => 'hidden'
+        ));
+        
+        
         // employeeName
         $this->add(array(
             'name' => 'employeeName',

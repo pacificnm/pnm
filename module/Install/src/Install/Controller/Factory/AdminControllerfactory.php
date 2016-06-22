@@ -24,9 +24,11 @@ class AdminControllerfactory implements FactoryInterface
         
         $employeeService = $realServiceLocator->get('Employee\Service\EmployeeServiceInterface');
         
+        $configService = $realServiceLocator->get('Config\Service\ConfigServiceInterface');
+        
         $adminForm = new AdminForm();
         
         
-        return new AdminController($authService, $employeeService, $adminForm);
+        return new AdminController($authService, $employeeService, $configService, $adminForm);
     }
 }

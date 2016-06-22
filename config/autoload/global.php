@@ -38,13 +38,7 @@ return array(
     
     'service_manager' => array(
         'factories' => array(
-            'Zend\Db\Adapter\Adapter' => function ($sm) {
-                $config = $sm->get('config');
-                $adapter = new BjyProfiler\Db\Adapter\ProfilingAdapter($config['db']);
-                $adapter->setProfiler(new BjyProfiler\Db\Profiler\Profiler());
-                $adapter->injectProfilingStatementPrototype();
-                return $adapter;
-            }
+            
         ),
         // to allow other adapter to be called by
         // $sm->get('db1') or $sm->get('db2') based on the adapters config.
@@ -55,10 +49,6 @@ return array(
         // identity
         'aliases' => array(
             'Zend\Authentication\AuthenticationService' => 'my_auth_service',
-            
-            // remove for production in order to use read/write db this aliase uses the profiler
-            'db1' => 'Zend\Db\Adapter\Adapter',
-            'db2' => 'Zend\Db\Adapter\Adapter',
         ),
         
         'invokables' => array(

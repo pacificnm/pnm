@@ -1,0 +1,28 @@
+<li class="header"><?php echo $this->translate('ACCOUNTING NAVIGATION'); ?></li>
+<li class="treeview <?php if($this->activeMenuItem == 'account'):?>active<?php endif;?>">
+	<a href="#">
+		<i class="fa fa-table"></i> <span><?php echo $this->translate('Accounting'); ?></span>
+	</a>
+	<ul class="treeview-menu">
+		<!-- home -->
+		<li class="<?php if($this->activeSubMenuItem == 'account-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('account-index'); ?>" title="My Profile">
+				<i class="fa fa-home"></i> <span><?php echo $this->translate('Home')?></span>
+			</a>
+		</li>
+		
+		<!-- Account Types -->
+		<li class="<?php if($this->activeSubMenuItem == 'account-type-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('account-type-index'); ?>" title="<?php echo $this->translate('Account Types'); ?>">
+				<i class="fa fa-bank"></i> <?php echo $this->translate('Account Types'); ?>
+			</a>
+		</li>
+		
+		<!-- Vendors -->
+		<li class="<?php if($this->activeSubMenuItem == 'vendor-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('vendor-index'); ?>" title="<?php echo $this->translate('Vendors'); ?>">
+				<i class="fa fa-truck"></i> <?php echo $this->translate('Vendors'); ?>
+			</a>
+		</li>
+	</ul>
+</li>

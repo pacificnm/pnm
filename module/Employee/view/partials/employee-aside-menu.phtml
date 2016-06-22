@@ -8,21 +8,21 @@
 		<ul class="treeview-menu">
 			<!-- home -->
 			<li class="<?php if($this->activeSubMenuItem == 'employee-profile'):?>active<?php endif;?>">
-				<a href="<?php echo $this->url('employee-profile'); ?>" >
+				<a href="<?php echo $this->url('employee-profile'); ?>" title="My Profile">
 					<i class="fa fa-home"></i> <span><?php echo $this->translate('Home')?></span>
 				</a>
 			</li>
 			
 			<!-- Client Favorites -->
 			<li class="<?php if($this->activeSubMenuItem == 'client-favorite-index'):?>active<?php endif;?>">
-				<a href="<?php echo $this->url('client-favorite-index'); ?>" >
+				<a href="<?php echo $this->url('client-favorite-index'); ?>" title="Client Favorites">
 					<i class="fa fa-star"></i> <span><?php echo $this->translate('Client Favorites')?></span>
 				</a>
 			</li>
 			
 			<!-- password -->
-			<li class="<?php if($this->activeSubMenuItem == ''):?>active<?php endif;?>">
-				<a href="" >
+			<li class="<?php if($this->activeSubMenuItem == 'employee-password'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('employee-password');?>" title="<?php echo $this->translate('Change Password')?>">
 					<i class="fa fa-lock"></i> <span><?php echo $this->translate('Change Password')?></span>
 				</a>
 			</li>

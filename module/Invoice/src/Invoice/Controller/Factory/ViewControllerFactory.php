@@ -35,10 +35,12 @@ class ViewControllerFactory implements FactoryInterface
         
         $workorderService = $realServiceLocator->get('Workorder\Service\WorkorderServiceInterface');
         
+        $accountService = $realServiceLocator->get('Account\Service\AccountServiceInterface');
+        
         $itemForm = new ItemForm();
         
         $paymentForm = $realServiceLocator->get('InvoicePayment\Form\PaymentForm');
         
-        return new ViewController($clientService, $invoiceService, $itemService, $optionService, $paymentService, $locationService, $phoneService, $workorderService, $itemForm, $paymentForm);
+        return new ViewController($clientService, $invoiceService, $itemService, $optionService, $paymentService, $locationService, $phoneService, $workorderService, $accountService, $itemForm, $paymentForm);
     }
 }

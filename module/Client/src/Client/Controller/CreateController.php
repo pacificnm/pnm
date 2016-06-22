@@ -11,6 +11,8 @@ use Client\Form\ClientForm;
 use Location\Form\LocationForm;
 use Phone\Form\PhoneForm;
 use User\Form\UserForm;
+use Account\Service\AccountService;
+use Account\Entity\AccountEntity;
 
 class CreateController extends BaseController
 {
@@ -38,6 +40,18 @@ class CreateController extends BaseController
      * @var PhoneServiceInterface
      */
     protected $phoneService;
+
+    /**
+     *
+     * @var AccountService
+     */
+    protected $accountService;
+
+    /**
+     *
+     * @var \ClientAccount\Service\AccountService
+     */
+    protected $clientAccountService;
 
     /**
      *
@@ -69,12 +83,14 @@ class CreateController extends BaseController
      * @param UserServiceInterface $userService            
      * @param LocationServiceInterface $locationService            
      * @param PhoneServiceInterface $phoneService            
+     * @param AccountService $accountService            
+     * @param \ClientAccount\Service\AccountService $clientAccountService            
      * @param ClientForm $clientForm            
      * @param LocationForm $locationForm            
      * @param PhoneForm $phoneForm            
      * @param UserForm $userForm            
      */
-    public function __construct(ClientServiceInterface $clientService, UserServiceInterface $userService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, ClientForm $clientForm, LocationForm $locationForm, PhoneForm $phoneForm, UserForm $userForm)
+    public function __construct(ClientServiceInterface $clientService, UserServiceInterface $userService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, AccountService $accountService, \ClientAccount\Service\AccountService $clientAccountService, ClientForm $clientForm, LocationForm $locationForm, PhoneForm $phoneForm, UserForm $userForm)
     {
         $this->clientService = $clientService;
         
@@ -83,6 +99,10 @@ class CreateController extends BaseController
         $this->locationService = $locationService;
         
         $this->phoneService = $phoneService;
+        
+        $this->accountService = $accountService;
+        
+        $this->clientAccountService = $clientAccountService;
         
         $this->clientForm = $clientForm;
         
@@ -169,6 +189,11 @@ class CreateController extends BaseController
                 
                 $userEntity = $this->userService->save($userEntity);
                 
+                
+                // create account
+                $this->createAccount($clientEntity->getClientId(), $clientEntity->getClientName());
+               
+                
                 $this->flashmessenger()->addSuccessMessage('The client was saved.');
                 
                 return $this->redirect()->toRoute('client-view', array(
@@ -190,4 +215,46 @@ class CreateController extends BaseController
             'phoneForm' => $this->phoneForm
         ));
     }
+    
+    /**
+     * 
+     * @param number $clientId
+     * @param string $clientName
+     */
+    private function createAccount($clientId, $clientName)
+    {
+        // create account
+        $accountEntity = new AccountEntity();
+        
+        $accountEntity->setAccountName($clientName);
+        
+        $accountEntity->setAccountDescription($clientName . ' Accounts Receivable');
+        
+        $accountEntity->setAccountActive(1);
+        
+        $accountEntity->setAccountBalance(0);
+        
+        $accountEntity->setAccountId(0);
+        
+        $accountEntity->setAccountTypeId(6);
+        
+        $accountEntity->setAccountVisible(0);
+        
+        $accountEntity->setAccountNumber($clientId);
+        
+        $accountEntity->setAccountCreated(time());
+        
+        $accountEntity = $this->accountService->save($accountEntity);
+        
+        // map account
+        $clientAccountEntity = new \ClientAccount\Entity\AccountEntity();
+        
+        $clientAccountEntity->setAccountId($accountEntity->getAccountId());
+        
+        $clientAccountEntity->setClientId($clientId);
+        
+        $clientAccountEntity = $this->clientAccountService->save($clientAccountEntity);
+    }
+    
+    
 }

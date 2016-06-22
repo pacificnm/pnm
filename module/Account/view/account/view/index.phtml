@@ -1,0 +1,100 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-bank"></i>
+					<?php echo $this->translate('View Account'); ?>
+				</h3>
+				<div class="box-tools">
+				
+				</div>
+			</div>
+			<div class="box-body">
+				<h3 class="profile-username">
+					<?php echo $this->accountEntity->getAccountName(); ?>
+					<span class="badge pull-right"><?php echo $this->currencyFormat($this->accountEntity->getAccountBalance(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang());?></span>
+				</h3>
+				<p class="text-muted"><?php echo $this->accountEntity->getTypeEntity()->getAccountTypeName(); ?>
+					<span class="pull-right small"><?php echo $this->accountEntity->getAccountNumber(); ?></span>
+				</p>
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item"><?php echo $this->accountEntity->getAccountDescription(); ?></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-bank"></i>
+					<?php echo $this->translate('Ledger'); ?>
+				</h3>
+				<div class="box-tools">
+				
+				</div>
+			</div>
+			<?php if($this->paginator->count() == 0): ?>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no ledger entiries'); ?></p>
+				</div>
+			</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Id'); ?></th>
+							<th><?php echo $this->translate('Date'); ?></th>
+							<th><?php echo $this->translate('Account'); ?></th>
+							<th><?php echo $this->translate('Type'); ?></th>
+							<th class="text-right"><?php echo $this->translate('Debit'); ?></th>
+							<th class="text-right"><?php echo $this->translate('Credit'); ?></th>
+							<th class="text-right"><?php echo $this->translate('Balance'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->paginator as $ledgerEntity): ?>
+						<tr>
+							<td>
+								<a href="" title="<?php echo $this->translate('View this ledger entry')?>">
+									<?php echo $ledgerEntity->getAccountLedgerId(); ?>
+								</a>	
+							</td>
+							<td><?php echo date($this->appConfig()->getConfigDateShort(), $ledgerEntity->getAccountLedgerCreate()); ?></td>
+							<td>
+								<a href="<?php echo $this->url('account-view', array('accountId' => $ledgerEntity->getFromAccountId()));?>" title="<?php echo $this->translate('View this account'); ?>">
+									<?php echo $ledgerEntity->getAccountEntity()->getAccountName(); ?>
+								</a>
+							</td>
+							<td><?php echo $ledgerEntity->getAccountLedgerType(); ?></td>
+							<td class="text-right"><?php echo $this->currencyFormat($ledgerEntity->getAccountLedgerDebitAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang());?></td>
+							<td class="text-right"><?php echo $this->currencyFormat($ledgerEntity->getAccountLedgerCreditAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang());?></td>
+							<td class="text-right"><?php echo $this->currencyFormat($ledgerEntity->getAccountLedgerBalance(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang());?></td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+			</div>
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12">
+    				<?php echo $this->Paginator(
+    	                        $this->itemCountPerPage,
+    	                        $this->itemCount,
+    	                        $this->pageCount,
+    	                        $this->page,
+    	                        $this->routeParams,
+    	                        $this->queryParams); ?>
+    	        	</div>
+    			</div>
+			</div>
+			<?php endif;?>
+		</div>
+	</div>
+</div>

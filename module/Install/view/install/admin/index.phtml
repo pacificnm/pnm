@@ -66,6 +66,14 @@
 				
 				
 				<?php echo $this->formElement($this->form->get('employeeId')); ?>
+				<?php echo $this->formElement($this->form->get('employeePhone')); ?>
+				
+				<?php echo $this->formElement($this->form->get('employeeStreet')); ?>
+				<?php echo $this->formElement($this->form->get('employeeStreetCont')); ?>
+				<?php echo $this->formElement($this->form->get('employeeCity')); ?>
+				<?php echo $this->formElement($this->form->get('employeeState')); ?>
+				<?php echo $this->formElement($this->form->get('employeePostal')); ?>
+				
 				<?php echo $this->formSubmit($this->form->get('submit')); ?>
 				<?php echo $this->form()->closeTag(); ?>
 			</div>

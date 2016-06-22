@@ -7,6 +7,8 @@ use Auth\Service\AuthServiceInterface;
 use Zend\View\Model\ViewModel;
 use Employee\Form\EmployeeForm;
 use Employee\Form\ProfileForm;
+use Employee\Form\PasswordForm;
+use Zend\Crypt\Password\Bcrypt;
 
 
 class UpdateController extends BaseController
@@ -38,11 +40,19 @@ class UpdateController extends BaseController
 
     /**
      * 
+     * @var PasswordForm
+     */
+    protected $passwordForm;
+    
+    /**
+     * 
      * @param EmployeeServiceInterface $employeeService
      * @param AuthServiceInterface $authService
      * @param EmployeeForm $employeeForm
+     * @param ProfileForm $profileForm
+     * @param PasswordForm $passwordForm
      */
-    public function __construct(EmployeeServiceInterface $employeeService, AuthServiceInterface $authService, EmployeeForm $employeeForm, ProfileForm $profileForm)
+    public function __construct(EmployeeServiceInterface $employeeService, AuthServiceInterface $authService, EmployeeForm $employeeForm, ProfileForm $profileForm, PasswordForm $passwordForm)
     {
         $this->employeeService = $employeeService;
         
@@ -51,6 +61,8 @@ class UpdateController extends BaseController
         $this->employeeForm = $employeeForm;
         
         $this->profileForm = $profileForm;
+        
+        $this->passwordForm = $passwordForm;
     }
 
     /**
@@ -177,6 +189,54 @@ class UpdateController extends BaseController
         
         return new ViewModel(array(
             'form' => $this->profileForm
+        ));
+    }
+    
+    public function passwordAction()
+    {
+        $request = $this->getRequest();
+        
+        // if we have a post
+        if ($request->isPost()) {
+            // get post
+            $postData = $request->getPost();
+        
+            $this->passwordForm->setData($postData);
+        
+            // if we are valid
+            if ($this->passwordForm->isValid()) {
+                
+                $entity = $this->passwordForm->getData();
+                
+                $bcrypt = new Bcrypt();
+                
+                $authEntity = $this->authService->get($this->identity()->getAuthId());
+                
+                $password = $bcrypt->create($entity['newPassword']);
+                
+                $authEntity->setAuthPassword($password);
+                
+                $this->authService->save($authEntity);
+                
+                $this->flashmessenger()->addSuccessMessage('Your password has been changed, Please sign out to use your new password.');
+                
+                return $this->redirect()->toRoute('employee-profile');
+            }
+        }
+        
+        
+        $this->passwordForm->get('employeeId')->setValue($this->identity()->getEmployeeId());
+        
+        $this->layout()->setVariable('pageTitle', 'My Profile');
+        
+        $this->layout()->setVariable('pageSubTitle', 'Change Password');
+        
+        $this->layout()->setVariable('activeMenuItem', 'employee');
+        
+        $this->layout()->setVariable('activeSubMenuItem', 'employee-password');
+        
+        return new ViewModel(array(
+            'form' => $this->passwordForm
         ));
     }
 }

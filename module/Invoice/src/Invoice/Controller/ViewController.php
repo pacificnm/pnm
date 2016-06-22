@@ -13,6 +13,7 @@ use Location\Service\LocationServiceInterface;
 use Phone\Service\PhoneServiceInterface;
 use InvoicePayment\Service\PaymentServiceInterface;
 use Workorder\Service\WorkorderServiceInterface;
+use Account\Service\AccountServiceInterface;
 
 class ViewController extends BaseController
 {
@@ -59,8 +60,18 @@ class ViewController extends BaseController
      */
     protected $phoneService;
 
+    /**
+     *
+     * @var WorkorderServiceInterface
+     */
     protected $workorderService;
-    
+
+    /**
+     *
+     * @var AccountServiceInterface
+     */
+    protected $accountService;
+
     /**
      *
      * @var ItemForm
@@ -73,8 +84,21 @@ class ViewController extends BaseController
      */
     protected $paymentForm;
 
-    
-    public function __construct(ClientServiceInterface $clientService, InvoiceServiceInterface $invoiceService, ItemServiceInterface $itemService, OptionServiceInterface $optionService, PaymentServiceInterface $paymentService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, WorkorderServiceInterface $workorderService, ItemForm $itemForm, PaymentForm $paymentForm)
+    /**
+     *
+     * @param ClientServiceInterface $clientService            
+     * @param InvoiceServiceInterface $invoiceService            
+     * @param ItemServiceInterface $itemService            
+     * @param OptionServiceInterface $optionService            
+     * @param PaymentServiceInterface $paymentService            
+     * @param LocationServiceInterface $locationService            
+     * @param PhoneServiceInterface $phoneService            
+     * @param WorkorderServiceInterface $workorderService            
+     * @param AccountServiceInterface $accountService            
+     * @param ItemForm $itemForm            
+     * @param PaymentForm $paymentForm            
+     */
+    public function __construct(ClientServiceInterface $clientService, InvoiceServiceInterface $invoiceService, ItemServiceInterface $itemService, OptionServiceInterface $optionService, PaymentServiceInterface $paymentService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, WorkorderServiceInterface $workorderService, AccountServiceInterface $accountService, ItemForm $itemForm, PaymentForm $paymentForm)
     {
         $this->clientService = $clientService;
         
@@ -91,6 +115,8 @@ class ViewController extends BaseController
         $this->phoneService = $phoneService;
         
         $this->workorderService = $workorderService;
+        
+        $this->accountService = $accountService;
         
         $this->itemForm = $itemForm;
         
@@ -184,6 +210,9 @@ class ViewController extends BaseController
             'invoiceId' => $invoiceId
         )));
         
+        // get accoutns payable
+        $accountEntitys = $this->accountService->getNonSystemAccounts();
+        
         // set up layout
         $this->layout()->setVariable('clientId', $id);
         
@@ -209,7 +238,8 @@ class ViewController extends BaseController
             'phoneEntity' => $phoneEntity,
             'workorderEntitys' => $workorderEntitys,
             'itemForm' => $this->itemForm,
-            'paymentForm' => $this->paymentForm
+            'paymentForm' => $this->paymentForm,
+            'accountEntitys' => $accountEntitys
         ));
     }
 }

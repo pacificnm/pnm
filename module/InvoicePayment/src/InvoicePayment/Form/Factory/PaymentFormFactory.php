@@ -18,6 +18,8 @@ class PaymentFormFactory implements FactoryInterface
     {
         $optionService = $serviceLocator->get('PaymentOption\Service\OptionServiceInterface');
         
-        return new PaymentForm($optionService);
+        $accountService = $serviceLocator->get('Account\Service\AccountServiceInterface');
+        
+        return new PaymentForm($optionService, $accountService);
     }
 }

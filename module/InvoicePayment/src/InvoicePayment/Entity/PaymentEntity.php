@@ -43,13 +43,17 @@ class PaymentEntity
     protected $invoicePaymentDetail;
 
     /**
+     * 
+     * @var number
+     */
+    protected $accountId;
+    
+    /**
      *
      * @var OptionEntity
      */
     protected $optionEntity;
-
     /**
-     *
      * @return the $invoicePaymentId
      */
     public function getInvoicePaymentId()
@@ -58,7 +62,6 @@ class PaymentEntity
     }
 
     /**
-     *
      * @return the $invoiceId
      */
     public function getInvoiceId()
@@ -67,7 +70,6 @@ class PaymentEntity
     }
 
     /**
-     *
      * @return the $invoicePaymentDate
      */
     public function getInvoicePaymentDate()
@@ -76,7 +78,6 @@ class PaymentEntity
     }
 
     /**
-     *
      * @return the $paymentOptionId
      */
     public function getPaymentOptionId()
@@ -85,7 +86,6 @@ class PaymentEntity
     }
 
     /**
-     *
      * @return the $invoicePaymentAmount
      */
     public function getInvoicePaymentAmount()
@@ -94,7 +94,6 @@ class PaymentEntity
     }
 
     /**
-     *
      * @return the $invoicePaymentDetail
      */
     public function getInvoicePaymentDetail()
@@ -103,7 +102,14 @@ class PaymentEntity
     }
 
     /**
-     *
+     * @return the $accountId
+     */
+    public function getAccountId()
+    {
+        return $this->accountId;
+    }
+
+    /**
      * @return the $optionEntity
      */
     public function getOptionEntity()
@@ -112,8 +118,7 @@ class PaymentEntity
     }
 
     /**
-     *
-     * @param number $invoicePaymentId            
+     * @param number $invoicePaymentId
      */
     public function setInvoicePaymentId($invoicePaymentId)
     {
@@ -121,8 +126,7 @@ class PaymentEntity
     }
 
     /**
-     *
-     * @param number $invoiceId            
+     * @param number $invoiceId
      */
     public function setInvoiceId($invoiceId)
     {
@@ -130,8 +134,7 @@ class PaymentEntity
     }
 
     /**
-     *
-     * @param number $invoicePaymentDate            
+     * @param number $invoicePaymentDate
      */
     public function setInvoicePaymentDate($invoicePaymentDate)
     {
@@ -139,8 +142,7 @@ class PaymentEntity
     }
 
     /**
-     *
-     * @param number $paymentOptionId            
+     * @param number $paymentOptionId
      */
     public function setPaymentOptionId($paymentOptionId)
     {
@@ -148,8 +150,7 @@ class PaymentEntity
     }
 
     /**
-     *
-     * @param number $invoicePaymentAmount            
+     * @param number $invoicePaymentAmount
      */
     public function setInvoicePaymentAmount($invoicePaymentAmount)
     {
@@ -157,8 +158,7 @@ class PaymentEntity
     }
 
     /**
-     *
-     * @param string $invoicePaymentDetail            
+     * @param string $invoicePaymentDetail
      */
     public function setInvoicePaymentDetail($invoicePaymentDetail)
     {
@@ -166,11 +166,21 @@ class PaymentEntity
     }
 
     /**
-     *
-     * @param \PaymentOption\Entity\OptionEntity $optionEntity            
+     * @param number $accountId
+     */
+    public function setAccountId($accountId)
+    {
+        $this->accountId = $accountId;
+    }
+
+    /**
+     * @param \PaymentOption\Entity\OptionEntity $optionEntity
      */
     public function setOptionEntity($optionEntity)
     {
         $this->optionEntity = $optionEntity;
     }
+
+
+    
 }

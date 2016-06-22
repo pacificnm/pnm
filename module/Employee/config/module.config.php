@@ -8,7 +8,8 @@ return array(
             'user' => array(),
             'employee' => array(
                 'employee-profile',
-                'employee-profile-update'
+                'employee-profile-update',
+                'employee-password'
             ),
             'accountant' => array(),
             'administrator' => array(
@@ -36,7 +37,8 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'Employee\Mapper\EmployeeMapperInterface' => 'Employee\Mapper\Factory\EmployeeMapperFactory',
-            'Employee\Service\EmployeeServiceInterface' => 'Employee\Service\Factory\EmployeeServiceFactory'
+            'Employee\Service\EmployeeServiceInterface' => 'Employee\Service\Factory\EmployeeServiceFactory',
+            'Employee\Form\PasswordForm' => 'Employee\Form\Factory\PasswordFormFactory',
         )
     ),
     
@@ -104,6 +106,17 @@ return array(
                     'defaults' => array(
                         'controller' => 'Employee\Controller\Update',
                         'action' => 'index'
+                    )
+                )
+            ),
+            'employee-password' => array(
+                'title' => 'Change Password',
+                'type' => 'literal',
+                'options' => array(
+                    'route' => '/employee/profile/change-password',
+                    'defaults' => array(
+                        'controller' => 'Employee\Controller\Update',
+                        'action' => 'password'
                     )
                 )
             ),

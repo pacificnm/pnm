@@ -326,6 +326,12 @@
         <h4 class="modal-title" id="myModalLabel"><i class="fa fa-dollar"></i> <?php echo $this->translate('Payment')?></h4>
       </div>
       <div class="modal-body">
+      	<?php if(count($this->accountEntitys) == 0): ?>
+      	<div class="alert alert-danger">
+      		<p><i class="fa fa-warning"></i> <?php echo $this->translate('There is no account configured to accept this payment. You must first setup one '); ?>
+      			<a href="<?php echo $this->url('account-create'); ?>" title="<?php echo $this->translate('Create new account')?>"><?php echo $this->translate('here'); ?></a>
+      	</div>
+      	<?php else: ?>
       		<?php echo $this->partial('partials/form-errors.phtml', array('errorMsg' => $this->paymentForm->getMessages())); ?>
        	
            	<div class="row">
@@ -380,12 +386,29 @@
                </div>
            </div>
            
+           <div class="row">
+            	<div class="col-xs-12 col-sm-6">
+    				<?php $element = $this->paymentForm->get('accountId'); ?>
+    				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+    					<label class="control-label"><?php echo $element->getLabel() ?></label>
+    					<?php echo $this->formElement($element); ?>
+    					<?php if($this->formElementErrors($element)): ?>
+    						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+    					<?php endif; ?>
+    				</div>
+               </div>
+           </div>
+           
           <?php echo $this->formElement($this->paymentForm->get('invoicePaymentId')); ?>
           <?php echo $this->formElement($this->paymentForm->get('invoiceId')); ?>
+          
+      <?php endif;?>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+        <?php if(count($this->accountEntitys) != 0): ?>
         <?php echo $this->formSubmit($this->itemForm->get('submit')); ?>
+        <?php endif;?>
       </div>
     </div>
   </div>

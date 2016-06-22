@@ -7,8 +7,6 @@
  */
 return array(
     'modules' => array(
-        'ZendDeveloperTools',
-        'BjyProfiler',
         'Application',
         'Acl',
         'Client',
@@ -54,6 +52,12 @@ return array(
         'TaskPriority',
         'HostAttribute',
         'HostAttributeValue',
+        'Account',
+        'AccountLedger',
+        'Update',
+        'AccountType',
+        'ClientAccount',
+        'VendorAccount',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

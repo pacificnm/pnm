@@ -37,7 +37,7 @@ class ClientMapper implements ClientMapperInterface
 
     /**
      *
-     * @var EmployeeEntity
+     * @var ClientEntity
      */
     protected $prototype;
 

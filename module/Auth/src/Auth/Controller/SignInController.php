@@ -98,7 +98,7 @@ class SignInController extends AbstractActionController
             if ($this->signInForm->isValid()) {
                 
                 $authEntity = $this->signInForm->getData();
-                               
+                                            
                 $this->authAdapter->setIdentity($authEntity->getAuthEmail());
                 
                 $this->authAdapter->setCredential($authEntity->getAuthPassword());
@@ -128,7 +128,7 @@ class SignInController extends AbstractActionController
                             
                             $this->flashmessenger()->addSuccessMessage('Welcome back ' . $authEntity->getAuthName());
                             
-                            return $this->redirect()->toRoute('home');
+                            return $this->redirect()->toRoute('employee-profile');
                         } else {
                             $userEntity = $this->userService->get($authEntity->getUserId());
                             

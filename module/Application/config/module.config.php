@@ -144,6 +144,54 @@ return array(
                 'route' => 'home',
                 'pages' => array(
                     array(
+                        'label' => 'Accounting',
+                        'route' => 'account-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'New Account',
+                                'route' => 'account-create',
+                                'useRouteMatch' => true,
+                            ),
+                            array(
+                                'label' => 'View Account',
+                                'route' => 'account-view',
+                                'useRouteMatch' => true,
+                                'pages' => array()
+                            ),
+                            array(
+                                'label' => 'Account Types',
+                                'route' => 'account-type-index',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Create Account Type',
+                                        'route' => 'account-type-create',
+                                        'useRouteMatch' => true,
+                                    ),
+                                    array(
+                                        'label' => 'View',
+                                        'route' => 'account-type-create',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Update',
+                                                'route' => 'account-type-update',
+                                                'useRouteMatch' => true,
+                                            ),
+                                            array(
+                                                'label' => 'Delete',
+                                                'route' => 'account-type-delete',
+                                                'useRouteMatch' => true,
+                                            ),
+                                        )
+                                    ),
+                                    
+                                )
+                            ),
+                        )
+                    ),
+                    array(
                         'label' => 'My Profile',
                         'route' => 'employee-profile',
                         'useRouteMatch' => true,
@@ -163,6 +211,11 @@ return array(
                             array(
                                 'label' => 'Edit',
                                 'route' => 'employee-profile-update',
+                                'useRouteMatch' => true,
+                            ),
+                            array(
+                                'label' => 'Change Password',
+                                'route' => 'employee-password',
                                 'useRouteMatch' => true,
                             ),
                         )
