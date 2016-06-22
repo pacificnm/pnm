@@ -1,0 +1,52 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">	
+					<i class="fa fa-truck"></i>
+					<?php echo $this->translate('Vendors'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('vendor-create', array());?>" title="<?php echo $this->translate('Create Vendor'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>	
+				</div>
+			</div>
+			<div class="box-body">
+			<?php if($this->paginator->count() == 0): ?>
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('You do not have any vendors.'); ?></p>
+				</div>
+			<?php else: ?>
+				<ul class="list-group list-group-unbordered">
+				<?php foreach($this->paginator as $vendor): ?>
+					<li class="list-group-item">
+						<div class="row">
+                        	<div class="col-xs-12">
+                        		<h3 class="profile-username">
+                        			<a href="<?php echo $this->url('vendor-view', array('vendorId' => $vendor->getVendorId()));?>" title="<?php echo $this->translate('View this vendor'); ?>">
+                        				<?php echo $vendor->getVendorName(); ?>
+                        			</a>
+                        			<span class="pull-right badge">Active</span>
+                        		</h3>
+                        	</div>
+                        </div>
+                        <div class="row">
+                    		<div class="col-xs-12 col-sm-9">
+                        		<b><?php echo $this->translate('Location'); ?>:</b>
+                        		<?php echo $vendor->getVendorStreet();?>
+                        		<?php echo $vendor->getVendorCity();?>,
+                        		<?php echo $vendor->getVendorState();?>
+                        		<?php echo $vendor->getVendorPostal();?>
+                        	</div>
+                        	<div class="col-xs-12 col-sm-3 text-right">
+                        		<b><?php echo $this->translate('Phone'); ?>:</b>
+                        		<?php echo $vendor->getVendorPhone();?>
+                        	</div>
+                        </div>
+					</li>
+				<?php endforeach; ?>
+				</ul>
+			<?php endif;?>
+			</div>
+		</div>
+	</div>
+</div>
