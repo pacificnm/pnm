@@ -1,7 +1,6 @@
 <?php
 namespace ClientAccount\Entity;
 
-use Account\Entity\AccountEntity;
 
 class AccountEntity
 {
