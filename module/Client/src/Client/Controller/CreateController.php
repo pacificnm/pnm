@@ -14,6 +14,7 @@ use User\Form\UserForm;
 use Account\Service\AccountService;
 use ClientAccount\Service\AccountService as ClientAccountServiceInterface;
 use Account\Entity\AccountEntity;
+use ClientAccount\Entity\AccountEntity as ClientAccountEntity;
 
 class CreateController extends BaseController
 {
@@ -248,7 +249,7 @@ class CreateController extends BaseController
         $accountEntity = $this->accountService->save($accountEntity);
         
         // map account
-        $clientAccountEntity = new \ClientAccount\Entity\AccountEntity();
+        $clientAccountEntity = new ClientAccountEntity();
         
         $clientAccountEntity->setAccountId($accountEntity->getAccountId());
         
