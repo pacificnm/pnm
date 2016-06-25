@@ -69,7 +69,12 @@
 			</a>
 		</li>
 		
-		
+		<!-- Host Attributes -->
+		<li class="<?php if($this->activeSubMenuItem == 'host-attribute-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('host-attribute-index'); ?>" title="<?php echo $this->translate('Access Control Lists'); ?>">
+				<i class="fa fa-lock"></i> <?php echo $this->translate('Permisions'); ?>
+			</a>
+		</li>
 		
 	</ul>
 </li>

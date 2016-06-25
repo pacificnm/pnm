@@ -1,33 +1,25 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 --
 -- Table structure for table `history`
 --
 
-CREATE TABLE `history` (
-  `history_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `history` (
+  `history_id` int(11) NOT NULL AUTO_INCREMENT,
   `auth_id` int(11) NOT NULL,
   `history_action` enum('CREATE','READ','UPDATE','DELETE') NOT NULL,
   `history_url` varchar(255) NOT NULL,
   `history_note` text,
-  `history_time` int(11) NOT NULL
+  `history_time` int(11) NOT NULL,
+  PRIMARY KEY (`history_id`),
+  KEY `auth_id` (`auth_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Indexes for dumped tables
---
-
---
--- Indexes for table `history`
+-- Constraints for table `history`
 --
 ALTER TABLE `history`
-  ADD PRIMARY KEY (`history_id`),
-  ADD KEY `auth_id` (`auth_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `history`
---
-ALTER TABLE `history`
-  MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT;
+  ADD CONSTRAINT `fk_history_auth_id` FOREIGN KEY (`auth_id`) REFERENCES `auth` (`auth_id`) ON UPDATE CASCADE;
+SET FOREIGN_KEY_CHECKS=1;

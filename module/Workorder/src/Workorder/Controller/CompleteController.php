@@ -248,7 +248,9 @@ class CompleteController extends BaseController
                     $invoiceEntity->setInvoiceTotal($invoiceEntity->getInvoiceTotal() - $creditTotal);
                     $invoiceEntity->setInvoiceBalance($invoiceEntity->getInvoiceBalance() - $creditTotal);
                     
-                    $this->invoiceService->save($invoiceEntity);
+                    $invoiceEntity = $this->invoiceService->save($invoiceEntity);
+                    
+                    
                 }
                 
                 // set invoice

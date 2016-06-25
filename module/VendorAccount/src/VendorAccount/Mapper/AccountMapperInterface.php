@@ -21,6 +21,13 @@ interface AccountMapperInterface
     public function get($id);
 
     /**
+     * 
+     * @param number $vendorId
+     * @return AccountEntity
+     */
+    public function getVendorAccount($vendorId);
+    
+    /**
      *
      * @param AccountEntity $entity            
      * @return AccountEntity

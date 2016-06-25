@@ -7,7 +7,9 @@
 					<?php echo $this->translate('Network Settings'); ?>
 				</h3>
 				<div class="box-tools">
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'network-create') ):?>
 					<a href="<?php echo $this->url('network-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create network setting'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+					<?php endif;?>
 				</div>
 			</div>
 			<div class="box-body">

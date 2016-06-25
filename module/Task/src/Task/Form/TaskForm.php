@@ -111,17 +111,17 @@ class TaskForm extends Form implements InputFilterProviderInterface
             )
         ));
         
-        // taskPriority
+        // taskPriorityId
         $this->add(array(
             'type' => 'Select',
-            'name' => 'taskPriority',
+            'name' => 'taskPriorityId',
             'options' => array(
                 'label' => 'Priority:',
                 'value_options' => $this->getPriorityOptions()
             ),
             'attributes' => array(
                 'class' => 'form-control',
-                'id' => 'taskPriority'
+                'id' => 'taskPriorityId'
             )
         ));
         
@@ -337,8 +337,8 @@ class TaskForm extends Form implements InputFilterProviderInterface
                 )
             ),
             
-            // taskPriority
-            'taskPriority' => array(
+            // taskPriorityId
+            'taskPriorityId' => array(
                 'required' => true,
                 'filters' => array(
                     array(

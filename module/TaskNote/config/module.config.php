@@ -1,21 +1,23 @@
 <?php
 return array(
-    'TaskNote' => array(
-        'name' => 'TaskNote',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'task-note-list',
-                'task-note-create',
-                'task-note-delete',
-                'task-note-update',
-                'task-note-view'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'TaskNote' => array(
+            'name' => 'TaskNote',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(
+                    'task-note-list',
+                    'task-note-create',
+                    'task-note-delete',
+                    'task-note-update',
+                    'task-note-view'
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

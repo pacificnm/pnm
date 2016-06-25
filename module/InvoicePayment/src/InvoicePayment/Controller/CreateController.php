@@ -134,6 +134,8 @@ class CreateController extends BaseController
             
             if ($this->paymentForm->isValid()) {
                 
+                $ledgerMemo = $clientEntity->getClientName() . ' payment for invoice #' . $invoiceEntity->getInvoiceId();
+                
                 $entity = $this->paymentForm->getData();
                 
                 $accountEntity = $this->accountService->get($entity->getAccountId());
@@ -146,41 +148,33 @@ class CreateController extends BaseController
                         'invoiceId' => $invoiceId
                     ));
                 }
-                                
+                
+                // add bill to client account service
+                $this->accountService->addLedgerCreditItem($clientAccountEntity->getAccountId(), $clientAccountEntity->getAccountId(), $invoiceEntity->getInvoiceBalance(), $ledgerMemo);
+                
+                
                 $entity->setInvoicePaymentDate(strtotime($entity->getInvoicePaymentDate()));
                 
-                $payemntEntity = $this->paymentService->save($entity);
-                
+                               
                 // update invoice
                 $invoiceEntity->setInvoiceDatePaid(time());
                 $invoiceEntity->setInvoicePayment($entity->getInvoicePaymentAmount());
                 $invoiceEntity->setInvoiceStatus('Paid');
                 $invoiceEntity->setInvoiceBalance($invoiceEntity->getInvoiceBalance() - $entity->getInvoicePaymentAmount());
                 
-                $this->invoiceService->save($invoiceEntity);
+                $invoiceEntity = $this->invoiceService->save($invoiceEntity);
                 
+                // debit client account
+                $ledgerEntity = $this->accountService->addLedgerDebitItem($clientAccountEntity->getAccountId(),$accountEntity->getAccountId(), $entity->getInvoicePaymentAmount(), $ledgerMemo);
                 
-                // save payment account
-                $accountLedgerBalance = $accountEntity->getAccountBalance() + $entity->getInvoicePaymentAmount();
+                // credit paying account
+                $ledgerEntity = $this->accountService->addLedgerCreditItem($accountEntity->getAccountId(), $clientAccountEntity->getAccountId(), $entity->getInvoicePaymentAmount(), $ledgerMemo);
                 
-                $this->ledgerService->createLedgerEntry($accountEntity->getAccountId(), $clientAccountEntity->getAccountId(), 'Deposit', $entity->getInvoicePaymentAmount(), 0, $accountLedgerBalance, $invoiceId, $payemntEntity->getInvoicePaymentId());
+                // set ledger id
+                $entity->setAccountLedgerId($ledgerEntity->getAccountLedgerId());
                 
-                $accountEntity->setAccountBalance($accountLedgerBalance);
-                
-                $this->accountService->save($accountEntity);
-                
-                
-                
-                // save client account
-                $accountLedgerBalance = $clientAccountEntity->getAccountEntity()->getAccountBalance() + ($invoiceEntity->getInvoiceTotal() - $entity->getInvoicePaymentAmount());
-                
-                $this->ledgerService->createLedgerEntry($clientAccountEntity->getAccountId(), $accountEntity->getAccountId(), 'Transfer', 0, $entity->getInvoicePaymentAmount(), $accountLedgerBalance, $invoiceId, $payemntEntity->getInvoicePaymentId());
-                
-                $clientAccountEntity->getAccountEntity()->setAccountBalance($accountLedgerBalance);
-                
-                $this->accountService->save($clientAccountEntity->getAccountEntity());
-                
-                
+                // save payment
+                $payemntEntity = $this->paymentService->save($entity);
                 
                 // set flash
                 $this->flashmessenger()->addSuccessMessage('The payment was saved.');

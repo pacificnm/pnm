@@ -1,18 +1,20 @@
 <?php
 return array(
-    'InvoiceOption' => array(
-        'name' => 'InvoiceOption',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array(
-                'invoice-option-index',
-                'invoice-option-update' 
+    'module' => array(
+        'InvoiceOption' => array(
+            'name' => 'InvoiceOption',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array(
+                    'invoice-option-index',
+                    'invoice-option-update' 
+                )
             )
-        )
+        ),
     ),
     
     // controllers

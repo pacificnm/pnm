@@ -1,22 +1,24 @@
 <?php
 return array(
-    'Network' => array(
-        'name' => 'Network',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'network-list',
-                'network-create',
-                'network-delete',
-                'network-update',
-                'network-view',
-                
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'Network' => array(
+            'name' => 'Network',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(
+                    'network-list',
+                    'network-view',
+                ),
+                'user' => array(),
+                'employee' => array(
+                    'network-create',
+                    'network-delete',
+                    'network-update',
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

@@ -1,18 +1,20 @@
 <?php
 return array(
-    'WorkorderTime' => array(
-        'name' => 'WorkorderTime',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'workorder-time-create',
-                'workorder-time-delete'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'WorkorderTime' => array(
+            'name' => 'WorkorderTime',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(
+                    'workorder-time-create',
+                    'workorder-time-delete'
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

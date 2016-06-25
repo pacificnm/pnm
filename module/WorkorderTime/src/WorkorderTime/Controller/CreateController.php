@@ -100,7 +100,8 @@ class CreateController extends BaseController
                 $totalTime = $timeOut - $timeIn;
                 
                 // calculate labor total
-                $laborTotal = number_format((($totalTime / 60) / 60) * $laborEntity->getLaborAmount(), 2);
+                
+                $laborTotal = number_format((($totalTime / 60) / 60) * $laborEntity->getLaborAmount(), 2, '.', '');
                 
                 // @todo need to check if workorder has credit if so we deduct from credits
                 

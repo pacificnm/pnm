@@ -9,19 +9,20 @@
 namespace Application;
 
 return array(
-    
-    'Application' => array(
-        'name' => 'Application',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(
-                'home'
-            ),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'Application' => array(
+            'name' => 'Application',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(
+                    'home'
+                ),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     'router' => array(
@@ -157,7 +158,49 @@ return array(
                                 'label' => 'View Account',
                                 'route' => 'account-view',
                                 'useRouteMatch' => true,
-                                'pages' => array()
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Ledger Item',
+                                        'route' => 'account-ledger-view',
+                                        'useRouteMatch' => true,
+                                    ),
+                                ),
+                            ),
+                            array(
+                                'label' => 'Bills',
+                                'route' => 'vendor-bill-index',
+                                'useRouteMatch' => true,
+                            ),
+                            array(
+                                'label' => 'Vendors',
+                                'route' => 'vendor-index',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'View',
+                                        'route' => 'vendor-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Bill',
+                                                'route' => 'vendor-bill-view',
+                                                'useRouteMatch' => true,
+                                                'pages' => array(
+                                                    array(
+                                                        'label' => 'Payment',
+                                                        'route' => 'vendor-payment-create',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'View Payment',
+                                                        'route' => 'vendor-payment-view',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
                             ),
                             array(
                                 'label' => 'Account Types',
@@ -412,11 +455,13 @@ return array(
                     array(
                         'label' => 'Clients',
                         'route' => 'client-index',
+                        'resource' => 'client-index',
                         'useRouteMatch' => true,
                         'pages' => array(
                             array(
                                 'label' => 'View Client',
                                 'route' => 'client-view',
+                                'resource' => 'client-view',
                                 'useRouteMatch' => true,
                                 'pages' => array(
                                     array(

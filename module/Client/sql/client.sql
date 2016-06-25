@@ -1,31 +1,21 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 --
 -- Table structure for table `client`
 --
 
-CREATE TABLE `client` (
-  `client_id` int(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `client` (
+  `client_id` int(20) NOT NULL AUTO_INCREMENT,
   `client_name` varchar(100) NOT NULL,
   `client_status` enum('Active','Closed') NOT NULL,
-  `client_created` int(20) NOT NULL
+  `client_created` int(20) NOT NULL,
+  PRIMARY KEY (`client_id`),
+  UNIQUE KEY `client_name` (`client_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Indexes for dumped tables
+-- RELATIONS FOR TABLE `client`:
 --
+SET FOREIGN_KEY_CHECKS=1;
 
---
--- Indexes for table `client`
---
-ALTER TABLE `client`
-  ADD PRIMARY KEY (`client_id`),
-  ADD UNIQUE KEY `client_name` (`client_name`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `client`
---
-ALTER TABLE `client`
-  MODIFY `client_id` int(20) NOT NULL AUTO_INCREMENT;

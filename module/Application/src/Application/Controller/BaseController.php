@@ -40,18 +40,36 @@ class BaseController extends AbstractActionController
         }
         
         // check if we are allowed to view the controller
-        if (! $this->acl($module)->checkAcl($this->identity()
+        if (! $this->acl()->checkAcl($this->identity()
             ->getAuthRole(), $router->getMatchedRouteName())) {
             return $this->redirect()
                 ->toRoute()
                 ->setStatusCode(403);
         }
+        
       
         if($this->identity()->getAuthRole() == 'administrator') {
             $adminAcl = true;
         } else {
             $adminAcl = false;
         }
+        
+       
+        
+        // if we are a user validate we own the client id we are requesting
+        if($this->identity()->getUserId() != 0) {
+            $id = $this->params()->fromRoute('clientId', null);
+            
+            if($id) {
+            
+                if($this->identity()->getUserEntity()->getClientId() != $id) {
+                    return $this->redirect()
+                    ->toRoute()
+                    ->setStatusCode(403);
+                }
+            }
+        }
+        
         
         // set menu
         $this->layout()->setVariable('activeSubMenuItem', $router->getMatchedRouteName());
@@ -60,6 +78,10 @@ class BaseController extends AbstractActionController
         
         $this->layout()->setVariable('adminAcl', $adminAcl);
         
+        $this->layout()->setVariable('acl', $this->acl()->getAcl());
+        
+        
+        
         // set page title
         $this->setPageTitle($router->getMatchedRouteName());
         
@@ -67,4 +89,5 @@ class BaseController extends AbstractActionController
         return parent::onDispatch($e);
     }
 
+    
 }

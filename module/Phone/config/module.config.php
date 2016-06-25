@@ -1,15 +1,19 @@
 <?php
 return array(
-    'Phone' => array(
-        'name' => 'Phone',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'Phone' => array(
+            'name' => 'Phone',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(
+                    'phone-view'
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

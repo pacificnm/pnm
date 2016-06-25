@@ -45,6 +45,16 @@ class AccountService implements AccountServiceInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \VendorAccount\Service\AccountServiceInterface::getVendorAccount()
+     */
+    public function getVendorAccount($vendorId)
+    {
+        return $this->mapper->getVendorAccount($vendorId);    
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *

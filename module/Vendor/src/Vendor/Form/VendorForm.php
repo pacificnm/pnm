@@ -15,7 +15,7 @@ class VendorForm extends Form implements InputFilterProviderInterface
      * @param array $options            
      * @return \Phone\Form\PhoneForm
      */
-    function __construct($name = 'phone-form', $options = array())
+    function __construct($name = 'vendor-form', $options = array())
     {
         parent::__construct($name, $options);
         

@@ -5,35 +5,60 @@ use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole;
 use Zend\Permissions\Acl\Resource\GenericResource;
+use Acl\Service\AclServiceInterface;
+use AclRole\Service\RoleServiceInterface;
+use AclResource\Service\ResourceServiceInterface;
 
 class ApplicationAcl extends AbstractPlugin
 {
 
     /**
+     * 
+     * @var AclServiceInterface
+     */
+    protected $aclService;
+    
+    /**
+     * 
+     * @var RoleServiceInterface
+     */
+    protected $roleService;
+    
+    /**
+     * 
+     * @var ResourceServiceInterface
+     */
+    protected $resourceService;
+    
+    /**
      *
      * @var \Zend\Permissions\Acl\Acl
      */
     protected $acl;
-
+    
     /**
      *
      * @var string
      */
     protected $module;
 
-    /**
-     *
-     * @var array
-     */
-    protected $config;
 
     /**
-     *
-     * @param array $config            
+     * 
+     * @param AclServiceInterface $aclService
+     * @param RoleServiceInterface $roleService
+     * @param ResourceServiceInterface $resourceService
+     * @param array $config
      */
-    public function __construct(array $config)
+    public function __construct(AclServiceInterface $aclService, RoleServiceInterface $roleService, ResourceServiceInterface $resourceService)
     {
-        $this->config = $config;
+        $this->acl = new Acl();
+
+        $this->aclService = $aclService;
+        
+        $this->roleService = $roleService;
+        
+        $this->resourceService = $resourceService;
     }
 
     /**
@@ -42,53 +67,38 @@ class ApplicationAcl extends AbstractPlugin
      * @throws \Exception
      * @return \Application\Controller\Plugin\Acl
      */
-    public function __invoke($module)
+    public function __invoke()
     {
-        $this->module = $module;
         
-        // load config
-        if (array_key_exists($this->module, $this->config)) {
-            
-            // set up acls
-            if (array_key_exists('acl', $this->config[$this->module])) {
-                $acl = new Acl();
-                
-                $allResources = array();
-                
-                $roles = $this->config[$this->module]['acl'];
-                
-                // loop though roles and create resources
-                foreach ($roles as $role => $resources) {
-                    // add roles
-                    $role = new GenericRole($role);
-                    
-                    $acl->addRole($role);
-                    
-                    $allResources = array_merge($resources, $allResources);
-                    
-                    foreach ($resources as $resource) {
-                        if (! $acl->hasResource($resource)) {
-                            $acl->addResource(new GenericResource($resource));
-                        }
-                    }
-                    
-                    // add restrictions
-                    foreach ($allResources as $resource) {
-                        $acl->allow($role, $resource);
-                    }
-                }
-                
-                $this->acl = $acl;
-                
-                
-                
-                return $this;
-            } else {
-                throw new \Exception('Config is missing acl definition.');
+        // add roles
+        $roles = $this->roleService->getAll(array('pagination' => 'off'));
+        
+        foreach($roles as $role) {
+            if(! $this->acl->hasRole($role->getAclRole())) {
+                $role = new GenericRole($role->getAclRole());
+        
+                $this->acl->addRole($role);
             }
-        } else {
-            throw new \Exception('Config is missing module definition');
         }
+        
+        // add resources
+        $resources = $this->resourceService->getAll(array('pagination' => 'off'));
+        
+        foreach($resources as $resource) {
+            if (! $this->acl->hasResource($resource->getAclResource())) {
+                $this->acl->addResource(new GenericResource($resource->getAclResource()));
+            }
+        }
+        
+        // add rules
+        $rules = $this->aclService->getAll(array('pagination' => 'off'));
+        
+        foreach($rules as $rule) {
+            $this->acl->allow($rule->getRole(), $rule->getResource());
+        }
+               
+        
+        return $this;
     }
 
     /**
@@ -104,5 +114,10 @@ class ApplicationAcl extends AbstractPlugin
         }
         
         return false;
+    }
+    
+    public function getAcl()
+    {
+        return $this->acl;
     }
 }

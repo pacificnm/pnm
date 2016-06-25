@@ -62,7 +62,7 @@
 					<?php foreach($this->paginator as $ledgerEntity): ?>
 						<tr>
 							<td>
-								<a href="" title="<?php echo $this->translate('View this ledger entry')?>">
+								<a href="<?php echo $this->url('account-ledger-view', array('accountId' => $ledgerEntity->getAccountId(), 'accountLedgerId' => $ledgerEntity->getAccountLedgerId())); ?>" title="<?php echo $this->translate('View this ledger entry')?>">
 									<?php echo $ledgerEntity->getAccountLedgerId(); ?>
 								</a>	
 							</td>

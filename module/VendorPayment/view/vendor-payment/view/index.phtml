@@ -1,0 +1,73 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">	
+					<i class="fa fa-dollar"></i>
+					<?php echo $this->translate('Bill'); ?>
+				</h3>
+				<div class="box-tools">
+				
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="row">
+        			<div class="col-xs-12">
+        				<h3 class="profile-username"><?php echo $this->vendorEntity->getVendorName(); ?></h3>
+        			</div>
+        		</div>
+				<ul class="list-group list-group-unbordered">
+					
+        			<li class="list-group-item">
+        				<div class="row">
+        					<div class="col-xs-12 col-sm-3">
+        						<p><b><?php echo $this->translate('Date Due'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateShort(),$this->billEntity->getVendorBillDateDue()); ?></p>
+        					</div>
+        					<div class="col-xs-12 col-sm-3">
+        						<p><b><?php echo $this->translate('Amount Due'); ?>:</b> <?php echo $this->currencyFormat($this->billEntity->getVendorBillAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></p>
+        					</div>
+        					<div class="col-xs-12 col-sm-3">
+        						<p><b><?php echo $this->translate('Balance'); ?>:</b> <?php echo $this->currencyFormat($this->billEntity->getVendorBillBalance(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></p>
+        					</div>
+        					<div class="col-xs-12 col-sm-3">
+        						<p><b><?php echo $this->translate('Status'); ?>:</b> <?php echo $this->billEntity->getVendorBillStatus(); ?></p>
+        					</div>
+        				</div>
+        			</li>
+        		</ul>
+        	</div>
+        </div>
+    </div>
+</div>
+ 
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">	
+					<i class="fa fa-dollar"></i>
+					<?php echo $this->translate('Payment Details'); ?>
+				</h3>
+				<div class="box-tools"></div>
+			</div>
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Payment Date'); ?>:</b> <?php echo $this->paymentEntity->getVendorPaymentDate(); ?></p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Payment Amount'); ?>:</b> <?php echo $this->paymentEntity->getVendorPaymentAmount(); ?></p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Paid From'); ?>:</b> 
+							<a href="<?php echo $this->url('account-view', array('accountId' => $this->paymentEntity->getAccountId()));?>" title="<?php echo $this->translate('View this account'); ?>">
+								<?php echo $this->paymentEntity->getAccountEntity()->getAccountName(); ?>
+							</a>
+							
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

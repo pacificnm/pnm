@@ -7,7 +7,9 @@
 					<?php echo $this->translate('Passwords'); ?>
 				</h3>
 				<div class="box-tools">
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'password-create') ):?>
 					<a href="<?php echo $this->url('password-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create new password'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="box-body">
@@ -34,9 +36,13 @@
 							<div class="row">
     							<div class="col-xs-12">
     								<h3 class="profile-username">
+    									<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'password-view') ):?>
     									<a href="<?php echo $this->url('password-view', array('passwordId' => $passwordEntity->getPasswordId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('View this password')?>">
     										<?php echo $passwordEntity->getPasswordLocation(); ?>
     									</a>
+    									<?php else: ?>
+    										<?php echo $passwordEntity->getPasswordLocation(); ?>
+    									<?php endif; ?>
     								</h3>
     							</div>
 							</div>

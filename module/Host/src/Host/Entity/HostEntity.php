@@ -26,7 +26,7 @@ class HostEntity
      *
      * @var number
      */
-    protected $hostType;
+    protected $hostTypeId;
 
     /**
      *
@@ -87,11 +87,11 @@ class HostEntity
 
     /**
      *
-     * @return the $hostType
+     * @return the $hostTypeId
      */
-    public function getHostType()
+    public function getHostTypeId()
     {
-        return $this->hostType;
+        return $this->hostTypeId;
     }
 
     /**
@@ -168,11 +168,11 @@ class HostEntity
 
     /**
      *
-     * @param number $hostType            
+     * @param number $hostTypeId            
      */
-    public function setHostType($hostType)
+    public function setHostTypeId($hostTypeId)
     {
-        $this->hostType = $hostType;
+        $this->hostTypeId = $hostTypeId;
     }
 
     /**

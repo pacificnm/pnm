@@ -97,7 +97,6 @@ class WorkorderMapper implements WorkorderMapperInterface
             }
         }
         
-        
         // join location
         $select->join('location', 'workorder.location_id = location.location_id', array(
             'location_type',
@@ -115,7 +114,6 @@ class WorkorderMapper implements WorkorderMapperInterface
             'phone_num'
         ), 'left');
         
-        
         // join primary user
         $exspresion = new Expression("location.location_id = user.location_id AND user.user_type = 'Primary' AND user.user_status = 'Active'");
         $select->join('user', $exspresion, array(
@@ -126,8 +124,6 @@ class WorkorderMapper implements WorkorderMapperInterface
             'user_email',
             'user_type'
         ), 'left');
-        
-
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
@@ -256,6 +252,10 @@ class WorkorderMapper implements WorkorderMapperInterface
             'client_id = ?' => $clientId
         ));
         
+        $select->where(array(
+            'workorder.workorder_status = ?' => 'Closed'
+        ));
+        
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
         $stmt = $sql->prepareStatementForSqlObject($select);
@@ -296,6 +296,10 @@ class WorkorderMapper implements WorkorderMapperInterface
             'client_id = ?' => $clientId
         ));
         
+        $select->where(array(
+            'workorder.workorder_status = ?' => 'Closed'
+        ));
+        
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
         $stmt = $sql->prepareStatementForSqlObject($select);
@@ -317,8 +321,9 @@ class WorkorderMapper implements WorkorderMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Workorder\Mapper\WorkorderMapperInterface::getClientUnInvoiced()
      */
     public function getClientUnInvoiced($clientId)
@@ -392,17 +397,17 @@ class WorkorderMapper implements WorkorderMapperInterface
         $result = $stmt->execute();
         
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
+            
             $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
-        
+            
             $resultSet->buffer();
-        
+            
             return $resultSet->initialize($result);
         }
         
         return array();
     }
-    
+
     /**
      *
      * {@inheritDoc}

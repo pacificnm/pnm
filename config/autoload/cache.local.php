@@ -24,7 +24,8 @@ return array(
             'plugins' => array(
                 'exception_handler' => array(
                     'throw_exceptions' => false
-                )
+                ),
+                'serializer'
             )
         )
     )

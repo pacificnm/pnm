@@ -7,8 +7,13 @@
 					<?php echo $this->translate('View Password'); ?>
 				</h3>
 				<div class="box-tools">
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'password-delete') ):?>
 					<a href="<?php echo $this->url('password-delete', array('passwordId' => $this->passwordEntity->getPasswordId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this password'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+					<?php endif;?>
+					
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'password-update') ):?>
 					<a href="<?php echo $this->url('password-update', array('passwordId' => $this->passwordEntity->getPasswordId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Edit this password'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="box-body">

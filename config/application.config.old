@@ -57,6 +57,10 @@ return array(
         'Update',
         'AccountType',
         'ClientAccount',
+        'VendorAccount',
+        'AclRole',
+        'AclResource',
+        'VendorBill',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

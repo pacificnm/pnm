@@ -8,12 +8,22 @@
 				</h3>
 				<div class="box-tools">
 					<?php if(! $this->authEntity): ?>
-					<a href="<?php echo $this->url('auth-create', array(), array('query' => array('userId' => $this->userEntity->getUserId()))); ?>" title="<?php echo $this->translate('Grant this user access to the portal');?>" class="btn btn-box-tool"><i class="fa fa-lock"></i> <?php echo $this->translate('Grant Access'); ?></a>
+    					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'auth-create') ):?>
+    						<a href="<?php echo $this->url('auth-create', array(), array('query' => array('userId' => $this->userEntity->getUserId()))); ?>" title="<?php echo $this->translate('Grant this user access to the portal');?>" class="btn btn-box-tool"><i class="fa fa-lock"></i> <?php echo $this->translate('Grant Access'); ?></a>
+    					<?php endif; ?>
+					
 					<?php else: ?>
-					<a href="<?php echo $this->url('auth-password', array('authId' => $this->authEntity->getAuthId())); ?>" title="<?php echo $this->translate('Reset user password')?>" class="btn btn-box-tool"><i class="fa fa-lock"></i> <?php echo $this->translate('Reset Password'); ?></a>
-					<a href="<?php echo $this->url('auth-delete', array('authId' => $this->authEntity->getAuthId())); ?>" title="<?php echo $this->translate('Revoke users access to the portal')?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Revoke Access'); ?></a>
+    					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'auth-password') ):?>
+    						<a href="<?php echo $this->url('auth-password', array('authId' => $this->authEntity->getAuthId())); ?>" title="<?php echo $this->translate('Reset user password')?>" class="btn btn-box-tool"><i class="fa fa-lock"></i> <?php echo $this->translate('Reset Password'); ?></a>
+    					<?php endif;?>
+						<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'auth-delete') ):?>
+							<a href="<?php echo $this->url('auth-delete', array('authId' => $this->authEntity->getAuthId())); ?>" title="<?php echo $this->translate('Revoke users access to the portal')?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Revoke Access'); ?></a>
+						<?php endif;?>
 					<?php endif; ?>
+					
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'user-update') ):?>
 					<a href="<?php echo $this->url('user-update', array('clientId' => $this->clientId, 'userId' => $this->userEntity->getUserId()));?>" title="<?php echo $this->translate('Edit this user'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="box-body">

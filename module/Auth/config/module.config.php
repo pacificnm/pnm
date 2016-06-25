@@ -1,23 +1,25 @@
 <?php
 use Auth\View\Helper\AuthNavBar;
 return array(
-    'Auth' => array(
-        'name' => 'Auth',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array(
-                'auth-index',
-                'auth-create',
-                'auth-delete',
-                'auth-update',
-                'auth-view',
-                'auth-password'
+    'module' => array(
+        'Auth' => array(
+            'name' => 'Auth',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array(
+                    'auth-index',
+                    'auth-create',
+                    'auth-delete',
+                    'auth-update',
+                    'auth-view',
+                    'auth-password'
+                )
             )
-        )
+        ),
     ),
     
     // controllers

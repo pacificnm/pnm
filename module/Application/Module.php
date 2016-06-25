@@ -49,19 +49,21 @@ class Module
      */
     function onDispatchError(MvcEvent $e)
     {
-        $viewModel = $e->getViewModel();
-        $viewModel->setTemplate('layout/error');
-        
-        $sm = $e->getApplication()->getServiceManager();
-        
-        $logger = new \Zend\Log\Logger();
-        $writer = new \Zend\Log\Writer\Stream('./data/log/' . date('Y-m-d') . '-error.log');
-        $logger->addWriter($writer);
-        
-        // log error
-        if ($e->getParam('exception')) {
-            $ex = $e->getParam('exception');
-            $logger->crit(sprintf("%s:%d %s (%d) [%s]", $ex->getFile(), $ex->getLine(), $ex->getMessage(), $ex->getCode(), get_class($ex)));
+        if(is_writable('./data/log/' . date('Y-m-d') . '-error.log')) {
+            $viewModel = $e->getViewModel();
+            $viewModel->setTemplate('layout/error');
+            
+            $sm = $e->getApplication()->getServiceManager();
+            
+            $logger = new \Zend\Log\Logger();
+            $writer = new \Zend\Log\Writer\Stream('./data/log/' . date('Y-m-d') . '-error.log');
+            $logger->addWriter($writer);
+            
+            // log error
+            if ($e->getParam('exception')) {
+                $ex = $e->getParam('exception');
+                $logger->crit(sprintf("%s:%d %s (%d) [%s]", $ex->getFile(), $ex->getLine(), $ex->getMessage(), $ex->getCode(), get_class($ex)));
+            }
         }
     }
 
@@ -72,6 +74,7 @@ class Module
     public function getAutoloaderConfig()
     {
         return array(
+            
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__

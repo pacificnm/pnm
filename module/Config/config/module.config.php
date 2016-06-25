@@ -1,18 +1,20 @@
 <?php
 return array(
-    'Config' => array(
-        'name' => 'Config',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array(
-                'config-index',
-                'config-update'
+    'module' => array(
+        'Config' => array(
+            'name' => 'Config',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array(
+                    'config-index',
+                    'config-update'
+                )
             )
-        )
+        ),
     ),
     
     'controllers' => array(

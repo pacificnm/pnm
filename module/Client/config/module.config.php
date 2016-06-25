@@ -1,20 +1,24 @@
 <?php
 return array(
-    'Client' => array(
-        'name' => 'Client',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'client-index',
-                'client-view',
-                'client-update',
-                'client-create'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'Client' => array(
+            'name' => 'Client',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(
+                    'client-view',
+                ),
+                'employee' => array(
+                    'client-index',
+                    'client-view',
+                    'client-update',
+                    'client-create'
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

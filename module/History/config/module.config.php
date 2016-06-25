@@ -1,15 +1,17 @@
 <?php
 return array(
-    'History' => array(
-        'name' => 'History',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'History' => array(
+            'name' => 'History',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

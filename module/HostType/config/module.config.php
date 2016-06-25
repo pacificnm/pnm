@@ -1,21 +1,23 @@
 <?php
 return array(
-    'HostType' => array(
-        'name' => 'HostType',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array(
-                'host-type-index',
-                'host-type-create',
-                'host-type-delete',
-                'host-type-update',
-                'host-type-view'
+    'module' => array(
+        'HostType' => array(
+            'name' => 'HostType',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array(
+                    'host-type-index',
+                    'host-type-create',
+                    'host-type-delete',
+                    'host-type-update',
+                    'host-type-view'
+                )
             )
-        )
+        ),
     ),
     
     // controllers

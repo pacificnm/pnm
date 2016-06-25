@@ -39,7 +39,7 @@
             ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
         ; ?>
-
+	<?php if($this->identity()->getEmployeeId() > 0): ?>
 	<script>
 		var taskReminder = function() {
 				$.ajax({
@@ -68,6 +68,7 @@
 
 		setInterval(taskReminder, interval);
 	</script>
+	<?php endif;?>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper">
@@ -93,6 +94,7 @@
 					<!-- Navbar Right Menu -->
 					<div class="navbar-custom-menu">
 						<ul class="nav navbar-nav">
+							<?php if($this->identity()->getEmployeeId() > 0): ?>
 							<!-- Messages: style can be found in dropdown.less-->
 							<?php echo $this->NavBarMessage(); ?>
 							
@@ -101,15 +103,17 @@
 							
 							<!-- Tasks: style can be found in dropdown.less -->
 							<?php echo $this->NavBarTask(); ?>
-							
+							<?php endif; ?>
 							
 							<!-- Auth Nav Bar: style can be found in dropdown.less -->
 							<?php echo $this->AuthNavBar(); ?>
 							
 							<!-- Control Sidebar Toggle Button -->
+							<?php if($this->identity()->getEmployeeId() > 0): ?>
 							<li>
 								<a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
 							</li>
+							<?php endif; ?>
 						</ul>
 					</div>
 				</nav>
@@ -126,7 +130,7 @@
   					
   					<!-- sidebar menu: : style can be found in sidebar.less -->
   					<ul class="sidebar-menu">
-  					<?php //\Zend\Debug\Debug::dump($this->identity()); ?>
+  					
   					<?php if($this->identity()->getEmployeeId() > 0): ?>
   						
   						<?php echo $this->EmployeeAsideMenu($this->clientId); ?>
@@ -136,7 +140,8 @@
   						<?php echo $this->AdminAsideMenu(); ?>
   						
   					<?php else:?>
-  					
+  						<?php $this->clientId = $this->identity()->getUserEntity()->getClientId();?>
+  						<?php echo $this->UserAsideMenu(); ?>
   					<?php endif;?>
   					</ul>
   				</section>
@@ -147,7 +152,7 @@
   				<section class="content-header">
   					<h1><?php echo $this->pageTitle; ?> <small><?php echo $this->pageSubTitle;?></small></h1>
   					
-  					<?php echo $this->navigation('navigation')->breadcrumbs()->setMinDepth(0)->setPartial('partials/breadcrumbs'); ?>
+  					<?php echo $this->navigation('navigation')->setAcl($this->acl)->setRole($this->identity()->getAuthRole())->breadcrumbs()->setMinDepth(0)->setPartial('partials/breadcrumbs'); ?>
   				</section>
   				
   				<section class="content">

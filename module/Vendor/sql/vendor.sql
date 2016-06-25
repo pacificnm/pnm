@@ -1,3 +1,7 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 --
 -- Table structure for table `vendor`
 --
@@ -16,3 +20,8 @@ CREATE TABLE IF NOT EXISTS `vendor` (
   `vendor_active` int(3) NOT NULL,
   PRIMARY KEY (`vendor_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONS FOR TABLE `vendor`:
+--
+SET FOREIGN_KEY_CHECKS=1;

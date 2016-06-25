@@ -2,11 +2,16 @@
 -- Table structure for table `account_type`
 --
 
-CREATE TABLE `account_type` (
-  `account_type_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `account_type` (
+  `account_type_id` int(11) NOT NULL AUTO_INCREMENT,
   `account_type_name` varchar(200) NOT NULL,
-  `account_type_active` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `account_type_active` int(3) NOT NULL,
+  PRIMARY KEY (`account_type_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONS FOR TABLE `account_type`:
+--
 
 --
 -- Dumping data for table `account_type`
@@ -27,23 +32,4 @@ INSERT INTO `account_type` (`account_type_id`, `account_type_name`, `account_typ
 (12, 'Other Income', 1),
 (13, 'Other Expense', 1),
 (14, 'Auto Loan', 0);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `account_type`
---
-ALTER TABLE `account_type`
-  ADD PRIMARY KEY (`account_type_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `account_type`
---
-ALTER TABLE `account_type`
-  MODIFY `account_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+SET FOREIGN_KEY_CHECKS=1;

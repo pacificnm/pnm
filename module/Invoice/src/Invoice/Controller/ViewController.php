@@ -189,6 +189,7 @@ class ViewController extends BaseController
         
         $this->itemForm->get('invoiceItemTotal')->setValue(0);
         
+        
         $this->itemForm->setAttribute('action', $this->url()
             ->fromRoute('invoice-item-create', array(
             'clientId' => $id,
@@ -203,6 +204,8 @@ class ViewController extends BaseController
         $this->paymentForm->get('invoicePaymentDate')->setValue(date("m/d/Y"));
         
         $this->paymentForm->get('invoicePaymentAmount')->setValue($invoiceEntity->getInvoiceTotal());
+        
+        $this->paymentForm->get('accountLedgerId')->setValue(0);
         
         $this->paymentForm->setAttribute('action', $this->url()
             ->fromRoute('invoice-payment-create', array(

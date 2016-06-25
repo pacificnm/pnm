@@ -1,22 +1,24 @@
 <?php
 return array(
-    'Task' => array(
-        'name' => 'Task',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'task-list',
-                'task-create',
-                'task-delete',
-                'task-update',
-                'task-view',
-                'task-reminder'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'Task' => array(
+            'name' => 'Task',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(
+                    'task-list',
+                    'task-create',
+                    'task-delete',
+                    'task-update',
+                    'task-view',
+                    'task-reminder'
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

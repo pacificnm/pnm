@@ -20,6 +20,10 @@ class ViewControllerFactory implements FactoryInterface
         
         $vendorService = $realServiceLocator->get('Vendor\Service\VendorServiceInterface');
         
-        return new ViewController($vendorService);
+        $accountService = $realServiceLocator->get('VendorAccount\Service\AccountServiceInterface');
+        
+        $billService = $realServiceLocator->get('VendorBill\Service\BillServiceInterface');
+        
+        return new ViewController($vendorService, $accountService, $billService);
     }
 }

@@ -1,17 +1,19 @@
 <?php
 return array(
-    'WorkorderCredit' => array(
-        'name' => 'WorkorderCredit',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'workorder-credit-create'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'WorkorderCredit' => array(
+            'name' => 'WorkorderCredit',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(
+                    'workorder-credit-create'
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

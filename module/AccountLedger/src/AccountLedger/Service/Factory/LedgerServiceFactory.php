@@ -18,8 +18,6 @@ class LedgerServiceFactory implements FactoryInterface
     {
         $mapper = $serviceLocator->get('AccountLedger\Mapper\LedgerMapperInterface');
         
-        $accountService = $serviceLocator->get('Account\Service\AccountServiceInterface');
-        
-        return new LedgerService($mapper, $accountService);
+        return new LedgerService($mapper);
     }
 }

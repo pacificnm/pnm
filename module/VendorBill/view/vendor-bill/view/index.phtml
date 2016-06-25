@@ -1,0 +1,117 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">	
+					<i class="fa fa-dollar"></i>
+					<?php echo $this->translate('Bill'); ?>
+				</h3>
+				<div class="box-tools">
+				<?php if($this->billEntity->getVendorBillStatus() != 'Paid'):?>
+					<a href="<?php echo $this->url('vendor-payment-create', array('vendorId' => $this->vendorEntity->getVendorId(), 'vendorBillId' => $this->billEntity->getVendorBillId()))?>" title="<?php echo $this->translate('Enter Payment');?>" class="btn btn-box-tool"><i class="fa fa-dollar"></i> <?php echo $this->translate('Payment'); ?></a>
+					<a href="<?php echo $this->url('vendor-bill-update', array('vendorId' => $this->vendorEntity->getVendorId(), 'vendorBillId' => $this->billEntity->getVendorBillId()));?>" title="<?php echo $this->translate('Edit this bill');?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+					
+				<?php endif; ?>
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="row">
+        			<div class="col-xs-12">
+        				<h3 class="profile-username"><?php echo $this->vendorEntity->getVendorName(); ?></h3>
+        			</div>
+        		</div>
+				<ul class="list-group list-group-unbordered">
+					
+        			<li class="list-group-item">
+        				<div class="row">
+        					<div class="col-xs-12 col-sm-3">
+        						<p><b><?php echo $this->translate('Date Due'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateShort(), $this->billEntity->getVendorBillDateDue()); ?></p>
+        					</div>
+        					<div class="col-xs-12 col-sm-3">
+        						<p><b><?php echo $this->translate('Amount Due'); ?>:</b> <?php echo $this->currencyFormat($this->billEntity->getVendorBillAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></p>
+        					</div>
+        					<div class="col-xs-12 col-sm-3">
+        						<p><b><?php echo $this->translate('Balance'); ?>:</b> <?php echo $this->currencyFormat($this->billEntity->getVendorBillBalance(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></p>
+        					</div>
+        					<div class="col-xs-12 col-sm-3">
+        						<p><b><?php echo $this->translate('Status'); ?>:</b> <?php echo $this->billEntity->getVendorBillStatus(); ?></p>
+        					</div>
+        				</div>
+        			</li>
+        			<li class="list-group-item">
+        				<div class="row">
+            				<div class="col-xs-12">
+            					<p><b><?php echo $this->translate('Memo')?>:</b> <?php echo $this->billEntity->getVendorBillMemo(); ?></p>
+            				</div>
+            			</div>
+        			</li>
+        		</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">	
+					<i class="fa fa-dollar"></i>
+					<?php echo $this->translate('Payments'); ?>
+				</h3>
+				<div class="box-tools">
+				
+				</div>
+			</div>
+			<?php if($this->paginator->count() == 0): ?>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no payments'); ?></p>
+				</div>
+			</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Payment Date');?></th>
+							<th><?php echo $this->translate('Account'); ?></th>
+							<th><?php echo $this->translate('Amount'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->paginator as $paymentEntity): ?>
+						<tr>
+							<td>
+								<a href="<?php echo $this->url('vendor-payment-view', array('vendorId' => $paymentEntity->getVendorId(), 'vendorBillId' => $paymentEntity->getVendorBillId(), 'vendorPaymentId' => $paymentEntity->getVendorPaymentId())); ?>" title="<?php echo $this->translate('View this payment'); ?>">
+									<?php echo date($this->appConfig()->getConfigDateShort(), $paymentEntity->getVendorPaymentDate()); ?>
+								</a>
+							</td>
+							<td>
+								<a href="<?php echo $this->url('account-view', array('accountId' => $paymentEntity->getAccountId())); ?>" title="View this account">
+									<?php echo $paymentEntity->getAccountEntity()->getAccountName();?>
+								</a>
+							</td>
+							<td><?php echo $this->currencyFormat($paymentEntity->getVendorPaymentAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+						</tr>
+					<?php endforeach;?>
+					</tbody>
+				</table>
+			</div>
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12">
+    				<?php echo $this->Paginator(
+    	                        $this->itemCountPerPage,
+    	                        $this->itemCount,
+    	                        $this->pageCount,
+    	                        $this->page,
+    	                        $this->routeParams,
+    	                        $this->queryParams); ?>
+    	        	</div>
+    			</div>
+			</div>
+			<?php endif; ?>
+		</div>
+	</div>
+</div>

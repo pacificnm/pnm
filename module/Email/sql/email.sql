@@ -1,6 +1,14 @@
-CREATE TABLE `email` (
-  `email_id` int(20) NOT NULL,
-  `user_id` int(20) NOT NULL,
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Table structure for table `email`
+--
+
+CREATE TABLE IF NOT EXISTS `email` (
+  `email_id` int(20) NOT NULL AUTO_INCREMENT,
+  `auth_id` int(20) NOT NULL,
   `email_date_created` int(11) NOT NULL,
   `email_date_sent` int(11) DEFAULT NULL,
   `email_to_address` varchar(200) NOT NULL,
@@ -9,26 +17,25 @@ CREATE TABLE `email` (
   `email_from_name` varchar(200) NOT NULL,
   `email_subject` varchar(255) NOT NULL,
   `email_body` text NOT NULL,
-  `email_log` text
+  `email_log` text,
+  PRIMARY KEY (`email_id`),
+  KEY `user_id` (`auth_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Indexes for dumped tables
+-- RELATIONS FOR TABLE `email`:
+--   `auth_id`
+--       `auth` -> `auth_id`
 --
 
 --
--- Indexes for table `email`
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `email`
 --
 ALTER TABLE `email`
-  ADD PRIMARY KEY (`email_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD CONSTRAINT `fk_email_auth_id` FOREIGN KEY (`auth_id`) REFERENCES `auth` (`auth_id`);
+SET FOREIGN_KEY_CHECKS=1;
 
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `email`
---
-ALTER TABLE `email`
-  MODIFY `email_id` int(20) NOT NULL AUTO_INCREMENT;

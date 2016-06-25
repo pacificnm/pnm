@@ -15,6 +15,6 @@ class AccountAsideMenu extends AbstractHelper
         $partialHelper = $view->plugin('partial');
         
         // set partial script
-        return $partialHelper('partials/account-aside-menu.phtml');
+        return $partialHelper('partials/account-aside-menu');
     }
 }

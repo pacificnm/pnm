@@ -1,21 +1,23 @@
 <?php
 return array(
-    'Labor' => array(
-        'name' => 'Labor',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array(
-                'labor-index',
-                'labor-create',
-                'labor-delete',
-                'labor-update',
-                'labor-view'
+    'module' => array(
+        'Labor' => array(
+            'name' => 'Labor',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array(
+                    'labor-index',
+                    'labor-create',
+                    'labor-delete',
+                    'labor-update',
+                    'labor-view'
+                )
             )
-        )
+        ),
     ),
     
     // controllers

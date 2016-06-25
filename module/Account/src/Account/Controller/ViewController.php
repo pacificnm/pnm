@@ -42,7 +42,7 @@ class ViewController extends BaseController
         $id = $this->params()->fromRoute('accountId');
         
         // page
-        $page = $this->params()->fromQuery('page', 1);
+        $page = $this->params()->fromQuery('page', 0);
         
         // count per page
         $countPerPage = $this->params()->fromQuery('count-per-page', 24);
@@ -59,7 +59,13 @@ class ViewController extends BaseController
         // get ledger items
         $paginator = $this->ledgerService->getAll(array('accountId' => $id));
         
-        $paginator->setCurrentPageNumber($page);
+        if($page == 0) {
+            $paginator->setCurrentPageNumber($paginator->count());
+            $page = $paginator->count();
+        } else {
+            $paginator->setCurrentPageNumber($page);
+        }
+       
         
         $paginator->setItemCountPerPage($countPerPage);
         
@@ -80,7 +86,9 @@ class ViewController extends BaseController
             'itemCount' => $paginator->getTotalItemCount(),
             'pageCount' => $paginator->count(),
             'queryParams' => $this->params()->fromQuery(),
-            'routeParams' => array(),
+            'routeParams' => array(
+                'accountId' => $id
+            ),
         ));
     }
 }

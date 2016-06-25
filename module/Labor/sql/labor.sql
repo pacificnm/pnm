@@ -1,12 +1,21 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 --
 -- Table structure for table `labor`
 --
 
-CREATE TABLE `labor` (
-  `labor_id` int(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `labor` (
+  `labor_id` int(20) NOT NULL AUTO_INCREMENT,
   `labor_name` varchar(100) NOT NULL,
-  `labor_amount` float(8,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `labor_amount` float(8,2) NOT NULL,
+  PRIMARY KEY (`labor_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONS FOR TABLE `labor`:
+--
 
 --
 -- Dumping data for table `labor`
@@ -21,23 +30,4 @@ INSERT INTO `labor` (`labor_id`, `labor_name`, `labor_amount`) VALUES
 (6, 'No Charge', 0.00),
 (7, 'Printer Service', 65.00),
 (8, 'Os Configuration', 55.00);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `labor`
---
-ALTER TABLE `labor`
-  ADD PRIMARY KEY (`labor_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `labor`
---
-ALTER TABLE `labor`
-  MODIFY `labor_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+SET FOREIGN_KEY_CHECKS=1;

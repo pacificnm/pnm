@@ -1,15 +1,17 @@
 <?php
 return array(
-    'Install' => array(
-        'name' => 'Install',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'Install' => array(
+            'name' => 'Install',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

@@ -1,9 +1,13 @@
---
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+-
 -- Table structure for table `file`
 --
 
-CREATE TABLE `file` (
-  `file_id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `file` (
+  `file_id` int(11) NOT NULL AUTO_INCREMENT,
   `employee_id` int(20) NOT NULL,
   `client_id` int(20) NOT NULL,
   `file_title` varchar(255) NOT NULL,
@@ -11,25 +15,16 @@ CREATE TABLE `file` (
   `file_mime` varchar(100) NOT NULL,
   `file_size` float(10,2) NOT NULL,
   `file_create` int(20) NOT NULL,
-  `file_modify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `file_modify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`file_id`),
+  KEY `employee_id` (`employee_id`),
+  KEY `client_id` (`client_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Indexes for dumped tables
---
-
---
--- Indexes for table `file`
+-- Constraints for table `file`
 --
 ALTER TABLE `file`
-  ADD PRIMARY KEY (`file_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `file`
---
-ALTER TABLE `file`
-  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT;
+  ADD CONSTRAINT `fk_file_client_id` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_file_employee_id` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`) ON UPDATE CASCADE;
+SET FOREIGN_KEY_CHECKS=1;

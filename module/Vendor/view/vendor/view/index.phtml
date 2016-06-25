@@ -1,0 +1,117 @@
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">	
+					<i class="fa fa-truck"></i>
+					<?php echo $this->translate('View Vendor'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('account-view', array('accountId' => $this->accountEntity->getAccountId())); ?>" title="<?php echo $this->translate('View vendor account');?>" class="btn btn-box-tool"><i class="fa fa-bank"></i> <?php echo $this->translate('Account'); ?></a>
+					<a href="<?php echo $this->url('vendor-bill-create', array('vendorId' => $this->vendorEntity->getVendorId())); ?>" title="<?php echo $this->translate('Create new bill');?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New Bill'); ?></a>
+					<a href="<?php echo $this->url('vendor-update', array('vendorId' => $this->vendorEntity->getVendorId())); ?>" title="<?php echo $this->translate('Edit this vendor');?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<h3 class="profile-username"><?php echo $this->vendorEntity->getVendorName(); ?></h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Account Number'); ?>:</b> <?php echo $this->vendorEntity->getVendorAccountNumber(); ?></p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Phone'); ?>:</b> <?php echo $this->vendorEntity->getVendorPhone(); ?></p>
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						<p><b><?php echo $this->translate('Website'); ?>:</b> 
+							<?php if($this->vendorEntity->getVendorWebsite()): ?>
+							<a href="<?php echo $this->vendorEntity->getVendorWebsite(); ?>" title="<?php echo $this->translate('go to vendors website')?>" target="_blank">
+								<?php echo $this->vendorEntity->getVendorWebsite(); ?>
+							</a>
+							<?php else: ?>
+							<?php echo $this->translate('Not Available'); ?>
+							<?php endif;?>
+						</p>
+					</div>
+					<div class="col-xs-12 col-sm-3 text-right">
+						<p><?php echo ($this->vendorEntity->getVendorActive() == 1) ? '<span class="badge">Active</span>' : '<span class="badge">Closed</span>'; ?></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<p><b><?php echo $this->translate('Location'); ?>:</b> 
+							<?php echo $this->vendorEntity->getVendorStreet(); ?>
+							<?php echo $this->vendorEntity->getVendorCity(); ?>,
+							<?php echo $this->vendorEntity->getVendorState(); ?>
+							<?php echo $this->vendorEntity->getVendorPostal(); ?>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">	
+					<i class="fa fa-dollar"></i>
+					<?php echo $this->translate('Bills'); ?>
+				</h3>
+			</div>
+			<?php if($this->paginator->count() == 0): ?>
+			<div class="alert alert-info">
+				<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('This vendor has no bills.'); ?></p>
+			</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Date Due'); ?></th>
+							<th><?php echo $this->translate('Amount Due'); ?></th>
+							<th><?php echo $this->translate('Balance'); ?></th>
+							<th><?php echo $this->translate('Status'); ?></th>
+							
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->paginator as $billEntity): ?>
+						<tr>
+							<td>
+								<a href="<?php echo $this->url('vendor-bill-view', array('vendorId' => $this->vendorEntity->getVendorId(), 'vendorBillId' => $billEntity->getVendorBillId()));?>" title="<?php echo $this->translate('View this bill'); ?>">
+									<?php echo date($this->appConfig()->getConfigDateShort(),$billEntity->getVendorBillDateDue()); ?>
+								</a>
+							</td>
+							<td><?php echo $this->currencyFormat($billEntity->getVendorBillAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+							<td><?php echo $this->currencyFormat($billEntity->getVendorBillBalance(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+							<td><?php echo $billEntity->getVendorBillStatus(); ?></td>
+						</tr>
+					<?php endforeach;?>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12">
+    				<?php echo $this->Paginator(
+    	                        $this->itemCountPerPage,
+    	                        $this->itemCount,
+    	                        $this->pageCount,
+    	                        $this->page,
+    	                        $this->routeParams,
+    	                        $this->queryParams); ?>
+    	        	</div>
+    			</div>
+			</div>
+			<?php endif;?>
+		</div>
+	</div>
+</div>

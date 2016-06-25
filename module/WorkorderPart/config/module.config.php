@@ -1,18 +1,20 @@
 <?php
 return array(
-    'WorkorderPart' => array(
-        'name' => 'WorkorderPart',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'workorder-part-create',
-                'workorder-part-delete'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'WorkorderPart' => array(
+            'name' => 'WorkorderPart',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(
+                    'workorder-part-create',
+                    'workorder-part-delete'
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

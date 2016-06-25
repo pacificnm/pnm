@@ -1,23 +1,25 @@
 <?php
 return array(
-    'User' => array(
-        'name' => 'User',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(
-                'user-profile'
-            ),
-            'employee' => array(
-                'user-list',
-                'user-create',
-                'user-delete',
-                'user-update',
-                'user-view'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'User' => array(
+            'name' => 'User',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(
+                    'user-profile',
+                    'user-list',
+                    'user-view'
+                ),
+                'employee' => array(
+                    'user-create',
+                    'user-delete',
+                    'user-update',
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     'controllers' => array(
@@ -110,6 +112,13 @@ return array(
                     )
                 )
             )
+        )
+    ),
+    
+    // view helpers
+    'view_helpers' => array(
+        'invokables' => array(
+            'UserAsideMenu' => 'User\View\Helper\UserAsideMenu'
         )
     ),
     

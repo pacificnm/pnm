@@ -14,20 +14,30 @@
     		<div class="row">
     			<div class="col-xs-12">
     				<?php $employeeEntity = $noteEntity->getEmployeeEntity(); ?>
-    				<span class="text-muted small"><i class="fa fa-clock-o"></i> <?php echo date($this->appConfig()->getConfigDateShort(), $noteEntity->getWorkorderNotesDate()); ?></span> : 
+    				<span class="text-muted small"><?php echo date($this->appConfig()->getConfigDateShort(), $noteEntity->getWorkorderNotesDate()); ?></span> : 
     				
     				<?php if($this->displayLinks): ?>
-    				<a href="" title="<?php echo $this->translate('View this employee'); ?>" class="small">
-    					<i class="fa fa-user"></i> <?php echo $employeeEntity->getEmployeeName(); ?>
+    				<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'employee-view') ):?>
+    				<a href="<?php echo $this->url('employee-view', array('employeeId' => $employeeEntity->getEmployeeId())); ?>" title="<?php echo $this->translate('View this employee'); ?>" class="small">
+    					<?php echo $employeeEntity->getEmployeeName(); ?>
     				</a>
     				<?php else: ?>
-    					<i class="fa fa-user"></i> <?php echo $employeeEntity->getEmployeeName(); ?>
+    					<?php echo $employeeEntity->getEmployeeName(); ?>
+    				<?php endif; ?>
+    				<?php else: ?>
+    					<?php echo $employeeEntity->getEmployeeName(); ?>
     				<?php endif;?>
     				
     				<?php if($this->workorderEntity->getWorkorderStatus() == 'Active' && $this->displayLinks): ?>
     				<span class="pull-right">
+    				
+    					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-note-delete') ):?>
         				<a href="<?php echo $this->url('workorder-note-delete', array('clientId' => $this->workorderEntity->getClientId(), 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderNotesId' => $noteEntity->getWorkorderNotesId())); ?>" title="<?php echo $this->translate('Delete this note'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+        				<?php endif;?>
+        				
+        				<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-note-update') ):?>
         				<a href="<?php echo $this->url('workorder-note-update', array('clientId' => $this->workorderEntity->getClientId(), 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderNotesId' => $noteEntity->getWorkorderNotesId())); ?>" title="<?php echo $this->translate('Edit this note'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+    					<?php endif; ?>
     				</span>   				
     				<?php endif; ?>
     			</div>

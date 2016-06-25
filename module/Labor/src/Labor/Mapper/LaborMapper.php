@@ -69,6 +69,7 @@ class LaborMapper implements LaborMapperInterface
         
         $select = $sql->select('labor');
         
+        $select->order('labor.labor_amount');
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         

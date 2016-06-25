@@ -1,27 +1,30 @@
 <?php
 return array(
-    'Employee' => array(
-        'name' => 'Employee',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'employee-profile',
-                'employee-profile-update',
-                'employee-password'
-            ),
-            'accountant' => array(),
-            'administrator' => array(
-                'employee-index',
-                'employee-create',
-                'employee-delete',
-                'employee-update',
-                'employee-view'
+    'module' => array(
+        'Employee' => array(
+            'name' => 'Employee',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(
+                    'employee-profile',
+                    'employee-profile-update',
+                    'employee-password'
+                ),
+                'accountant' => array(),
+                'administrator' => array(
+                    'employee-index',
+                    'employee-create',
+                    'employee-delete',
+                    'employee-update',
+                    'employee-view'
+                )
             )
-        )
+        ),
     ),
     
+    // controllers
     'controllers' => array(
         'factories' => array(
             'Employee\Controller\Profile' => 'Employee\Controller\Factory\ProfileControllerFactory',

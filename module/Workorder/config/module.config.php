@@ -1,23 +1,26 @@
 <?php
 return array(
-    'Workorder' => array(
-        'name' => 'Workorder',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'workorder-list',
-                'workorder-create',
-                'workorder-delete',
-                'workorder-update',
-                'workorder-view',
-                'workorder-print',
-                'workorder-complete'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'Workorder' => array(
+            'name' => 'Workorder',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(
+                    'workorder-list',
+                    'workorder-view',
+                    'workorder-print',
+                ),
+                'employee' => array(
+                    'workorder-create',
+                    'workorder-delete',
+                    'workorder-update',
+                    'workorder-complete'
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

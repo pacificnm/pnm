@@ -1,18 +1,20 @@
 <?php
 return array(
-    'InvoicePayment' => array(
-        'name' => 'InvoicePayment',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'invoice-payment-create',
-                'invoice-payemnt-delete'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'InvoicePayment' => array(
+            'name' => 'InvoicePayment',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(
+                    'invoice-payment-create',
+                    'invoice-payment-delete'
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers
@@ -57,7 +59,7 @@ return array(
                     )
                 )
             ),
-            'invoice-payemnt-delete' => array(
+            'invoice-payment-delete' => array(
                 'title' => 'Delete Invoice',
                 'type' => 'segment',
                 'options' => array(

@@ -2,6 +2,7 @@
 namespace Account\Service;
 
 use Account\Entity\AccountEntity;
+use AccountLedger\Entity\LedgerEntity;
 
 interface AccountServiceInterface
 {
@@ -39,4 +40,22 @@ interface AccountServiceInterface
      * @return boolean
      */
     public function delete(AccountEntity $entity);
+    
+    /**
+     * 
+     * @param unknown $accountId
+     * @param unknown $fromAccountId
+     * @param unknown $ledgerAmount
+     * @return LedgerEntity
+     */
+    public function addLedgerCreditItem($accountId, $fromAccountId, $ledgerAmount, $ledgerMemo);
+    
+    /**
+     * 
+     * @param unknown $accountId
+     * @param unknown $fromAccountId
+     * @param unknown $ledgerAmount
+     * @return LedgerEntity
+     */
+    public function addLedgerDebitItem($accountId, $fromAccountId, $ledgerAmount, $ledgerMemo);
 }

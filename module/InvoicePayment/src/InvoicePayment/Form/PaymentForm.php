@@ -125,6 +125,12 @@ class PaymentForm extends Form implements InputFilterProviderInterface
             )
         ));
         
+        // accountLedgerId
+        $this->add(array(
+            'name' => 'accountLedgerId',
+            'type' => 'hidden'
+        ));
+        
         // button
         $this->add(array(
             'name' => 'submit',
@@ -213,6 +219,30 @@ class PaymentForm extends Form implements InputFilterProviderInterface
                         'options' => array(
                             'messages' => array(
                                 \Zend\Validator\NotEmpty::IS_EMPTY => "The Deposit To is required and cannot be empty."
+                            )
+                        )
+                    )
+                )
+            ),
+            
+            // accountLedgerId
+            'accountLedgerId' => array(
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Account Ledger Id is required and cannot be empty."
                             )
                         )
                     )

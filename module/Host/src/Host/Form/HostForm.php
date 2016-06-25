@@ -64,17 +64,17 @@ class HostForm extends Form implements InputFilterProviderInterface
         
         
         
-        // hostType
+        // hostTypeId
         $this->add(array(
             'type' => 'Select',
-            'name' => 'hostType',
+            'name' => 'hostTypeId',
             'options' => array(
-                'label' => 'Location:',
+                'label' => 'Host Type:',
                 'value_options' => $this->getHostOptions()
             ),
             'attributes' => array(
                 'class' => 'form-control',
-                'id' => 'hostType'
+                'id' => 'hostTypeId'
             )
         ));
         

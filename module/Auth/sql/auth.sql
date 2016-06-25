@@ -1,9 +1,14 @@
+
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 --
 -- Table structure for table `auth`
 --
 
-CREATE TABLE `auth` (
-  `auth_id` int(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `auth` (
+  `auth_id` int(20) NOT NULL AUTO_INCREMENT,
   `auth_role` varchar(100) NOT NULL,
   `auth_email` varchar(200) NOT NULL,
   `auth_password` varchar(100) NOT NULL,
@@ -11,26 +16,15 @@ CREATE TABLE `auth` (
   `auth_type` enum('Employee','User') NOT NULL,
   `auth_last_login` int(11) NOT NULL,
   `auth_last_ip` varchar(100) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `employee_id` int(11) NOT NULL DEFAULT '0'
+  `user_id` int(20) NOT NULL DEFAULT '0',
+  `employee_id` int(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`auth_id`),
+  KEY `user_id` (`user_id`),
+  KEY `employee_id` (`employee_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Indexes for dumped tables
+-- RELATIONS FOR TABLE `auth`:
 --
+SET FOREIGN_KEY_CHECKS=1;
 
---
--- Indexes for table `auth`
---
-ALTER TABLE `auth`
-  ADD PRIMARY KEY (`auth_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `auth`
---
-ALTER TABLE `auth`
-  MODIFY `auth_id` int(20) NOT NULL AUTO_INCREMENT;

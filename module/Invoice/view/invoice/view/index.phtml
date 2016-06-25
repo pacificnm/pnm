@@ -7,12 +7,24 @@
 					<?php echo $this->translate('View Invoice'); ?>
 				</h3>
 				<div class="box-tools">
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-print') ):?>
 					<a href="<?php echo $this->url('invoice-print', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" target="_blank" title="<?php echo $this->translate('Print this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
+					<?php endif; ?>
+					
 					<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
+					
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-payment-create') ):?>
 					<a href="javascript:void(0);" data-toggle="modal" data-target="#paymentModal" title="<?php echo $this->translate('Pay this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-dollar"></i> <?php echo $this->translate('Payment'); ?></a>
+					<?php endif; ?>
+					
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-delete') ):?>
 					<a href="<?php echo $this->url('invoice-delete', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('Delete this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
               		<?php endif; ?>
+              		<?php endif; ?>
+              		
+              		<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-update') ):?>
               		<a href="<?php echo $this->url('invoice-update', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('Edit this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="box-body">
@@ -130,7 +142,9 @@
 				</h3>
 				<div class="box-tools">
 					<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
-					<a href="javascript:void(0);" data-toggle="modal" data-target="#itemModal" title="<?php echo $this->translate('Add item this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-item-create') ):?>
+						<a href="javascript:void(0);" data-toggle="modal" data-target="#itemModal" title="<?php echo $this->translate('Add item this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+					<?php endif; ?>
 					<?php endif; ?>
 				</div>
 			</div>
@@ -162,7 +176,9 @@
               				<td class="text-right"><?php echo $this->currencyFormat($itemEntity->getInvoiceItemTotal(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
               				<td class="text-right" nowrap>
               				<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
+              				<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-item-delete') ):?>
               					<a href="<?php echo $this->url('invoice-item-delete', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId(), 'invoiceItemId' => $itemEntity->getInvoiceItemId())); ?>" title="<?php echo $this->translate('Delete this invoice item'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+              				<?php endif;?>
               				<?php endif; ?>
               				</td>
               				
@@ -224,7 +240,9 @@
 				</h3>
 				<div class="box-tools">
 					<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-payment-create') ):?>
 					<a href="javascript:void(0);" data-toggle="modal" data-target="#paymentModal" title="<?php echo $this->translate('Pay this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-dollar"></i> <?php echo $this->translate('Payment'); ?></a>
+					<?php endif; ?>
 					<?php endif; ?>
 				</div>
 			</div>
@@ -278,7 +296,9 @@
 				</h3>
 				<div class="box-tools">
 					<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-workorder') ):?>
 					<a href="<?php echo $this->url('invoice-workorder', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('Add a work order to this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('Add'); ?></a>
+					<?php endif; ?>
 					<?php endif; ?>
 				</div>
 			</div>
@@ -301,10 +321,13 @@
               		<?php foreach($this->workorderEntitys as $workorderEntity): ?>
 						<tr>
 							<td>
-								<a href="<?php echo $this->url('workorder-view', array('clientId' => $this->clientId, 'workorderId' => $workorderEntity->getWorkorderId()));?>" title="<?php echo $this->translate('View this work order');?>"><?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?></a>
-							</td>
-							<td class="text-right">
-								<a href="<?php echo $this->url('invoice-workorder-delete', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId(), 'workorderId' => $workorderEntity->getWorkorderId())); ?>" title="<?php echo $this->translate('Remove this work order from invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+								<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-view') ):?>
+								<a href="<?php echo $this->url('workorder-view', array('clientId' => $this->clientId, 'workorderId' => $workorderEntity->getWorkorderId()));?>" title="<?php echo $this->translate('View this work order');?>">
+									<?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?>
+								</a>
+								<?php else: ?>
+									<?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?>
+								<?php endif; ?>
 							</td>
 						</tr>
 					<?php endforeach;?>
@@ -400,6 +423,7 @@
            </div>
            
           <?php echo $this->formElement($this->paymentForm->get('invoicePaymentId')); ?>
+          <?php echo $this->formElement($this->paymentForm->get('accountLedgerId')); ?>
           <?php echo $this->formElement($this->paymentForm->get('invoiceId')); ?>
           
       <?php endif;?>

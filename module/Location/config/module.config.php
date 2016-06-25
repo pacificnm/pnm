@@ -1,19 +1,21 @@
 <?php
 return array(
-    'Location' => array(
-        'name' => 'Location',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'location-update',
-                'location-view',
-                'location-create'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'Location' => array(
+            'name' => 'Location',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(
+                    'location-update',
+                    'location-view',
+                    'location-create'
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

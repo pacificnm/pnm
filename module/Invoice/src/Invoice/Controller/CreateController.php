@@ -79,8 +79,12 @@ class CreateController extends BaseController
                     $entity->setInvoiceDatePaid(strtotime($entity->getInvoiceDatePaid()));
                 }
         
+                
+                
                 $entity = $this->invoiceService->save($entity);
         
+               
+                
                 $this->flashmessenger()->addSuccessMessage('The invoice was saved.');
         
                 return $this->redirect()->toRoute('invoice-view', array(

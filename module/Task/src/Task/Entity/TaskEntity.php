@@ -48,7 +48,7 @@ class TaskEntity
      *
      * @var string
      */
-    protected $taskPriority;
+    protected $taskPriorityId;
 
     /**
      *
@@ -142,11 +142,11 @@ class TaskEntity
 
     /**
      *
-     * @return the $taskPriority
+     * @return the $taskPriorityId
      */
-    public function getTaskPriority()
+    public function getTaskPriorityId()
     {
-        return $this->taskPriority;
+        return $this->taskPriorityId;
     }
 
     /**
@@ -259,11 +259,11 @@ class TaskEntity
 
     /**
      *
-     * @param string $taskPriority            
+     * @param string $taskPriorityId            
      */
-    public function setTaskPriority($taskPriority)
+    public function setTaskPriorityId($taskPriorityId)
     {
-        $this->taskPriority = $taskPriority;
+        $this->taskPriorityId = $taskPriorityId;
     }
 
     /**

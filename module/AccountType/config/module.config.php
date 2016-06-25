@@ -1,21 +1,23 @@
 <?php
 return array(
-    'AccountType' => array(
-        'name' => 'AccountType',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array(
-                'account-type-index',
-                'account-type-create',
-                'account-type-delete',
-                'account-type-update',
-                'account-type-view'
+    'module' => array(
+        'AccountType' => array(
+            'name' => 'AccountType',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array(
+                    'account-type-index',
+                    'account-type-create',
+                    'account-type-delete',
+                    'account-type-update',
+                    'account-type-view'
+                )
             )
-        )
+        ),
     ),
     
     // controllers

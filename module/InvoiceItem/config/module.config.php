@@ -1,18 +1,20 @@
 <?php
 return array(
-    'InvoiceItem' => array(
-        'name' => 'InvoiceItem',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'invoice-item-create',
-                'invoice-item-delete'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'InvoiceItem' => array(
+            'name' => 'InvoiceItem',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(
+                    'invoice-item-create',
+                    'invoice-item-delete'
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

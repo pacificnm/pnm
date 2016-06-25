@@ -38,7 +38,11 @@ class DatabaseController extends AbstractActionController
         
         foreach (new \RecursiveIteratorIterator($it) as $file) {
         
-            if (in_array(strtolower(array_pop(explode('.', $file))), $display)) {
+            $fileExt = explode('.', $file);
+            
+            $check = strtolower(array_pop($fileExt));
+
+            if (in_array($check, $display)) {
         
                 $sql = file_get_contents($file);
         

@@ -32,11 +32,15 @@
     		<div class="col-xs-3">
     			<?php $employeeEntity = $timeEntity->getEmployeeEntity(); ?>
     			<?php if($this->displayLinks): ?>
-    			<a href="" title="<?php echo $this->translate('View this employee'); ?>" class="">
-    				<i class="fa fa-user"></i> <?php echo $employeeEntity->getEmployeeName(); ?>
-    			</a>
+    			<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'employee-view') ):?>
+        			<a href="<?php echo $this->url('employee-view', array('employeeId' => $employeeEntity->getEmployeeId()));?>" title="<?php echo $this->translate('View this employee'); ?>" class="">
+        				<?php echo $employeeEntity->getEmployeeName(); ?>
+        			</a>
+        		<?php else:?>
+    				<?php echo $employeeEntity->getEmployeeName(); ?>
+    			<?php endif;?>
     			<?php else: ?>
-    				<i class="fa fa-user"></i> <?php echo $employeeEntity->getEmployeeName(); ?>
+    				<?php echo $employeeEntity->getEmployeeName(); ?>
     			<?php endif;?>
     		</div>
     		<div class="col-xs-2">
@@ -56,10 +60,12 @@
     		</div>
     		<div class="col-xs-1">
     			<?php if($this->workorderEntity->getWorkorderStatus() == 'Active' && $this->displayLinks): ?>
-    			<a href="<?php echo $this->url('workorder-time-delete', array('clientId' => $this->workorderEntity->getClientId(), 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderTimeId' => $timeEntity->getWorkorderTimeId())); ?>" 
-    				title="<?php echo $this->translate('Delete this time'); ?>" class="btn btn-box-tool pull-right" style="margin-top:-4px;">
-    				<i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?>
-    			</a>
+    			<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-time-delete') ):?>
+        			<a href="<?php echo $this->url('workorder-time-delete', array('clientId' => $this->workorderEntity->getClientId(), 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderTimeId' => $timeEntity->getWorkorderTimeId())); ?>" 
+        				title="<?php echo $this->translate('Delete this time'); ?>" class="btn btn-box-tool pull-right" style="margin-top:-4px;">
+        				<i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?>
+        			</a>
+        		<?php endif;?>
     			<?php endif; ?>
     		</div>
     	</div>

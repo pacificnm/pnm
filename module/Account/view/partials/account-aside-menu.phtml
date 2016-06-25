@@ -1,3 +1,5 @@
+<?php if( $this->acl->isAllowed($this->identity()->getAuthRole(), 'account-index') ):?>
+
 <li class="header"><?php echo $this->translate('ACCOUNTING NAVIGATION'); ?></li>
 <li class="treeview <?php if($this->activeMenuItem == 'account'):?>active<?php endif;?>">
 	<a href="#">
@@ -11,12 +13,6 @@
 			</a>
 		</li>
 		
-		<!-- Account Types -->
-		<li class="<?php if($this->activeSubMenuItem == 'account-type-index'):?>active<?php endif;?>">
-			<a href="<?php echo $this->url('account-type-index'); ?>" title="<?php echo $this->translate('Account Types'); ?>">
-				<i class="fa fa-bank"></i> <?php echo $this->translate('Account Types'); ?>
-			</a>
-		</li>
 		
 		<!-- Vendors -->
 		<li class="<?php if($this->activeSubMenuItem == 'vendor-index'):?>active<?php endif;?>">
@@ -24,5 +20,22 @@
 				<i class="fa fa-truck"></i> <?php echo $this->translate('Vendors'); ?>
 			</a>
 		</li>
+		
+		<!-- Bills -->
+		<li class="<?php if($this->activeSubMenuItem == 'vendor-bill-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('vendor-bill-index'); ?>" title="<?php echo $this->translate('Bills'); ?>">
+				<i class="fa fa-dollar"></i> <?php echo $this->translate('Bills'); ?>
+			</a>
+		</li>
+		
+		<!-- Account Types -->
+		<li class="<?php if($this->activeSubMenuItem == 'account-type-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('account-type-index'); ?>" title="<?php echo $this->translate('Account Types'); ?>">
+				<i class="fa fa-bank"></i> <?php echo $this->translate('Account Types'); ?>
+			</a>
+		</li>
+		
+		
 	</ul>
 </li>
+<?php endif;?>

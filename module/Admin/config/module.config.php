@@ -1,19 +1,22 @@
 <?php
 return array(
-    'Admin' => array(
-        'name' => 'Admin',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array(
-                'admin-index'
+    'module' => array(
+        'Admin' => array(
+            'name' => 'Admin',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array(
+                    'admin-index'
+                )
             )
-        )
+        ),
     ),
     
+    // controllers
     'controllers' => array(
         'factories' => array(
             'Admin\Controller\Index' => 'Admin\Controller\Factory\IndexControllerFactory',

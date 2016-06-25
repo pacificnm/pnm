@@ -1,21 +1,26 @@
 <?php
 return array(
-    'Password' => array(
-        'name' => 'Password',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'password-list',
-                'password-create',
-                'password-delete',
-                'password-update',
-                'password-view'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'Password' => array(
+            'name' => 'Password',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(
+                    'password-list',
+                    'password-view'
+                ),
+                'employee' => array(
+                    
+                    'password-create',
+                    'password-delete',
+                    'password-update',
+                    
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

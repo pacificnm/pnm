@@ -1,3 +1,7 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 --
 -- Table structure for table `host_attribute_value`
 --
@@ -66,3 +70,10 @@ INSERT INTO `host_attribute_value` (`host_attribute_value_id`, `host_attribute_i
 (49, 4, 'WPA + TKIP/AES '),
 (50, 4, 'WPA + TKIP'),
 (51, 5, 'File Server');
+
+--
+-- Constraints for table `host_attribute_value`
+--
+ALTER TABLE `host_attribute_value`
+  ADD CONSTRAINT `fk_host_attribute_value_host_attribute_id` FOREIGN KEY (`host_attribute_id`) REFERENCES `host_attribute` (`host_attribute_id`) ON UPDATE CASCADE;
+SET FOREIGN_KEY_CHECKS=1;

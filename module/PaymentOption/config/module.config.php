@@ -1,17 +1,19 @@
 <?php
 return array(
-    'PaymentOption' => array(
-        'name' => 'PaymentOption',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array(
-                'payment-option-index',
+    'module' => array(
+        'PaymentOption' => array(
+            'name' => 'PaymentOption',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array(
+                    'payment-option-index',
+                )
             )
-        )
+        ),
     ),
     
     // controllers

@@ -1,21 +1,23 @@
 <?php
 return array(
-    'Account' => array(
-        'name' => 'Account',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(
-                'account-index',
-                'account-create',
-                'account-update',
-                'account-delete',
-                'account-view'
-            ),
-            'administrator' => array()
-        )
+    'module' => array(
+        'Account' => array(
+            'name' => 'Account',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(
+                    'account-index',
+                    'account-create',
+                    'account-update',
+                    'account-delete',
+                    'account-view'
+                ),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

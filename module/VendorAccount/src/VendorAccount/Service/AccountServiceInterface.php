@@ -21,6 +21,13 @@ interface AccountServiceInterface
     
     /**
      *
+     * @param number $vendorId
+     * @return AccountEntity
+     */
+    public function getVendorAccount($vendorId);
+    
+    /**
+     *
      * @param AccountEntity $entity
      * @return AccountEntity
      */

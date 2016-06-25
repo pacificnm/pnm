@@ -1,3 +1,4 @@
+
 <div class="row">
 	<div class="col-xs-12">
 		<div class="box box-primary">
@@ -8,7 +9,9 @@
 				</h3>
 				
 				<div class="box-tools">
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-create') ):?>
 					<a href="<?php echo $this->url('workorder-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create new work order');?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="box-body">
@@ -56,7 +59,11 @@
 						<div class="row">
 							<div class="col-xs-12">
 								<h3 class="profile-username">
+									<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-view') ):?>
 									<a href="<?php echo $this->url('workorder-view', array('clientId' => $this->clientId, 'workorderId' => $workorderEntity->getWorkorderId())); ?>" title="<?php echo $this->translate('View this work order'); ?>"><?php echo $this->translate('Work Order #')?><?php echo $workorderEntity->getWorkorderId(); ?></a>
+									<?php else: ?>
+									<?php echo $this->translate('Work Order #')?><?php echo $workorderEntity->getWorkorderId(); ?>
+									<?php endif; ?>
 									<span class="pull-right badge <?php ($workorderEntity->getWorkorderStatus() == 'Active') ? 'text-success' : 'text-danger'; ?>"><?php echo $workorderEntity->getWorkorderStatus(); ?></span>	
 								</h3>
 							</div>
@@ -75,20 +82,31 @@
 							</div>
 							<div class="col-xs-12 col-sm-4">
 								<b><?php echo $this->translate('Contact'); ?>:</b> 
+									<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'user-view') ):?>
 									<a href="<?php echo $this->url('user-view', array('clientId' => $this->clientId, 'userId' => $workorderEntity->getUserEntity()->getUserId()));?>" title="<?php echo $this->translate('View this user'); ?>">
 										<?php echo $workorderEntity->getUserEntity()->getUserNameFirst();?> <?php echo $workorderEntity->getUserEntity()->getUserNameLast();?>
 									</a>
+									<?php else: ?>
+										<?php echo $workorderEntity->getUserEntity()->getUserNameFirst();?> <?php echo $workorderEntity->getUserEntity()->getUserNameLast();?>
+									<?php endif; ?>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-xs-12 col-sm-8">
 								<b><?php echo $this->translate('Location'); ?>:</b> 
-								<a href="" title="<?php echo $this->translate('View this location'); ?>">
+								<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'location-view') ):?>
+								<a href="<?php echo $this->url('location-view', array('locationId' => $workorderEntity->getLocationEntity()->getLocationId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('View this location'); ?>">
 									<?php echo $workorderEntity->getLocationEntity()->getLocationStreet(); ?> 
 									<?php echo $workorderEntity->getLocationEntity()->getLocationCity(); ?>,
 									<?php echo $workorderEntity->getLocationEntity()->getLocationState(); ?>
 									<?php echo $workorderEntity->getLocationEntity()->getLocationZip(); ?>
 								</a>
+								<?php else: ?>
+									<?php echo $workorderEntity->getLocationEntity()->getLocationStreet(); ?> 
+									<?php echo $workorderEntity->getLocationEntity()->getLocationCity(); ?>,
+									<?php echo $workorderEntity->getLocationEntity()->getLocationState(); ?>
+									<?php echo $workorderEntity->getLocationEntity()->getLocationZip(); ?>
+								<?php endif; ?>
 							</div>
 							<div class="col-xs-12 col-sm-4">
 								<b><?php echo $this->translate('Phone'); ?>:</b> 

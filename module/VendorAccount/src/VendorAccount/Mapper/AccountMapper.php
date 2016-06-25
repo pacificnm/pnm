@@ -110,6 +110,39 @@ class AccountMapper implements AccountMapperInterface
         
         return array();
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \VendorAccount\Mapper\AccountMapperInterface::getVendorAccount()
+     */
+    public function getVendorAccount($vendorId)
+    {
+        $sql = new Sql($this->readAdapter);
+    
+        $select = $sql->select('vendor_account');
+    
+        $select->where(array(
+            'vendor_account.vendor_id = ?' => $vendorId
+        ));
+    
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+    
+        $stmt = $sql->prepareStatementForSqlObject($select);
+    
+        $result = $stmt->execute();
+    
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+    
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+    
+            $resultSet->buffer();
+    
+            return $resultSet->initialize($result)->current();
+        }
+    
+        return array();
+    }
 
     /**
      * 

@@ -1,12 +1,21 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
 --
 -- Table structure for table `network_attribute`
 --
 
-CREATE TABLE `network_attribute` (
-  `network_attribute_id` int(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `network_attribute` (
+  `network_attribute_id` int(20) NOT NULL AUTO_INCREMENT,
   `network_attribute_name` varchar(255) NOT NULL,
-  `network_attribute_type` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `network_attribute_type` varchar(255) NOT NULL,
+  PRIMARY KEY (`network_attribute_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONS FOR TABLE `network_attribute`:
+--
 
 --
 -- Dumping data for table `network_attribute`
@@ -30,23 +39,4 @@ INSERT INTO `network_attribute` (`network_attribute_id`, `network_attribute_name
 (15, 'Public Default Gateway', 'text'),
 (16, 'Public Domain Name Server', 'text'),
 (17, 'Public Subnet', 'text');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `network_attribute`
---
-ALTER TABLE `network_attribute`
-  ADD PRIMARY KEY (`network_attribute_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `network_attribute`
---
-ALTER TABLE `network_attribute`
-  MODIFY `network_attribute_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+SET FOREIGN_KEY_CHECKS=1;

@@ -1,21 +1,23 @@
 <?php
 return array(
-    'HostAttributeValue' => array(
-        'name' => 'HostAttributeValue',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array(
-                'host-attribute-value-index',
-                'host-attribute-value-create',
-                'host-attribute-value-delete',
-                'host-attribute-value-update',
-                'host-attribute-value-view'
+    'module' => array(
+        'HostAttributeValue' => array(
+            'name' => 'HostAttributeValue',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array(
+                    'host-attribute-value-index',
+                    'host-attribute-value-create',
+                    'host-attribute-value-delete',
+                    'host-attribute-value-update',
+                    'host-attribute-value-view'
+                )
             )
-        )
+        ),
     ),
     
     // controllers

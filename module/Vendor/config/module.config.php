@@ -1,21 +1,23 @@
 <?php
 return array(
-    'Vendor' => array(
-        'name' => 'Vendor',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(
-                'vendor-index',
-                'vendor-create',
-                'vendor-delete',
-                'vendor-update',
-                'vendor-view'
-            ),
-            'administrator' => array()
-        )
+    'module' => array(
+        'Vendor' => array(
+            'name' => 'Vendor',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(
+                    'vendor-index',
+                    'vendor-create',
+                    'vendor-delete',
+                    'vendor-update',
+                    'vendor-view'
+                ),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

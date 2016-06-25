@@ -92,7 +92,7 @@ class TaskMapper implements TaskMapperInterface
         }
         
         // join priority
-        $select->join('task_priority', 'task_priority.task_priority_id = task.task_priority', array(
+        $select->join('task_priority', 'task_priority.task_priority_id = task.task_priority_id', array(
             'task_priority_value'
         ), 'inner');
         
@@ -132,7 +132,7 @@ class TaskMapper implements TaskMapperInterface
         ));
         
         // join priority
-        $select->join('task_priority', 'task_priority.task_priority_id = task.task_priority', array(
+        $select->join('task_priority', 'task_priority.task_priority_id = task.task_priority_id', array(
             'task_priority_value'
         ), 'inner');
         

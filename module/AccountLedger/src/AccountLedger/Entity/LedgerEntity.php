@@ -56,15 +56,9 @@ class LedgerEntity
 
     /**
      *
-     * @var number
+     * @var string
      */
-    protected $paymentId;
-
-    /**
-     *
-     * @var number
-     */
-    protected $invoiceId;
+    protected $accountLedgerMemo;
 
     /**
      *
@@ -146,20 +140,11 @@ class LedgerEntity
 
     /**
      *
-     * @return the $paymentId
+     * @return the $accountLedgerMemo
      */
-    public function getPaymentId()
+    public function getAccountLedgerMemo()
     {
-        return $this->paymentId;
-    }
-
-    /**
-     *
-     * @return the $invoiceId
-     */
-    public function getInvoiceId()
-    {
-        return $this->invoiceId;
+        return $this->accountLedgerMemo;
     }
 
     /**
@@ -245,20 +230,11 @@ class LedgerEntity
 
     /**
      *
-     * @param number $paymentId            
+     * @param string $accountLedgerMemo            
      */
-    public function setPaymentId($paymentId)
+    public function setAccountLedgerMemo($accountLedgerMemo)
     {
-        $this->paymentId = $paymentId;
-    }
-
-    /**
-     *
-     * @param number $invoiceId            
-     */
-    public function setInvoiceId($invoiceId)
-    {
-        $this->invoiceId = $invoiceId;
+        $this->accountLedgerMemo = $accountLedgerMemo;
     }
 
     /**

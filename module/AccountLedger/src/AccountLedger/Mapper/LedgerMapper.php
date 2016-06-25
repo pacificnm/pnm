@@ -80,7 +80,7 @@ class LedgerMapper implements LedgerMapperInterface
         $select->join('account', 'account_ledger.from_account_id = account.account_id', array(
             'account_type_id',
             'account_name'
-        ), 'left');
+        ), 'inner');
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
@@ -106,6 +106,12 @@ class LedgerMapper implements LedgerMapperInterface
         $select->where(array(
             'account_ledger.account_ledger_id = ?' => $id
         ));
+        
+        // join from account
+        $select->join('account', 'account_ledger.from_account_id = account.account_id', array(
+            'account_type_id',
+            'account_name'
+        ), 'inner');
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         

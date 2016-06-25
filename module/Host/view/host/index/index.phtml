@@ -7,7 +7,9 @@
 					<?php echo $this->translate('Hosts'); ?>
 				</h3>
 				<div class="box-tools">
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'host-create') ):?>
 					<a href="<?php echo $this->url('host-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create new host'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="box-body">
@@ -61,16 +63,20 @@
     					<div class="row">
     						<div class="col-xs-12">
     							<h3 class="profile-username">
+    								<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'host-view') ):?>
     								<a href="<?php echo $this->url('host-view', array('clientId' => $this->clientId, 'hostId' => $hostEntity->getHostId())); ?>" title="<?php echo $this->translate('View this host'); ?>">
     									<?php echo $hostEntity->getHostName(); ?>
     								</a>
+    								<?php else: ?>
+    									<?php echo $hostEntity->getHostName(); ?>
+    								<?php endif; ?>
     								<span class="pull-right badge"><?php echo $hostEntity->getHostStatus(); ?></span>
     							</h3>
     						</div>
     					</div>
     					<div class="row">
     						<div class="col-xs-12 col-sm-4">
-    							<b><?php echo $this->translate('Host Type'); ?>:</b> <?php echo $hostEntity->getHostType(); ?>
+    							<b><?php echo $this->translate('Host Type'); ?>:</b> <?php echo $hostEntity->getHostTypeId(); ?>
     						</div>
     						<div class="col-xs-12 col-sm-4">
     							<b><?php echo $this->translate('Host IP'); ?>:</b> <?php echo $hostEntity->getHostIp(); ?>

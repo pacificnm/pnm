@@ -1,19 +1,21 @@
 <?php
 return array(
-    'ClientFavorite' => array(
-        'name' => 'ClientFavorite',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'client-favorite-index',
-                'client-favorite-create',
-                'client-favorite-delete'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'ClientFavorite' => array(
+            'name' => 'ClientFavorite',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(
+                    'client-favorite-index',
+                    'client-favorite-create',
+                    'client-favorite-delete'
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

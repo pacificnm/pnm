@@ -32,14 +32,16 @@
     			<?php echo $partEntity->getWorkorderPartsDescription(); ?>
     		</div>
     		<div class="col-xs-1">
-    			<?php echo $partEntity->getWorkorderPartsAmount(); ?>
+    			<?php echo $this->currencyFormat($partEntity->getWorkorderPartsAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
     		</div>
     		<div class="col-xs-1">
-    			<?php echo $partEntity->getWorkorderPartsTotal(); ?>
+    			<?php echo $this->currencyFormat($partEntity->getWorkorderPartsTotal(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
     		</div>
     		<div class="col-xs-1">
     			<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
-    			<a href="<?php echo $this->url('workorder-part-delete', array('clientId' => $this->workorderEntity->getClientId(), 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderPartId' => $partEntity->getWorkorderPartsId())); ?>" title="<?php echo $this->translate('Delete this part'); ?>" class="btn btn-box-tool pull-right"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+    				<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-part-delete') ):?>
+    				<a href="<?php echo $this->url('workorder-part-delete', array('clientId' => $this->workorderEntity->getClientId(), 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderPartId' => $partEntity->getWorkorderPartsId())); ?>" title="<?php echo $this->translate('Delete this part'); ?>" class="btn btn-box-tool pull-right"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+    				<?php endif; ?>
     			<?php endif; ?>
     		</div>
     	</div>

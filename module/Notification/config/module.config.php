@@ -1,15 +1,17 @@
 <?php
 return array(
-    'Notification' => array(
-        'name' => 'Notification',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'Notification' => array(
+            'name' => 'Notification',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers

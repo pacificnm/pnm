@@ -1,19 +1,21 @@
 <?php
 return array(
-    'WorkorderNote' => array(
-        'name' => 'WorkorderNote',
-        'version' => '2.5',
-        'acl' => array(
-            'guest' => array(),
-            'user' => array(),
-            'employee' => array(
-                'workorder-note-create',
-                'workorder-note-update',
-                'workorder-note-delete'
-            ),
-            'accountant' => array(),
-            'administrator' => array()
-        )
+    'module' => array(
+        'WorkorderNote' => array(
+            'name' => 'WorkorderNote',
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'employee' => array(
+                    'workorder-note-create',
+                    'workorder-note-update',
+                    'workorder-note-delete'
+                ),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        ),
     ),
     
     // controllers
