@@ -1,4 +1,3 @@
-
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -13,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `client_account` (
   `account_id` int(20) NOT NULL,
   PRIMARY KEY (`client_account_id`),
   KEY `client_id` (`client_id`),
+  KEY `account_id` (`account_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
