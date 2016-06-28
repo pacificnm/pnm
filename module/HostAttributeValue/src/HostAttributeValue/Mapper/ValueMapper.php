@@ -138,6 +138,39 @@ class ValueMapper implements ValueMapperInterface
         
         return array();
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \HostAttributeValue\Mapper\ValueMapperInterface::getValue()
+     */
+    public function getValue($value)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('host_attribute_value');
+        
+        $select->where(array(
+            'host_attribute_value.host_attribute_value_name = ?' => $value
+        ));
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+            $resultSet->buffer();
+        
+            return $resultSet->initialize($result)->current();
+        }
+        
+        return array();
+    }
 
     /**
      *

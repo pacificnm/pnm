@@ -44,6 +44,16 @@ class ValueService implements ValueServiceInterface
     /**
      * 
      * {@inheritDoc}
+     * @see \HostAttributeValue\Service\ValueServiceInterface::getValue()
+     */
+    public function getValue($value)
+    {
+        return $this->mapper->getValue($value);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
      * @see \HostAttributeValue\Service\ValueServiceInterface::save()
      */
     public function save(ValueEntity $entity)

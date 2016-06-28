@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
 namespace Workorder\Controller;
 
 use Application\Controller\BaseController;
@@ -13,6 +20,12 @@ use Workorder\Form\CompleteForm;
 use WorkorderCredit\Form\CreditForm;
 use WorkorderCredit\Service\CreditServiceInterface;
 
+/**
+ * View Work Order Controller
+ *
+ * @author jaimie (pacificnm@gmail.com)
+ *
+ */
 class ViewController extends BaseController
 {
 
@@ -138,17 +151,7 @@ class ViewController extends BaseController
             ->getUri(), 'READ', $this->identity()
             ->getAuthId(), 'View Client ' . $clientEntity->getClientName() . ' work order #' . $workorderId);
         
-        $this->layout()->setVariable('clientId', $id);
         
-        $this->layout()->setVariable('pageTitle', 'View Work Order');
-        
-        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
-        
-        $this->layout()->setVariable('activeMenuItem', 'client');
-        
-        $this->layout()->setVariable('activeSubMenuItem', 'workorder-list');
-        
-        $this->setHeadTitle($clientEntity->getClientName());
         
         // note form
         $this->noteForm->get('workorderId')->setValue($workorderId);
@@ -217,6 +220,9 @@ class ViewController extends BaseController
         
         $this->creditForm->get('workorderCreditAmountLeft')->setValue(0);
         
+        
+        $this->creditForm->get('accountLedgerId')->setValue(0);
+        
         $this->creditForm->setAttribute('action', $this->url()
             ->fromRoute('workorder-credit-create', array(
             'clientId' => $id,
@@ -227,6 +233,20 @@ class ViewController extends BaseController
         $workorderEmployeEntitys = $this->workorderEmployeeService->getAll(array(
             'workorderId' => $workorderId
         ));
+        
+        
+        // set layout vars
+        $this->layout()->setVariable('clientId', $id);
+        
+        $this->layout()->setVariable('pageTitle', 'View Work Order');
+        
+        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
+        
+        $this->layout()->setVariable('activeMenuItem', 'client');
+        
+        $this->layout()->setVariable('activeSubMenuItem', 'workorder-list');
+        
+        $this->setHeadTitle($clientEntity->getClientName());
         
         // return View
         return new ViewModel(array(

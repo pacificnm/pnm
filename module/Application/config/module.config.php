@@ -739,6 +739,11 @@ return array(
                                                         'label' => 'Delete Note',
                                                         'route' => 'workorder-note-delete',
                                                         'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Credit',
+                                                        'route' => 'workorder-credit-view',
+                                                        'useRouteMatch' => true
                                                     )
                                                 )
                                             )

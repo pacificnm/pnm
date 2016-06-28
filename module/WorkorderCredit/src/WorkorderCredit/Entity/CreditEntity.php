@@ -1,8 +1,23 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
 namespace WorkorderCredit\Entity;
 
 use PaymentOption\Entity\OptionEntity;
+use Account\Entity\AccountEntity;
+use AccountLedger\Entity\LedgerEntity;
 
+/**
+ * Work Order Credit Entity
+ *
+ * @author jaimie (pacificnm@gmail.com)
+ *        
+ */
 class CreditEntity
 {
 
@@ -17,6 +32,18 @@ class CreditEntity
      * @var number
      */
     protected $workorderId;
+
+    /**
+     *
+     * @var number
+     */
+    protected $accountId;
+
+    /**
+     *
+     * @var number
+     */
+    protected $accountLedgerId;
 
     /**
      *
@@ -50,15 +77,27 @@ class CreditEntity
 
     /**
      *
+     * @var String
+     */
+    protected $workorderCreditType;
+
+    /**
+     *
      * @var OptionEntity
      */
     protected $optionEntity;
 
     /**
      *
-     * @var String
+     * @var AccountEntity
      */
-    protected $workorderCreditType;
+    protected $accountEntity;
+
+    /**
+     *
+     * @var LedgerEntity
+     */
+    protected $ledgerEntity;
 
     /**
      *
@@ -76,6 +115,24 @@ class CreditEntity
     public function getWorkorderId()
     {
         return $this->workorderId;
+    }
+
+    /**
+     *
+     * @return the $accountId
+     */
+    public function getAccountId()
+    {
+        return $this->accountId;
+    }
+
+    /**
+     *
+     * @return the $accountLedgerId
+     */
+    public function getAccountLedgerId()
+    {
+        return $this->accountLedgerId;
     }
 
     /**
@@ -125,6 +182,15 @@ class CreditEntity
 
     /**
      *
+     * @return the $workorderCreditType
+     */
+    public function getWorkorderCreditType()
+    {
+        return $this->workorderCreditType;
+    }
+
+    /**
+     *
      * @return the $optionEntity
      */
     public function getOptionEntity()
@@ -134,11 +200,20 @@ class CreditEntity
 
     /**
      *
-     * @return the $workorderCreditType
+     * @return the $accountEntity
      */
-    public function getWorkorderCreditType()
+    public function getAccountEntity()
     {
-        return $this->workorderCreditType;
+        return $this->accountEntity;
+    }
+
+    /**
+     *
+     * @return the $ledgerEntity
+     */
+    public function getLedgerEntity()
+    {
+        return $this->ledgerEntity;
     }
 
     /**
@@ -157,6 +232,24 @@ class CreditEntity
     public function setWorkorderId($workorderId)
     {
         $this->workorderId = $workorderId;
+    }
+
+    /**
+     *
+     * @param number $accountId            
+     */
+    public function setAccountId($accountId)
+    {
+        $this->accountId = $accountId;
+    }
+
+    /**
+     *
+     * @param number $accountLedgerId            
+     */
+    public function setAccountLedgerId($accountLedgerId)
+    {
+        $this->accountLedgerId = $accountLedgerId;
     }
 
     /**
@@ -206,6 +299,15 @@ class CreditEntity
 
     /**
      *
+     * @param \WorkorderCredit\Entity\String $workorderCreditType            
+     */
+    public function setWorkorderCreditType($workorderCreditType)
+    {
+        $this->workorderCreditType = $workorderCreditType;
+    }
+
+    /**
+     *
      * @param \PaymentOption\Entity\OptionEntity $optionEntity            
      */
     public function setOptionEntity($optionEntity)
@@ -215,10 +317,19 @@ class CreditEntity
 
     /**
      *
-     * @param \WorkorderCredit\Entity\String $workorderCreditType            
+     * @param \Account\Entity\AccountEntity $accountEntity            
      */
-    public function setWorkorderCreditType($workorderCreditType)
+    public function setAccountEntity($accountEntity)
     {
-        $this->workorderCreditType = $workorderCreditType;
+        $this->accountEntity = $accountEntity;
+    }
+
+    /**
+     *
+     * @param \AccountLedger\Entity\LedgerEntity $ledgerEntity            
+     */
+    public function setLedgerEntity($ledgerEntity)
+    {
+        $this->ledgerEntity = $ledgerEntity;
     }
 }

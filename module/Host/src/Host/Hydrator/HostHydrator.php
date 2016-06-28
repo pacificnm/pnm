@@ -3,6 +3,8 @@ namespace Host\Hydrator;
 
 use Zend\Stdlib\Hydrator\ClassMethods;
 use Host\Entity\HostEntity;
+use HostType\Entity\TypeEntity;
+use Location\Entity\LocationEntity;
 
 class HostHydrator extends ClassMethods
 {
@@ -30,6 +32,14 @@ class HostHydrator extends ClassMethods
         
         parent::hydrate($data, $object);
         
+        $typeEntity = parent::hydrate($data, new TypeEntity());
+        
+        $object->setTypeEntity($typeEntity);
+        
+        $locationEntity = parent::hydrate($data, new LocationEntity());
+        
+        $object->setLocationEntity($locationEntity);
+        
         return $object;
     }
 
@@ -46,6 +56,10 @@ class HostHydrator extends ClassMethods
         }
         
         $data = parent::extract($object);
+        
+        unset($data['type_entity']);
+        
+        unset($data['location_entity']);
         
         return $data;
     }

@@ -158,7 +158,7 @@ class ConsoleController extends AbstractActionController
                            // if no reource create it
                            if(! $resourceEntity) {
                                $entity = new ResourceEntity();
-                               $entity->setAclResourceId(0);
+                               //$entity->setAclResourceId(0);
                                $entity->setAclResource($resource);
                                
                                $this->resourceService->save($entity);
@@ -172,7 +172,7 @@ class ConsoleController extends AbstractActionController
                        $aclEntity = $this->aclService->getAclRule($role, $resource);
                        if(! $aclEntity) {
                            $entity = new AclEntity();
-                           $entity->setAclId(0);
+                           //$entity->setAclId(0);
                            $entity->setRole($role);
                            $entity->setResource($resource);
                            

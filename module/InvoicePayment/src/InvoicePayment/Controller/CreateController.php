@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
 namespace InvoicePayment\Controller;
 
 use Application\Controller\BaseController;
@@ -9,6 +16,12 @@ use Client\Service\ClientServiceInterface;
 use ClientAccount\Service\AccountServiceInterface;
 use AccountLedger\Service\LedgerServiceInterface;
 
+/**
+ * Create Invoice Payment Controller
+ *
+ * @author jaimie (pacificnm@gmail.com)
+ *
+ */
 class CreateController extends BaseController
 {
 

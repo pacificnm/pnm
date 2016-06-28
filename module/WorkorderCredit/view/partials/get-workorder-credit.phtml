@@ -24,7 +24,13 @@
     <li class="list-group-item">
     	<div class="row">
     		<div class="col-xs-2">
+    			<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-credit-view') ):?>
+    			<a href="<?php echo $this->url('workorder-credit-view', array('clientId' => $this->clientId, 'workorderId' => $creditEntity->getWorkorderId(), 'workorderCreditId' => $creditEntity->getWorkorderCreditId()));?>" title="<?php echo $this->translate('View this work order credit'); ?>">
     			<?php echo date($this->appConfig()->getConfigDateShort(), $creditEntity->getWorkorderCreditDate());?>
+    			</a>
+    			<?php else: ?>
+    			<?php echo date($this->appConfig()->getConfigDateShort(), $creditEntity->getWorkorderCreditDate());?>
+    			<?php endif; ?>
     		</div>
     		<div class="col-xs-2">
     			<?php echo $creditEntity->getWorkorderCreditType();?>

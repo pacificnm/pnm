@@ -1,6 +1,9 @@
 <?php
 namespace Host\Entity;
 
+use HostType\Entity\TypeEntity;
+use Location\Entity\LocationEntity;
+
 class HostEntity
 {
 
@@ -57,6 +60,18 @@ class HostEntity
      * @var number
      */
     protected $hostCreated;
+
+    /**
+     *
+     * @var TypeEntity
+     */
+    protected $typeEntity;
+
+    /**
+     *
+     * @var LocationEntity
+     */
+    protected $locationEntity;
 
     /**
      *
@@ -141,6 +156,24 @@ class HostEntity
 
     /**
      *
+     * @return the $typeEntity
+     */
+    public function getTypeEntity()
+    {
+        return $this->typeEntity;
+    }
+
+    /**
+     *
+     * @return the $locationEntity
+     */
+    public function getLocationEntity()
+    {
+        return $this->locationEntity;
+    }
+
+    /**
+     *
      * @param number $hostId            
      */
     public function setHostId($hostId)
@@ -218,5 +251,23 @@ class HostEntity
     public function setHostCreated($hostCreated)
     {
         $this->hostCreated = $hostCreated;
+    }
+
+    /**
+     *
+     * @param \HostType\Entity\TypeEntity $typeEntity            
+     */
+    public function setTypeEntity($typeEntity)
+    {
+        $this->typeEntity = $typeEntity;
+    }
+
+    /**
+     *
+     * @param \Location\Entity\LocationEntity $locationEntity            
+     */
+    public function setLocationEntity($locationEntity)
+    {
+        $this->locationEntity = $locationEntity;
     }
 }

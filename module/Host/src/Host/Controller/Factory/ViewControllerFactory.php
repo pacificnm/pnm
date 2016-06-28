@@ -20,6 +20,10 @@ class ViewControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new ViewController($clientService);
+        $hostService = $realServiceLocator->get('Host\Service\HostServiceInterface');
+        
+        $mapService = $realServiceLocator->get('HostAttributeMap\Service\MapServiceInterface');
+        
+        return new ViewController($clientService, $hostService, $mapService);
     }
 }

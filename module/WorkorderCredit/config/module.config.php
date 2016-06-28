@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
 return array(
     'module' => array(
         'WorkorderCredit' => array(
@@ -8,7 +15,8 @@ return array(
                 'guest' => array(),
                 'user' => array(),
                 'employee' => array(
-                    'workorder-credit-create'
+                    'workorder-credit-create',
+                    'workorder-credit-view'
                 ),
                 'accountant' => array(),
                 'administrator' => array()
@@ -19,7 +27,8 @@ return array(
     // controllers
     'controllers' => array(
         'factories' => array(
-            'WorkorderCredit\Controller\Create' => 'WorkorderCredit\Controller\Factory\CreateControllerFactory'
+            'WorkorderCredit\Controller\Create' => 'WorkorderCredit\Controller\Factory\CreateControllerFactory',
+            'WorkorderCredit\Controller\View' => 'WorkorderCredit\Controller\Factory\ViewControllerFactory',
         )
     ),
     
@@ -42,6 +51,17 @@ return array(
                     'route' => '/client/[:clientId]/work-order/[:workorderId]/work-order-credit/create',
                     'defaults' => array(
                         'controller' => 'WorkorderCredit\Controller\Create',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'workorder-credit-view' => array(
+                'title' => 'View Work Order Credit',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/work-order/[:workorderId]/work-order-credit/[:workorderCreditId]/view',
+                    'defaults' => array(
+                        'controller' => 'WorkorderCredit\Controller\View',
                         'action' => 'index'
                     )
                 )

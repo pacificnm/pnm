@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
 namespace WorkorderCredit\Mapper;
 
 use Zend\Db\Adapter\AdapterInterface;
@@ -14,6 +21,12 @@ use Zend\Paginator\Adapter\DbSelect;
 use Zend\Db\ResultSet\ResultSet;
 use WorkorderCredit\Entity\CreditEntity;
 
+/**
+ * Work Order Credit Mapper
+ *
+ * @author jaimie (pacificnm@gmail.com)
+ *        
+ */
 class CreditMapper implements CreditMapperInterface
 {
 
@@ -90,11 +103,30 @@ class CreditMapper implements CreditMapperInterface
     {
         $sql = new Sql($this->readAdapter);
         
-        $select = $sql->select('workorder');
+        $select = $sql->select('workorder_credit');
         
         $select->where(array(
             'workorder_credit.workorder_credit_id = ?' => $id
         ));
+        
+        // join payment option
+        $select->join('payment_option', 'workorder_credit.payment_option_id = payment_option.payment_option_id', array(
+            'payment_option_name',
+            'payment_option_enabled'
+        ), 'inner');
+        
+        
+        // join account
+        $select->join('account', 'workorder_credit.account_id = account.account_id', array(
+            'account_name',
+            'account_type_id',
+            'account_description',
+            'account_number',
+            'account_balance',
+            'account_created',
+            'account_active',
+            'account_visible'
+        ), 'inner');
         
         $stmt = $sql->prepareStatementForSqlObject($select);
         
@@ -181,10 +213,11 @@ class CreditMapper implements CreditMapperInterface
         
         return (bool) $result->getAffectedRows();
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \WorkorderCredit\Mapper\CreditMapperInterface::getWorkorderTotal()
      */
     public function getWorkorderTotal($workorderId)
@@ -208,19 +241,19 @@ class CreditMapper implements CreditMapperInterface
         $result = $stmt->execute();
         
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
+            
             $resultSet = new ResultSet();
-        
+            
             $resultSet->initialize($result);
-        
+            
             $row = $resultSet->current();
-        
+            
             return $row['workorder_credit_total'];
         }
         
         return 0;
     }
-    
+
     public function getWorkorderCredit($workorderId)
     {
         $sql = new Sql($this->readAdapter);
@@ -236,17 +269,17 @@ class CreditMapper implements CreditMapperInterface
         $result = $stmt->execute();
         
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
+            
             $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
-        
+            
             $resultSet->buffer();
-        
+            
             return $resultSet->initialize($result);
         }
         
         return array();
     }
-    
+
     public function getWorkorderLaborCredit($workorderId)
     {
         $sql = new Sql($this->readAdapter);
@@ -268,51 +301,52 @@ class CreditMapper implements CreditMapperInterface
         $result = $stmt->execute();
         
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
+            
             $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
-        
+            
             $resultSet->buffer();
-        
+            
             return $resultSet->initialize($result)->current();
         }
         
         return array();
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \WorkorderCredit\Mapper\CreditMapperInterface::getWorkorderPartCredit()
      */
     public function getWorkorderPartCredit($workorderId)
     {
         $sql = new Sql($this->readAdapter);
-    
+        
         $select = $sql->select('workorder_credit');
-    
+        
         $select->where(array(
             'workorder_credit.workorder_id = ?' => $workorderId
         ));
-    
+        
         $select->where(array(
             'workorder_credit.workorder_credit_type = ?' => 'Parts'
         ));
-    
+        
         $select->where->greaterThan('workorder_credit.workorder_credit_amount_left', 0);
         
         $stmt = $sql->prepareStatementForSqlObject($select);
-    
+        
         $result = $stmt->execute();
-    
+        
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-    
+            
             $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
-    
+            
             $resultSet->buffer();
-    
+            
             return $resultSet->initialize($result)->current();
         }
-    
+        
         return array();
     }
 }

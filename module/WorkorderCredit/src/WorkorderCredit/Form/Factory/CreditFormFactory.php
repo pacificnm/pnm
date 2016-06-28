@@ -16,6 +16,8 @@ class CreditFormFactory implements FactoryInterface
     {
         $optionService = $serviceLocator->get('PaymentOption\Service\OptionServiceInterface');
         
-        return new CreditForm($optionService);
+        $accountService = $serviceLocator->get('Account\Service\AccountServiceInterface');
+        
+        return new CreditForm($optionService, $accountService);
     }
 }

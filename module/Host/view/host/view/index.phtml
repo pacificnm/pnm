@@ -7,9 +7,101 @@
 					<?php echo $this->translate('View Host'); ?>
 				</h3>
 				<div class="box-tools">
+					<?php if(count($this->mapEnitys) == 0): ?>
+    					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'host-attribute-map-create') ):?>
+    					<a href="<?php echo $this->url('host-attribute-map-create', array('clientId' => $this->clientId, 'hostId' => $this->hostEntity->getHostId()))?>" title="<?php echo $this->translate('Add attribute set to this host'); ?>" class="btn btn-box-tool"><i class="fa fa-cogs"></i> <?php echo $this->translate('Add Attributes');?></a>
+    					<?php endif; ?>
+    				<?php else: ?>
+    					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'host-attribute-map-update') ):?>
+    					<a href="<?php echo $this->url('host-attribute-map-update', array('clientId' => $this->clientId, 'hostId' => $this->hostEntity->getHostId()))?>" title="<?php echo $this->translate('Edit this hosts attributes'); ?>" class="btn btn-box-tool"><i class="fa fa-cogs"></i> <?php echo $this->translate('Edit Attributes');?></a>
+    					<?php endif;?>
+    				<?php endif; ?>
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'host-delete') ):?>
+						<a href="<?php echo $this->url('host-delete', array('hostId' => $this->hostEntity->getHostId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this host'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+					<?php endif; ?>
 					
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'host-update') ):?>
+					<a href="<?php echo $this->url('host-update', array('hostId' => $this->hostEntity->getHostId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Edit this host'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+					<?php endif; ?>
 				</div>
+			</div>
+			<div class="box-body">
+				<h3 class="profile-username">
+					<?php echo $this->hostEntity->getHostName();?>
+					<span class="pull-right badge"><?php echo $this->translate($this->hostEntity->getHostStatus()); ?></span>
+				</h3>
+				<p class="text-muted"><?php echo $this->hostEntity->getTypeEntity()->getHostTypeName(); ?></p>
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Health'); ?>:</b> 
+							<span class="pull-right"><?php echo $this->hostEntity->getHostHealth(); ?></span>
+					</li>
+					<li class="list-group-item">	
+						<b><?php echo $this->translate('Ip Address'); ?>:</b> 
+							<span class="pull-right"><?php echo ($this->hostEntity->getHostIp() != '') ? $this->hostEntity->getHostIp() : $this->translate('Not Set'); ?></span>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Created'); ?>:</b>
+							<span class="pull-right"><?php echo date($this->appConfig()->getConfigDateShort(), $this->hostEntity->getHostCreated());?></span>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Location'); ?>:</b>
+						<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'location-view') ):?>
+							<a href="<?php echo $this->url('location-view', array('clientId' => $this->clientId, 'locationId' => $this->hostEntity->getLocationId()));?>" title="<?php echo $this->translate('View this location')?>" class="pull-right">
+								<?php echo $this->hostEntity->getLocationEntity()->getLocationStreet(); ?>
+								<?php echo $this->hostEntity->getLocationEntity()->getLocationCity(); ?>,
+								<?php echo $this->hostEntity->getLocationEntity()->getLocationState(); ?>
+								<?php echo $this->hostEntity->getLocationEntity()->getLocationZip(); ?>
+							</a>
+						<?php else: ?>
+							<span class="pull-right">
+								<?php echo $this->hostEntity->getLocationEntity()->getLocationStreet(); ?>
+								<?php echo $this->hostEntity->getLocationEntity()->getLocationCity(); ?>,
+								<?php echo $this->hostEntity->getLocationEntity()->getLocationState(); ?>
+								<?php echo $this->hostEntity->getLocationEntity()->getLocationZip(); ?>	
+							</span>
+						<?php endif;?>
+					</li>
+					<?php foreach($this->mapEnitys as $mapEntity):?>
+					<li class="list-group-item">
+						<b><?php echo $mapEntity->getAttributeEntity()->getHostAttributeName(); ?>:</b> 
+						<span class="pull-right">
+							<?php if($mapEntity->getHostAttributeId() == 7): ?>
+								<script>
+								$( document ).ready(function() {
+									$('#passwordValue').html('<?php echo $this->decrypt($mapEntity->getHostAttributeMapValue()); ?>');
+								});
+								</script>
+								<a  data-toggle="modal" data-target="#myModal">******** <i class="fa fa-search"></i></a>
+							<?php else: ?>
+								<?php echo $mapEntity->getHostAttributeMapValue(); ?>
+							<?php endif; ?>
+						</span>
+					</li>
+					<?php endforeach; ?>
+				</ul>
 			</div>
 		</div>
 	</div>
 </div>
+
+<!-- password Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><?php echo $this->translate('View Password'); ?></h4>
+      </div>
+      <div class="modal-body">
+       	<p class="text-centered"><b><?php echo $this->translate('Password'); ?>:</b> 
+       		<span id="passwordValue"></span>
+       	</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+      </div>
+    </div>
+  </div>
+</div>
+	

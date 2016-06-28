@@ -22,10 +22,18 @@ CREATE TABLE IF NOT EXISTS `workorder_credit` (
   KEY `payment_option_id` (`payment_option_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+ALTER TABLE `workorder_credit` ADD `account_id` INT(20) NOT NULL AFTER `workorder_id`, ADD INDEX (`account_id`);
+
+ALTER TABLE `workorder_credit` ADD `account_ledger_id` INT(20) NOT NULL AFTER `account_id`, ADD INDEX (`account_ledger_id`);
+
 --
 -- Constraints for table `workorder_credit`
 --
 ALTER TABLE `workorder_credit`
   ADD CONSTRAINT `fk_workorder_credit_payment_option_id` FOREIGN KEY (`payment_option_id`) REFERENCES `payment_option` (`payment_option_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_workorder_credit_workorder_id` FOREIGN KEY (`workorder_id`) REFERENCES `workorder` (`workorder_id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_workorder_credit_workorder_id` FOREIGN KEY (`workorder_id`) REFERENCES `workorder` (`workorder_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_workorder_credit_workorder_account_id` FOREIGN KEY (`account_id`) REFERENCES `account`(`account_id`) ON DELETE RESTRICT ON UPDATE CASCADE, 
+  ADD CONSTRAINT `fk_workorder_credit_workorder_account_ledger_id` FOREIGN KEY (`account_ledger_id`) REFERENCES `account_ledger`(`account_ledger_id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
 SET FOREIGN_KEY_CHECKS=1;

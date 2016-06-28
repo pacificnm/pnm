@@ -22,6 +22,13 @@ interface ValueMapperInterface
 
     /**
      *
+     * @param string $value
+     * @return ValueEntity
+     */
+    public function getValue($value);
+    
+    /**
+     *
      * @param ValueEntity $entity            
      * @return ValueEntity
      */

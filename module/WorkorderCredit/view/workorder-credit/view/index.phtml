@@ -1,0 +1,52 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-dollar"></i>
+					<?php echo $this->translate('View Work Order Credit'); ?>
+				</h3>
+				<div class="box-tools">
+				
+				</div>
+			</div>
+			<div class="box-body">
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Date'); ?>: </b>
+						<span class="pull-right"><?php echo date($this->appConfig()->getConfigDateShort(), $this->creditEntity->getWorkorderCreditDate()); ?></span>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Payment Type'); ?>:</b>
+						<span class="pull-right"><?php echo $this->creditEntity->getOptionEntity()->getPaymentOptionName() ;?></span>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Credit Type'); ?>: </b>
+						<span class="pull-right"><?php echo $this->creditEntity->getWorkorderCreditType(); ?></span>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Detail'); ?>: </b>
+						<span class="pull-right"><?php echo $this->creditEntity->getWorkorderCreditDetail(); ?></span>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Credit Amount'); ?>: </b>
+						<span class="pull-right"><?php echo $this->currencyFormat($this->creditEntity->getWorkorderCreditAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></span>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Credit Balance'); ?>: </b>
+						<span class="pull-right"><?php echo $this->currencyFormat($this->creditEntity->getWorkorderCreditAmountLeft(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></span>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Deposit To'); ?>: </b>
+						<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'account-view') ):?>
+							<a href="<?php echo $this->url('account-view', array('accountId' => $this->creditEntity->getAccountId()));?>" title="<?php echo $this->translate('View this account'); ?>" class="pull-right"><?php echo $this->creditEntity->getAccountEntity()->getAccountName(); ?></a>
+						<?php else: ?>
+							<span class="pull-right"><?php echo $this->creditEntity->getAccountEntity()->getAccountName(); ?></span>
+						<?php endif; ?>
+						
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

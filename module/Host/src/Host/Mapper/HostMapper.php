@@ -102,6 +102,21 @@ class HostMapper implements HostMapperInterface
             'host.host_id = ?' => $id
         ));
         
+        // join type
+        $select->join('host_type', 'host.host_type_id = host_type.host_type_id', array(
+            'host_type_name'
+        ), 'inner');
+        
+        // join location
+        $select->join('location', 'location.location_id = host.location_id', array(
+            'location_type',
+            'location_street',
+            'location_city',
+            'location_state',
+            'location_zip',
+            'location_Status'
+        ), 'inner');
+        
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
         $stmt = $sql->prepareStatementForSqlObject($select);
