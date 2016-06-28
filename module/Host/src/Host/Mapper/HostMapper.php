@@ -77,6 +77,45 @@ class HostMapper implements HostMapperInterface
             ));
         }
         
+        // host status
+        if (array_key_exists('hostStatus', $filter) && ! empty($filter['hostStatus'])) {
+            $select->where(array(
+                'host.host_status = ?' => $filter['hostStatus']
+            ));
+        }
+        
+        // host type
+        if (array_key_exists('hostTypeId', $filter) && ! empty($filter['hostTypeId'])) {
+            $select->where(array(
+                'host.host_type_id = ?' => $filter['hostTypeId']
+            ));
+        }
+        
+        // keyword
+        if (array_key_exists('keyword', $filter) && ! empty($filter['keyword'])) {
+            $select->where->like('host.host_name', $filter['keyword'] . '%');
+        }
+        
+        $select->where(array(
+            'host.host_status != ?' => 'Deleted'
+        ));
+        
+        // join host type
+        $select->join('host_type', 'host.host_type_id = host_type.host_type_id', array(
+            'host_type_name'
+        ), 'inner');
+        
+        // join location
+        $select->join('location', 'host.location_id = location.location_id', array(
+            'location_type',
+            'location_street',
+            'location_street_cont',
+            'location_city',
+            'location_state',
+            'location_zip',
+            'location_Status'
+        ), 'inner');
+        
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
         $paginatorAdapter = new DbSelect($select, $this->readAdapter, $resultSetPrototype);

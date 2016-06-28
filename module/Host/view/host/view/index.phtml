@@ -72,7 +72,14 @@
 									$('#passwordValue').html('<?php echo $this->decrypt($mapEntity->getHostAttributeMapValue()); ?>');
 								});
 								</script>
-								<a  data-toggle="modal" data-target="#myModal">******** <i class="fa fa-search"></i></a>
+								<a  data-toggle="modal" data-target="#passwordModal">******** <i class="fa fa-search"></i></a>
+							<?php elseif($mapEntity->getHostAttributeId() == 8): ?>
+								<script>
+								$( document ).ready(function() {
+									$('#wirelessPasswordValue').html('<?php echo $this->decrypt($mapEntity->getHostAttributeMapValue()); ?>');
+								});
+								</script>
+								<a  data-toggle="modal" data-target="#wirelessPasswordModal">******** <i class="fa fa-search"></i></a>
 							<?php else: ?>
 								<?php echo $mapEntity->getHostAttributeMapValue(); ?>
 							<?php endif; ?>
@@ -86,7 +93,7 @@
 </div>
 
 <!-- password Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -96,6 +103,26 @@
       <div class="modal-body">
        	<p class="text-centered"><b><?php echo $this->translate('Password'); ?>:</b> 
        		<span id="passwordValue"></span>
+       	</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- password Modal -->
+<div class="modal fade" id="wirelessPasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><?php echo $this->translate('View Password'); ?></h4>
+      </div>
+      <div class="modal-body">
+       	<p class="text-centered"><b><?php echo $this->translate('Password'); ?>:</b> 
+       		<span id="wirelessPasswordValue"></span>
        	</p>
       </div>
       <div class="modal-footer">

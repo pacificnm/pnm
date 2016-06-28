@@ -15,6 +15,7 @@ use HostAttributeMap\Form\CopierForm;
 use HostAttributeMap\Form\ScannerForm;
 use HostAttributeMap\Form\RouterForm;
 use HostAttributeMap\Form\WirelessRouterForm;
+use HostAttributeMap\Form\AccessPointForm;
 
 class CreateController extends BaseController
 {
@@ -85,13 +86,17 @@ class CreateController extends BaseController
      */
     protected $routerForm;
 
-    protected $wirelessRouterForm;
-    
     /**
      *
-     * @var array
+     * @var WirelessRouterForm
      */
-    protected $config;
+    protected $wirelessRouterForm;
+
+    /**
+     * 
+     * @var AccessPointForm
+     */
+    protected $accessPointForm;
 
     /**
      *
@@ -112,13 +117,10 @@ class CreateController extends BaseController
      * @param CopierForm $copierForm            
      * @param ScannerForm $scannerForm            
      * @param RouterForm $routerForm            
-     * @param array $config            
+     * @param WirelessRouterForm $wirelessRouterForm            
+     * @param AccessPointForm $accessPointForm            
      */
-    public function __construct(ClientServiceInterface $clientService, HostServiceInterface $hostService, MapServiceInterface $mapService, 
-        WorkstationForm $workstationForm, ServerForm $serverForm, LaptopForm $laptopForm, TabletForm $tabletForm, PrinterForm $printerForm, 
-        CopierForm $copierForm, ScannerForm $scannerForm, RouterForm $routerForm, 
-        WirelessRouterForm $wirelessRouterForm,
-        array $config)
+    public function __construct(ClientServiceInterface $clientService, HostServiceInterface $hostService, MapServiceInterface $mapService, WorkstationForm $workstationForm, ServerForm $serverForm, LaptopForm $laptopForm, TabletForm $tabletForm, PrinterForm $printerForm, CopierForm $copierForm, ScannerForm $scannerForm, RouterForm $routerForm, WirelessRouterForm $wirelessRouterForm, AccessPointForm $accessPointForm)
     {
         $this->clientService = $clientService;
         
@@ -144,7 +146,7 @@ class CreateController extends BaseController
         
         $this->wirelessRouterForm = $wirelessRouterForm;
         
-        $this->config = $config;
+        $this->accessPointForm = $accessPointForm;
         
         $this->viewModel = new ViewModel();
     }
@@ -219,11 +221,11 @@ class CreateController extends BaseController
                 break;
             // wireless router
             case 10:
-                
+                $this->saveWirelessRouter($id, $hostId);
                 break;
             // Access Point
             case 11:
-                
+                $this->saveAccessPoint($id, $hostId);
                 break;
             default:
                 
@@ -457,7 +459,7 @@ class CreateController extends BaseController
             // get post
             $postData = $request->getPost();
             
-           $this->mapService->saveRouter($hostId, $postData);
+            $this->mapService->saveRouter($hostId, $postData);
             
             $this->flashMessenger()->addSuccessMessage('Host Attributes where saved');
             
@@ -489,6 +491,57 @@ class CreateController extends BaseController
             
             $this->flashMessenger()->addSuccessMessage('Host Attributes where saved');
             
+            return $this->redirect()->toRoute('host-view', array(
+                'clientId' => $clientId,
+                'hostId' => $hostId
+            ));
+        }
+    }
+
+    /**
+     *
+     * @param number $clientId            
+     * @param number $hostId            
+     */
+    private function saveWirelessRouter($clientId, $hostId)
+    {
+        $request = $this->getRequest();
+        
+        $this->viewModel->setTemplate('host-attribute-map/create/wireless-router.phtml');
+        
+        $this->viewModel->setVariable('form', $this->wirelessRouterForm);
+        
+        if ($request->isPost()) {
+            // get post
+            $postData = $request->getPost();
+            
+            $this->mapService->saveWirelessRouter($hostId, $postData);
+            
+            $this->flashMessenger()->addSuccessMessage('Host Attributes where saved');
+            
+            return $this->redirect()->toRoute('host-view', array(
+                'clientId' => $clientId,
+                'hostId' => $hostId
+            ));
+        }
+    }
+    
+    private function saveAccessPoint($clientId, $hostId)
+    {
+        $request = $this->getRequest();
+        
+        $this->viewModel->setTemplate('host-attribute-map/create/access-point.phtml');
+        
+        $this->viewModel->setVariable('form', $this->accessPointForm);
+        
+        if ($request->isPost()) {
+            // get post
+            $postData = $request->getPost();
+        
+            $this->mapService->saveAccessPoint($hostId, $postData);
+        
+            $this->flashMessenger()->addSuccessMessage('Host Attributes where saved');
+        
             return $this->redirect()->toRoute('host-view', array(
                 'clientId' => $clientId,
                 'hostId' => $hostId

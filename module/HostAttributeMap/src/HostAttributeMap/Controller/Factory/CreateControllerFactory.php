@@ -43,8 +43,10 @@ class CreateControllerFactory implements FactoryInterface
         
         $routerForm = $realServiceLocator->get('HostAttributeMap\Form\RouterForm');
         
-        $config = $realServiceLocator->get('config');
+        $wirelessRouterForm = $realServiceLocator->get('HostAttributeMap\Form\WirelessRouterForm');
         
-        return new CreateController($clientService, $hostService, $mapService, $workstationForm, $serverForm, $laptopForm, $tabletForm, $printerForm, $copierForm, $scannerForm, $routerForm, $config);
+        $accessPointForm = $realServiceLocator->get('HostAttributeMap\Form\AccessPointForm');
+        
+        return new CreateController($clientService, $hostService, $mapService, $workstationForm, $serverForm, $laptopForm, $tabletForm, $printerForm, $copierForm, $scannerForm, $routerForm, $wirelessRouterForm, $accessPointForm);
     }
 }

@@ -48,7 +48,9 @@ class CreateController extends BaseController
         $clientEntity = $this->clientService->get($id);
         
         if (! $clientEntity) {
+            $this->flashMessenger()->addErrorMessage('Client was not found');
             
+            return $this->redirect()->toRoute('client-index');
         }
 
         // get request

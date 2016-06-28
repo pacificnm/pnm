@@ -110,6 +110,20 @@ interface MapServiceInterface
      */
     public function saveSwitch($hostId, $postData);
     
+    /**
+     * 
+     * @param unknown $hostId
+     * @param unknown $postData
+     */
+    public function saveWirelessRouter($hostId, $postData);
+    
+    
+    /**
+     * 
+     * @param unknown $hostId
+     * @param unknown $postData
+     */
+    public function saveAccessPoint($hostId, $postData);
     
     /**
      *

@@ -20,12 +20,22 @@
                 				<div class="col-xs-12">
                 				
                 					<div class="form-group">
-                        				<select class="form-control input-sm" name="hostStatus" id="hostStatus">
+                        				<select class="form-control input-sm" name="host-status" id="host-status">
                         					<option value=""><?php echo $this->translate('Status'); ?></option>
                         					<option value="Active" <?php if($this->hostStatus == 'Active'):?> selected <?php endif?>><?php echo $this->translate('Active'); ?></option>
-                        					<option value="Closed" <?php if($this->hostStatus == 'Closed'):?> selected <?php endif?>><?php echo $this->translate('Closed'); ?></option>
+                        					<option value="Retired" <?php if($this->hostStatus == 'Retired'):?> selected <?php endif?>><?php echo $this->translate('Retired'); ?></option>
                         				</select>
                     				</div>
+                    				
+                    				<!-- host type -->
+                    				<div class="form-group">
+                        				<select class="form-control input-sm" name="host-type" id="host-type">
+                        					<option value=""><?php echo $this->translate('Type'); ?></option>
+                        					<?php foreach($this->typeEntites as $typeEntity): ?>
+                        					<option value="<?php echo $typeEntity->getHostTypeId(); ?>" <?php if($this->hostTypeId == $typeEntity->getHostTypeId()): ?>selected<?php endif;?>><?php echo $typeEntity->getHostTypeName();?></option>
+                        					<?php endforeach; ?>
+                        				</select>
+                        			</div>
                     				
                     				<div class="form-group">
                 						<div class="input-group input-group-sm">
@@ -76,10 +86,28 @@
     					</div>
     					<div class="row">
     						<div class="col-xs-12 col-sm-4">
-    							<b><?php echo $this->translate('Host Type'); ?>:</b> <?php echo $hostEntity->getHostTypeId(); ?>
+    							<b><?php echo $this->translate('Host Type'); ?>:</b> <?php echo $hostEntity->getTypeEntity()->getHostTypeName(); ?>
     						</div>
     						<div class="col-xs-12 col-sm-4">
-    							<b><?php echo $this->translate('Host IP'); ?>:</b> <?php echo $hostEntity->getHostIp(); ?>
+    							<b><?php echo $this->translate('Host IP'); ?>:</b> <?php echo ($hostEntity->getHostIp() != '') ? $hostEntity->getHostIp() : $this->translate('Not Assigned'); ?>
+    						</div>
+    					</div>
+    					<div class="row">
+    						<div class="col-xs-12">
+    							<b><?php echo $this->translate('Location'); ?>: </b>
+    							<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'location-view') ):?>
+    								<a href="<?php echo $this->url('location-view', array('clientId' => $hostEntity->getLocationId(), 'locationId' => $hostEntity->getLocationId())); ?>" title="<?php echo $this->translate('View this location'); ?>">
+    									<?php echo $hostEntity->getLocationEntity()->getLocationStreet(); ?>
+    									<?php echo $hostEntity->getLocationEntity()->getLocationCity(); ?>,
+    									<?php echo $hostEntity->getLocationEntity()->getLocationState(); ?>
+    									<?php echo $hostEntity->getLocationEntity()->getLocationZip(); ?>
+    								</a>
+    							<?php else: ?>
+    								<?php echo $hostEntity->getLocationEntity()->getLocationStreet(); ?>
+    								<?php echo $hostEntity->getLocationEntity()->getLocationCity(); ?>,
+    								<?php echo $hostEntity->getLocationEntity()->getLocationState(); ?>
+    								<?php echo $hostEntity->getLocationEntity()->getLocationZip(); ?>
+    							<?php endif; ?>
     						</div>
     					</div>
     				</li>

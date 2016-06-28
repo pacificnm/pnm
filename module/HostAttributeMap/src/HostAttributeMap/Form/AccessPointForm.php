@@ -5,7 +5,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use HostAttributeValue\Service\ValueServiceInterface;
 
-class WirelessRouterForm extends Form implements InputFilterProviderInterface
+class AccessPointForm extends Form implements InputFilterProviderInterface
 {
 
     /**
@@ -182,7 +182,7 @@ class WirelessRouterForm extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        return array();
+        // TODO Auto-generated method stub
     }
 
     private function getOperatingSystemOptions()
@@ -220,7 +220,7 @@ class WirelessRouterForm extends Form implements InputFilterProviderInterface
         
         return $options;
     }
-    
+
     private function getSecurityTypeOptions()
     {
         $options = array();

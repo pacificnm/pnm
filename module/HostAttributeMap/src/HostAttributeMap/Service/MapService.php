@@ -168,19 +168,19 @@ class MapService implements MapServiceInterface
     public function saveWorkstation($hostId, $postData)
     {
         // save operating system
-        $this->mapService->saveOperatingSystem($hostId, $postData);
+        $this->saveOperatingSystem($hostId, $postData);
         
         // save manufacture
-        $this->mapService->saveManufacture($hostId, $postData);
+        $this->saveManufacture($hostId, $postData);
         
         // save model
-        $this->mapService->saveModel($hostId, $postData);
+        $this->saveModel($hostId, $postData);
         
         // save Asset Tag
-        $this->mapService->saveAssetTag($hostId, $postData);
+        $this->saveAssetTag($hostId, $postData);
         
         // save Serial Number
-        $this->mapService->saveSerialNumber($hostId, $postData);
+        $this->saveSerialNumber($hostId, $postData);
     }
     
     /**
@@ -201,7 +201,7 @@ class MapService implements MapServiceInterface
         
         // save server type
         if (! empty($postData->serverTypeId)) {
-            $this->mapService->saveSelect($hostId, 5, $postData->serverTypeId);
+            $this->saveSelect($hostId, 5, $postData->serverTypeId);
         }
         
         // save Asset Tag
@@ -219,19 +219,19 @@ class MapService implements MapServiceInterface
     public function saveLaptop($hostId, $postData)
     {
         // save operating system
-        $this->mapService->saveOperatingSystem($hostId, $postData);
+        $this->saveOperatingSystem($hostId, $postData);
         
         // save manufacture
-        $this->mapService->saveManufacture($hostId, $postData);
+        $this->saveManufacture($hostId, $postData);
         
         // save model
-        $this->mapService->saveModel($hostId, $postData);
+        $this->saveModel($hostId, $postData);
         
         // save Asset Tag
-        $this->mapService->saveAssetTag($hostId, $postData);
+        $this->saveAssetTag($hostId, $postData);
         
         // save Serial Number
-        $this->mapService->saveSerialNumber($hostId, $postData);
+        $this->saveSerialNumber($hostId, $postData);
     }
     
     /**
@@ -242,19 +242,19 @@ class MapService implements MapServiceInterface
     public function saveTablet($hostId, $postData)
     {
         // save operating system
-        $this->mapService->saveManufacture($hostId, $postData);
+        $this->saveManufacture($hostId, $postData);
         
         // save manufacture
-        $this->mapService->saveManufacture($hostId, $postData);
+        $this->saveManufacture($hostId, $postData);
         
         // save model
-        $this->mapService->saveModel($hostId, $postData);
+        $this->saveModel($hostId, $postData);
         
         // save Asset Tag
-        $this->mapService->saveAssetTag($hostId, $postData);
+        $this->saveAssetTag($hostId, $postData);
         
         // save Serial Number
-        $this->mapService->saveSerialNumber($hostId, $postData);
+        $this->saveSerialNumber($hostId, $postData);
         
     }
     
@@ -266,22 +266,22 @@ class MapService implements MapServiceInterface
     public function savePrinter($hostId, $postData)
     {
         // save manufacture
-        $this->mapService->saveManufacture($hostId, $postData);
+        $this->saveManufacture($hostId, $postData);
         
         // save model
-        $this->mapService->saveModel($hostId, $postData);
+        $this->saveModel($hostId, $postData);
         
         // username
-        $this->mapService->saveUsername($hostId, $postData);
+        $this->saveUsername($hostId, $postData);
         
         // password
-        $this->mapService->savePassword($hostId, $postData);
+        $this->savePassword($hostId, $postData);
         
         // save Asset Tag
-        $this->mapService->saveAssetTag($hostId, $postData);
+        $this->saveAssetTag($hostId, $postData);
         
         // save Serial Number
-        $this->mapService->saveSerialNumber($hostId, $postData);
+        $this->saveSerialNumber($hostId, $postData);
     }
     
     /**
@@ -292,22 +292,22 @@ class MapService implements MapServiceInterface
     public function saveCopier($hostId, $postData)
     {
         // save manufacture
-        $this->mapService->saveManufacture($hostId, $postData);
+        $this->saveManufacture($hostId, $postData);
         
         // save model
-        $this->mapService->saveModel($hostId, $postData);
+        $this->saveModel($hostId, $postData);
         
         // username
-        $this->mapService->saveUsername($hostId, $postData);
+        $this->saveUsername($hostId, $postData);
         
         // password
-        $this->mapService->savePassword($hostId, $postData);
+        $this->savePassword($hostId, $postData);
         
         // save Asset Tag
-        $this->mapService->saveAssetTag($hostId, $postData);
+        $this->saveAssetTag($hostId, $postData);
         
         // save Serial Number
-        $this->mapService->saveSerialNumber($hostId, $postData);
+        $this->saveSerialNumber($hostId, $postData);
     }
     
     /**
@@ -318,22 +318,22 @@ class MapService implements MapServiceInterface
     public function saveScanner($hostId, $postData)
     {
         // save manufacture
-        $this->mapService->saveManufacture($hostId, $postData);
+        $this->saveManufacture($hostId, $postData);
         
         // save model
-        $this->mapService->saveModel($hostId, $postData);
+        $this->saveModel($hostId, $postData);
         
         // username
-        $this->mapService->saveUsername($hostId, $postData);
+        $this->saveUsername($hostId, $postData);
         
         // password
-        $this->mapService->savePassword($hostId, $postData);
+        $this->savePassword($hostId, $postData);
         
         // save Asset Tag
-        $this->mapService->saveAssetTag($hostId, $postData);
+        $this->saveAssetTag($hostId, $postData);
         
         // save Serial Number
-        $this->mapService->saveSerialNumber($hostId, $postData);
+        $this->saveSerialNumber($hostId, $postData);
     }
     
     /**
@@ -344,25 +344,25 @@ class MapService implements MapServiceInterface
     public function saveRouter($hostId, $postData)
     {
         // save operating system
-        $this->mapService->saveOperatingSystem($hostId, $postData);
+        $this->saveOperatingSystem($hostId, $postData);
         
         // save manufacture
-        $this->mapService->saveManufacture($hostId, $postData);
+        $this->saveManufacture($hostId, $postData);
         
         // save model
-        $this->mapService->saveModel($hostId, $postData);
+        $this->saveModel($hostId, $postData);
         
         // username
-        $this->mapService->saveUsername($hostId, $postData);
+        $this->saveUsername($hostId, $postData);
         
         // password
-        $this->mapService->savePassword($hostId, $postData);
+        $this->savePassword($hostId, $postData);
         
         // save Asset Tag
-        $this->mapService->saveAssetTag($hostId, $postData);
+        $this->saveAssetTag($hostId, $postData);
         
         // save Serial Number
-        $this->mapService->saveSerialNumber($hostId, $postData);
+        $this->saveSerialNumber($hostId, $postData);
     }
     
     /**
@@ -373,26 +373,98 @@ class MapService implements MapServiceInterface
     public function saveSwitch($hostId, $postData)
     {
         // save operating system
-        $this->mapService->saveOperatingSystem($hostId, $postData);
+        $this->saveOperatingSystem($hostId, $postData);
         
         // save manufacture
-        $this->mapService->saveManufacture($hostId, $postData);
+        $this->saveManufacture($hostId, $postData);
         
         // save model
-        $this->mapService->saveModel($hostId, $postData);
+        $this->saveModel($hostId, $postData);
         
         // username
-        $this->mapService->saveUsername($hostId, $postData);
+        $this->saveUsername($hostId, $postData);
         
         // password
-        $this->mapService->savePassword($hostId, $postData);
+        $this->savePassword($hostId, $postData);
         
         // save Asset Tag
-        $this->mapService->saveAssetTag($hostId, $postData);
+        $this->saveAssetTag($hostId, $postData);
         
         // save Serial Number
-        $this->mapService->saveSerialNumber($hostId, $postData);
+        $this->saveSerialNumber($hostId, $postData);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \HostAttributeMap\Service\MapServiceInterface::saveWirelessRouter()
+     */
+    public function saveWirelessRouter($hostId, $postData)
+    {
+        // save operating system
+        $this->saveOperatingSystem($hostId, $postData);
+        
+        // save manufacture
+        $this->saveManufacture($hostId, $postData);
+        
+        // save model
+        $this->saveModel($hostId, $postData);
+        
+        // username
+        $this->saveUsername($hostId, $postData);
+        
+        // password
+        $this->savePassword($hostId, $postData);
+        
+        // save Asset Tag
+        $this->saveAssetTag($hostId, $postData);
+        
+        // save Serial Number
+        $this->saveSerialNumber($hostId, $postData);
+        
+        // ssid
+        $this->saveSSID($hostId, $postData);
+        
+        // security password
+        $this->saveWirelessPassword($hostId, $postData);
+        
+        // security type
+        $this->saveWirelessSecurityType($hostId, $postData);
+    }
+    
+    public function saveAccessPoint($hostId, $postData)
+    {
+        // save operating system
+        $this->saveOperatingSystem($hostId, $postData);
+        
+        // save manufacture
+        $this->saveManufacture($hostId, $postData);
+        
+        // save model
+        $this->saveModel($hostId, $postData);
+        
+        // username
+        $this->saveUsername($hostId, $postData);
+        
+        // password
+        $this->savePassword($hostId, $postData);
+        
+        // save Asset Tag
+        $this->saveAssetTag($hostId, $postData);
+        
+        // save Serial Number
+        $this->saveSerialNumber($hostId, $postData);
+        
+        // ssid
+        $this->saveSSID($hostId, $postData);
+        
+        // security password
+        $this->saveWirelessPassword($hostId, $postData);
+        
+        // security type
+        $this->saveWirelessSecurityType($hostId, $postData);
+    }
+    
     /**
      *
      * @param number $hostId
@@ -438,7 +510,7 @@ class MapService implements MapServiceInterface
      * @param unknown $hostId
      * @param unknown $postData
      */
-    public function saveUsername($hostId, $postData)
+    private function saveUsername($hostId, $postData)
     {
         if (! empty($postData->username)) {
             $this->saveText($hostId, 6, $postData->username);
@@ -472,6 +544,59 @@ class MapService implements MapServiceInterface
     
             $this->saveText($hostId, 7, $password);
         }
+    }
+    
+    /**
+     * 
+     * @param unknown $hostId
+     * @param unknown $postData
+     * @throws \Exception
+     */
+    private function saveWirelessPassword($hostId, $postData)
+    {
+        // make sure we have an encryption key
+        if (! array_key_exists('encryption-key', $this->config) || empty($this->config['encryption-key'])) {
+            throw new \Exception('missing encryption-key. You need to add the config key in the local.php config and provide a random string for default encryption');
+        }
+    
+        if (! empty($postData->password)) {
+    
+            // encrypt password
+            $blockCipher = BlockCipher::factory('mcrypt', array(
+                'algo' => 'aes'
+            ));
+    
+            // set key
+            $blockCipher->setKey($this->config['encryption-key']);
+    
+            $password = $blockCipher->encrypt($postData->securityPassword);
+    
+            $this->saveText($hostId, 8, $password);
+        }
+    }
+    
+    /**
+     * 
+     * @param unknown $hostId
+     * @param unknown $postData
+     */
+    private function saveSSID($hostId, $postData)
+    {
+        if (! empty($postData->ssid)) {
+            $this->saveText($hostId, 9, $postData->ssid);
+        }
+    }
+    
+    /**
+     * 
+     * @param unknown $hostId
+     * @param unknown $postData
+     */
+    private function saveWirelessSecurityType($hostId, $postData)
+    {
+        if (! empty($postData->securityType)) {
+            $this->saveSelect($hostId, 4, $postData->securityType);
+        } 
     }
     
     /**

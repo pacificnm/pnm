@@ -22,6 +22,8 @@ class IndexControllerFactory implements FactoryInterface
         
         $hostService = $realServiceLocator->get('Host\Service\HostServiceInterface');
         
-        return new IndexController($clientService, $hostService);
+        $typeService = $realServiceLocator->get('HostType\Service\TypeServiceInterface');
+        
+        return new IndexController($clientService, $hostService, $typeService);
     }
 }

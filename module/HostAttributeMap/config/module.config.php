@@ -49,6 +49,7 @@ return array(
             'HostAttributeMap\Form\ScannerForm' => 'HostAttributeMap\Form\Factory\ScannerFormFactory',
             'HostAttributeMap\Form\RouterForm' => 'HostAttributeMap\Form\Factory\RouterFormFactory',
             'HostAttributeMap\Form\WirelessRouterForm' => 'HostAttributeMap\Form\Factory\WirelessRouterFactory',
+            'HostAttributeMap\Form\AccessPointForm' => 'HostAttributeMap\Form\Factory\AccessPointFormFactory'
         )
     ),
     
