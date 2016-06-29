@@ -211,6 +211,11 @@ class WorkorderMapper implements WorkorderMapperInterface
         $select->where(array(
             'client_id = ?' => $clientId
         ));
+
+        // status
+        if(! empty($status)) {
+            $select->where(array('workorder.workorder_status = ?' => $status));
+        }
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
