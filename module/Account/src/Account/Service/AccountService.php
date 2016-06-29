@@ -67,6 +67,20 @@ class AccountService implements AccountServiceInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \Account\Service\AccountServiceInterface::getAccountsByType()
+     */
+    public function getAccountsByType($accountTypeId)
+    {
+        $filter = array(
+            'accountTypeId' => $accountTypeId
+        );
+        
+        return $this->mapper->getAll($filter);
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *

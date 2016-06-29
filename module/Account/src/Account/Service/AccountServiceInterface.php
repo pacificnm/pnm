@@ -28,6 +28,13 @@ interface AccountServiceInterface
     public function getNonSystemAccounts();
 
     /**
+     * 
+     * @param number $accountTypeId
+     * @return AccountEntity
+     */
+    public function getAccountsByType($accountTypeId);
+    
+    /**
      *
      * @param AccountEntity $entity            
      * @return AccountEntity

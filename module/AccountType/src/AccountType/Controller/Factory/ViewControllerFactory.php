@@ -5,6 +5,11 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use AccountType\Controller\ViewController;
 
+/**
+ * 
+ * @author jaimie
+ *
+ */
 class ViewControllerFactory implements FactoryInterface
 {
     
@@ -19,6 +24,8 @@ class ViewControllerFactory implements FactoryInterface
         
         $typeService = $realServiceLocator->get('AccountType\Service\TypeServiceInterface');
         
-        return new ViewController($typeService);
+        $accountService = $realServiceLocator->get('Account\Service\AccountServiceInterface');
+        
+        return new ViewController($typeService, $accountService);
     }
 }
