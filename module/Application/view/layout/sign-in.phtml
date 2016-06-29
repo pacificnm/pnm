@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?php echo $this->headTitle($this->appConfig()->getConfigCompanyNameShort())->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?php echo $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -38,16 +38,16 @@
 	<body class="hold-transition login-page">
 		<div class="login-box">
 			<div class="login-logo">
-				<a href="" title=""><b>Pacific</b> NM</a>
+				<a href="<?php echo $this->url('home'); ?>" title="<?php echo $this->appConfig()->getConfigCompanyNameShort(); ?>"><b><?php echo $this->appConfig()->getConfigCompanyNameShort(); ?></b></a>
 			</div>
 			<div class="login-box-body">
 				<p class="login-box-msg"><?php echo $this->translate('Sign in to start your session');?></p>
 				<?php echo $this->content; ?>
 				
 				<br />
-				
-				<a href="#" title="<?php echo $this->translate('I forgot my password'); ?>"><?php echo $this->translate('I forgot my password'); ?></a><br>
-				<a href="#" title="<?php echo $this->translate('Register a new membership'); ?>" class="text-center"><?php echo $this->translate('Register a new membership'); ?></a>
+				<p class="login-box-msg">
+					<a href="#" title="<?php echo $this->translate('I forgot my password'); ?>"><?php echo $this->translate('I forgot my password'); ?></a><br>
+				</p>
 			</div>
 		</div>
       <?php echo $this->inlineScript() ?>
