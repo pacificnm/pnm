@@ -74,8 +74,17 @@ class AccountMapper implements AccountMapperInterface
             'account_active = ?' => 1
         ));
         
-        if(array_key_exists('accountVisible', $filter) && ! empty($filter['accountVisible'])) {
-            $select->where(array('account.account_visible = ?' => $filter['accountVisible']));
+        // filter account type
+        if (array_key_exists('accountTypeId', $filter) && ! empty($filter['accountTypeId'])) {
+            $select->where(array(
+                'account.account_type_id = ?' => $filter['accountTypeId']
+            ));
+        }
+        
+        if (array_key_exists('accountVisible', $filter) && ! empty($filter['accountVisible'])) {
+            $select->where(array(
+                'account.account_visible = ?' => $filter['accountVisible']
+            ));
         }
         
         $select->join('account_type', 'account.account_type_id = account_type.account_type_id', array(
@@ -132,8 +141,9 @@ class AccountMapper implements AccountMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Account\Mapper\AccountMapperInterface::getNonSystemAccounts()
      */
     public function getNonSystemAccounts()
@@ -161,17 +171,17 @@ class AccountMapper implements AccountMapperInterface
         $result = $stmt->execute();
         
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
+            
             $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
-        
+            
             $resultSet->buffer();
-        
+            
             return $resultSet->initialize($result);
         }
         
         return array();
     }
-    
+
     public function save(AccountEntity $entity)
     {
         $postData = $this->hydrator->extract($entity);
