@@ -6,10 +6,10 @@
  * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
  * @license   https://www.pacificnm.com/license/new-bsd New BSD License
  */
-namespace Account\Controller\Factory;
+namespace AccountLedger\Form\Factory;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Account\Controller\UpdateController;
+use AccountLedger\Form\LedgerForm;
 
 /**
  *
@@ -17,22 +17,18 @@ use Account\Controller\UpdateController;
  * @version 2.5.0
  *         
  */
-class UpdateControllerFactory
+class LedgerFormFactory
 {
 
     /**
      *
      * @param ServiceLocatorInterface $serviceLocator            
-     * @return \Account\Controller\UpdateController
+     * @return \AccountLedger\Form\LedgerForm
      */
     public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
-        $realServiceLocator = $serviceLocator->getServiceLocator();
+        $accountService = $serviceLocator->get('Account\Service\AccountServiceInterface');
         
-        $accountService = $realServiceLocator->get('Account\Service\AccountServiceInterface');
-        
-        $accountForm = $realServiceLocator->get('Account\Form\AccountForm');
-        
-        return new UpdateController($accountService, $accountForm);
+        return new LedgerForm($accountService);
     }
 }

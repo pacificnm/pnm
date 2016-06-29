@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
 namespace Account\Controller;
 
 use Application\Controller\BaseController;
@@ -6,6 +13,11 @@ use Account\Service\AccountServiceInterface;
 use Account\Form\AccountForm;
 use Zend\View\Model\ViewModel;
 
+/**
+ *
+ * @author jaimie
+ *
+ */
 class CreateController extends BaseController
 {
 
@@ -41,6 +53,7 @@ class CreateController extends BaseController
      */
     public function indexAction()
     {
+        // request object
         $request = $this->getRequest();
         
         // if we have a post
@@ -65,6 +78,7 @@ class CreateController extends BaseController
             }
         }
         
+        // set form defaults
         $this->accountForm->get('accountId')->setValue(0);
         
         $this->accountForm->get('accountCreated')->setValue(time());
@@ -75,6 +89,7 @@ class CreateController extends BaseController
         
         $this->accountForm->get('accountVisible')->setValue(1);
         
+        // set up layout vars
         $this->layout()->setVariable('pageTitle', 'Accounts');
         
         $this->layout()->setVariable('pageSubTitle', 'New');
@@ -83,6 +98,7 @@ class CreateController extends BaseController
         
         $this->layout()->setVariable('activeSubMenuItem', 'account-index');
         
+        // return view
         return new ViewModel(array(
             'form' => $this->accountForm
         ));
