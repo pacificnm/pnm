@@ -1,10 +1,22 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
 namespace Account\Controller;
 
 use Application\Controller\BaseController;
 use Account\Service\AccountServiceInterface;
 use Zend\View\Model\ViewModel;
 
+/**
+ *
+ * @author jaimie
+ *
+ */
 class IndexController extends BaseController
 {
 

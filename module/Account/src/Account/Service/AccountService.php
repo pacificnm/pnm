@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
 namespace Account\Service;
 
 use Account\Entity\AccountEntity;
@@ -6,6 +13,11 @@ use Account\Mapper\AccountMapperInterface;
 use AccountLedger\Entity\LedgerEntity;
 use AccountLedger\Service\LedgerServiceInterface;
 
+/**
+ * 
+ * @author jaimie
+ *
+ */
 class AccountService implements AccountServiceInterface
 {
 

@@ -1,3 +1,12 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
+?>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="box box-primary">
@@ -7,7 +16,9 @@
 					<?php echo $this->translate('View Account'); ?>
 				</h3>
 				<div class="box-tools">
-				
+					<a href="<?php echo $this->url('account-ledger-create', array('accountId' => $this->accountEntity->getAccountId())); ?>" title="<?php echo $this->translate('New account transfer'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>					
+					<a href="<?php echo $this->url('account-delete', array('accountId' => $this->accountEntity->getAccountId())); ?>" title="<?php echo $this->translate('Delete this account'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+					<a href="<?php echo $this->url('account-update', array('accountId' => $this->accountEntity->getAccountId())); ?>" title="<?php echo $this->translate('Edit this account'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 				</div>
 			</div>
 			<div class="box-body">

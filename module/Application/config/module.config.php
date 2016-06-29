@@ -164,6 +164,21 @@ return array(
                                         'route' => 'account-ledger-view',
                                         'useRouteMatch' => true,
                                     ),
+                                    array(
+                                        'label' => 'Create Ledger Item',
+                                        'route' => 'account-ledger-create',
+                                        'useRouteMatch' => true,
+                                    ),
+                                    array(
+                                        'label' => 'Edit',
+                                        'route' => 'account-update',
+                                        'useRouteMatch' => true,
+                                    ),
+                                    array(
+                                        'label' => 'Delete',
+                                        'route' => 'account-delete',
+                                        'useRouteMatch' => true,
+                                    )
                                 ),
                             ),
                             array(
