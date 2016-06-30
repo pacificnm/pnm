@@ -9,10 +9,10 @@
 ?>
 <?php if( $this->acl->isAllowed($this->identity()->getAuthRole(), 'account-index') ):?>
 
-<li class="header"><?php echo $this->translate('ACCOUNTING NAVIGATION'); ?></li>
 <li class="treeview <?php if($this->activeMenuItem == 'account'):?>active<?php endif;?>">
 	<a href="#">
 		<i class="fa fa-table"></i> <span><?php echo $this->translate('Accounting'); ?></span>
+		<i class="fa fa-angle-left pull-right"></i>
 	</a>
 	<ul class="treeview-menu">
 		<!-- home -->

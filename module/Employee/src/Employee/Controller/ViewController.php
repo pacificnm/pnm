@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
 namespace Employee\Controller;
 
 use Application\Controller\BaseController;
@@ -7,6 +14,12 @@ use Zend\View\Model\ViewModel;
 use Task\Service\TaskServiceInterface;
 use WorkorderEmployee\Service\WorkorderEmployeeServiceInterface;
 
+/**
+ *
+ * @author jaimie <pacificnm@gmail.com>
+ * @version 2.5.0
+ *         
+ */
 class ViewController extends BaseController
 {
 
@@ -17,23 +30,23 @@ class ViewController extends BaseController
     protected $employeeService;
 
     /**
-     * 
+     *
      * @var WorkorderEmployeeServiceInterface
      */
     protected $workorderService;
-    
+
     /**
-     * 
+     *
      * @var TaskServiceInterface
      */
     protected $taskService;
-    
-/**
- * 
- * @param EmployeeServiceInterface $employeeService
- * @param WorkorderServiceInterface $workorderService
- * @param TaskServiceInterface $taskService
- */
+
+    /**
+     *
+     * @param EmployeeServiceInterface $employeeService            
+     * @param WorkorderServiceInterface $workorderService            
+     * @param TaskServiceInterface $taskService            
+     */
     public function __construct(EmployeeServiceInterface $employeeService, WorkorderEmployeeServiceInterface $workorderService, TaskServiceInterface $taskService)
     {
         $this->employeeService = $employeeService;
@@ -51,8 +64,6 @@ class ViewController extends BaseController
      */
     public function indexAction()
     {
-        
-        
         $this->layout()->setVariable('pageTitle', 'Employee');
         
         $this->layout()->setVariable('pageSubTitle', 'View');
@@ -65,8 +76,7 @@ class ViewController extends BaseController
         
         $employeeEntity = $this->employeeService->get($id);
         
-        
-        if(! $employeeEntity) {
+        if (! $employeeEntity) {
             $this->flashmessenger()->addErrorMessage('Unable to find the employee #' . $id);
             
             return $this->redirect()->toRoute('employee-index');
@@ -75,8 +85,6 @@ class ViewController extends BaseController
         $workorderEntitys = $this->workorderService->getEmployeeWorkorders($employeeEntity->getEmployeeId());
         
         $taskEntitys = $this->taskService->getEmployeeActiveTasks($employeeEntity->getEmployeeId());
-        
-        
         
         return new ViewModel(array(
             'employeeEntity' => $employeeEntity,

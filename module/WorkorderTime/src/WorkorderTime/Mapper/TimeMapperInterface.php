@@ -39,4 +39,20 @@ interface TimeMapperInterface
      * @return TimeEntity
      */
     public function getTotalByLabor($clientId);
+    
+    /**
+     * 
+     * @param number $employeeId
+     * @param number $start
+     * @param number $end
+     */
+    public function getEmployeeTime($employeeId, $start, $end);
+    
+    /**
+     * 
+     * @param unknown $employeeId
+     * @param unknown $start
+     * @param unknown $end
+     */
+    public function getEmployeeTotalTime($employeeId, $start = null, $end = null);
 }

@@ -1,17 +1,14 @@
 {
-  "name" : "Pacificnm App",
-  "description" : "Skeleton Application for ZF2",
-  "version" : "2.5",
+  "name" : "PacificNM",
+  "description" : "Pacific NM is a CRM for network service providers",
+  "version" : "2.5.0",
   "require" : {
     "php" : ">=5.5",
     "zendframework/zendframework" : "~2.5",
-    "zendframework/zend-developer-tools" : "dev-master",
-    "zendframework/zftool" : "dev-master"
+    "zendframework/zftool" : "dev-master",
+    "davidhavl/dherrorlogging" : "~2.0"
   },
   "license" : "BSD-3-Clause",
-  "keywords" : [ "framework", "zf2" ],
-  "homepage" : "http://framework.zend.com/",
-  "require-dev": {
-    "phpunit/phpunit": "^5.4"
-  }
+  "keywords" : [ "PacificNM", "Pacific Network Management" ],
+  "homepage" : "http://www.pacificnm.com"
 }

@@ -9,7 +9,7 @@
 namespace Employee\Controller\Factory;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Employee\Controller\IndexController;
+use Employee\Controller\TimePrintController;
 
 /**
  *
@@ -17,20 +17,20 @@ use Employee\Controller\IndexController;
  * @version 2.5.0
  *         
  */
-class IndexControllerFactory
+class TimePrintControllerFactory
 {
 
     /**
      *
      * @param ServiceLocatorInterface $serviceLocator            
-     * @return \Employee\Controller\IndexController
+     * @return \Employee\Controller\TimePrintController
      */
     public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
-        $employeeService = $realServiceLocator->get('Employee\Service\EmployeeServiceInterface');
+        $timeService = $realServiceLocator->get('WorkorderTime\Service\TimeServiceInterface');
         
-        return new IndexController($employeeService);
+        return new TimePrintController($timeService);
     }
 }

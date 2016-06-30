@@ -10,6 +10,8 @@ use Zend\Db\Sql\Insert;
 use Zend\Db\Sql\Update;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Db\ResultSet\ResultSet;
+use Zend\Paginator\Paginator;
+use Zend\Paginator\Adapter\DbSelect;
 use WorkorderTime\Entity\TimeEntity;
 
 class TimeMapper implements TimeMapperInterface
@@ -211,10 +213,11 @@ class TimeMapper implements TimeMapperInterface
         
         return (bool) $result->getAffectedRows();
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \WorkorderTime\Mapper\TimeMapperInterface::getTotalByLabor()
      */
     public function getTotalByLabor($clientId)
@@ -229,7 +232,9 @@ class TimeMapper implements TimeMapperInterface
             'labor_name'
         ));
         
-        $select->join('workorder', 'workorder.workorder_id = workorder_time.workorder_id', array('client_id'), 'inner');
+        $select->join('workorder', 'workorder.workorder_id = workorder_time.workorder_id', array(
+            'client_id'
+        ), 'inner');
         
         $select->where(array(
             'workorder.client_id = ?' => $clientId
@@ -244,14 +249,106 @@ class TimeMapper implements TimeMapperInterface
         $result = $stmt->execute();
         
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
+            
             $resultSet = new ResultSet();
-        
+            
             $resultSet->initialize($result);
-        
+            
             $resultSet->buffer();
             
             return $resultSet;
+        }
+        
+        return 0;
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderTime\Mapper\TimeMapperInterface::getEmployeeTime()
+     */
+    public function getEmployeeTime($employeeId, $start = null, $end = null)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder_time');
+        
+        $select->where(array(
+            'workorder_time.employee_id = ?' => $employeeId
+        ));
+        
+        if ($start) {
+            $select->where->greaterThanOrEqualTo('workorder_time.workorder_time_in', $start);
+        }
+        
+        if ($end) {
+            $select->where->lessThanOrEqualTo('workorder_time.workorder_time_out', $end);
+        }
+        
+        // join workorder
+        $select->join('workorder', 'workorder_time.workorder_id = workorder.workorder_id', array(
+            'client_id'
+        ), 'inner');
+        
+        // join client
+        $select->join('client', 'workorder.client_id = client.client_id', array(
+            'client_name'
+        ), 'inner');
+        
+        $select->order('workorder_time.workorder_time_in');
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $paginatorAdapter = new DbSelect($select, $this->readAdapter, $resultSetPrototype);
+        
+        $paginator = new Paginator($paginatorAdapter);
+        
+        return $paginator;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     * @see \WorkorderTime\Mapper\TimeMapperInterface::getEmployeeTotalTime()
+     */
+    public function getEmployeeTotalTime($employeeId, $start = null, $end = null)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder_time');
+        
+        $select->columns(array(
+            'time_total' => new \Zend\Db\Sql\Expression('SUM(workorder_time_total)')
+        ));
+        
+        $select->where(array(
+            'workorder_time.employee_id = ?' => $employeeId
+        ));
+        
+        if ($start) {
+            $select->where->greaterThanOrEqualTo('workorder_time.workorder_time_in', $start);
+        }
+        
+        if ($end) {
+            $select->where->lessThanOrEqualTo('workorder_time.workorder_time_out', $end);
+        }
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+            
+            $resultSet = new ResultSet();
+            
+            $resultSet->initialize($result);
+            
+            $resultSet->buffer();
+            
+            $row = $resultSet->current();
+            
+            return $row->time_total;
         }
         
         return 0;
