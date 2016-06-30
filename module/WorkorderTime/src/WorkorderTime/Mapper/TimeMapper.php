@@ -295,6 +295,8 @@ class TimeMapper implements TimeMapperInterface
             'client_name'
         ), 'inner');
         
+        $select->order('workorder_time.workorder_time_in');
+        
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
         $paginatorAdapter = new DbSelect($select, $this->readAdapter, $resultSetPrototype);
