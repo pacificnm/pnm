@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
 return array(
     'module' => array(
         'Employee' => array(
@@ -10,7 +17,9 @@ return array(
                 'employee' => array(
                     'employee-profile',
                     'employee-profile-update',
-                    'employee-password'
+                    'employee-password',
+                    'employee-time',
+                    'employee-time-print'
                 ),
                 'accountant' => array(),
                 'administrator' => array(
@@ -33,6 +42,8 @@ return array(
             'Employee\Controller\Update' => 'Employee\Controller\Factory\UpdateControllerFactory',
             'Employee\Controller\Create' => 'Employee\Controller\Factory\CreateControllerFactory',
             'Employee\Controller\Delete' => 'Employee\Controller\Factory\DeleteControllerFactory',
+            'Employee\Controller\Time' => 'Employee\Controller\Factory\TimeControllerFactory',
+            'Employee\Controller\TimePrint' => 'Employee\Controller\Factory\TimePrintControllerFactory',
         )
     ),
     
@@ -94,7 +105,7 @@ return array(
                 'title' => 'Delete Employee',
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/admin/employee/delete/[:employeeId]',
+                    'route' => '/admin/employee/[:employeeId]/delete',
                     'defaults' => array(
                         'controller' => 'Employee\Controller\Delete',
                         'action' => 'index'
@@ -105,7 +116,7 @@ return array(
                 'title' => 'Edit Employee',
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/admin/employee/update/[:employeeId]',
+                    'route' => '/admin/employee/[:employeeId]/update',
                     'defaults' => array(
                         'controller' => 'Employee\Controller\Update',
                         'action' => 'index'
@@ -127,9 +138,31 @@ return array(
                 'title' => 'View Employee',
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/admin/employee/view/[:employeeId]',
+                    'route' => '/admin/employee/[:employeeId]/view',
                     'defaults' => array(
                         'controller' => 'Employee\Controller\View',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'employee-time' => array(
+                'title' => 'Time Clock',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/employee/profile/time',
+                    'defaults' => array(
+                        'controller' => 'Employee\Controller\Time',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'employee-time-print' => array(
+                'title' => 'Time Clock',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/employee/profile/time/print',
+                    'defaults' => array(
+                        'controller' => 'Employee\Controller\TimePrint',
                         'action' => 'index'
                     )
                 )

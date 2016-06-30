@@ -4,6 +4,8 @@ namespace WorkorderTime\Hydrator;
 use Zend\Stdlib\Hydrator\ClassMethods;
 use WorkorderTime\Entity\TimeEntity;
 use Employee\Entity\EmployeeEntity;
+use Workorder\Entity\WorkorderEntity;
+use Client\Entity\ClientEntity;
 
 class TimeHydrator extends ClassMethods
 {
@@ -31,9 +33,21 @@ class TimeHydrator extends ClassMethods
         
         parent::hydrate($data, $object);
         
+        // set client entity
         $employeeEntity = parent::hydrate($data, new EmployeeEntity());
         
         $object->setEmployeeEntity($employeeEntity);
+        
+        //set workorder
+        $workorderEntity = parent::hydrate($data, new WorkorderEntity());
+        
+        // if we have a workorderEntity set the client
+        if($workorderEntity) {
+            $clientEntity = parent::hydrate($data, new ClientEntity());
+             $workorderEntity->setClientEntity($clientEntity);
+        }
+        
+        $object->setWorkorderEntity($workorderEntity);
         
         return $object;
     }
@@ -53,6 +67,8 @@ class TimeHydrator extends ClassMethods
         $data = parent::extract($object);
         
         unset($data['employee_entity']);
+        
+        unset($data['workorder_entity']);
         
         return $data;
     }

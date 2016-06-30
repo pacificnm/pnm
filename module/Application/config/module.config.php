@@ -255,6 +255,11 @@ return array(
                         'useRouteMatch' => true,
                         'pages' => array(
                             array(
+                                'label' => 'Time Clock',
+                                'route' => 'employee-time',
+                                'useRouteMatch' => true,
+                            ),
+                            array(
                                 'label' => 'Favorite Clients',
                                 'route' => 'client-favorite-index',
                                 'useRouteMatch' => true,

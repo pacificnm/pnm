@@ -1,0 +1,61 @@
+<section class="invoice small">
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+				<?php echo $this->appConfig()->getConfigCompanyName();?>
+				<small class="pull-right"><?php echo $this->translate('Time Card For'); ?> <?php echo $this->identity()->getEmployeeEntity()->getEmployeeName(); ?></small>
+			</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<p><b><?php echo $this->translate('Period'); ?>:</b> <?php echo urldecode($this->start); ?> - <?php echo urldecode($this->end); ?></p>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-xs-12">
+        	<?php if($this->paginator->count() == 0): ?>
+    			<div class="box-body">
+    				<div class="row">
+    					<div class="col-xs-12">
+    						<div class="alert alert-info">
+    							<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no time entries for '); ?> <?php echo $this->start; ?> - <?php echo $this->end; ?></p>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+			<?php else: ?>
+			<div class="table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Work Order'); ?></th>
+							<th><?php echo $this->translate('Client'); ?></th>
+							<th><?php echo $this->translate('Time In'); ?></th>
+							<th><?php echo $this->translate('Time Out'); ?></th>
+							<th class="text-right"><?php echo $this->translate('Time Total'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->paginator as $timeEntity): ?>
+						<tr>
+							<td><?php echo $this->translate('Work Order #'); ?><?php echo $timeEntity->getWorkorderId(); ?></td>
+							<td><?php echo $timeEntity->getWorkorderEntity()->getClientEntity()->getClientName();?></td>
+							<td><?php echo date($this->appConfig()->getConfigDateLong(), $timeEntity->getWorkorderTimeIn()); ?></td>
+							<td><?php echo date($this->appConfig()->getConfigDateLong(), $timeEntity->getWorkorderTimeOut()); ?></td>
+							<td class="text-right"><?php echo number_format(($timeEntity->getWorkorderTimeTotal() / 60) / 60, 2); ?> <?php echo $this->translate('hrs'); ?></td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th class="text-right" colspan="4"><?php echo $this->translate('Total'); ?></th>
+							<th class="text-right"><?php echo number_format(($this->totalTime / 60) / 60, 2); ?> <?php echo $this->translate('hrs'); ?></th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<?php endif; ?>
+    	</div>
+    </div>
+</section>

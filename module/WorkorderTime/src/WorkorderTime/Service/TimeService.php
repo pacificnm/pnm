@@ -89,4 +89,24 @@ class TimeService implements TimeServiceInterface
     {
         return $this->mapper->getTotalByLabor($clientId);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderTime\Service\TimeServiceInterface::getEmployeeTime()
+     */
+    public function getEmployeeTime($employeeId, $start = null, $end = null)
+    {
+        return $this->mapper->getEmployeeTime($employeeId, $start, $end);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderTime\Service\TimeServiceInterface::getEmployeeTotalTime()
+     */
+    public function getEmployeeTotalTime($employeeId, $start = null, $end = null)
+    {
+        return $this->mapper->getEmployeeTotalTime($employeeId, $start, $end);
+    }
 }

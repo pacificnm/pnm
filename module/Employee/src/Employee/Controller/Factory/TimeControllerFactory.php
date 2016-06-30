@@ -9,28 +9,27 @@
 namespace Employee\Controller\Factory;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Employee\Controller\IndexController;
+use Employee\Controller\TimeController;
 
 /**
  *
  * @author jaimie <pacificnm@gmail.com>
  * @version 2.5.0
- *         
+ *
  */
-class IndexControllerFactory
+class TimeControllerFactory
 {
 
     /**
      *
      * @param ServiceLocatorInterface $serviceLocator            
-     * @return \Employee\Controller\IndexController
      */
     public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
-        $employeeService = $realServiceLocator->get('Employee\Service\EmployeeServiceInterface');
+        $timeService = $realServiceLocator->get('WorkorderTime\Service\TimeServiceInterface');
         
-        return new IndexController($employeeService);
+        return new TimeController($timeService);
     }
 }
