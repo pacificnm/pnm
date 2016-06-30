@@ -10,7 +10,7 @@
   },
   "license" : "BSD-3-Clause",
   "keywords" : [ "PacificNM", "Pacific Network Management" ],
-  "homepage" : "www.pacificnm.com",
+  "homepage" : "http://www.pacificnm.com",
   "require-dev": {
     "phpunit/phpunit": "^5.4"
   }
