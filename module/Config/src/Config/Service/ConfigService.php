@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
 namespace Config\Service;
 
 use Zend\Cache\Storage\Adapter\Memcached;
@@ -51,16 +58,7 @@ class ConfigService implements ConfigServiceInterface
      */
     public function get($id)
     {
-        $key = 'config-service-get-' . $id;
-        
-        $configEntity = $this->memcached->getItem($key);
-        
-        if (! $configEntity) {
-            
-            $configEntity = $this->mapper->get($id);
-            
-            $this->memcached->setItem($key, $configEntity);
-        }
+        $configEntity = $this->mapper->get($id);
         
         return $configEntity;
     }

@@ -1,3 +1,12 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
+?>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="box box-primary">
@@ -11,30 +20,7 @@
 				</div>
 			</div>
 			<div class="box-body">
-				<h3 class="profile-username"><?php echo $this->translate('Application Config'); ?></h3>
-				<ul class="list-group list-group-unbordered">
-					<li class="list-group-item">
-						<b><?php echo $this->translate('Version'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigVersion();?></a>
-					</li>
-					<li class="list-group-item">
-						<b><?php echo $this->translate('Site'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigHttpAddress();?></a>
-					</li>
-					<li class="list-group-item">
-						<b><?php echo $this->translate('Date Long'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigDateLong();?></a>
-					</li>
-					<li class="list-group-item">
-						<b><?php echo $this->translate('Date Short'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigDateShort();?></a>
-					</li>
-					<li class="list-group-item">
-						<b><?php echo $this->translate('Language'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigLang();?></a>
-					</li>
-					<li class="list-group-item">
-						<b><?php echo $this->translate('Currency'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCurrency();?></a>
-					</li>
-					<li class="list-group-item">
-						<b><?php echo $this->translate('Copyright Year Start'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCopyYear();?></a>
-					</li>
-				</ul>
+				
 				<h3 class="profile-username"><?php echo $this->translate('Company Settings'); ?></h3>
 				<ul class="list-group list-group-unbordered">
 					<li class="list-group-item">
@@ -68,6 +54,35 @@
 						<b><?php echo $this->translate('Phone Number Alt.')?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCompanyPhoneAlt();?></a>
 					</li>
 				</ul>
+				
+				<h3 class="profile-username"><?php echo $this->translate('Application Config'); ?></h3>
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Version'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigVersion();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Site'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigHttpAddress();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Date Long'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigDateLong();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Date Short'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigDateShort();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Language'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigLang();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Currency'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCurrency();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Copyright Year Start'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCopyYear();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Google API Key'); ?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigGoogleApiKey();?></a>
+					</li>
+				</ul>
+				
 				<h3 class="profile-username"><?php echo $this->translate('Email Settings'); ?></h3>
 				<ul class="list-group list-group-unbordered">
 					<li class="list-group-item">

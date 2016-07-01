@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
 namespace Config\Form;
 
 use Zend\Form\Form;
@@ -6,6 +13,12 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use Config\Hydrator\ConfigHydrator;
 use Config\Entity\ConfigEntity;
 
+/**
+ * 
+ * @author jaimie <pacificnm@gmail.com>
+ * @version 2.5.0
+ *
+ */
 class ConfigForm extends Form implements InputFilterProviderInterface
 {
     /**
@@ -252,6 +265,19 @@ class ConfigForm extends Form implements InputFilterProviderInterface
             'attributes' => array(
                 'class' => 'form-control',
                 'id' => 'configCurrency'
+            )
+        ));
+        
+        // configGoogleApiKey
+        $this->add(array(
+            'name' => 'configGoogleApiKey',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Google API Key:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'configGoogleApiKey'
             )
         ));
         
