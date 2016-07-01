@@ -64,13 +64,11 @@
     							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing phone.')?></span>
     						<?php else: ?>
     							<?php $phoneEntity = $this->workorderEntity->getPhoneEntity(); ?>
-    							<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'phone-view') ):?>
-    							<a href="<?php echo $this->url('phone-view', array('clientId' => $this->clientId, 'phoneId' => $phoneEntity->getPhoneId())); ?>" title="<?php echo $this->translate('View this phone');?>">
+    							
+    							<a href="tel:<?php echo $phoneEntity->getPhoneNum();?>" title="<?php echo $this->translate('call this phone number'); ?>">
     								<?php echo $phoneEntity->getPhoneNum();?>
     							</a>
-    							<?php else: ?>
-    								<?php echo $phoneEntity->getPhoneNum();?>
-    							<?php endif; ?>
+    							
     						<?php endif; ?>
 						</p>
 					</div>

@@ -70,16 +70,23 @@
                     	<div class="row">
                     		<div class="col-xs-12 col-sm-9">
                         		<b><?php echo $this->translate('Location'); ?>:</b>
-                        		<a href="" title="<?php echo $this->translate('View this location'); ?>">
+                        		<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'location-view') ):?>
+                        		<a href="<?php echo $this->url('location-view', array('clientId' => $clientEntity->getClientId(), 'locationId' => $clientEntity->getLocationEntity()->getLocationId()));?>" title="<?php echo $this->translate('View this location'); ?>">
                         			<?php echo $clientEntity->getLocationEntity()->getLocationStreet(); ?>
                         			<?php echo $clientEntity->getLocationEntity()->getLocationCity(); ?>,
                         			<?php echo $clientEntity->getLocationEntity()->getLocationState(); ?>
                         			<?php echo $clientEntity->getLocationEntity()->getLocationZip(); ?>
                         		</a>
+                        		<?php else: ?>
+                        			<?php echo $clientEntity->getLocationEntity()->getLocationStreet(); ?>
+                        			<?php echo $clientEntity->getLocationEntity()->getLocationCity(); ?>,
+                        			<?php echo $clientEntity->getLocationEntity()->getLocationState(); ?>
+                        			<?php echo $clientEntity->getLocationEntity()->getLocationZip(); ?>
+                        		<?php endif; ?>
                         	</div>
                         	<div class="col-xs-12 col-sm-3 text-right">
                         		<b><?php echo $this->translate('Phone'); ?>:</b>
-                        		<a href="" title="<?php echo $this->translate('View this phone number'); ?>">
+                        		<a href="tel:<?php echo $clientEntity->getPhoneEntity()->getPhoneNum(); ?>" title="<?php echo $this->translate('Call this phone number'); ?>">
                         			<?php echo $clientEntity->getPhoneEntity()->getPhoneNum(); ?>
                         		</a>
                         	</div>

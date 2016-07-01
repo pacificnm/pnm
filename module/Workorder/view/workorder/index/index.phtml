@@ -110,7 +110,7 @@
 							</div>
 							<div class="col-xs-12 col-sm-4">
 								<b><?php echo $this->translate('Phone'); ?>:</b> 
-								<?php echo $workorderEntity->getPhoneEntity()->getPhoneNum(); ?>
+								<a href="tel:<?php echo $workorderEntity->getPhoneEntity()->getPhoneNum(); ?>" title="<?php echo $this->translate('Call this phone number')?>"><?php echo $workorderEntity->getPhoneEntity()->getPhoneNum(); ?></a>
 							</div>
 						</div>
 					</li>

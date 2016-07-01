@@ -59,7 +59,7 @@
 								</div>
 								<div class="row">
 									<div class="col-xs-12">
-										<p><?php echo $this->appConfig()->getConfigCompanyPhone(); ?></p>
+										<p><a href="tel:<?php echo $this->appConfig()->getConfigCompanyPhone(); ?>" title="<?php echo $this->translate('Call this phone number'); ?>"><?php echo $this->appConfig()->getConfigCompanyPhone(); ?></a></p>
 									</div>
 								</div>
 							</div>
@@ -90,7 +90,7 @@
 								</div>
 								<div class="row">
 									<div class="col-xs-12">
-										<p><?php echo $this->phoneEntity->getPhoneNum(); ?></p>
+										<p><a href="tel:<?php echo $this->phoneEntity->getPhoneNum(); ?>" title="<?php echo $this->translate('Call this phone number'); ?>"><?php echo $this->phoneEntity->getPhoneNum(); ?></a></p>
 									</div>
 								</div>
 							</div>

@@ -93,6 +93,7 @@ class ClientMapper implements ClientMapperInterface
         $expresion = new Expression("client.client_id = location.client_id  AND location.location_type='Primary' AND location.location_status='Active'");
         
         $select->join('location', $expresion, array(
+            'location_id',
             'location_type',
             'location_street',
             'location_city',
@@ -105,6 +106,7 @@ class ClientMapper implements ClientMapperInterface
         $expresion = new Expression("location.location_id = phone.location_id AND phone.phone_type='Primary'");
         
         $select->join('phone', $expresion, array(
+            'phone_id',
             'phone_type',
             'phone_num'
         ), 'left');
@@ -136,6 +138,7 @@ class ClientMapper implements ClientMapperInterface
         $expresion = new Expression("client.client_id = location.client_id  AND location.location_type='Primary' AND location.location_status='Active'");
         
         $select->join('location', $expresion, array(
+            'location_id',
             'location_type',
             'location_street',
             'location_city',
@@ -148,6 +151,7 @@ class ClientMapper implements ClientMapperInterface
         $expresion = new Expression("location.location_id = phone.location_id AND phone.phone_type='Primary'");
         
         $select->join('phone', $expresion, array(
+            'phone_id',
             'phone_type',
             'phone_num'
         ), 'left');

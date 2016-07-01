@@ -71,7 +71,8 @@
      						<b><?php echo $this->translate('E-Mail'); ?></b> <a class="pull-right"><?php echo $this->employeeEntity->getEmployeeEmail(); ?></a>
      					</li>
      					<li class="list-group-item">
-     						<b><?php echo $this->translate('Phone'); ?></b> <a class="pull-right"><?php echo $this->employeeEntity->getEmployeePhone();?></a>
+     						<b><?php echo $this->translate('Phone'); ?></b> 
+     							<a href="tel:<?php echo $this->employeeEntity->getEmployeePhone();?>" title="<?php echo $this->translate('Call this phone number'); ?>" class="pull-right"><?php echo $this->employeeEntity->getEmployeePhone();?></a>
      					</li>
      					<li class="list-group-item">
      						<b><?php echo $this->translate('Adddress'); ?></b> <a class="pull-right">

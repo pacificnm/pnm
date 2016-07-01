@@ -65,8 +65,8 @@ class PhoneForm extends Form implements InputFilterProviderInterface
                 'label' => 'Phone Number:'
             ),
             'attributes' => array(
-                'class' => 'form-control',
-                'id' => 'phoneNum'
+                'class' => 'form-control phone',
+                'id' => 'phoneNum',
             )
         ));
         
