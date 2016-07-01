@@ -155,7 +155,7 @@
 						
 						<p><b><?php echo $this->translate('Phone')?>:</b> 
 						
-							<a class="pull-right"><?php echo $this->clientEntity->getPhoneEntity()->getPhoneNum(); ?></a>
+							<a href="tel:<?php echo $this->clientEntity->getPhoneEntity()->getPhoneNum(); ?>" title="<?php echo $this->translate('Call this phone number')?>" class="pull-right"><?php echo $this->clientEntity->getPhoneEntity()->getPhoneNum(); ?></a>
 						</p>
 					</div>
 					<div class="col-xs-12">

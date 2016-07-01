@@ -24,7 +24,8 @@
 						<p><b><?php echo $this->translate('Account Number'); ?>:</b> <?php echo $this->vendorEntity->getVendorAccountNumber(); ?></p>
 					</div>
 					<div class="col-xs-12 col-sm-3">
-						<p><b><?php echo $this->translate('Phone'); ?>:</b> <?php echo $this->vendorEntity->getVendorPhone(); ?></p>
+						<p><b><?php echo $this->translate('Phone'); ?>:</b> 
+							<a href="tel:<?php echo $this->vendorEntity->getVendorPhone(); ?>" title="<?php echo $this->translate('Call this phone number'); ?>"><?php echo $this->vendorEntity->getVendorPhone(); ?></a></p>
 					</div>
 					<div class="col-xs-12 col-sm-3">
 						<p><b><?php echo $this->translate('Website'); ?>:</b> 

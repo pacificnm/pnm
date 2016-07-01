@@ -39,7 +39,7 @@
                         	</div>
                         	<div class="col-xs-12 col-sm-3 text-right">
                         		<b><?php echo $this->translate('Phone'); ?>:</b>
-                        		<?php echo $vendor->getVendorPhone();?>
+                        		<a href="tel:<?php echo $vendor->getVendorPhone();?>" title="<?php echo $this->translate('Call this phone number'); ?>"><?php echo $vendor->getVendorPhone();?></a>
                         	</div>
                         </div>
 					</li>

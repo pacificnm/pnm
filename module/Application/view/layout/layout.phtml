@@ -23,6 +23,7 @@
 
         <!-- Scripts -->
         <?php echo $this->headScript()
+
             ->prependFile($this->basePath('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'))
             ->prependFile($this->basePath('plugins/daterangepicker/daterangepicker.js'))
             ->prependFile($this->basePath('plugins/datepicker/bootstrap-datepicker.js'))
@@ -216,5 +217,7 @@
           </div>
         </div>
         <?php echo $this->inlineScript() ?>
+        
+
     </body>
 </html>
