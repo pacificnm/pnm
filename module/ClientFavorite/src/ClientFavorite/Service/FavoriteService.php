@@ -1,9 +1,22 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
 namespace ClientFavorite\Service;
 
 use ClientFavorite\Entity\FavoriteEntity;
 use ClientFavorite\Mapper\FavoriteMapperInterface;
 
+/**
+ *
+ * @author jaimie <pacificnm@gmail.com>
+ * @version 2.5.0
+ *
+ */
 class FavoriteService implements FavoriteServiceInterface
 {
 
@@ -64,6 +77,16 @@ class FavoriteService implements FavoriteServiceInterface
     public function delete(FavoriteEntity $entity)
     {
         return $this->mapper->delete($entity);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \ClientFavorite\Service\FavoriteServiceInterface::hasFavorite()
+     */
+    public function hasFavorite($clientId, $authId)
+    {
+        return $this->mapper->hasFavorite($clientId, $authId);
     }
    
 }

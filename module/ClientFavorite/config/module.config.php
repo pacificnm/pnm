@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
 return array(
     'module' => array(
         'ClientFavorite' => array(
@@ -79,7 +86,8 @@ return array(
     // view helpers
     'view_helpers' => array(
         'factories' => array(
-            'favorites' => 'ClientFavorite\View\Helper\Factory\FavoriteViewHelperFactory'
+            'favorites' => 'ClientFavorite\View\Helper\Factory\FavoriteViewHelperFactory',
+            'hasFavorite' => 'ClientFavorite\View\Helper\Factory\HasFavoriteFactory',
         ),
         'invokables' => array()
     )

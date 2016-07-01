@@ -8,44 +8,40 @@
  */
 namespace ClientFavorite\View\Helper;
 
+
 use Zend\View\Helper\AbstractHelper;
 use ClientFavorite\Service\FavoriteServiceInterface;
 
 /**
- *
+ * 
  * @author jaimie <pacificnm@gmail.com>
  * @version 2.5.0
  *
  */
-class Favorite extends AbstractHelper
+class HasFavorite extends AbstractHelper
 {
-
     /**
      *
      * @var FavoriteServiceInterface
      */
     protected $favoriteService;
-
+    
     /**
      *
-     * @param FavoriteServiceInterface $favoriteService            
+     * @param FavoriteServiceInterface $favoriteService
      */
     public function __construct(FavoriteServiceInterface $favoriteService)
     {
         $this->favoriteService = $favoriteService;
     }
-
-    public function __invoke()
+    
+    public function __invoke($clientId, $authId)
     {
-        $view = $this->getView();
-        
-        $partialHelper = $view->plugin('partial');
-        
-        $favoriteEntitys = $this->favoriteService->getAll(array('authId' => $view->Identity()->getAuthId()));
-        
-        $data = new \stdClass();
-        $data->favoriteEntitys = $favoriteEntitys;
-        
-        return $partialHelper('partials/favorite.phtml', $data);
+        $favoriteEntity = $this->favoriteService->hasFavorite($clientId, $authId);
+        if($favoriteEntity) {
+            return $favoriteEntity;
+        } else {
+            return false;
+        }
     }
 }

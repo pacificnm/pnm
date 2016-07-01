@@ -103,11 +103,21 @@
 			
 		<!-- Client Fav -->
 		<?php if( $this->acl->isAllowed($this->identity()->getAuthRole(), 'client-favorite-create') ):?>
+		<?php $favoriteEntity = $this->hasFavorite($this->clientId, $this->identity()->getAuthId()); ?>
+		
+		<?php if($favoriteEntity): ?>
+		<li class="<?php if($this->activeSubMenuItem == 'client-favorite-create'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('client-favorite-delete', array('clientId' => $this->clientId, 'clientFavoriteId' => $favoriteEntity->getclientFavoriteId())); ?>" title="<?php echo $this->translate('Remove From Favorite')?>">
+				<i class="fa fa-star"></i> <?php echo $this->translate('Remove From Favorite')?>
+			</a>
+		</li>
+		<?php else: ?>
 		<li class="<?php if($this->activeSubMenuItem == 'client-favorite-create'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('client-favorite-create', array('clientId' => $this->clientId)); ?>">
 				<i class="fa fa-star"></i> <?php echo $this->translate('Add To Favorite')?>
 			</a>
 		</li>
+		<?php endif; ?>
 		<?php endif; ?>
 			
 		<!-- Hosts -->

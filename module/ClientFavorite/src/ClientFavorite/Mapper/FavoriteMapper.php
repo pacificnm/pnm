@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
 namespace ClientFavorite\Mapper;
 
 use Zend\Db\Adapter\AdapterInterface;
@@ -13,6 +20,12 @@ use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\DbSelect;
 use ClientFavorite\Entity\FavoriteEntity;
 
+/**
+ *
+ * @author jaimie <pacificnm@gmail.com>
+ * @version 2.5.0
+ *
+ */
 class FavoriteMapper implements FavoriteMapperInterface
 {
 
@@ -114,8 +127,6 @@ class FavoriteMapper implements FavoriteMapperInterface
             'client_favorite.client_favorite_id = ?' => $id
         ));
         
-        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
-        
         $stmt = $sql->prepareStatementForSqlObject($select);
         
         $result = $stmt->execute();
@@ -133,8 +144,9 @@ class FavoriteMapper implements FavoriteMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \ClientFavorite\Mapper\FavoriteMapperInterface::save()
      */
     public function save(FavoriteEntity $entity)
@@ -142,19 +154,19 @@ class FavoriteMapper implements FavoriteMapperInterface
         $postData = $this->hydrator->extract($entity);
         
         if ($entity->getClientFavoriteId()) {
-        
+            
             // ID present, it's an Update
             $action = new Update('client_favorite');
-        
+            
             $action->set($postData);
-        
+            
             $action->where(array(
                 'client_favorite.client_favorite_id = ?' => $entity->getClientFavoriteId()
             ));
         } else {
             // ID NOT present, it's an Insert
             $action = new Insert('client_favorite');
-        
+            
             $action->values($postData);
         }
         
@@ -166,12 +178,12 @@ class FavoriteMapper implements FavoriteMapperInterface
         
         if ($result instanceof ResultInterface) {
             $newId = $result->getGeneratedValue();
-        
+            
             if ($newId) {
                 // When a value has been generated, set it on the object
                 $entity->setClientFavoriteId($newId);
             }
-        
+            
             return $entity;
         }
         
@@ -179,8 +191,9 @@ class FavoriteMapper implements FavoriteMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \ClientFavorite\Mapper\FavoriteMapperInterface::delete()
      */
     public function delete(FavoriteEntity $entity)
@@ -198,5 +211,44 @@ class FavoriteMapper implements FavoriteMapperInterface
         $result = $stmt->execute();
         
         return (bool) $result->getAffectedRows();
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \ClientFavorite\Mapper\FavoriteMapperInterface::hasFavorite()
+     */
+    public function hasFavorite($clientId, $authId)
+    {
+        
+        
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('client_favorite');
+        
+        $select->where(array(
+            'client_favorite.auth_id =? ' => $authId
+        ));
+        
+        $select->where(array(
+            'client_favorite.client_id =? ' => $clientId
+        ));
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+            $resultSet->buffer();
+        
+            $row = $resultSet->initialize($result)->current();
+            
+            return $row;
+        }
+        
+        return false;
     }
 }

@@ -2,13 +2,21 @@
 namespace Employee\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
+use ClientFavorite\Service\FavoriteServiceInterface;
 
 class EmployeeAsideMenu extends AbstractHelper
-{
-    public function __invoke($clientId = 0, $activeItem = null)
+{    
+    /**
+     * 
+     * @param number $clientId
+     * @param unknown $activeItem
+     */
+    public function __invoke()
     {
+       
         $view = $this->getView();
     
+               
         $partialHelper = $view->plugin('partial');
     
         // set partial script

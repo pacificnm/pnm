@@ -70,6 +70,8 @@ class BaseController extends AbstractActionController
             }
         }
         
+        $clientId = $this->getEvent()->getRouteMatch()->getParam('clientId', null);
+
         
         // set menu
         $this->layout()->setVariable('activeSubMenuItem', $router->getMatchedRouteName());
@@ -80,7 +82,7 @@ class BaseController extends AbstractActionController
         
         $this->layout()->setVariable('acl', $this->acl()->getAcl());
         
-        
+        $this->layout()->setVariable('clientId', $clientId);
         
         // set page title
         $this->setPageTitle($router->getMatchedRouteName());

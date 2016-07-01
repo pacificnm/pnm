@@ -180,8 +180,11 @@ return array(
         ),
     ),
     'view_helpers' => array(
+        'factories' => array(
+            'EmployeeAsideMenu' => 'Employee\View\Helper\Factory\EmployeeAsideMenuFactory'
+        ),
         'invokables' => array(
-            'EmployeeAsideMenu' => 'Employee\\View\\Helper\\EmployeeAsideMenu',
+            //'EmployeeAsideMenu' => 'Employee\\View\\Helper\\EmployeeAsideMenu',
         ),
     ),
     'view_manager' => array(
