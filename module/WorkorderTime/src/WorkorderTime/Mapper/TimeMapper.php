@@ -240,6 +240,10 @@ class TimeMapper implements TimeMapperInterface
             'workorder.client_id = ?' => $clientId
         ));
         
+        $select->where(array(
+            'workorder.workorder_status = ?' => 'Closed'
+        ));
+        
         $select->group('labor_id');
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
