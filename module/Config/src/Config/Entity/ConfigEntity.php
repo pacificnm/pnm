@@ -1,6 +1,19 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
 namespace Config\Entity;
 
+/**
+ *
+ * @author jaimie <pacificnm@gmail.com>
+ * @version 2.5.0
+ *         
+ */
 class ConfigEntity
 {
 
@@ -111,6 +124,12 @@ class ConfigEntity
      * @var string
      */
     protected $configCurrency;
+
+    /**
+     *
+     * @var string
+     */
+    protected $configGoogleApiKey;
 
     /**
      *
@@ -276,6 +295,15 @@ class ConfigEntity
 
     /**
      *
+     * @return the $configGoogleApiKey
+     */
+    public function getConfigGoogleApiKey()
+    {
+        return $this->configGoogleApiKey;
+    }
+
+    /**
+     *
      * @param number $configId            
      */
     public function setConfigId($configId)
@@ -434,5 +462,14 @@ class ConfigEntity
     public function setConfigCurrency($configCurrency)
     {
         $this->configCurrency = $configCurrency;
+    }
+
+    /**
+     *
+     * @param string $configGoogleApiKey            
+     */
+    public function setConfigGoogleApiKey($configGoogleApiKey)
+    {
+        $this->configGoogleApiKey = $configGoogleApiKey;
     }
 }

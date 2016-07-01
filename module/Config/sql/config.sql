@@ -28,6 +28,9 @@ CREATE TABLE IF NOT EXISTS `config` (
   PRIMARY KEY (`config_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
+
+-- updated 
+ALTER TABLE `config` ADD `config_google_api_key` VARCHAR(100) NOT NULL AFTER `config_currency`;
 --
 -- RELATIONS FOR TABLE `config`:
 --
@@ -36,7 +39,8 @@ CREATE TABLE IF NOT EXISTS `config` (
 -- Dumping data for table `config`
 --
 
-INSERT INTO `config` (`config_id`, `config_version`, `config_copy_year`, `config_company_name`, `config_company_name_short`, `config_company_name_abv`, `config_company_street`, `config_company_street_cont`, `config_company_city`, `config_company_state`, `config_company_postal`, `config_company_phone`, `config_company_phone_alt`, `config_http_address`, `config_date_long`, `config_date_short`, `config_lang`, `config_currency`) VALUES
-(1, '2.5.0', 2013, 'Pacific Network Management', 'PacificNM', 'PNM', '323 SE Riverside AV', '', 'Grants Pass', 'Oregon', '97526', '(541) 237-4655', '', '', 'm/d/Y h:i a', 'm/d/Y', 'en_US', 'USD');
+INSERT INTO `config` (`config_id`, `config_version`, `config_copy_year`, `config_company_name`, `config_company_name_short`, `config_company_name_abv`, `config_company_street`, `config_company_street_cont`, `config_company_city`, `config_company_state`, `config_company_postal`, `config_company_phone`, `config_company_phone_alt`, `config_http_address`, `config_date_long`, `config_date_short`, `config_lang`, `config_currency`, `config_google_api_key`) VALUES
+(1, '2.5.0', 2013, 'Pacific Network Management', 'PacificNM', 'PNM', '323 SE Riverside AV', '', 'Grants Pass', 'Oregon', '97526', '(541) 237-4655', '', '', 'm/d/Y h:i a', 'm/d/Y', 'en_US', 'USD', '');
 SET FOREIGN_KEY_CHECKS=1;
+
 
