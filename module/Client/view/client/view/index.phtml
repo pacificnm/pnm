@@ -207,7 +207,7 @@
 								<?php echo $locationEntity->getLocationZip(); ?>
 							<?php endif; ?>
 							<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'location-view') ):?>
-								<a href="<?php echo $this->url('location-view', array('clientId' => $this->clientId, 'locationId' => $locationEntity->getLocationId())); ?>" title="<?php echo $this->translate('Edit this location'); ?>" class="btn btn-box-tool pull-right"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+								<a href="<?php echo $this->url('location-update', array('clientId' => $this->clientId, 'locationId' => $locationEntity->getLocationId())); ?>" title="<?php echo $this->translate('Edit this location'); ?>" class="btn btn-box-tool pull-right"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 							<?php endif; ?>
 							</td>
 						</tr>
