@@ -6,29 +6,31 @@
  * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
  * @license
  */
-namespace ClientFavorite\Service\Factory;
+namespace ClientFavorite\View\Helper\Factory;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
-use ClientFavorite\Service\FavoriteService;
+use ClientFavorite\View\Helper\HasFavorite;
 
 /**
  *
  * @author jaimie <pacificnm@gmail.com>
  * @version 2.5.0
- *         
+ *
  */
-class FavoriteServiceFactory
+class HasFavoriteFactory
 {
 
     /**
-     *
-     * @param ServiceLocatorInterface $serviceLocator            
-     * @return \ClientFavorite\Service\FavoriteService
+     * 
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return \ClientFavorite\View\Helper\HasFavorite
      */
     public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
-        $mapper = $serviceLocator->get('ClientFavorite\Mapper\FavoriteMapperInterface');
+        $realServiceLocator = $serviceLocator->getServiceLocator();
         
-        return new FavoriteService($mapper);
+        $favoriteService = $realServiceLocator->get('ClientFavorite\Service\FavoriteServiceInterface');
+        
+        return new HasFavorite($favoriteService);
     }
 }
