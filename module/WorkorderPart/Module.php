@@ -1,7 +1,9 @@
 <?php
 namespace WorkorderPart;
 
-class Module
+use ZF\Apigility\Provider\ApigilityProviderInterface;
+
+class Module implements ApigilityProviderInterface
 {
     public function getConfig()
     {

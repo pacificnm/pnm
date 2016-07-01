@@ -46,12 +46,14 @@
 		</li>
 			
 		<!-- Calendar -->
-		<li class="<?php if($this->activeSubMenuItem == ''):?>active<?php endif;?>">
-			<a href="" >
+		<?php if( $this->acl->isAllowed($this->identity()->getAuthRole(), 'employee-calendar') ):?>
+		<li class="<?php if($this->activeSubMenuItem == 'employee-calendar'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('employee-calendar'); ?>" title="<?php echo $this->translate('View calendar'); ?>">
 				<i class="fa fa-calendar" aria-hidden="true"></i> <span><?php echo $this->translate('Calendar')?></span>
 			</a>
 		</li>
-			
+		<?php endif; ?>
+		
 		<!-- Milage -->
 		<li class="<?php if($this->activeSubMenuItem == ''):?>active<?php endif;?>">
 			<a href="" >

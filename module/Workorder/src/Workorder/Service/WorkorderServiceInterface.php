@@ -33,49 +33,54 @@ interface WorkorderServiceInterface
      * @return boolean
      */
     public function delete(WorkorderEntity $entity);
-    
+
     /**
-     * 
-     * @param number $clientId
-     * @param string $status
+     *
+     * @param number $clientId            
+     * @param string $status            
      * @return number
      */
     public function getClientTotalCount($clientId, $status);
-    
+
     /**
-     * 
-     * @param number $clientId
+     *
+     * @param number $clientId            
      * @return boolean
      */
     public function getClientActiveWorkOrders($clientId);
-    
+
     /**
-     * 
-     * @param number $clientId
+     *
+     * @param number $clientId            
      * @return float
      */
     public function getClientTotalLabor($clientId);
-    
+
     /**
-     * 
-     * @param number $clientId
+     *
+     * @param number $clientId            
      * @return float
      */
     public function getClientTotalPart($clientId);
-    
+
     /**
      *
-     * @param number $clientId
+     * @param number $clientId            
      * @return WorkorderEntity
      */
     public function getClientUnInvoiced($clientId);
-    
+
     /**
      *
-     * @param number $invoiceId
+     * @param number $invoiceId            
      * @return WorkorderEntity
      */
     public function getInvoiceWorkorders($invoiceId);
-    
-    
+
+    /**
+     *
+     * @param array $filter            
+     * @return WorkorderEntity
+     */
+    public function getWorkorderSchedule(array $filter);
 }
