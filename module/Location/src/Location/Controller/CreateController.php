@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
 namespace Location\Controller;
 
 use Application\Controller\BaseController;
@@ -7,6 +14,12 @@ use Location\Service\LocationServiceInterface;
 use Location\Form\LocationForm;
 use Zend\View\Model\ViewModel;
 
+/**
+ *
+ * @author jaimie <pacificnm@gmail.com>
+ * @version 2.5.0
+ *
+ */
 class CreateController extends BaseController
 {
 
