@@ -8,16 +8,18 @@
  */
 namespace Employee;
 
+use ZF\Apigility\Provider\ApigilityProviderInterface;
+
 /**
- * 
+ *
  * @author jaimie <pacificnm@gmail.com>
  * @version 2.5.0
- *
+ *         
  */
-class Module
+class Module implements ApigilityProviderInterface
 {
+
     /**
-     * 
      */
     public function getConfig()
     {
@@ -25,7 +27,7 @@ class Module
     }
 
     /**
-     * 
+     *
      * @return string[][][]
      */
     public function getAutoloaderConfig()
@@ -33,9 +35,9 @@ class Module
         return array(
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
+                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__
+                )
+            )
         );
     }
 }

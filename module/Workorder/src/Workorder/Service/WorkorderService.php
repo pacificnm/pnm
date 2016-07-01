@@ -136,4 +136,14 @@ class WorkorderService implements WorkorderServiceInterface
         
         return $this->mapper->getAll($filter);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Workorder\Service\WorkorderServiceInterface::getWorkorderSchedule()
+     */
+    public function getWorkorderSchedule(array $filter)
+    {
+        return $this->mapper->getWorkorderSchedule($filter);
+    }
 }

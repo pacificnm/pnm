@@ -58,6 +58,13 @@ interface WorkorderMapperInterface
     public function getInvoiceWorkorders($invoiceId);
     
     /**
+     * 
+     * @param array $filter
+     * @return WorkorderEntity
+     */
+    public function getWorkorderSchedule(array $filter);
+    
+    /**
      *
      * @param WorkorderEntity $entity            
      * @return WorkorderEntity

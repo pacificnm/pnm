@@ -260,6 +260,11 @@ return array(
                                 'useRouteMatch' => true,
                             ),
                             array(
+                                'label' => 'Calendar',
+                                'route' => 'employee-calendar',
+                                'useRouteMatch' => true,
+                            ),
+                            array(
                                 'label' => 'Favorite Clients',
                                 'route' => 'client-favorite-index',
                                 'useRouteMatch' => true,

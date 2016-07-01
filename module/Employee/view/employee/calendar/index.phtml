@@ -1,0 +1,73 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
+?>
+<link rel="stylesheet" href="/plugins/fullcalendar/fullcalendar.min.css">
+<link rel="stylesheet" href="/plugins/fullcalendar/fullcalendar.print.css" media="print">
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-calendar"></i>
+					<?php echo $this->translate('Calendar'); ?>
+				</h3>
+				<div class="box-tools"></div>
+			</div>
+			<div class="box-body no-padding">
+				<div id="calendar"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="/plugins/fullcalendar/fullcalendar.min.js"></script>
+<script>
+  $(function () {
+	var date = new Date();
+	var d = date.getDate();
+	var m = date.getMonth();
+	var y = date.getFullYear();
+
+	$('#calendar').fullCalendar({
+		header: {
+	        left: 'prev,next today',
+	        center: 'title',
+			right: 'month,agendaWeek,agendaDay'
+		},
+		buttonText: {
+	        today: 'today',
+	        month: 'month',
+	        week: 'week',
+	        day: 'day'
+	    },
+	    events: function(start, end, timezone, callback) {
+	        $.ajax({
+	            url: '/api/workorder/schedule',
+	            data: {
+	                emloyee:<?php echo $this->identity()->getEmployeeId(); ?>
+	            },
+	            success: function(response) {
+	                var events = [];
+					
+	                $(response._embedded.schedule).each(function(key, value) {
+		                console.log(value);
+	                    events.push({
+	                    	title: value.title,
+	                    	start: value.start,
+	                    	end: value.end,
+	                    	url: value.url,
+	                    	id: value.id
+	                    });
+	                });
+	                callback(events);
+	            }
+	        });
+	    }
+	});
+  });
+</script>
