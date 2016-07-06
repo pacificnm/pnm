@@ -24,6 +24,11 @@ CREATE TABLE IF NOT EXISTS `task` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- update added flag to dismiss the reminder
+--
+ALTER TABLE `task` ADD `task_date_reminder_active` INT(3) NOT NULL AFTER `task_date_reminder`;
+
+--
 -- Constraints for table `task`
 --
 ALTER TABLE `task`

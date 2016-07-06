@@ -23,7 +23,7 @@
 
         <!-- Scripts -->
         <?php echo $this->headScript()
-
+            ->prependFile($this->basePath('plugins/handelbars/handlebars-v4.0.5.js'))
             ->prependFile($this->basePath('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'))
             ->prependFile($this->basePath('plugins/daterangepicker/daterangepicker.js'))
             ->prependFile($this->basePath('plugins/datepicker/bootstrap-datepicker.js'))
@@ -40,38 +40,104 @@
             ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
         ; ?>
-	<?php if($this->identity()->getEmployeeId() > 0): ?>
+
+	<?php if($this->identity() && $this->identity()->getEmployeeId() > 0): ?>
+	
+	<script id="taskReminderTemplate" type="text/x-handlebars-template">
+        {{#each task_reminder}}
+        <div class="box">
+            <div class="box-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <p><b><?php echo $this->translate('Client '); ?>:</b> {{clientName}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p><b><?php echo $this->translate('Task'); ?>:</b> <a href="/client/{{clientId}}/task/view/{{taskId}}" title="<?php echo $this->translate('View this task'); ?>">{{taskTitle}}</a></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p><b><?php echo $this->translate('Due'); ?>:</b> {{taskDateEnd}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <p><b><?php echo $this->translate('Priority'); ?>:</b> {{taskPriority}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                 <p><b><?php echo $this->translate('Status'); ?>:</b>   {{taskStatus}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-right">
+                <p><button class="btn btn-danger" onClick="dismissReminder({{taskId}});"><?php echo $this->translate('Dismiss'); ?></button></p>
+            </div>
+        </div>
+        </div></div>
+        {{/each}}
+    </script>
+	
 	<script>
+		function dismissReminder(taskId) {
+			console.log(taskId);
+			$.ajax({
+			    type: "put",
+			    url: '/api/task/dismiss-reminder/' + taskId,
+			    beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer <?php echo $this->identity()->getAccessToken(); ?>');},
+			    dataType: 'json',
+			    contentType: "application/json",
+			    data: JSON.stringify({
+					'taskreminderActive' : 0,
+				}),
+			    success: function(resp) {
+					console.log(resp);
+				},
+			    error: function(resp) {
+
+				}
+			});
+			
+			$("#reminderModal").modal('hide');
+		}
+	
 		var taskReminder = function() {
 				$.ajax({
 			    type: "get",
-			    url: "<?php echo $this->basePath('/api/task/reminder'); ?>",
+			    data: {'access_token': '<?php echo $this->identity()->getAccessToken(); ?>'},
+			    url: "<?php echo $this->basePath('/api/task/get-reminder'); ?>",
 			    success: function(resp) {
-				    taskEntitys = resp.taskEntitys;
 
-				    if(! $.isEmptyObject(taskEntitys)) {
-    				    var str = $('#reminderBody').html();
-    				    
-    				    $(taskEntitys).each(function(index, element) {
-    					    
-    				    	str += '<a href="/client/'+element.client_id+'/task/view/'+element.task_id+'" title="<?php echo $this->translate('View this task'); ?>">'+element.task_title+'</a>';
-    				    });
-    				    
-    				    $('#reminderBody').html(str);
-    				    
-    				    $("#reminderModal").modal('show');
-				    }
+				    taskEntitys = resp._embedded;
+
+				    if(! $.isEmptyObject(taskEntitys.task_reminder)) {
+    				    var source   = $("#taskReminderTemplate").html();
+    					var template = Handlebars.compile(source);
+    				    if(! $.isEmptyObject(taskEntitys)) {			    
+    				    	var html = template(taskEntitys);				   
+        				    
+        				    $('#reminderBody').html(html);
+        				    if (!$('#reminderModal').is(':visible')) {
+        				    	
+        				    	$("#reminderModal").modal('show');
+        				    }
+    				    }
+					}
 			    }
 			});
 		};
 
 		var interval = 1000 * 60 * 1;
-
+		
 		setInterval(taskReminder, interval);
 	</script>
 	<?php endif;?>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
+
 		<div class="wrapper">
 		
 			<header class="main-header">
@@ -95,7 +161,7 @@
 					<!-- Navbar Right Menu -->
 					<div class="navbar-custom-menu">
 						<ul class="nav navbar-nav">
-							<?php if($this->identity()->getEmployeeId() > 0): ?>
+							<?php if($this->identity() && $this->identity()->getEmployeeId() > 0): ?>
 							<!-- Messages: style can be found in dropdown.less-->
 							<?php echo $this->NavBarMessage(); ?>
 							
@@ -110,7 +176,7 @@
 							<?php echo $this->AuthNavBar(); ?>
 							
 							<!-- Control Sidebar Toggle Button -->
-							<?php if($this->identity()->getEmployeeId() > 0): ?>
+							<?php if($this->identity() && $this->identity()->getEmployeeId() > 0): ?>
 							<li>
 								<a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
 							</li>
@@ -131,7 +197,7 @@
   					
   					<!-- sidebar menu: : style can be found in sidebar.less -->
   					<ul class="sidebar-menu">
-  					
+  					<?php if($this->identity()): ?>
   					<?php if($this->identity()->getEmployeeId() > 0): ?>
   						  						
   						<?php echo $this->EmployeeAsideMenu(1); ?>
@@ -144,6 +210,7 @@
   						<?php $this->clientId = $this->identity()->getUserEntity()->getClientId();?>
   						<?php echo $this->UserAsideMenu(); ?>
   					<?php endif;?>
+  					<?php endif; ?>
   					</ul>
   				</section>
   			</aside>
@@ -152,8 +219,11 @@
   			<div class="content-wrapper">
   				<section class="content-header">
   					<h1><?php echo $this->pageTitle; ?> <small><?php echo $this->pageSubTitle;?></small></h1>
-  					
+  					<?php if($this->identity()):?>
   					<?php echo $this->navigation('navigation')->setAcl($this->acl)->setRole($this->identity()->getAuthRole())->breadcrumbs()->setMinDepth(0)->setPartial('partials/breadcrumbs'); ?>
+  					<?php else: ?>
+  					
+  					<?php endif;?>
   				</section>
   				
   				<section class="content">
@@ -191,8 +261,10 @@
 				</ul>
 				<!-- Tab panes -->
 				<div class="tab-content">
+					<?php if($this->identity()): ?>
 					<?php echo $this->favorites();?>
 					<?php echo $this->getAuthHistory(); ?>
+					<?php endif; ?>
 				</div>
   			</aside>
   			 <div class="control-sidebar-bg"></div>

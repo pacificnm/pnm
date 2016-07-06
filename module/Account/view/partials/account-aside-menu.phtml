@@ -7,7 +7,7 @@
  * @license
  */
 ?>
-<?php if( $this->acl->isAllowed($this->identity()->getAuthRole(), 'account-index') ):?>
+<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'account-index') ):?>
 
 <li class="treeview <?php if($this->activeMenuItem == 'account'):?>active<?php endif;?>">
 	<a href="#">

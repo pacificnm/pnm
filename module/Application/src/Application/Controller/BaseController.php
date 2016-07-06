@@ -16,6 +16,8 @@ class BaseController extends AbstractActionController
      */
     public function onDispatch(MvcEvent $e)
     {
+      
+       
         // check if we are installed
         if(! file_exists('data/install')) {
             return $this->redirect()->toRoute('install-index');
@@ -57,7 +59,7 @@ class BaseController extends AbstractActionController
        
         
         // if we are a user validate we own the client id we are requesting
-        if($this->identity()->getUserId() != 0) {
+        if($this->identity()->getUser() != 0) {
             $id = $this->params()->fromRoute('clientId', null);
             
             if($id) {
@@ -86,6 +88,8 @@ class BaseController extends AbstractActionController
         
         // set page title
         $this->setPageTitle($router->getMatchedRouteName());
+        
+        
         
         // return parent dispatch
         return parent::onDispatch($e);

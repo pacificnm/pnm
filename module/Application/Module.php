@@ -8,14 +8,19 @@
  */
 namespace Application;
 
+use ZF\Apigility\Provider\ApigilityProviderInterface;
+
+
 /**
- * 
+ *
  * @author jaimie <pacificnm@gmail.com>
  * @version 2.5.0
- *
+ *         
  */
-class Module
+class Module implements ApigilityProviderInterface
 {
+
+    
 
     /**
      */

@@ -173,7 +173,7 @@ class AuthMapper implements AuthMapperInterface
         ), 'left');
         
         // join user
-        $select->join('user', 'user.user_id = auth.user_id', array(
+        $select->join('user', 'user.user_id = auth.user', array(
             'client_id',
             'location_id',
             'user_status',

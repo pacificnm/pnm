@@ -24,6 +24,12 @@ CREATE TABLE IF NOT EXISTS `auth` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- needed to change user_id to user for oauth2 to be able to use auth table
+-- it uses user_id as its identification field.
+--
+ALTER TABLE `auth` CHANGE `user_id` `user` INT(20) NOT NULL DEFAULT '0';
+
+--
 -- RELATIONS FOR TABLE `auth`:
 --
 SET FOREIGN_KEY_CHECKS=1;
