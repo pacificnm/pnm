@@ -40,4 +40,11 @@ interface PartServiceInterface
      * @return PartEntity
      */
     public function getWorkorderParts($workorderId);
+
+    /**
+     *
+     * @param number $start            
+     * @param number $end            
+     */
+    public function getTotalByDateRange($start, $end);
 }

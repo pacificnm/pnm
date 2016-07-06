@@ -36,6 +36,14 @@ interface WorkorderServiceInterface
 
     /**
      *
+     * @param number $start
+     * @param number $end
+     * @param status $status
+     */
+    public function getByDateRange($start, $end, $status);
+    
+    /**
+     *
      * @param number $clientId            
      * @param string $status            
      * @return number

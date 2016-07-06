@@ -109,4 +109,24 @@ class TimeService implements TimeServiceInterface
     {
         return $this->mapper->getEmployeeTotalTime($employeeId, $start, $end);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderTime\Service\TimeServiceInterface::getTotalByDateRange()
+     */
+    public function getTotalByDateRange($start, $end)
+    {
+        return $this->mapper->getTotalByDateRange($start, $end);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderTime\Service\TimeServiceInterface::getTotalsForMonth()
+     */
+    public function getTotalsForMonth($start, $end)
+    {
+        return $this->mapper->getTotalsForMonth($start, $end);
+    }
 }

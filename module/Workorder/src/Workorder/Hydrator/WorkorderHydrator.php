@@ -6,6 +6,7 @@ use Workorder\Entity\WorkorderEntity;
 use Location\Entity\LocationEntity;
 use Phone\Entity\PhoneEntity;
 use User\Entity\UserEntity;
+use Client\Entity\ClientEntity;
 
 class WorkorderHydrator extends ClassMethods
 {
@@ -43,6 +44,10 @@ class WorkorderHydrator extends ClassMethods
         $userEntity = parent::hydrate($data, new UserEntity());
         
         $object->setUserEntity($userEntity);
+        
+        $clientEntity = parent::hydrate($data, new ClientEntity());
+        
+        $object->setClientEntity($clientEntity);
         
         return $object;
     }

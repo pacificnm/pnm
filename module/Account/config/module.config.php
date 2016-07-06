@@ -16,6 +16,7 @@ return array(
                 'user' => array(),
                 'employee' => array(),
                 'accountant' => array(
+                    'account-home',
                     'account-index',
                     'account-create',
                     'account-update',
@@ -30,11 +31,12 @@ return array(
     // controllers
     'controllers' => array(
         'factories' => array(
-            'Account\Controller\Index' => 'Account\Controller\Factory\IndexControllerFactory',
-            'Account\Controller\Create' => 'Account\Controller\Factory\CreateControllerFactory',
-            'Account\Controller\Delete' => 'Account\Controller\Factory\DeleteControllerFactory',
-            'Account\Controller\Update' => 'Account\Controller\Factory\UpdateControllerFactory',
-            'Account\Controller\View' => 'Account\Controller\Factory\ViewControllerFactory'
+            'Account\Controller\IndexController' => 'Account\Controller\Factory\IndexControllerFactory',
+            'Account\Controller\CreateController' => 'Account\Controller\Factory\CreateControllerFactory',
+            'Account\Controller\DeleteController' => 'Account\Controller\Factory\DeleteControllerFactory',
+            'Account\Controller\UpdateController' => 'Account\Controller\Factory\UpdateControllerFactory',
+            'Account\Controller\ViewController' => 'Account\Controller\Factory\ViewControllerFactory',
+            'Account\Controller\HomeController' => 'Account\Controller\Factory\HomeControllerFactory'
         )
     ),
     
@@ -56,7 +58,7 @@ return array(
                 'options' => array(
                     'route' => '/account',
                     'defaults' => array(
-                        'controller' => 'Account\Controller\Index',
+                        'controller' => 'Account\Controller\IndexController',
                         'action' => 'index'
                     )
                 )
@@ -68,7 +70,7 @@ return array(
                 'options' => array(
                     'route' => '/account/create',
                     'defaults' => array(
-                        'controller' => 'Account\Controller\Create',
+                        'controller' => 'Account\Controller\CreateController',
                         'action' => 'index'
                     )
                 )
@@ -80,7 +82,7 @@ return array(
                 'options' => array(
                     'route' => '/account/delete/[:accountId]',
                     'defaults' => array(
-                        'controller' => 'Account\Controller\Delete',
+                        'controller' => 'Account\Controller\DeleteController',
                         'action' => 'index'
                     )
                 )
@@ -92,7 +94,7 @@ return array(
                 'options' => array(
                     'route' => '/account/update/[:accountId]',
                     'defaults' => array(
-                        'controller' => 'Account\Controller\Update',
+                        'controller' => 'Account\Controller\UpdateController',
                         'action' => 'index'
                     )
                 )
@@ -103,11 +105,22 @@ return array(
                 'options' => array(
                     'route' => '/account/view/[:accountId]',
                     'defaults' => array(
-                        'controller' => 'Account\Controller\View',
+                        'controller' => 'Account\Controller\ViewController',
                         'action' => 'index'
                     )
                 )
-            )
+            ),
+            'account-home' => array(
+                'title' => 'Accounting',
+                'type' => 'literal',
+                'options' => array(
+                    'route' => '/account/home',
+                    'defaults' => array(
+                        'controller' => 'Account\Controller\HomeController',
+                        'action' => 'index'
+                    )
+                )
+            ),
         )
     ),
     

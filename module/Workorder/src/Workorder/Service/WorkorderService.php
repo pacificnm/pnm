@@ -70,6 +70,17 @@ class WorkorderService implements WorkorderServiceInterface
      *
      * {@inheritDoc}
      *
+     * @see \Workorder\Service\WorkorderServiceInterface::getByDateRange()
+     */
+    public function getByDateRange($start, $end, $status)
+    {
+        return $this->mapper->getByDateRange($start, $end, $status);
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
      * @see \Workorder\Service\WorkorderServiceInterface::getClientTotalCount()
      */
     public function getClientTotalCount($clientId, $status)
@@ -136,10 +147,11 @@ class WorkorderService implements WorkorderServiceInterface
         
         return $this->mapper->getAll($filter);
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Workorder\Service\WorkorderServiceInterface::getWorkorderSchedule()
      */
     public function getWorkorderSchedule(array $filter)

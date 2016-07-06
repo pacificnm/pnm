@@ -1,0 +1,25 @@
+{
+  "version": "2.5.0",
+  "name": "Pacific NM",
+  "launch_path": "/index.php",
+  "description": "Network management CRM and billing platform.",
+  "icons": {
+    "128": "/img/icon-128x128.png"
+  },
+  "developer": {
+    "name": "",
+    "url": ""
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "default_locale": "en",
+  "permissions": {
+  },
+  "locales": {
+    "en": {
+      "name": "Pacific NM",
+      "description": "Network management CRM and billing platform."
+    }
+  }
+}

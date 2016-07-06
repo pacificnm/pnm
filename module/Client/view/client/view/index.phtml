@@ -1,5 +1,5 @@
 <div class="row">
-	<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-list') ):?>
+	<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'workorder-list') ):?>
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="info-box">
 			<span class="info-box-icon bg-aqua"><i class="fa fa-wrench fa-fw"></i></span>
@@ -11,7 +11,7 @@
 	</div>
 	<?php endif; ?>
 	
-	<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-list') ):?>
+	<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'invoice-list') ):?>
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="info-box">
 			<span class="info-box-icon bg-green"><i class="fa fa-credit-card fa-fw"></i></span>
@@ -36,7 +36,7 @@
 		</div>
 	</div>
 	
-	<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'task-list') ):?>
+	<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'task-list') ):?>
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<div class="info-box">
 			<span class="info-box-icon bg-yellow"><i class="fa fa-flag f-fw"></i></span>
@@ -127,7 +127,7 @@
 			<div class="box-header with-border">
 				<h3 class="box-title"><i class="fa fa-user"></i> <?php echo $this->clientEntity->getClientName(); ?></h3>
 				<div class="box-tools pull-right">
-					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'client-update') ):?>
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'client-update') ):?>
 					<a href="<?php echo $this->url('client-update', array('clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Edit this client');?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 					<?php endif; ?>
 				</div>
@@ -142,7 +142,7 @@
 					
 					<div class="col-xs-12">
 						<p><b><?php echo $this->translate('Primary Contact')?>:</b> 
-						<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'user-view') ):?>
+						<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'user-view') ):?>
 							<a href="<?php echo $this->url('user-view', array('clientId' => $this->clientId, 'userId' => $this->userEntity->getUserId()));?>" title="<?php echo $this->translate('View this user'); ?>" class="pull-right">
 								<?php echo $this->userEntity->getUserNameFirst(); ?> <?php echo $this->userEntity->getUserNameLast(); ?>
 							</a>
@@ -175,7 +175,7 @@
 			<div class="box-header with-border">
 				<h3 class="box-title"><i class="fa fa-globe f-fw"></i> <?php echo $this->translate('Locations'); ?></h3>
 				<div class="box-tools pull-right">
-				<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'location-create') ):?>
+				<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'location-create') ):?>
 					<a href="<?php echo $this->url('location-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Add new location');?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New');?></a>
 				<?php endif; ?>
 				</div>
@@ -193,7 +193,7 @@
 					<?php foreach($this->locationEntitys as $locationEntity): ?>
 						<tr>
 							<td>
-							<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'location-view') ):?>
+							<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'location-view') ):?>
 								<a href="<?php echo $this->url('location-view', array('clientId' => $this->clientId, 'locationId' => $locationEntity->getLocationId()));?>" title="<?php echo $this->translate('View this location'); ?>">
 									<?php echo $locationEntity->getLocationStreet(); ?>
 									<?php echo $locationEntity->getLocationCity()?>,
@@ -206,7 +206,7 @@
 								<?php echo $locationEntity->getLocationState(); ?>
 								<?php echo $locationEntity->getLocationZip(); ?>
 							<?php endif; ?>
-							<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'location-view') ):?>
+							<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'location-view') ):?>
 								<a href="<?php echo $this->url('location-update', array('clientId' => $this->clientId, 'locationId' => $locationEntity->getLocationId())); ?>" title="<?php echo $this->translate('Edit this location'); ?>" class="btn btn-box-tool pull-right"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 							<?php endif; ?>
 							</td>
@@ -219,7 +219,7 @@
 		</div>
 		
 		<!-- tasks -->
-		<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'task-list') ):?>
+		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'task-list') ):?>
 		<div class="box box-warning">
 			<div class="box-header with-border">
 				<h3 class="box-title"><i class="fa fa-flag f-fw"></i> <?php echo $this->translate('Active Tasks'); ?></h3>
@@ -267,7 +267,7 @@
 	
 	<div class="col-sm-8 col-xs-12">
 		<!-- Work Orders -->
-		<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-list') ):?>
+		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'workorder-list') ):?>
 		<div class="box box-primary">
 			<div class="box-header with-border">
 				<h3 class="box-title"><i class="fa fa-wrench"></i> <?php echo $this->translate('Active Work Orders'); ?></h3>
@@ -297,7 +297,7 @@
 					<?php foreach($this->workorderEntitys as $workorderEntity): ?>
 						<tr>
 							<td>
-								<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-view') ):?>
+								<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'workorder-view') ):?>
 								<a href="<?php echo $this->url('workorder-view', array('clientId' => $this->clientId, 'workorderId' => $workorderEntity->getWorkorderId()));?>" title="<?php echo $this->translate('View this work order'); ?>">
 									<?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?>
 								</a>
@@ -317,7 +317,7 @@
 		<?php endif; ?>
 		
 		<!-- invoices -->
-		<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-list') ):?>
+		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'invoice-list') ):?>
 		<div class="box box-success">
     		<div class="box-header with-border">
     			<h3 class="box-title"><i class="fa fa-credit-card"></i> <?php echo $this->translate('Un-Paid Invoices'); ?></h3>
@@ -347,7 +347,7 @@
     				<?php foreach($this->invoiceEntitys as $invoiceEntity): ?>
     					<tr>
     						<td>
-    							<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-view') ):?>
+    							<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'invoice-view') ):?>
     							<a href="<?php echo $this->url('invoice-view', array('clientId' => $this->clientId, 'invoiceId' => $invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('View this invoice'); ?>">
     								<?php echo $this->translate('Invoice #');?><?php echo $invoiceEntity->getInvoiceId(); ?>
     							</a>

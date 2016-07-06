@@ -246,8 +246,6 @@ class TimeMapper implements TimeMapperInterface
         
         $select->group('labor_id');
         
-        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
-        
         $stmt = $sql->prepareStatementForSqlObject($select);
         
         $result = $stmt->execute();
@@ -267,8 +265,64 @@ class TimeMapper implements TimeMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
+     * @see \WorkorderTime\Mapper\TimeMapperInterface::getTotalByDateRange()
+     */
+    public function getTotalByDateRange($start, $end)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder_time');
+        
+        $select->columns(array(
+            'workorder_labor_total' => new \Zend\Db\Sql\Expression('SUM(labor_total)'),
+        ));
+        
+        // join workorder
+        $select->join('workorder', 'workorder_time.workorder_id = workorder.workorder_id', array(
+            'workorder_date_scheduled',
+            'workorder_date_close'
+        ), 'inner');
+        
+        // status
+        $select->where(array(
+            'workorder.workorder_status = ?' => 'Closed'
+        ));
+        
+        if ($start) {
+            $select->where->greaterThanOrEqualTo('workorder.workorder_date_scheduled', $start);
+        }
+        
+        if ($end) {
+            $select->where->lessThanOrEqualTo('workorder.workorder_date_close', $end);
+        }
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+            
+            $resultSet = new ResultSet();
+            
+            $resultSet->initialize($result);
+            
+            $resultSet->buffer();
+            
+            $row = $resultSet->current();
+            
+            return $row->workorder_labor_total;
+        }
+        
+        return 0;
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
      * @see \WorkorderTime\Mapper\TimeMapperInterface::getEmployeeTime()
      */
     public function getEmployeeTime($employeeId, $start = null, $end = null)
@@ -353,6 +407,63 @@ class TimeMapper implements TimeMapperInterface
             $row = $resultSet->current();
             
             return $row->time_total;
+        }
+        
+        return 0;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderTime\Mapper\TimeMapperInterface::getTotalsForMonth()
+     */
+    public function getTotalsForMonth($start, $end)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder_time');
+        
+        $select->columns(array(
+            'workorder_labor_total' => new \Zend\Db\Sql\Expression('SUM(labor_total)'),
+            'workorder_time_in',
+            'day' => new \Zend\Db\Sql\Expression("Day(FROM_UNIXTIME('workorder_time_in'))"),
+        ));
+        
+        $select->group(new \Zend\Db\Sql\Expression("Day( FROM_UNIXTIME( `workorder_time_in` ) )"));
+        
+        // join workorder
+        $select->join('workorder', 'workorder_time.workorder_id = workorder.workorder_id', array(
+        ), 'inner');
+        
+        // status
+        $select->where(array(
+            'workorder.workorder_status = ?' => 'Closed'
+        ));
+        
+        if ($start) {
+           $select->where->greaterThanOrEqualTo('workorder.workorder_date_scheduled', $start);
+        }
+        
+        if ($end) {
+           $select->where->lessThanOrEqualTo('workorder.workorder_date_close', $end);
+        }
+        
+        //echo $sql->getSqlstringForSqlObject($select); die ;
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+            
+            $resultSet = new ResultSet();
+            
+            $resultSet->initialize($result);
+            
+            $resultSet->buffer();
+
+            
+            return $resultSet;
         }
         
         return 0;

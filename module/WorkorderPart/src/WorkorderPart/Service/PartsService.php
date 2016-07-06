@@ -67,8 +67,9 @@ class PartsService implements PartServiceInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \WorkorderPart\Service\PartServiceInterface::getWorkorderParts()
      */
     public function getWorkorderParts($workorderId)
@@ -78,5 +79,16 @@ class PartsService implements PartServiceInterface
         );
         
         return $this->mapper->getAll($filter);
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     * @see \WorkorderPart\Service\PartServiceInterface::getTotalByDateRange()
+     */
+    public function getTotalByDateRange($start, $end)
+    {
+        return $this->mapper->getTotalByDateRange($start, $end);
     }
 }

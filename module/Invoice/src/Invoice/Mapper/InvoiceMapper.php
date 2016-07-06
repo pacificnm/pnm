@@ -109,8 +109,6 @@ class InvoiceMapper implements InvoiceMapperInterface
             'invoice.invoice_id = ?' => $id
         ));
         
-        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
-        
         $stmt = $sql->prepareStatementForSqlObject($select);
         
         $result = $stmt->execute();
@@ -125,6 +123,48 @@ class InvoiceMapper implements InvoiceMapperInterface
         }
         
         return array();
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     * @see \Invoice\Mapper\InvoiceMapperInterface::getByDateRange()
+     */
+    public function getByDateRange($start, $end, $status)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('invoice');
+        
+        // join client
+        $select->join('client', 'invoice.client_id = client.client_id', array(
+            'client_name',
+            'client_status'
+        ), 'inner');
+        
+        // status
+        $select->where(array(
+            'invoice.invoice_status = ?' => $status
+        ));
+        
+        // start
+        if($start) {
+            $select->where->greaterThanOrEqualTo('invoice.invoice_date_start', $start);
+        }
+        
+        // end
+        if($end) {
+            $select->where->lessThanOrEqualTo('invoice.invoice_date_end', $end);
+        }
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $paginatorAdapter = new DbSelect($select, $this->readAdapter, $resultSetPrototype);
+        
+        $paginator = new Paginator($paginatorAdapter);
+        
+        return $paginator;
     }
 
     /**

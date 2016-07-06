@@ -3,6 +3,7 @@ namespace Invoice\Hydrator;
 
 use Zend\Stdlib\Hydrator\ClassMethods;
 use Invoice\Entity\InvoiceEntity;
+use Client\Entity\ClientEntity;
 
 class InvoiceHydrator extends ClassMethods
 {
@@ -30,6 +31,10 @@ class InvoiceHydrator extends ClassMethods
         
         parent::hydrate($data, $object);
         
+        $clientEntity = parent::hydrate($data, new ClientEntity());
+        
+        $object->setClientEntity($clientEntity);
+        
         return $object;
     }
 
@@ -46,6 +51,8 @@ class InvoiceHydrator extends ClassMethods
         }
         
         $data = parent::extract($object);
+        
+        unset($data['client_entity']);
         
         return $data;
     }

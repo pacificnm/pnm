@@ -20,6 +20,14 @@ interface InvoiceMapperInterface
     public function get($id);
     
     /**
+     * 
+     * @param number $start
+     * @param number $end
+     * @param string $status
+     */
+    public function getByDateRange($start, $end, $status);
+    
+    /**
      *
      * @param InvoiceEntity $entity
      * @return InvoiceEntity

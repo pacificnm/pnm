@@ -22,6 +22,12 @@ interface BillMapperInterface
 
     /**
      *
+     * @return BillEntity
+     */
+    public function getDueBills();
+
+    /**
+     *
      * @param BillEntity $entity            
      * @return BillEntity
      */

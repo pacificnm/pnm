@@ -5,6 +5,7 @@ use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\Permissions\Acl\Acl;
 use Zend\Permissions\Acl\Role\GenericRole;
 use Zend\Permissions\Acl\Resource\GenericResource;
+use Zend\Cache\Storage\Adapter\Memcached;
 use Acl\Service\AclServiceInterface;
 use AclRole\Service\RoleServiceInterface;
 use AclResource\Service\ResourceServiceInterface;
@@ -13,58 +14,61 @@ class ApplicationAcl extends AbstractPlugin
 {
 
     /**
-     * 
+     *
      * @var AclServiceInterface
      */
     protected $aclService;
-    
+
     /**
-     * 
+     *
      * @var RoleServiceInterface
      */
     protected $roleService;
-    
+
     /**
-     * 
+     *
      * @var ResourceServiceInterface
      */
     protected $resourceService;
-    
+
     /**
      *
      * @var \Zend\Permissions\Acl\Acl
      */
     protected $acl;
-    
+
     /**
      *
      * @var string
      */
     protected $module;
 
+    /**
+     *
+     * @var Memcached
+     */
+    protected $memcached;
 
     /**
-     * 
-     * @param AclServiceInterface $aclService
-     * @param RoleServiceInterface $roleService
-     * @param ResourceServiceInterface $resourceService
-     * @param array $config
+     *
+     * @param AclServiceInterface $aclService            
+     * @param RoleServiceInterface $roleService            
+     * @param ResourceServiceInterface $resourceService            
+     * @param Memcached $memcached            
      */
-    public function __construct(AclServiceInterface $aclService, RoleServiceInterface $roleService, ResourceServiceInterface $resourceService)
+    public function __construct(AclServiceInterface $aclService, RoleServiceInterface $roleService, ResourceServiceInterface $resourceService, Memcached $memcached)
     {
-        
         $this->acl = new Acl();
-
+        
         $this->aclService = $aclService;
         
         $this->roleService = $roleService;
         
         $this->resourceService = $resourceService;
         
-        
+        $this->memcached = $memcached;
     }
 
-    
     /**
      *
      * @param string $module            
@@ -72,37 +76,65 @@ class ApplicationAcl extends AbstractPlugin
      * @return \Application\Controller\Plugin\Acl
      */
     public function __invoke()
-    {    
+    {
         
         // add roles
-        $roles = $this->roleService->getAll(array('pagination' => 'off'));
+        $key = 'acl-roles';
         
-        foreach($roles as $role) {
-            if(! $this->acl->hasRole($role->getAclRole())) {
-                $role = new GenericRole($role->getAclRole());
+        $roles = $this->memcached->getItem($key);
         
+        if (! $roles) {
+            $roles = $this->roleService->getAll(array(
+                'pagination' => 'off'
+            ))->toArray();
+            
+            $this->memcached->setItem($key, $roles);
+        }
+        
+        foreach ($roles as $role) {
+            if (! $this->acl->hasRole($role['acl_role'])) {
+                $role = new GenericRole($role['acl_role']);
+                
                 $this->acl->addRole($role);
             }
         }
         
         // add resources
-        $resources = $this->resourceService->getAll(array('pagination' => 'off'));
+        $key = 'acl-resources';
         
-        foreach($resources as $resource) {
-            if (! $this->acl->hasResource($resource->getAclResource())) {
-                $this->acl->addResource(new GenericResource($resource->getAclResource()));
+        $resources = $this->memcached->getItem($key);
+        
+        if (! $resources) {
+            $resources = $this->resourceService->getAll(array(
+                'pagination' => 'off'
+            ))->toArray();
+            
+            $this->memcached->setItem($key, $resources);
+        }
+        
+        foreach ($resources as $resource) {
+            if (! $this->acl->hasResource($resource['acl_resource'])) {
+                $this->acl->addResource(new GenericResource($resource['acl_resource']));
             }
         }
         
         // add rules
-        $rules = $this->aclService->getAll(array('pagination' => 'off'));
+        $key = 'acl-rules';
         
-        foreach($rules as $rule) {
-            $this->acl->allow($rule->getRole(), $rule->getResource());
+        $rules = $this->memcached->getItem($key);
+        
+        if (! $rules) {
+            $rules = $this->aclService->getAll(array(
+                'pagination' => 'off'
+            ))->toArray();
+            
+            $this->memcached->setItem($key, $rules);
         }
-               
         
-       
+        foreach ($rules as $rule) {
+            $this->acl->allow($rule['role'], $rule['resource']);
+        }
+        
         return $this;
     }
 
@@ -120,7 +152,7 @@ class ApplicationAcl extends AbstractPlugin
         
         return false;
     }
-    
+
     public function getAcl()
     {
         return $this->acl;

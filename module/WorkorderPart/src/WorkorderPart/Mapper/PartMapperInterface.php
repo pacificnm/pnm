@@ -33,4 +33,11 @@ interface PartMapperInterface
      * @return boolean
      */
     public function delete(PartEntity $entity);
+    
+    /**
+     * 
+     * @param number $start
+     * @param number $end
+     */
+    public function getTotalByDateRange($start, $end);
 }
