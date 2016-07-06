@@ -129,4 +129,14 @@ class TimeService implements TimeServiceInterface
     {
         return $this->mapper->getTotalsForMonth($start, $end);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderTime\Service\TimeServiceInterface::getTotalsForYear()
+     */
+    public function getTotalsForYear($start, $end, $clientId)
+    {
+        return $this->mapper->getTotalsForYear($start, $end, $clientId);
+    }
 }

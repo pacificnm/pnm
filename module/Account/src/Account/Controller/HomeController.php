@@ -144,7 +144,7 @@ class HomeController extends BaseController
         $dataSet = array_replace($data, $data2);
         
         // set up layout
-        $this->layout()->setVariable('pageTitle', 'Account');
+        $this->layout()->setVariable('pageTitle', 'Accounting');
         
         $this->layout()->setVariable('pageSubTitle', 'Home');
         

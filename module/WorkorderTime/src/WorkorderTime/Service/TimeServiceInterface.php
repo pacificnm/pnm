@@ -72,8 +72,16 @@ interface TimeServiceInterface
     public function getTotalByDateRange($start, $end);
     
     /**
-     * 
-     * @param unknown $month
+     *
+     * @param number $start
+     * @param number $end
      */
     public function getTotalsForMonth($start, $end);
+    
+    /**
+     *
+     * @param number $start
+     * @param number $end
+     */
+    public function getTotalsForYear($start, $end, $clientId);
 }
