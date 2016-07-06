@@ -528,6 +528,12 @@ class WorkorderMapper implements WorkorderMapperInterface
             'user_type'
         ), 'left');
         
+        // join client
+        $select->join('client', 'workorder.client_id = client.client_id', array(
+            'client_name',
+            'client_status'
+        ), 'inner');
+        
         $stmt = $sql->prepareStatementForSqlObject($select);
         
         $result = $stmt->execute();
