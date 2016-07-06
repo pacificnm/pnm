@@ -6,15 +6,16 @@ use VendorBill\Mapper\BillMapperInterface;
 
 class BillService implements BillServiceInterface
 {
+
     /**
-     * 
+     *
      * @var BillMapperInterface
      */
     protected $mapper;
-    
+
     /**
-     * 
-     * @param BillMapperInterface $mapper
+     *
+     * @param BillMapperInterface $mapper            
      */
     public function __construct(BillMapperInterface $mapper)
     {
@@ -22,8 +23,9 @@ class BillService implements BillServiceInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \VendorBill\Service\BillServiceInterface::getAll()
      */
     public function getAll($filter)
@@ -32,8 +34,9 @@ class BillService implements BillServiceInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \VendorBill\Service\BillServiceInterface::get()
      */
     public function get($id)
@@ -42,8 +45,20 @@ class BillService implements BillServiceInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
+     * @see \VendorBill\Service\BillServiceInterface::getDueBills()
+     */
+    public function getDueBills()
+    {
+        return $this->mapper->getDueBills();
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
      * @see \VendorBill\Service\BillServiceInterface::save()
      */
     public function save(BillEntity $entity)
@@ -52,18 +67,20 @@ class BillService implements BillServiceInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \VendorBill\Service\BillServiceInterface::delete()
      */
     public function delete(BillEntity $entity)
     {
         return $this->mapper->delete($entity);
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \VendorBill\Service\BillServiceInterface::getUnpaidBills()
      */
     public function getUnpaidBills()

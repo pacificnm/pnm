@@ -15,10 +15,18 @@
 		<i class="fa fa-angle-left pull-right"></i>
 	</a>
 	<ul class="treeview-menu">
-		<!-- home -->
+	
+		<li class="<?php if($this->activeSubMenuItem == 'account-home'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('account-home'); ?>" title="Account Home">
+				<i class="fa fa-home"></i> <span><?php echo $this->translate('Account Home')?></span>
+			</a>
+		</li>
+		
+	
+		<!-- accounts -->
 		<li class="<?php if($this->activeSubMenuItem == 'account-index'):?>active<?php endif;?>">
-			<a href="<?php echo $this->url('account-index'); ?>" title="My Profile">
-				<i class="fa fa-home"></i> <span><?php echo $this->translate('Home')?></span>
+			<a href="<?php echo $this->url('account-index'); ?>" title="Accounts">
+				<i class="fa fa-bank"></i> <span><?php echo $this->translate('Accounts')?></span>
 			</a>
 		</li>
 		
@@ -40,7 +48,7 @@
 		<!-- Account Types -->
 		<li class="<?php if($this->activeSubMenuItem == 'account-type-index'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('account-type-index'); ?>" title="<?php echo $this->translate('Account Types'); ?>">
-				<i class="fa fa-bank"></i> <?php echo $this->translate('Account Types'); ?>
+				<i class="fa fa-cogs"></i> <?php echo $this->translate('Account Types'); ?>
 			</a>
 		</li>
 		

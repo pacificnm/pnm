@@ -58,9 +58,22 @@ interface TimeServiceInterface
     
     /**
      *
-     * @param unknown $employeeId
-     * @param unknown $start
-     * @param unknown $end
+     * @param number $employeeId
+     * @param number $start
+     * @param number $end
      */
     public function getEmployeeTotalTime($employeeId, $start = null, $end = null);
+    
+    /**
+     * 
+     * @param number $start
+     * @param number $end
+     */
+    public function getTotalByDateRange($start, $end);
+    
+    /**
+     * 
+     * @param unknown $month
+     */
+    public function getTotalsForMonth($start, $end);
 }

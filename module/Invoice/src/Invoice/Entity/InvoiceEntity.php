@@ -1,6 +1,8 @@
 <?php
 namespace Invoice\Entity;
 
+use Client\Entity\ClientEntity;
+
 class InvoiceEntity
 {
 
@@ -81,6 +83,12 @@ class InvoiceEntity
      * @var number
      */
     protected $invoiceDatePaid;
+
+    /**
+     *
+     * @var ClientEntity
+     */
+    protected $clientEntity;
 
     /**
      *
@@ -201,6 +209,15 @@ class InvoiceEntity
 
     /**
      *
+     * @return the $clientEntity
+     */
+    public function getClientEntity()
+    {
+        return $this->clientEntity;
+    }
+
+    /**
+     *
      * @param number $invoiceId            
      */
     public function setInvoiceId($invoiceId)
@@ -314,5 +331,14 @@ class InvoiceEntity
     public function setInvoiceDatePaid($invoiceDatePaid)
     {
         $this->invoiceDatePaid = $invoiceDatePaid;
+    }
+
+    /**
+     *
+     * @param \Client\Entity\ClientEntity $clientEntity            
+     */
+    public function setClientEntity($clientEntity)
+    {
+        $this->clientEntity = $clientEntity;
     }
 }

@@ -22,6 +22,14 @@ interface WorkorderMapperInterface
 
     /**
      *
+     * @param number $start            
+     * @param number $end            
+     * @param status $status            
+     */
+    public function getByDateRange($start, $end, $status);
+
+    /**
+     *
      * @param number $clientId            
      * @param string $status            
      * @return number
@@ -51,19 +59,19 @@ interface WorkorderMapperInterface
     public function getClientUnInvoiced($clientId);
 
     /**
-     * 
-     * @param number $invoiceId
+     *
+     * @param number $invoiceId            
      * @return WorkorderEntity
      */
     public function getInvoiceWorkorders($invoiceId);
-    
+
     /**
-     * 
-     * @param array $filter
+     *
+     * @param array $filter            
      * @return WorkorderEntity
      */
     public function getWorkorderSchedule(array $filter);
-    
+
     /**
      *
      * @param WorkorderEntity $entity            

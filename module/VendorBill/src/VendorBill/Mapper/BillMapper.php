@@ -117,8 +117,6 @@ class BillMapper implements BillMapperInterface
             'vendor_bill.vendor_bill_id = ?' => $id
         ));
         
-        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
-        
         $stmt = $sql->prepareStatementForSqlObject($select);
         
         $result = $stmt->execute();
@@ -130,6 +128,44 @@ class BillMapper implements BillMapperInterface
             $resultSet->buffer();
             
             return $resultSet->initialize($result)->current();
+        }
+        
+        return array();
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     * @see \VendorBill\Mapper\BillMapperInterface::getDueBills()
+     */
+    public function getDueBills()
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('vendor_bill');
+        
+        $select->where(array(
+            'vendor_bill.vendor_bill_status = ?' => 'Un-Paid'
+        ));
+        
+        // join vendor
+        $select->join('vendor', 'vendor_bill.vendor_id = vendor.vendor_id', array(
+            'vendor_name',
+            'vendor_active'
+        ), 'left');
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+            
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+            
+            $resultSet->buffer();
+            
+            return $resultSet->initialize($result);
         }
         
         return array();

@@ -193,4 +193,59 @@ class PartMapper implements PartMapperInterface
         
         return (bool) $result->getAffectedRows();
     }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     * @see \WorkorderPart\Mapper\PartMapperInterface::getTotalByDateRange()
+     */
+    public function getTotalByDateRange($start, $end)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder_parts');
+        
+        $select->columns(array(
+            'workorder_part_total' => new \Zend\Db\Sql\Expression('SUM(workorder_parts_total)')
+        ));
+        
+        // join workorder
+        $select->join('workorder', 'workorder_parts.workorder_id = workorder.workorder_id', array(
+            'workorder_date_scheduled',
+            'workorder_date_close'
+        ), 'inner');
+        
+        // status
+        $select->where(array(
+            'workorder.workorder_status = ?' => 'Closed'
+        ));
+        
+        if ($start) {
+            $select->where->greaterThanOrEqualTo('workorder.workorder_date_scheduled', $start);
+        }
+        
+        if ($end) {
+            $select->where->lessThanOrEqualTo('workorder.workorder_date_close', $end);
+        }
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+            
+            $resultSet = new ResultSet();
+            
+            $resultSet->initialize($result);
+            
+            $resultSet->buffer();
+            
+            $row = $resultSet->current();
+            
+            return $row->workorder_part_total;
+        }
+        
+        return 0;
+    }
 }

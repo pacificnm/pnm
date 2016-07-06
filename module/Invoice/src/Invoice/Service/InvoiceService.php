@@ -48,6 +48,17 @@ class InvoiceService implements InvoiceServiceInterface
      *
      * {@inheritDoc}
      *
+     * @see \Invoice\Service\InvoiceServiceInterface::getByDateRange()
+     */
+    public function getByDateRange($start, $end, $status)
+    {
+        return $this->mapper->getByDateRange($start, $end, $status);
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
      * @see \Invoice\Service\InvoiceServiceInterface::save()
      */
     public function save(InvoiceEntity $entity)
@@ -65,10 +76,11 @@ class InvoiceService implements InvoiceServiceInterface
     {
         return $this->mapper->delete($entity);
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Invoice\Service\InvoiceServiceInterface::getClientUnpaidInvoices()
      */
     public function getClientUnpaidInvoices($clientId)

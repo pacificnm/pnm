@@ -1,0 +1,418 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
+?>
+<div class="row">
+ 	<div class="col-md-3 col-sm-6 col-xs-12">
+ 		<div class="info-box">
+ 			<span class="info-box-icon bg-green"><i class="fa fa-credit-card fa-fw"></i></span>
+ 			<div class="info-box-content">
+ 				<span class="info-box-text"><?php echo $this->translate('Paid Invoices')?></span>
+ 				<span class="info-box-number"><?php echo $this->closedInvoiceEntitys->getTotalItemCount(); ?></span>
+ 			</div>
+ 		</div>
+ 	</div>
+ 	
+ 	<div class="col-md-3 col-sm-6 col-xs-12">
+ 		<div class="info-box">
+ 			<span class="info-box-icon bg-red"><i class="fa fa-credit-card  fa-fw"></i></span>
+ 			<div class="info-box-content">
+ 				<a href="#unPaidInvoices" title="<?php echo $this->translate('View un-paid invoices'); ?>">
+     				<span class="info-box-text"><?php echo $this->translate('Un-Paid Invoices')?></span>
+     				<span class="info-box-number"><?php echo $this->openInvoiceEntitys->getTotalItemCount(); ?></span>
+ 				</a>
+ 			</div>
+ 		</div>
+ 	</div>
+ 	
+ 	<!-- fix for small devices only -->
+ 	<div class="clearfix visible-sm-block"></div>
+ 	
+ 	<div class="col-md-3 col-sm-6 col-xs-12">
+ 		<div class="info-box">
+ 			<span class="info-box-icon bg-red"><i class="fa fa-wrench fa-fw"></i></span>
+ 			<div class="info-box-content">
+ 				<a href="#openWorkOrders" title="<?php echo $this->translate('View open work orders'); ?>">
+ 					<span class="info-box-text"><?php echo $this->translate('Open Work Orders')?></span>
+ 					<span class="info-box-number"><?php echo $this->openWorkorderEntitys->getTotalItemCount(); ?></span>
+ 				</a>
+ 			</div>
+ 		</div>
+ 	</div>
+ 	
+ 	<div class="col-md-3 col-sm-6 col-xs-12">
+ 		<div class="info-box">
+ 			<span class="info-box-icon bg-green"><i class="fa fa-wrench fa-fw"></i></span>
+ 			<div class="info-box-content">
+ 				<span class="info-box-text"><?php echo $this->translate('Closed Work Orders')?></span>
+ 				<span class="info-box-number"><?php echo $this->closedWorkorderEntitys->getTotalItemCount(); ?></span>
+ 			</div>
+ 		</div>
+ 	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title"><?php echo $this->translate('Monthly Recap Report'); ?></h3>
+				<div class="box-tools pull-right">
+					<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="row">
+					<div class="col-md-8">
+						<p class="text-center"><strong><?php echo $this->translate('Sales'); ?>: <?php echo date("F Y", time())?></strong></p>
+						<div class="chart">
+                            <!-- Sales Chart Canvas -->
+                            <canvas id="salesChart" style="height: 180px;"></canvas>
+                        </div>
+					</div>
+					<div class="col-md-4">
+					
+					</div>
+				</div>
+			</div>
+			<div class="box-footer">
+				<div class="row">
+					<div class="col-sm-3 col-xs-6">
+						<div class="description-block border-right">
+							<h5 class="description-header"><?php echo $this->currencyFormat($this->totalLabor, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></h5>
+							<span class="description-text"><?php echo $this->translate('TOTAL LABOR'); ?></span>
+						</div>
+					</div>
+					
+					<div class="col-sm-3 col-xs-6">
+						<div class="description-block border-right">
+							<h5 class="description-header"><?php echo $this->currencyFormat($this->totalParts, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></h5>
+							<span class="description-text"><?php echo $this->translate('TOTAL PARTS'); ?></span>
+						</div>
+					</div>
+					
+					<div class="col-sm-3 col-xs-6">
+						<div class="description-block border-right">
+							<h5 class="description-header"><?php echo $this->currencyFormat($this->totalLabor + $this->totalParts, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></h5>
+							<span class="description-text"><?php echo $this->translate('TOTAL REVENUE'); ?></span>
+						</div>
+					</div>
+					
+					<div class="col-sm-3 col-xs-6">
+						<div class="description-block">
+							<h5 class="description-header"><?php echo $this->openWorkorderEntitys->getTotalItemCount() + $this->closedWorkorderEntitys->getTotalItemCount() ; ?></h5>
+							<span class="description-text"><?php echo $this->translate('WORK Orders'); ?></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-4 col-xs-12">
+		<!-- Accounts -->
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title"><i class="fa fa-bank"></i> <?php echo $this->translate('Accounts'); ?></h3>
+				<div class="box-tools pull-right"></div>
+			</div>
+			<?php if($this->accountEntitys->count() == 0):?>
+    		<div class="box-body">
+    			<div class="alert alert-info">
+    				<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no accounts.'); ?></p>
+    			</div>
+    		</div>
+			<?php else: ?>
+			<?php $accountTotal = 0; ?>
+			<div class="box-body table-responsive no-padding">
+        		<table class="table table-hover">
+        			<thead>
+        				<tr>
+        					<th><?php echo $this->translate('Account'); ?></th>
+        					<th class="text-right"><?php echo $this->translate('Balance'); ?></th>
+        				</tr>
+        			</thead>
+        			<tbody>
+        			<?php foreach($this->accountEntitys as $accountEntity): ?>
+        				<tr>
+        					<td>
+        						<a href="<?php echo $this->url('account-view', array('accountId' => $accountEntity->getAccountId())); ?>" title="<?php echo $this->translate('View this account'); ?>">
+        							<?php echo $accountEntity->getAccountName(); ?>
+        						</a>
+        					</td>
+        					<td class="text-right"><?php echo $this->currencyFormat($accountEntity->getAccountBalance(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+        				</tr>
+        				<?php $accountTotal = $accountTotal + $accountEntity->getAccountBalance(); ?>
+        			<?php endforeach; ?>
+        			</tbody>
+        			<tfoot>
+        				<tr>
+        					<th><?php echo $this->translate('Total'); ?></th>
+        					<th class="text-right"><?php echo $this->currencyFormat($accountTotal, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang());?></th>
+        				</tr>
+        			</tfoot>
+        		</table>
+        	</div>
+			
+			<?php endif; ?>
+		</div>
+		
+		<!-- Bills -->
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title"><i class="fa fa-dollar"></i> <?php echo $this->translate('Due Bills'); ?></h3>
+				<div class="box-tools pull-right"></div>
+			</div>
+			<?php if($this->billEntitys->count() == 0):?>
+    		<div class="box-body">
+    			<div class="alert alert-info">
+    				<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no un-paid bills.'); ?></p>
+    			</div>
+    		</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+        		<table class="table table-hover">
+        			<thead>
+        				<tr>
+        					<th><?php echo $this->translate('Vendor'); ?></th>
+        					<th><?php echo $this->translate('Due'); ?></th>
+        					<th class="text-right"><?php echo $this->translate('Amount'); ?></th>
+        				</tr>
+        			</thead>
+        			<tbody>
+        			<?php $billsTotal = 0; ?>
+        			<?php foreach($this->billEntitys as $billEntity): ?>
+        				<tr>
+        					<td>
+        						<a href="<?php echo $this->url('vendor-view', array('vendorId' => $billEntity->getVendorId()));?>" title="<?php echo $this->translate('View this vendor'); ?>">
+        							<?php echo $billEntity->getVendorEntity()->getVendorName(); ?>
+        						</a>
+        					</td>
+        					<td><?php echo date($this->appConfig()->getConfigDateShort(), $billEntity->getVendorBillDateDue());?></td>
+        					<td class="text-right"><?php echo $this->currencyFormat($billEntity->getVendorBillAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+        				</tr>
+        				<?php $billsTotal = $billsTotal + $billEntity->getVendorBillAmount(); ?>
+        			<?php endforeach; ?>
+        			</tbody>
+        			<tfoot>
+        				<tr>
+        					<th colspan="2"><?php echo $this->translate('Total'); ?></th>
+        					<th class="text-right"><?php echo $this->currencyFormat($billsTotal, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></th>
+        				</tr>
+        			</tfoot>
+        		</table>
+        	</div>
+			<?php endif; ?>
+		</div>
+		
+		<!-- summary -->
+		<div class="box box-success">
+			<div class="box-header with-border">
+				<h3 class="box-title"><i class="fa fa-dollar"></i> <?php echo $this->translate('Summary'); ?></h3>
+				<div class="box-tools pull-right"></div>
+			</div>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<tr>
+						<th><?php echo $this->translate('Account Total'); ?></th>
+						<th class="text-right"><?php echo $this->currencyFormat($accountTotal, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang());?></th>
+					</tr>
+					<tr>
+						<th><?php echo $this->translate('Vendor Total'); ?></th>
+						<th class="text-right"><?php echo $this->currencyFormat($billsTotal, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></th>
+					</tr>
+					<tr>
+						<th><?php echo $this->translate('Balance'); ?></th>
+						<th class="text-right"><?php echo $this->currencyFormat($accountTotal - $billsTotal, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></th>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-8 col-xs-12">
+		<!-- un-paid invoices -->
+		<a id="unPaidInvoices"></a>
+		<div class="box box-danger">
+			<div class="box-header with-border">
+				<h3 class="box-title"><i class="fa fa-credit-card"></i> <?php echo $this->translate('Un-Paid Invoices'); ?></h3>
+				<div class="box-tools pull-right"></div>
+			</div>
+			<?php if($this->openInvoiceEntitys->getTotalItemCount() == 0):?>
+        		<div class="box-body">
+        			<div class="alert alert-info">
+    					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no un-paid invoices.'); ?></p>
+    				</div>
+        		</div>
+    		<?php else: ?>
+        		<div class="box-body table-responsive no-padding">
+        			<table class="table table-hover">
+        				<thead>
+        					<tr>
+        						<th><?php echo $this->translate('Invoice #'); ?></th>
+        						<th><?php echo $this->translate('Date'); ?></th>
+        						<th><?php echo $this->translate('Client'); ?></th>
+        						<th class="text-right"><?php echo $this->translate('Amount'); ?></th>
+        					</tr>
+        				</thead>
+        				<tbody>
+        				<?php foreach($this->openInvoiceEntitys as $invoiceEntity): ?>
+        					<tr>
+        						<td>
+        							<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'invoice-view') ):?>
+        							<a href="<?php echo $this->url('invoice-view', array('clientId' => $invoiceEntity->getClientId(), 'invoiceId' => $invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('View this invoice'); ?>">
+        								<?php echo $this->translate('Invoice #');?><?php echo $invoiceEntity->getInvoiceId(); ?>
+        							</a>
+        							<?php else: ?>
+        								<?php echo $this->translate('Invoice #');?><?php echo $invoiceEntity->getInvoiceId(); ?>
+        							<?php endif;?>
+        						</td>
+        						<td><?php echo date($this->appConfig()->getConfigDateShort(), $invoiceEntity->getInvoiceDate()); ?></td>
+        						<td>
+        							<a href="<?php echo $this->url('client-view', array('clientId' => $invoiceEntity->getClientId()));?>" title="<?php echo $this->translate('View this client'); ?>">
+        								<?php echo $invoiceEntity->getClientEntity()->getClientName(); ?>
+        							</a>
+        						</td>
+        						<td class="text-right"><?php echo $this->currencyFormat($invoiceEntity->getInvoiceTotal(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+        					</tr>
+        				<?php endforeach; ?>
+        				</tbody>
+        			</table>
+    			</div>
+    		<?php endif;?>
+		</div>
+		
+		<!-- open work orders -->
+		<a id="openWorkOrders"></a>
+		<div class="box box-danger">
+			<div class="box-header with-border">
+				<h3 class="box-title"><i class="fa fa-wrench"></i> <?php echo $this->translate('Open Work Orders'); ?></h3>
+				<div class="box-tools pull-right"></div>
+			</div>
+			
+			<?php if($this->openWorkorderEntitys->getTotalItemCount() == 0):?>
+    			<div class="box-body">
+    				<div class="alert alert-info">
+    					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no open work orders.'); ?></p>
+    				</div>
+    			</div>
+			<?php else: ?>
+				<div class="box-body table-responsive no-padding">
+    				<table class="table table-hover">
+    					<thead>
+    						<tr>
+    							<th><?php echo $this->translate('Work Order #'); ?></th>
+    							<th><?php echo $this->translate('Client'); ?></th>
+    							<th><?php echo $this->translate('Description'); ?></th>
+    							<th><?php echo $this->translate('Scheduled'); ?></th>	
+    						</tr>
+    					</thead>
+    					<tbody>
+    					<?php foreach($this->openWorkorderEntitys as $workorderEntity): ?>
+    						<tr>
+    							<td>
+    								<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'workorder-view') ):?>
+    								<a href="<?php echo $this->url('workorder-view', array('clientId' => $this->clientId, 'workorderId' => $workorderEntity->getWorkorderId()));?>" title="<?php echo $this->translate('View this work order'); ?>">
+    									<?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?>
+    								</a>
+    								<?php else: ?>
+    									<?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?>
+    								<?php endif; ?>
+    							</td>
+    							<td>
+    								<a href="<?php echo $this->url('client-view', array('clientId' => $workorderEntity->getClientId())); ?>" title="<?php echo $this->translate('View this client'); ?>">
+    									<?php echo $workorderEntity->getClientEntity()->getClientName(); ?>
+    								</a>
+    							</td>
+    							<td><?php echo $workorderEntity->getWorkorderDescription(); ?></td>
+    							<td><?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderDateScheduled()); ?></td>
+    						</tr>
+    					<?php endforeach;?>	
+    					</tbody>
+    				</table>
+    			</div>
+			<?php endif; ?>
+
+		</div>
+	</div>
+</div>
+<script>
+$( document ).ready(function() {
+	//-----------------------
+	  //- MONTHLY SALES CHART -
+	  //-----------------------
+
+	  // Get context with jQuery - using jQuery's .get() method.
+	  var salesChartCanvas = $("#salesChart").get(0).getContext("2d");
+	  // This will get the first returned node in the jQuery collection.
+	  var salesChart = new Chart(salesChartCanvas);
+
+	
+	var salesChartData = {
+		labels: [<?php for($x = 1; $x <= date("t"); $x++): ?>"<?php echo $x;?>"<?php if($x < date("t")): ?>,<?php endif; ?><?php endfor;?>],
+		datasets: [
+			{
+		        label: "Labor",
+		        fillColor: "rgba(60,141,188,0.9)",
+		        strokeColor: "rgba(60,141,188,0.8)",
+		        pointColor: "#3b8bba",
+		        pointStrokeColor: "rgba(60,141,188,1)",
+		        pointHighlightFill: "#fff",
+		        pointHighlightStroke: "rgba(60,141,188,1)",
+		             data: [<?php foreach($this->dataSet as $data): ?><?php echo $data;?>,<?php endforeach;?>]
+		           },
+			]
+		};
+
+	var salesChartOptions = {
+		    //Boolean - If we should show the scale at all
+		    showScale: true,
+		    //Boolean - Whether grid lines are shown across the chart
+		    scaleShowGridLines: false,
+		    //String - Colour of the grid lines
+		    scaleGridLineColor: "rgba(0,0,0,.05)",
+		    //Number - Width of the grid lines
+		    scaleGridLineWidth: 1,
+		    //Boolean - Whether to show horizontal lines (except X axis)
+		    scaleShowHorizontalLines: true,
+		    //Boolean - Whether to show vertical lines (except Y axis)
+		    scaleShowVerticalLines: true,
+		    //Boolean - Whether the line is curved between points
+		    bezierCurve: true,
+		    //Number - Tension of the bezier curve between points
+		    bezierCurveTension: 0.3,
+		    //Boolean - Whether to show a dot for each point
+		    pointDot: false,
+		    //Number - Radius of each point dot in pixels
+		    pointDotRadius: 4,
+		    //Number - Pixel width of point dot stroke
+		    pointDotStrokeWidth: 1,
+		    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+		    pointHitDetectionRadius: 20,
+		    //Boolean - Whether to show a stroke for datasets
+		    datasetStroke: true,
+		    //Number - Pixel width of dataset stroke
+		    datasetStrokeWidth: 2,
+		    //Boolean - Whether to fill the dataset with a color
+		    datasetFill: true,
+		    //String - A legend template
+		    legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%=datasets[i].label%></li><%}%></ul>",
+		    //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+		    maintainAspectRatio: true,
+		    //Boolean - whether to make the chart responsive to window resizing
+		    responsive: true
+		  };
+
+	//Create the line chart
+	  salesChart.Bar(salesChartData, salesChartOptions);
+
+
+		
+    console.log( "ready!" );
+});
+</script>
