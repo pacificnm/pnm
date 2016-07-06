@@ -13,7 +13,8 @@ return array(
                     'client-index',
                     'client-view',
                     'client-update',
-                    'client-create'
+                    'client-create',
+                    'client-delete'
                 ),
                 'accountant' => array(),
                 'administrator' => array()
@@ -27,7 +28,8 @@ return array(
             'Client\Controller\Index' => 'Client\Controller\Factory\IndexControllerFactory',
             'Client\Controller\View' => 'Client\Controller\Factory\ViewControllerFactory',
             'Client\Controller\Create' => 'Client\Controller\Factory\CreateControllerFactory',
-            'Client\Controller\Update' => 'Client\Controller\Factory\UpdateControllerFactory'
+            'Client\Controller\Update' => 'Client\Controller\Factory\UpdateControllerFactory',
+            'Client\Controller\Delete' => 'Client\Controller\Factory\DeleteControllerFactory',
         )
         
     ),
@@ -74,6 +76,18 @@ return array(
                     'route' => '/client/[:clientId]/update',
                     'defaults' => array(
                         'controller' => 'Client\Controller\Update',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            
+            'client-delete' => array(
+                'title' => 'Delete Client',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/delete',
+                    'defaults' => array(
+                        'controller' => 'Client\Controller\Delete',
                         'action' => 'index'
                     )
                 )
