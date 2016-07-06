@@ -19,6 +19,8 @@ class DeleteControllerFactory implements FactoryInterface
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
-        return new DeleteController($clientService);
+        $workorderService = $realServiceLocator->get('Workorder\Service\WorkorderServiceInterface');
+        
+        return new DeleteController($clientService, $workorderService);
     }
 }
