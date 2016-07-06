@@ -5,6 +5,7 @@ use Zend\Stdlib\Hydrator\ClassMethods;
 use WorkorderEmployee\Entity\WorkorderEmployeeEntity;
 use Employee\Entity\EmployeeEntity;
 use Workorder\Entity\WorkorderEntity;
+use Client\Entity\ClientEntity;
 
 class WorkorderEmployeeHydrator extends ClassMethods
 {
@@ -39,6 +40,10 @@ class WorkorderEmployeeHydrator extends ClassMethods
         $workorderEntity = parent::hydrate($data, new WorkorderEntity());
         
         $object->setWorkorderEntity($workorderEntity);
+        
+        $clientEntity = parent::hydrate($data, new ClientEntity());
+        
+        $object->getWorkorderEntity()->setClientEntity($clientEntity);
         
         return $object;
     }

@@ -201,6 +201,7 @@
  					<thead>
  						<tr>
  							<th><?php echo $this->translate('Work Order #'); ?></th>
+ 							<th><?php echo $this->translate('Client'); ?></th>
  							<th><?php echo $this->translate('Description'); ?></th>
  							<th><?php echo $this->translate('Scheduled'); ?></th>	
  						</tr>
@@ -209,6 +210,11 @@
 					<?php foreach($this->workorderEntitys as $workorderEntity): ?>
 						<tr>
  							<td><a href="<?php echo $this->url('workorder-view', array('clientId' => $workorderEntity->getWorkorderEntity()->getClientId(), 'workorderId' => $workorderEntity->getWorkorderId()));?>" title="<?php echo $this->translate('View this work order'); ?>"><?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?></a></td>
+ 							<td>
+ 								<a href="<?php echo $this->url('client-view', array('clientId' => $workorderEntity->getWorkorderEntity()->getClientId())); ?>" title="<?php echo $this->translate('View this client'); ?>">
+									<?php echo $workorderEntity->getWorkorderEntity()->getClientEntity()->getClientName(); ?>
+								</a>
+ 							</td>
  							<td><?php echo $workorderEntity->getWorkorderEntity()->getWorkorderDescription(); ?></td>
  							<td><?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderEntity()->getWorkorderDateScheduled()); ?></td>
  						</tr>

@@ -166,7 +166,11 @@ class WorkorderEmployeeMapper implements WorkorderEmployeeMapperInterface
             'workorder_date_close'
         ), 'inner');
         
-       
+        // join client
+        $select->join('client', 'workorder.client_id = client.client_id', array(
+            'client_name',
+            'client_status'
+        ), 'inner');
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
