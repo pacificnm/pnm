@@ -22,7 +22,7 @@ return array(
                 'accountant' => array(),
                 'administrator' => array()
             )
-        ),
+        )
     ),
     
     'router' => array(
@@ -124,13 +124,14 @@ return array(
             'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
-            'error/index' => __DIR__ . '/../view/error/index.phtml',
-            //'oauth/authorize' => __DIR__ . '/../view/oauth/authorize.phtml'
-        ),
-        'template_path_stack' => array(
-            __DIR__ . '/../view',
-            
+            'error/index' => __DIR__ . '/../view/error/index.phtml'
         )
+        // 'oauth/authorize' => __DIR__ . '/../view/oauth/authorize.phtml'
+        ,
+        'template_path_stack' => array(
+            __DIR__ . '/../view'
+        )
+        
     ),
     // Placeholder for console routes
     'console' => array(
@@ -148,45 +149,53 @@ return array(
                 'pages' => array(
                     array(
                         'label' => 'Accounting',
-                        'route' => 'account-index',
+                        'route' => 'account-home',
                         'useRouteMatch' => true,
                         'pages' => array(
                             array(
-                                'label' => 'New Account',
-                                'route' => 'account-create',
-                                'useRouteMatch' => true,
-                            ),
-                            array(
-                                'label' => 'View Account',
-                                'route' => 'account-view',
+                                'label' => 'Accounts',
+                                'route' => 'account-index',
                                 'useRouteMatch' => true,
                                 'pages' => array(
                                     array(
-                                        'label' => 'Ledger Item',
-                                        'route' => 'account-ledger-view',
-                                        'useRouteMatch' => true,
+                                        'label' => 'New Account',
+                                        'route' => 'account-create',
+                                        'useRouteMatch' => true
                                     ),
                                     array(
-                                        'label' => 'Create Ledger Item',
-                                        'route' => 'account-ledger-create',
+                                        'label' => 'View Account',
+                                        'route' => 'account-view',
                                         'useRouteMatch' => true,
-                                    ),
-                                    array(
-                                        'label' => 'Edit',
-                                        'route' => 'account-update',
-                                        'useRouteMatch' => true,
-                                    ),
-                                    array(
-                                        'label' => 'Delete',
-                                        'route' => 'account-delete',
-                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Ledger Item',
+                                                'route' => 'account-ledger-view',
+                                                'useRouteMatch' => true
+                                            ),
+                                            array(
+                                                'label' => 'Create Ledger Item',
+                                                'route' => 'account-ledger-create',
+                                                'useRouteMatch' => true
+                                            ),
+                                            array(
+                                                'label' => 'Edit',
+                                                'route' => 'account-update',
+                                                'useRouteMatch' => true
+                                            ),
+                                            array(
+                                                'label' => 'Delete',
+                                                'route' => 'account-delete',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
                                     )
-                                ),
+                                )
                             ),
+                            
                             array(
                                 'label' => 'Bills',
                                 'route' => 'vendor-bill-index',
-                                'useRouteMatch' => true,
+                                'useRouteMatch' => true
                             ),
                             array(
                                 'label' => 'Vendors',
@@ -206,13 +215,13 @@ return array(
                                                     array(
                                                         'label' => 'Payment',
                                                         'route' => 'vendor-payment-create',
-                                                        'useRouteMatch' => true,
+                                                        'useRouteMatch' => true
                                                     ),
                                                     array(
                                                         'label' => 'View Payment',
                                                         'route' => 'vendor-payment-view',
-                                                        'useRouteMatch' => true,
-                                                    ),
+                                                        'useRouteMatch' => true
+                                                    )
                                                 )
                                             )
                                         )
@@ -227,7 +236,7 @@ return array(
                                     array(
                                         'label' => 'Create Account Type',
                                         'route' => 'account-type-create',
-                                        'useRouteMatch' => true,
+                                        'useRouteMatch' => true
                                     ),
                                     array(
                                         'label' => 'View',
@@ -237,18 +246,18 @@ return array(
                                             array(
                                                 'label' => 'Update',
                                                 'route' => 'account-type-update',
-                                                'useRouteMatch' => true,
+                                                'useRouteMatch' => true
                                             ),
                                             array(
                                                 'label' => 'Delete',
                                                 'route' => 'account-type-delete',
-                                                'useRouteMatch' => true,
-                                            ),
+                                                'useRouteMatch' => true
+                                            )
                                         )
-                                    ),
-                                    
+                                    )
                                 )
-                            ),
+                                
+                            )
                         )
                     ),
                     array(
@@ -259,12 +268,12 @@ return array(
                             array(
                                 'label' => 'Time Clock',
                                 'route' => 'employee-time',
-                                'useRouteMatch' => true,
+                                'useRouteMatch' => true
                             ),
                             array(
                                 'label' => 'Calendar',
                                 'route' => 'employee-calendar',
-                                'useRouteMatch' => true,
+                                'useRouteMatch' => true
                             ),
                             array(
                                 'label' => 'Favorite Clients',
@@ -281,13 +290,13 @@ return array(
                             array(
                                 'label' => 'Edit',
                                 'route' => 'employee-profile-update',
-                                'useRouteMatch' => true,
+                                'useRouteMatch' => true
                             ),
                             array(
                                 'label' => 'Change Password',
                                 'route' => 'employee-password',
-                                'useRouteMatch' => true,
-                            ),
+                                'useRouteMatch' => true
+                            )
                         )
                     ),
                     
@@ -367,18 +376,18 @@ return array(
                                         'pages' => array(
                                             array(
                                                 'label' => 'Edit',
-                                                'route' => 'host-type-update',
+                                                'route' => 'host-type-update'
                                             ),
                                             array(
                                                 'label' => 'Delete',
-                                                'route' => 'host-type-delete',
+                                                'route' => 'host-type-delete'
                                             )
                                         )
                                     ),
                                     array(
                                         'label' => 'Create Host Type',
                                         'route' => 'host-type-create',
-                                        'useRouteMatch' => true,
+                                        'useRouteMatch' => true
                                     )
                                 )
                             ),
@@ -394,23 +403,23 @@ return array(
                                         'pages' => array(
                                             array(
                                                 'label' => 'Edit',
-                                                'route' => 'host-attribute-update',
+                                                'route' => 'host-attribute-update'
                                             ),
                                             array(
                                                 'label' => 'Delete',
-                                                'route' => 'host-attribute-delete',
+                                                'route' => 'host-attribute-delete'
                                             ),
                                             array(
                                                 'label' => 'New Value',
                                                 'route' => 'host-attribute-value-create',
-                                                'useRouteMatch' => true,
+                                                'useRouteMatch' => true
                                             )
                                         )
                                     ),
                                     array(
                                         'label' => 'Create',
                                         'route' => 'host-attribute-create',
-                                        'useRouteMatch' => true,
+                                        'useRouteMatch' => true
                                     )
                                 )
                             ),

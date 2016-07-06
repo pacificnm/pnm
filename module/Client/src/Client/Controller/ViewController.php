@@ -9,6 +9,7 @@ use Invoice\Service\InvoiceServiceInterface;
 use Task\Service\TaskServiceInterface;
 use Location\Service\LocationServiceInterface;
 use User\Service\UserServiceInterface;
+use WorkorderTime\Service\TimeServiceInterface;
 
 class ViewController extends BaseController
 {
@@ -50,15 +51,22 @@ class ViewController extends BaseController
     protected $userService;
 
     /**
-     *
-     * @param ClientServiceInterface $clientService            
-     * @param WorkorderServiceInterface $workorderService            
-     * @param InvoiceServiceInterface $invoiceService            
-     * @param TaskServiceInterface $taskService            
-     * @param LocationServiceInterface $locationService            
-     * @param UserServiceInterface $userService            
+     * 
+     * @var TimeServiceInterface
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, InvoiceServiceInterface $invoiceService, TaskServiceInterface $taskService, LocationServiceInterface $locationService, UserServiceInterface $userService)
+    protected $timeService;
+    
+    /**
+     * 
+     * @param ClientServiceInterface $clientService
+     * @param WorkorderServiceInterface $workorderService
+     * @param InvoiceServiceInterface $invoiceService
+     * @param TaskServiceInterface $taskService
+     * @param LocationServiceInterface $locationService
+     * @param UserServiceInterface $userService
+     * @param TimeServiceInterface $timeService
+     */
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, InvoiceServiceInterface $invoiceService, TaskServiceInterface $taskService, LocationServiceInterface $locationService, UserServiceInterface $userService, TimeServiceInterface $timeService)
     {
         $this->clientService = $clientService;
         
@@ -71,6 +79,8 @@ class ViewController extends BaseController
         $this->locationService = $locationService;
         
         $this->userService = $userService;
+        
+        $this->timeService = $timeService;
     }
 
     /**
@@ -130,6 +140,30 @@ class ViewController extends BaseController
         // get primary user
         $userEntity = $this->userService->getClientPrimaryUser($id);
         
+        // start time
+        $start = mktime(0, 0, 0, 1, 1, date("Y"));
+        
+        // end time
+        $end = mktime(23, 59, 59, 12, 31, date("Y"));
+        
+        // get chart data
+        $timeEntitys = $this->timeService->getTotalsForYear($start, $end, $id);
+        
+        $data = array();
+        
+        $data2 = array();
+        
+        for($x = 1; $x <= 12; $x++) {
+            $data[$x] = 0;
+        }
+        
+        foreach($timeEntitys as $timeEntity) {
+            $month = intval(date("m", $timeEntity->workorder_time_in));
+            $data2[$month] = $timeEntity->workorder_labor_total;
+        }
+        
+        $dataSet = array_replace($data, $data2);
+        
         // return view model
         return new ViewModel(array(
             'clientEntity' => $clientEntity,
@@ -142,7 +176,8 @@ class ViewController extends BaseController
             'invoiceEntitys' => $invoiceEntitys,
             'taskEntitys' => $taskEntitys,
             'locationEntitys' => $locationEntitys,
-            'userEntity' => $userEntity
+            'userEntity' => $userEntity,
+            'dataSet' => $dataSet
         ));
     }
 }

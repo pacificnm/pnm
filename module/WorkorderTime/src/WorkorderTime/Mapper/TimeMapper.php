@@ -468,4 +468,60 @@ class TimeMapper implements TimeMapperInterface
         
         return 0;
     }
+    
+    public function getTotalsForYear($start, $end, $clientId = null)
+    {
+        $sql = new Sql($this->readAdapter);
+    
+        $select = $sql->select('workorder_time');
+    
+        $select->columns(array(
+            'workorder_labor_total' => new \Zend\Db\Sql\Expression('SUM(labor_total)'),
+            'workorder_time_in',
+            'day' => new \Zend\Db\Sql\Expression("Month(FROM_UNIXTIME('workorder_time_in'))"),
+        ));
+    
+        $select->group(new \Zend\Db\Sql\Expression("Month( FROM_UNIXTIME( `workorder_time_in` ) )"));
+    
+        // join workorder
+        $select->join('workorder', 'workorder_time.workorder_id = workorder.workorder_id', array(
+        ), 'inner');
+    
+        // status
+        $select->where(array(
+            'workorder.workorder_status = ?' => 'Closed'
+        ));
+    
+        if ($start) {
+            $select->where->greaterThanOrEqualTo('workorder.workorder_date_scheduled', $start);
+        }
+    
+        if ($end) {
+            $select->where->lessThanOrEqualTo('workorder.workorder_date_close', $end);
+        }
+        
+        if($clientId) {
+            $select->where(array('workorder.client_id = ?' => $clientId));
+        }
+    
+        //echo $sql->getSqlstringForSqlObject($select); die ;
+    
+        $stmt = $sql->prepareStatementForSqlObject($select);
+    
+        $result = $stmt->execute();
+    
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+    
+            $resultSet = new ResultSet();
+    
+            $resultSet->initialize($result);
+    
+            $resultSet->buffer();
+    
+    
+            return $resultSet;
+        }
+    
+        return 0;
+    }
 }
