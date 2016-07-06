@@ -58,6 +58,12 @@ class TaskEntity
 
     /**
      *
+     * @var bool
+     */
+    protected $taskDateReminderActive;
+
+    /**
+     *
      * @var string
      */
     protected $taskTitle;
@@ -156,6 +162,15 @@ class TaskEntity
     public function getTaskDateReminder()
     {
         return $this->taskDateReminder;
+    }
+
+    /**
+     *
+     * @return the $taskDateReminderActive
+     */
+    public function getTaskDateReminderActive()
+    {
+        return $this->taskDateReminderActive;
     }
 
     /**
@@ -273,6 +288,15 @@ class TaskEntity
     public function setTaskDateReminder($taskDateReminder)
     {
         $this->taskDateReminder = $taskDateReminder;
+    }
+
+    /**
+     *
+     * @param boolean $taskDateReminderActive            
+     */
+    public function setTaskDateReminderActive($taskDateReminderActive)
+    {
+        $this->taskDateReminderActive = $taskDateReminderActive;
     }
 
     /**

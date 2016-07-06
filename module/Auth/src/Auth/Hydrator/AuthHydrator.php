@@ -60,6 +60,11 @@ class AuthHydrator extends ClassMethods
         
         unset($data['employee_entity']);
         
+        unset($data['access_token']);
+        
+        unset($data['refresh_token']);
+        
+        unset($data['expires_in']);
         return $data;
     }
 }

@@ -52,6 +52,7 @@ class ApplicationAcl extends AbstractPlugin
      */
     public function __construct(AclServiceInterface $aclService, RoleServiceInterface $roleService, ResourceServiceInterface $resourceService)
     {
+        
         $this->acl = new Acl();
 
         $this->aclService = $aclService;
@@ -59,8 +60,11 @@ class ApplicationAcl extends AbstractPlugin
         $this->roleService = $roleService;
         
         $this->resourceService = $resourceService;
+        
+        
     }
 
+    
     /**
      *
      * @param string $module            
@@ -68,7 +72,7 @@ class ApplicationAcl extends AbstractPlugin
      * @return \Application\Controller\Plugin\Acl
      */
     public function __invoke()
-    {
+    {    
         
         // add roles
         $roles = $this->roleService->getAll(array('pagination' => 'off'));
@@ -98,6 +102,7 @@ class ApplicationAcl extends AbstractPlugin
         }
                
         
+       
         return $this;
     }
 

@@ -4,7 +4,7 @@ namespace Auth\Entity;
 use Employee\Entity\EmployeeEntity;
 use User\Entity\UserEntity;
 
-class AuthEntity implements AuthEntityInterface
+class AuthEntity
 {
 
     /**
@@ -59,7 +59,7 @@ class AuthEntity implements AuthEntityInterface
      *
      * @var number
      */
-    protected $userId;
+    protected $user;
 
     /**
      *
@@ -81,6 +81,22 @@ class AuthEntity implements AuthEntityInterface
 
     /**
      *
+     * @var string
+     */
+    protected $accessToken;
+
+    /**
+     *
+     * @var string
+     */
+    protected $refreshToken;
+
+    /**
+     * 
+     * @var number
+     */
+    protected $expiresIn;
+    /**
      * @return the $authId
      */
     public function getAuthId()
@@ -89,7 +105,6 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
      * @return the $authRole
      */
     public function getAuthRole()
@@ -98,7 +113,6 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
      * @return the $authEmail
      */
     public function getAuthEmail()
@@ -107,7 +121,6 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
      * @return the $authPassword
      */
     public function getAuthPassword()
@@ -116,7 +129,6 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
      * @return the $authName
      */
     public function getAuthName()
@@ -125,7 +137,6 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
      * @return the $authType
      */
     public function getAuthType()
@@ -134,7 +145,6 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
      * @return the $authLastLogin
      */
     public function getAuthLastLogin()
@@ -143,7 +153,6 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
      * @return the $authLastIp
      */
     public function getAuthLastIp()
@@ -152,16 +161,14 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
-     * @return the $userId
+     * @return the $user
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**
-     *
      * @return the $employeeId
      */
     public function getEmployeeId()
@@ -170,7 +177,6 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
      * @return the $userEntity
      */
     public function getUserEntity()
@@ -179,7 +185,6 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
      * @return the $employeeEntity
      */
     public function getEmployeeEntity()
@@ -188,8 +193,31 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
-     * @param number $authId            
+     * @return the $accessToken
+     */
+    public function getAccessToken()
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * @return the $refreshToken
+     */
+    public function getRefreshToken()
+    {
+        return $this->refreshToken;
+    }
+
+    /**
+     * @return the $expiresIn
+     */
+    public function getExpiresIn()
+    {
+        return $this->expiresIn;
+    }
+
+    /**
+     * @param number $authId
      */
     public function setAuthId($authId)
     {
@@ -197,8 +225,7 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
-     * @param string $authRole            
+     * @param string $authRole
      */
     public function setAuthRole($authRole)
     {
@@ -206,8 +233,7 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
-     * @param string $authEmail            
+     * @param string $authEmail
      */
     public function setAuthEmail($authEmail)
     {
@@ -215,8 +241,7 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
-     * @param string $authPassword            
+     * @param string $authPassword
      */
     public function setAuthPassword($authPassword)
     {
@@ -224,8 +249,7 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
-     * @param string $authName            
+     * @param string $authName
      */
     public function setAuthName($authName)
     {
@@ -233,8 +257,7 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
-     * @param string $authType            
+     * @param string $authType
      */
     public function setAuthType($authType)
     {
@@ -242,8 +265,7 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
-     * @param string $authLastLogin            
+     * @param string $authLastLogin
      */
     public function setAuthLastLogin($authLastLogin)
     {
@@ -251,8 +273,7 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
-     * @param string $authLastIp            
+     * @param string $authLastIp
      */
     public function setAuthLastIp($authLastIp)
     {
@@ -260,17 +281,15 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
-     * @param number $userId            
+     * @param number $user
      */
-    public function setUserId($userId)
+    public function setUser($user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
     }
 
     /**
-     *
-     * @param number $employeeId            
+     * @param number $employeeId
      */
     public function setEmployeeId($employeeId)
     {
@@ -278,8 +297,7 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
-     * @param \User\Entity\UserEntity $userEntity            
+     * @param \User\Entity\UserEntity $userEntity
      */
     public function setUserEntity($userEntity)
     {
@@ -287,11 +305,35 @@ class AuthEntity implements AuthEntityInterface
     }
 
     /**
-     *
-     * @param \Employee\Entity\EmployeeEntity $employeeEntity            
+     * @param \Employee\Entity\EmployeeEntity $employeeEntity
      */
     public function setEmployeeEntity($employeeEntity)
     {
         $this->employeeEntity = $employeeEntity;
     }
+
+    /**
+     * @param string $accessToken
+     */
+    public function setAccessToken($accessToken)
+    {
+        $this->accessToken = $accessToken;
+    }
+
+    /**
+     * @param string $refreshToken
+     */
+    public function setRefreshToken($refreshToken)
+    {
+        $this->refreshToken = $refreshToken;
+    }
+
+    /**
+     * @param number $expiresIn
+     */
+    public function setExpiresIn($expiresIn)
+    {
+        $this->expiresIn = $expiresIn;
+    }
+
 }

@@ -31,5 +31,15 @@ return array(
             'Acl\Service\AclServiceInterface' => 'Acl\Service\Factory\AclServiceFactory',
             'Acl\Mapper\AclMapperInterface' => 'Acl\Mapper\Factory\AclMapperFactory'
         )
+    ),
+    
+    'view_helpers' => array(
+        
+        'invokables' => array()
+
+        ,
+        'factories' => array(
+            'Acl' => 'Acl\View\Helper\Factory\AclViewHelperFactory'
+        )
     )
 );

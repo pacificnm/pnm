@@ -46,14 +46,12 @@ class AuthAdapter implements AdapterInterface
     {
         $bcrypt = new Bcrypt();
         
-        
-        
         $authEntity = $this->authService->getAuthByEmail($this->authEmail);
         
-        if(!$authEntity) {
+        if (! $authEntity) {
             return new Result(Result::FAILURE_CREDENTIAL_INVALID, 'Invalid Username / Password combination.', array());
         }
-       
+        
         if ($bcrypt->verify($this->authPassword, $authEntity->getAuthPassword())) {
             return new Result(Result::SUCCESS, $authEntity);
         }

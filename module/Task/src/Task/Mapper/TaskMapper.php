@@ -184,6 +184,18 @@ class TaskMapper implements TaskMapperInterface
             'task.task_status = ?' => 'Active'
         ));
         
+        // join priority
+        $select->join('task_priority', 'task_priority.task_priority_id = task.task_priority_id', array(
+            'task_priority_value'
+        ), 'inner');
+        
+        
+        $select->join('client', 'client.client_id = task.client_id', array(
+            'client_name'
+        ), 'inner');
+        
+        $select->where(array('task.task_date_reminder_active = ?' => 1));
+        
         $select->where->lessThanOrEqualTo('task_date_reminder', time());
         
         // echo $sql->getSqlstringForSqlObject($select); die ;
