@@ -193,7 +193,8 @@ class SignInController extends AbstractActionController
             'Content-Type' => 'application/x-www-form-urlencoded; charset=UTF-8'
         ));
         
-        $request->setUri('http://dev.pacificnm.com/oauth');
+        
+        $request->setUri('http://'.$_SERVER['SERVER_NAME'].'/oauth');
         
         $request->setMethod('POST');
         
