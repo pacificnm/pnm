@@ -127,6 +127,9 @@
 			<div class="box-header with-border">
 				<h3 class="box-title"><i class="fa fa-user"></i> <?php echo $this->clientEntity->getClientName(); ?></h3>
 				<div class="box-tools pull-right">
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'client-delete') ):?>
+					<a href="<?php echo $this->url('client-delete', array('clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Delete this client');?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+					<?php endif; ?>
 					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'client-update') ):?>
 					<a href="<?php echo $this->url('client-update', array('clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Edit this client');?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 					<?php endif; ?>
