@@ -77,6 +77,11 @@ class HistoryMapper implements HistoryMapperInterface
             ));
         }
         
+        // order
+        if(array_key_exists('order', $filter) && ! empty($filter['order'])) {
+            $select->order($filter['order']);
+        }
+            
         $select->order('history.history_time DESC');
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);

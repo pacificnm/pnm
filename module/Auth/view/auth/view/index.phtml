@@ -89,3 +89,61 @@
 		</div>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col-xs-12">
+	
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-history"></i> <?php echo $this->translate('History'); ?>
+				</h3>
+			</div>
+			<?php if($this->paginator->count() == 0): ?>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('This auth has no history events'); ?></p>
+				</div>
+			</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Date'); ?></th>
+							<th><?php echo $this->translate('Action'); ?></th>
+							<th><?php echo $this->translate('Url'); ?></th>
+							<th><?php echo $this->translate('Note'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->paginator as $historyEntity): ?>
+						<tr>
+							<td><?php echo date($this->appConfig()->getConfigDateLong(), $historyEntity->getHistoryTime()); ?></td>
+							<td><?php echo $historyEntity->getHistoryAction(); ?></td>
+							<td><?php echo $historyEntity->getHistoryUrl(); ?></td>
+							<td><?php echo $historyEntity->getHistoryNote();?></td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+			</div>
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<?php echo $this->Paginator(
+	                        $this->itemCountPerPage,
+	                        $this->itemCount,
+	                        $this->pageCount,
+	                        $this->page,
+	                        $this->routeParams,
+	                        $this->queryParams); 
+					   ?>
+					</div>
+				</div>
+			</div>
+			<?php endif; ?>
+		</div>
+		
+	</div>
+</div>

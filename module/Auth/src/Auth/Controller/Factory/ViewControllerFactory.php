@@ -19,6 +19,8 @@ class ViewControllerFactory implements FactoryInterface
         
         $authService = $realServiceLocator->get('Auth\Service\AuthServiceInterface');
         
-        return new ViewController($authService);
+        $historyService = $realServiceLocator->get('History\Service\HistoryServiceInterface');
+        
+        return new ViewController($authService, $historyService);
     }
 }
