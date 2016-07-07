@@ -13,7 +13,11 @@
 <?php foreach($this->timeEntitys as $timeEntity): ?>
 
 <div class="progress-group">
+	<?php if($this->total > 0): ?>
 	<?php $percent = round(($timeEntity->workorder_labor_total / $this->total) * 100)?>
+	<?php else: ?>
+	<?php $percent = 0;?>
+	<?php endif; ?>
 	<span class="progress-text"><?php echo $timeEntity->labor_name; ?></span>
 	<span class="progress-number"><b><?php echo $timeEntity->workorder_labor_total; ?></b></span>
 	<div class="progress sm">
