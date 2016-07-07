@@ -780,6 +780,11 @@ return array(
                                                         'label' => 'Credit',
                                                         'route' => 'workorder-credit-view',
                                                         'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Remove Employee',
+                                                        'route' => 'workorder-employee-delete',
+                                                        'useRouteMatch' => true
                                                     )
                                                 )
                                             )

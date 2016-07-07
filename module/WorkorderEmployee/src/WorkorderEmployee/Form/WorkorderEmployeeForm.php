@@ -6,26 +6,36 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use Employee\Service\EmployeeServiceInterface;
 use WorkorderEmployee\Hydrator\WorkorderEmployeeHydrator;
 use WorkorderEmployee\Entity\WorkorderEmployeeEntity;
+use WorkorderEmployee\Service\WorkorderEmployeeServiceInterface;
 
 class WorkorderEmployeeForm extends Form implements InputFilterProviderInterface
 {
 
     /**
-     * 
+     *
      * @var EmployeeServiceInterface
      */
     protected $employeeService;
 
     /**
      * 
+     * @var WorkorderEmployeeServiceInterface
+     */
+    protected $workorderEmployeeService;
+    
+    /**
+     * 
      * @param EmployeeServiceInterface $employeeService
+     * @param WorkorderEmployeeServiceInterface $workorderEmployeeService
      * @param string $name
      * @param array $options
      * @return \WorkorderEmployee\Form\WorkorderEmployeeForm
      */
-    function __construct(EmployeeServiceInterface $employeeService, $name = 'workrder-form', $options = array())
+    function __construct(EmployeeServiceInterface $employeeService, WorkorderEmployeeServiceInterface $workorderEmployeeService, $name = 'workrder-form', $options = array())
     {
         $this->employeeService = $employeeService;
+        
+        $this->workorderEmployeeService = $workorderEmployeeService;
         
         parent::__construct($name, $options);
         
@@ -33,7 +43,7 @@ class WorkorderEmployeeForm extends Form implements InputFilterProviderInterface
         
         $this->setObject(new WorkorderEmployeeEntity());
         
-        // workorderId
+        // workorderEmployeeId
         $this->add(array(
             'name' => 'workorderEmployeeId',
             'type' => 'hidden'
@@ -81,13 +91,88 @@ class WorkorderEmployeeForm extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        return array();
+        return array(
+            // workorderId
+            'workorderId' => array(
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Work Order Id is required and cannot be empty."
+                            )
+                        )
+                    )
+                )
+            ),
+            
+            // workorderEmployeeId
+            'workorderEmployeeId' => array(
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Work Order Employee Id is required and cannot be empty."
+                            )
+                        )
+                    )
+                )
+            ),
+            
+            'employeeId' => array(
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The mployee Id is required and cannot be empty."
+                            )
+                        )
+                    ),
+                    array(
+                        'name' => 'WorkorderEmployee\Validator\HasEmployee',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'employeeService' => $this->workorderEmployeeService,
+                        )
+                    )
+                )
+            ),
+        );
     }
 
-   
-
     /**
-     * 
      */
     private function getEmployeeOptions()
     {
@@ -95,7 +180,7 @@ class WorkorderEmployeeForm extends Form implements InputFilterProviderInterface
         
         $entitys = $this->employeeService->getAll(array());
         
-        foreach($entitys as $entity) {
+        foreach ($entitys as $entity) {
             $options[$entity->getEmployeeId()] = $entity->getEmployeeName();
         }
         

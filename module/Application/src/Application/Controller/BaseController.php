@@ -16,8 +16,6 @@ class BaseController extends AbstractActionController
      */
     public function onDispatch(MvcEvent $e)
     {
-      
-       
         // check if we are installed
         if(! file_exists('data/install')) {
             return $this->redirect()->toRoute('install-index');
@@ -55,8 +53,6 @@ class BaseController extends AbstractActionController
         } else {
             $adminAcl = false;
         }
-        
-       
         
         // if we are a user validate we own the client id we are requesting
         if($this->identity()->getUser() != 0) {
