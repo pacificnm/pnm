@@ -28,6 +28,10 @@ class LocationForm extends Form implements InputFilterProviderInterface
      */
     protected $locationService;
     
+    /**
+     * 
+     * @var number $clientId
+     */
     protected $clientId;
     
     /**

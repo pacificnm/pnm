@@ -19,6 +19,7 @@ use WorkorderPart\Form\PartForm;
 use Workorder\Form\CompleteForm;
 use WorkorderCredit\Form\CreditForm;
 use WorkorderCredit\Service\CreditServiceInterface;
+use WorkorderEmployee\Form\WorkorderEmployeeForm as EmployeeForm;
 
 /**
  * View Work Order Controller
@@ -85,6 +86,12 @@ class ViewController extends BaseController
 
     /**
      * 
+     * @var EmployeeForm
+     */
+    protected $employeeForm;
+    
+    /**
+     * 
      * @param ClientServiceInterface $clientService
      * @param WorkorderServiceInterface $workorderService
      * @param WorkorderEmployeeServiceInterface $workorderEmployeeService
@@ -94,8 +101,9 @@ class ViewController extends BaseController
      * @param PartForm $partForm
      * @param CompleteForm $completeForm
      * @param CreditForm $creditForm
+     * @param EmployeeForm $employeeForm
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, CreditServiceInterface $creditService, NoteForm $noteForm, TimeForm $timeForm, PartForm $partForm, CompleteForm $completeForm, CreditForm $creditForm)
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, CreditServiceInterface $creditService, NoteForm $noteForm, TimeForm $timeForm, PartForm $partForm, CompleteForm $completeForm, CreditForm $creditForm, EmployeeForm $employeeForm)
     {
         $this->clientService = $clientService;
         
@@ -114,6 +122,8 @@ class ViewController extends BaseController
         $this->completeForm = $completeForm;
         
         $this->creditForm = $creditForm;
+        
+        $this->employeeForm = $employeeForm;
     }
 
     /**
@@ -128,16 +138,20 @@ class ViewController extends BaseController
         
         $workorderId = $this->params()->fromRoute('workorderId');
         
+        // get client
         $clientEntity = $this->clientService->get($id);
         
+        // validate client
         if (! $clientEntity) {
             $this->flashmessenger()->addErrorMessage('Client was not found.');
             
             return $this->redirect()->toRoute('client-list');
         }
         
+        // get work order
         $workorderEntity = $this->workorderService->get($workorderId);
         
+        // validate work order
         if (! $workorderEntity) {
             $this->flashmessenger()->addErrorMessage('Work Order was not found.');
             
@@ -146,94 +160,33 @@ class ViewController extends BaseController
             ));
         }
         
+        // get employees
+        $workorderEmployeEntitys = $this->workorderEmployeeService->getAll(array(
+            'workorderId' => $workorderId
+        ));
+        
         // set history
         $this->setHistory($this->getRequest()
             ->getUri(), 'READ', $this->identity()
             ->getAuthId(), 'View Client ' . $clientEntity->getClientName() . ' work order #' . $workorderId);
         
-        
-        
         // note form
-        $this->noteForm->get('workorderId')->setValue($workorderId);
-        
-        $this->noteForm->get('workorderNotesId')->setValue(0);
-        
-        $this->noteForm->get('workorderNotesDate')->setValue(date("m/d/Y"));
-        
-        $this->noteForm->setAttribute('Action', $this->url()
-            ->fromRoute('workorder-note-create', array(
-            'clientId' => $id,
-            'workorderId' => $workorderId
-        )));
+        $this->setUpNoteForm($id, $workorderId);
         
         // time form
-        $this->timeForm->get('workorderTimeId')->setValue(0);
-        
-        $this->timeForm->get('workorderId')->setValue($workorderId);
-        
-        $this->timeForm->get('workorderTimeOut')->setValue(0);
-        
-        $this->timeForm->get('workorderTimeTotal')->setValue(0);
-        
-        $this->timeForm->get('laborName')->setValue('not set');
-        
-        $this->timeForm->get('laborRate')->setValue(0);
-        
-        $this->timeForm->get('laborTotal')->setValue(0);
-        
-        $this->timeForm->setAttribute('action', $this->url()
-            ->fromRoute('workorder-time-create', array(
-            'clientId' => $id,
-            'workorderId' => $workorderId
-        )));
+        $this->setUpTimeForm($id, $workorderId);
         
         // part form
-        $this->partForm->get('workorderPartsId')->setValue(0);
-        
-        $this->partForm->get('workorderId')->setValue($workorderId);
-        
-        $this->partForm->get('workorderPartsTotal')->setValue(0);
-        
-        $this->partForm->setAttribute('action', $this->url()
-            ->fromRoute('workorder-part-create', array(
-            'clientId' => $id,
-            'workorderId' => $workorderId
-        )));
+        $this->setUpPartForm($id, $workorderId);
         
         // complete form
-        $this->completeForm->get('workorderDateClose')->setValue(date("m/d/Y"));
-        
-        $this->completeForm->get('createInvoice')->setValue(1);
-        
-        $this->completeForm->setAttribute('action', $this->url()
-            ->fromRoute('workorder-complete', array(
-            'clientId' => $id,
-            'workorderId' => $workorderId
-        )));
+        $this->setUpCompleteForm($id, $workorderId);
         
         // credit form
-        $this->creditForm->get('workorderCreditId')->setValue(0);
+        $this->setUpCreditForm($id, $workorderId);
         
-        $this->creditForm->get('workorderId')->setValue($workorderId);
-        
-        $this->creditForm->get('workorderCreditDate')->setValue(time());
-        
-        $this->creditForm->get('workorderCreditAmountLeft')->setValue(0);
-        
-        
-        $this->creditForm->get('accountLedgerId')->setValue(0);
-        
-        $this->creditForm->setAttribute('action', $this->url()
-            ->fromRoute('workorder-credit-create', array(
-            'clientId' => $id,
-            'workorderId' => $workorderId
-        )));
-        
-        // employees
-        $workorderEmployeEntitys = $this->workorderEmployeeService->getAll(array(
-            'workorderId' => $workorderId
-        ));
-        
+        // employee form
+        $this->setUpEmployeeForm($id, $workorderId);
         
         // set layout vars
         $this->layout()->setVariable('clientId', $id);
@@ -259,9 +212,155 @@ class ViewController extends BaseController
             'timeForm' => $this->timeForm,
             'partForm' => $this->partForm,
             'completeForm' => $this->completeForm,
-            'creditForm' => $this->creditForm
+            'creditForm' => $this->creditForm,
+            'employeeForm' => $this->employeeForm
         ));
     }
-}
 
-?>
+    /**
+     * 
+     * @param unknown $clientId
+     * @param unknown $workorderId
+     * @return \Workorder\Controller\ViewController
+     */
+    protected function setUpCreditForm($clientId, $workorderId)
+    {
+        $this->creditForm->get('workorderCreditId')->setValue(0);
+        
+        $this->creditForm->get('workorderId')->setValue($workorderId);
+        
+        $this->creditForm->get('workorderCreditDate')->setValue(time());
+        
+        $this->creditForm->get('workorderCreditAmountLeft')->setValue(0);
+        
+        
+        $this->creditForm->get('accountLedgerId')->setValue(0);
+        
+        $this->creditForm->setAttribute('action', $this->url()
+            ->fromRoute('workorder-credit-create', array(
+                'clientId' => $clientId,
+                'workorderId' => $workorderId
+            )));
+        
+        return $this;
+    }
+    
+    /**
+     * 
+     * @param unknown $clientId
+     * @param unknown $workorderId
+     * @return \Workorder\Controller\ViewController
+     */
+    protected function setUpTimeForm($clientId, $workorderId)
+    {
+        $this->timeForm->get('workorderTimeId')->setValue(0);
+        
+        $this->timeForm->get('workorderId')->setValue($workorderId);
+        
+        $this->timeForm->get('workorderTimeOut')->setValue(0);
+        
+        $this->timeForm->get('workorderTimeTotal')->setValue(0);
+        
+        $this->timeForm->get('laborName')->setValue('not set');
+        
+        $this->timeForm->get('laborRate')->setValue(0);
+        
+        $this->timeForm->get('laborTotal')->setValue(0);
+        
+        $this->timeForm->setAttribute('action', $this->url()
+            ->fromRoute('workorder-time-create', array(
+                'clientId' => $clientId,
+                'workorderId' => $workorderId
+            )));
+        
+        return $this;
+    }
+    
+    /**
+     * 
+     * @param unknown $clientId
+     * @param unknown $workorderId
+     * @return \Workorder\Controller\ViewController
+     */
+    protected function setUpPartForm($clientId, $workorderId)
+    {
+        $this->partForm->get('workorderPartsId')->setValue(0);
+        
+        $this->partForm->get('workorderId')->setValue($workorderId);
+        
+        $this->partForm->get('workorderPartsTotal')->setValue(0);
+        
+        $this->partForm->setAttribute('action', $this->url()
+            ->fromRoute('workorder-part-create', array(
+                'clientId' => $clientId,
+                'workorderId' => $workorderId
+            )));
+        
+        return $this;
+    }
+    
+    /**
+     * 
+     * @param unknown $clientId
+     * @param unknown $workorderId
+     * @return \Workorder\Controller\ViewController
+     */
+    protected function setUpNoteForm($clientId, $workorderId)
+    {
+        $this->noteForm->get('workorderId')->setValue($workorderId);
+        
+        $this->noteForm->get('workorderNotesId')->setValue(0);
+        
+        $this->noteForm->get('workorderNotesDate')->setValue(date("m/d/Y"));
+        
+        $this->noteForm->setAttribute('Action', $this->url()
+            ->fromRoute('workorder-note-create', array(
+                'clientId' => $clientId,
+                'workorderId' => $workorderId
+            )));
+       
+        return $this;
+    }
+    
+    /**
+     * 
+     * @param unknown $clientId
+     * @param unknown $workorderId
+     * @return \Workorder\Controller\ViewController
+     */
+    protected function setUpCompleteForm($clientId, $workorderId)
+    {
+        $this->completeForm->get('workorderDateClose')->setValue(date("m/d/Y"));
+        
+        $this->completeForm->get('createInvoice')->setValue(1);
+        
+        $this->completeForm->setAttribute('action', $this->url()
+            ->fromRoute('workorder-complete', array(
+                'clientId' => $clientId,
+                'workorderId' => $workorderId
+            )));
+        
+        return $this;
+    }
+    
+    /**
+     * 
+     * @param unknown $clientId
+     * @param unknown $workorderId
+     * @return \Workorder\Controller\ViewController
+     */
+    protected function setUpEmployeeForm($clientId, $workorderId)
+    {
+        $this->employeeForm->get('workorderId')->setValue($workorderId);
+        
+        $this->employeeForm->get('workorderEmployeeId')->setValue(0);
+        
+        $this->employeeForm->setAttribute('action', $this->url()
+            ->fromRoute('workorder-employee-create', array(
+                'clientId' => $clientId,
+                'workorderId' => $workorderId
+            )));
+        
+        return $this;
+    }
+}

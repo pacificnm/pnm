@@ -18,6 +18,8 @@ class WorkorderEmployeeFormFactory implements FactoryInterface
     {
         $employeeService = $serviceLocator->get('Employee\Service\EmployeeServiceInterface');
         
-        return new WorkorderEmployeeForm($employeeService);
+        $workorderEmployeeService = $serviceLocator->get('WorkorderEmployee\Service\WorkorderEmployeeServiceInterface');
+        
+        return new WorkorderEmployeeForm($employeeService, $workorderEmployeeService);
     }
 }

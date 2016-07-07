@@ -182,6 +182,51 @@ class WorkorderEmployeeMapper implements WorkorderEmployeeMapperInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderEmployee\Mapper\WorkorderEmployeeMapperInterface::getEmployeeWorkorder()
+     */
+    public function getEmployeeWorkorder($employeeId, $workorderId)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder_employee');
+        
+        $select->where(array(
+            'workorder_employee.employee_id = ?' => $employeeId
+        ));
+        
+        $select->where(array(
+            'workorder_employee.workorder_id = ?' => $workorderId
+        ));
+        
+        // join employee
+        $select->join('employee', 'workorder_employee.employee_id = employee.employee_id', array(
+            'employee_name',
+            'employee_title',
+            'employee_email',
+            'employee_im',
+            'employee_image',
+            'employee_status'
+        ), 'inner');
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+            $resultSet->buffer();
+        
+            return $resultSet->initialize($result)->current();
+        }
+        
+        return array();
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *
