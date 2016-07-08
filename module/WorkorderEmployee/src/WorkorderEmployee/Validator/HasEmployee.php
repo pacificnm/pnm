@@ -60,6 +60,12 @@ class HasEmployee extends AbstractValidator
         // from form
         $workorderId = $context['workorderId'];
         
+        $employeeId = $context['employeeId'];
+        
+        if($value == $employeeId) {
+           return true;
+        }
+        
         // get from service
         $employeeEntity = $this->employeeService->getEmployeeWorkorder($value, $workorderId);
         

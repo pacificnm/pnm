@@ -298,7 +298,9 @@ class CreditMapper implements CreditMapperInterface
             'workorder.client_id = ?' => $clientId
         ));
         
-        $select->where->greaterThan('workorder_credit.workorder_credit_amount_left', 0);
+       
+        
+        $select->order('workorder_credit_id DESC');
         
         $stmt = $sql->prepareStatementForSqlObject($select);
         

@@ -92,4 +92,24 @@ class InvoiceService implements InvoiceServiceInterface
         
         return $this->mapper->getAll($filter);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Invoice\Service\InvoiceServiceInterface::getTotalsFormMonth()
+     */
+    public function getTotalsFormMonth($start, $end, $invoiceStatus, $clientId = null)
+    {
+        return $this->mapper->getTotalsFormMonth($start, $end, $invoiceStatus, $clientId);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Invoice\Service\InvoiceServiceInterface::getTotalsFormYear()
+     */
+    public function getTotalsFormYear($start, $end, $invoiceStatus, $clientId = null)
+    {
+        return $this->mapper->getTotalsFormYear($start, $end, $invoiceStatus, $clientId);
+    }
 }

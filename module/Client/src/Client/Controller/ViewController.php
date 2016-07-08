@@ -147,7 +147,10 @@ class ViewController extends BaseController
         $end = mktime(23, 59, 59, 12, 31, date("Y"));
         
         // get chart data
-        $timeEntitys = $this->timeService->getTotalsForYear($start, $end, $id);
+        //$timeEntitys = $this->timeService->getTotalsForYear($start, $end, $id);
+        
+        $chartEntitys = $this->invoiceService->getTotalsFormYear($start, $end, 'Paid', $id);
+        
         
         $data = array();
         
@@ -157,13 +160,14 @@ class ViewController extends BaseController
             $data[$x] = 0;
         }
         
-        foreach($timeEntitys as $timeEntity) {
-            $month = intval(date("m", $timeEntity->workorder_time_in));
-            $data2[$month] = $timeEntity->workorder_labor_total;
+        foreach($chartEntitys as $chartEntity) {
+            $month = intval(date("m", $chartEntity->invoice_date));
+            $data2[$month] = $chartEntity->invoice_total_month;
         }
         
         $dataSet = array_replace($data, $data2);
         
+               
         // return view model
         return new ViewModel(array(
             'clientEntity' => $clientEntity,

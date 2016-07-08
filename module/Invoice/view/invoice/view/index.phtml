@@ -273,7 +273,7 @@
               				<td><?php echo $this->currencyFormat($paymentEntity->getInvoicePaymentAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
               				<td class="text-right">
               					<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
-              					<a href="<?php echo $this->url('invoice-payemnt-delete', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId(), 'invoicePaymentId' => $paymentEntity->getInvoicePaymentId()));?>" title="<?php echo $this->translate('Dleete this payment.'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('delete'); ?></a>
+              					<a href="<?php echo $this->url('invoice-payment-delete', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId(), 'invoicePaymentId' => $paymentEntity->getInvoicePaymentId()));?>" title="<?php echo $this->translate('Dleete this payment.'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('delete'); ?></a>
               					<?php endif; ?>
               				</td>
               			</tr>

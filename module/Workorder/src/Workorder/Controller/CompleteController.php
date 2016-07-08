@@ -13,6 +13,8 @@ use Workorder\Form\CompleteForm;
 use Invoice\Entity\InvoiceEntity;
 use InvoiceItem\Entity\ItemEntity;
 use WorkorderCredit\Service\CreditServiceInterface;
+use InvoicePayment\Entity\PaymentEntity;
+use InvoicePayment\Service\PaymentServiceInterface;
 
 class CompleteController extends BaseController
 {
@@ -67,6 +69,12 @@ class CompleteController extends BaseController
 
     /**
      * 
+     * @var PaymentServiceInterface
+     */
+    protected $paymentService;
+    
+    /**
+     * 
      * @var CompleteForm
      */
     protected $completeForm;
@@ -81,9 +89,10 @@ class CompleteController extends BaseController
      * @param ItemServiceInterface $itemService
      * @param OptionServiceInterface $optionService
      * @param CreditServiceInterface $creditService
+     * @param PaymentServiceInterface $paymentService
      * @param CompleteForm $completeForm
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, TimeServiceInterface $timeService, PartServiceInterface $partService, InvoiceServiceInterface $invoiceService, ItemServiceInterface $itemService, OptionServiceInterface $optionService, CreditServiceInterface $creditService, CompleteForm $completeForm)
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, TimeServiceInterface $timeService, PartServiceInterface $partService, InvoiceServiceInterface $invoiceService, ItemServiceInterface $itemService, OptionServiceInterface $optionService, CreditServiceInterface $creditService, PaymentServiceInterface $paymentService, CompleteForm $completeForm)
     {
         $this->clientService = $clientService;
         
@@ -100,6 +109,8 @@ class CompleteController extends BaseController
         $this->optionService = $optionService;
         
         $this->creditService = $creditService;
+        
+        $this->paymentService = $paymentService;
         
         $this->completeForm = $completeForm;
     }
@@ -226,10 +237,12 @@ class CompleteController extends BaseController
                 
                 // set credits and adjust the invoice if we have credits
                 $creditEntitys = $this->creditService->getWorkorderCredit($workorderId);
+                
                 if($creditEntitys) {
                     $creditTotal = 0;
                     
                     foreach($creditEntitys as $creditEntity) {
+                        
                         $itemEntity = new ItemEntity();
                         $itemEntity->setInvoiceId($invoiceEntity->getInvoiceId());
                         $itemEntity->setInvoiceItemQty(1);
@@ -241,16 +254,35 @@ class CompleteController extends BaseController
                         $itemEntity = $this->itemService->save($itemEntity);
                         
                         $creditTotal = $creditTotal + $creditEntity->getWorkorderCreditAmount();
+                        
+                        // map payment
+                        $paymentEntity = new PaymentEntity();
+                        
+                        $paymentEntity->setAccountId($creditEntity->getAccountId());
+                        $paymentEntity->setAccountLedgerId($creditEntity->getAccountLedgerId());
+                        $paymentEntity->setInvoiceId($invoiceEntity->getInvoiceId());
+                        $paymentEntity->setPaymentOptionId($creditEntity->getPaymentOptionId());
+                        $paymentEntity->setInvoicePaymentAmount($creditEntity->getWorkorderCreditAmount());
+                        $paymentEntity->setInvoicePaymentDate($creditEntity->getWorkorderCreditDate());
+                        $paymentEntity->setInvoicePaymentDetail($creditEntity->getWorkorderCreditDetail());
+                        $paymentEntity->setInvoicePaymentId(0);
+                        
+                        
+                        $this->paymentService->save($paymentEntity);
+                        
+                        // if credit is >= than invoice amount mark paid
+                        if($creditEntity->getWorkorderCreditAmount() >= $invoiceEntity->getInvoiceBalance()) {
+                            $invoiceEntity->setInvoiceStatus('Paid');
+                            $invoiceEntity->setInvoiceDatePaid($creditEntity->getWorkorderCreditDate());
+                        }
                     }
                     
                     // update invoice
-                    $invoiceEntity->setInvoiceSubtotal($invoiceEntity->getInvoiceSubtotal() - $creditTotal);
-                    $invoiceEntity->setInvoiceTotal($invoiceEntity->getInvoiceTotal() - $creditTotal);
-                    $invoiceEntity->setInvoiceBalance($invoiceEntity->getInvoiceBalance() - $creditTotal);
+                    $invoiceEntity->setInvoicePayment($creditTotal);
+                    $invoiceEntity->setInvoiceBalance($invoiceEntity->getInvoiceTotal() - $creditTotal);
                     
                     $invoiceEntity = $this->invoiceService->save($invoiceEntity);
-                    
-                    
+
                 }
                 
                 // set invoice

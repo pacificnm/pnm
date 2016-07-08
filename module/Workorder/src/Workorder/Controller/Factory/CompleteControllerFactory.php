@@ -1,20 +1,19 @@
 <?php
 namespace Workorder\Controller\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Workorder\Controller\CompleteController;
 use Workorder\Form\CompleteForm;
 
-class CompleteControllerFactory implements FactoryInterface
+class CompleteControllerFactory
 {
 
     /**
      * 
-     * {@inheritDoc}
-     * @see \Zend\ServiceManager\FactoryInterface::createService()
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return \Workorder\Controller\CompleteController
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
@@ -34,8 +33,10 @@ class CompleteControllerFactory implements FactoryInterface
         
         $creditService = $realServiceLocator->get('WorkorderCredit\Service\CreditServiceInterface');
         
+        $paymentService = $realServiceLocator->get('InvoicePayment\Service\PaymentServiceInterface');
+        
         $completeForm = new CompleteForm();
         
-        return new CompleteController($clientService, $workorderService, $timeService, $partService, $invoiceService, $itemService, $optionService, $creditService, $completeForm);
+        return new CompleteController($clientService, $workorderService, $timeService, $partService, $invoiceService, $itemService, $optionService, $creditService, $paymentService, $completeForm);
     }
 }

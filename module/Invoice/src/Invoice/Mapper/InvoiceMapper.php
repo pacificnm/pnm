@@ -11,6 +11,7 @@ use Zend\Db\Sql\Update;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\DbSelect;
+use Zend\Db\ResultSet\ResultSet;
 use Invoice\Entity\InvoiceEntity;
 
 class InvoiceMapper implements InvoiceMapperInterface
@@ -235,5 +236,113 @@ class InvoiceMapper implements InvoiceMapperInterface
         $result = $stmt->execute();
         
         return (bool) $result->getAffectedRows();
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Invoice\Mapper\InvoiceMapperInterface::getTotalsFormMonth()
+     */
+    public function getTotalsFormYear($start, $end, $invoiceStatus, $clientId = null)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('invoice');
+        
+        $select->columns(array(
+            'invoice_total_month' => new \Zend\Db\Sql\Expression('SUM(invoice_total)'),
+            'invoice_date',
+            'month' => new \Zend\Db\Sql\Expression("Month(FROM_UNIXTIME('invoice_date'))"),
+        ));
+        
+        $select->where(array('invoice.invoice_status = ?' => $invoiceStatus));
+        
+        if ($start) {
+            $select->where->greaterThanOrEqualTo('invoice.invoice_date', $start);
+        }
+        
+        if ($end) {
+            $select->where->lessThanOrEqualTo('invoice.invoice_date', $end);
+        }
+        
+        if($clientId) {
+            $select->where(array('invoice.client_id = ?' => $clientId));
+        }
+        
+        $select->group(new \Zend\Db\Sql\Expression("Month( FROM_UNIXTIME( `invoice_date` ) )"));
+        
+        //echo $sql->getSqlstringForSqlObject($select); die ;
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new ResultSet();
+        
+            $resultSet->initialize($result);
+        
+            $resultSet->buffer();
+        
+        
+            return $resultSet;
+        }
+        
+        return 0;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Invoice\Mapper\InvoiceMapperInterface::getTotalsFormMonth()
+     */
+    public function getTotalsFormMonth($start, $end, $invoiceStatus, $clientId = null)
+    {
+        $sql = new Sql($this->readAdapter);
+    
+        $select = $sql->select('invoice');
+    
+        $select->columns(array(
+            'invoice_total_day' => new \Zend\Db\Sql\Expression('SUM(invoice_total)'),
+            'invoice_date',
+            'day' => new \Zend\Db\Sql\Expression("Day(FROM_UNIXTIME('invoice_date'))"),
+        ));
+    
+        $select->where(array('invoice.invoice_status = ?' => $invoiceStatus));
+    
+        if ($start) {
+            $select->where->greaterThanOrEqualTo('invoice.invoice_date', $start);
+        }
+    
+        if ($end) {
+            $select->where->lessThanOrEqualTo('invoice.invoice_date', $end);
+        }
+    
+        if($clientId) {
+            $select->where(array('invoice.client_id = ?' => $clientId));
+        }
+    
+        $select->group(new \Zend\Db\Sql\Expression("Day( FROM_UNIXTIME( `invoice_date` ) )"));
+    
+        // echo $sql->getSqlstringForSqlObject($select); die ;
+    
+        $stmt = $sql->prepareStatementForSqlObject($select);
+    
+        $result = $stmt->execute();
+    
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+    
+            $resultSet = new ResultSet();
+    
+            $resultSet->initialize($result);
+    
+            $resultSet->buffer();
+    
+    
+            return $resultSet;
+        }
+    
+        return 0;
     }
 }
