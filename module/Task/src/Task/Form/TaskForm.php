@@ -48,6 +48,12 @@ class TaskForm extends Form implements InputFilterProviderInterface
             'type' => 'hidden'
         ));
         
+        // taskDateReminderActive
+        $this->add(array(
+            'name' => 'taskDateReminderActive',
+            'type' => 'hidden'
+        ));
+        
         // employeeId
         $this->add(array(
             'type' => 'Select',
@@ -428,7 +434,28 @@ class TaskForm extends Form implements InputFilterProviderInterface
                         )
                     )
                 )
-            )
+            ),
+            
+            // taskDateReminderActive
+            'taskDateReminderActive' => array(
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Task Reminder Active is required and cannot be empty."
+                            )
+                        )
+                    )
+                )
+            ),
         );
     }
 
