@@ -73,7 +73,7 @@ class UpdateController extends BaseController
         if (! $clientEntity) {
             $this->flashmessenger()->addErrorMessage('Client was not found.');
             
-            return $this->redirect()->toRoute('client-list');
+            return $this->redirect()->toRoute('client-index');
         }
         
         $locationEntity = $this->locationService->get($locationId);
@@ -81,7 +81,7 @@ class UpdateController extends BaseController
         if (! $locationEntity) {
             $this->flashmessenger()->addErrorMessage('Location was not found.');
             
-            return $this->redirect()->toRoute('client-list');
+            return $this->redirect()->toRoute('client-index');
         }
         
         $request = $this->getRequest();

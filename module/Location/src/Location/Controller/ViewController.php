@@ -61,7 +61,7 @@ class ViewController extends BaseController
         if (! $clientEntity) {
             $this->flashmessenger()->addErrorMessage('Client was not found.');
         
-            return $this->redirect()->toRoute('client-list');
+            return $this->redirect()->toRoute('client-index');
         }
         
         $locationEntity = $this->locationService->get($locationId);
@@ -69,7 +69,7 @@ class ViewController extends BaseController
         if(! $locationEntity) {
             $this->flashmessenger()->addErrorMessage('Location was not found.');
             
-            return $this->redirect()->toRoute('client-list');
+            return $this->redirect()->toRoute('client-index');
         }
         
         // set up layout
@@ -81,7 +81,7 @@ class ViewController extends BaseController
         
         $this->layout()->setVariable('activeMenuItem', 'client');
         
-        $this->layout()->setVariable('activeSubMenuItem', 'client-list');
+        $this->layout()->setVariable('activeSubMenuItem', 'client-index');
         
         $this->setHeadTitle($clientEntity->getClientName());
         

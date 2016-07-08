@@ -68,7 +68,7 @@ class ViewController extends BaseController
             
             $this->flashmessenger()->addErrorMessage('Client was not found.');
             
-            return $this->redirect()->toRoute('client-list');
+            return $this->redirect()->toRoute('client-index');
         }
         
         // validate we got a password

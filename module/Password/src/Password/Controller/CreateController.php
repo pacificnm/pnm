@@ -75,7 +75,7 @@ class CreateController extends BaseController
             
             $this->flashmessenger()->addErrorMessage('Client was not found.');
             
-            return $this->redirect()->toRoute('client-list');
+            return $this->redirect()->toRoute('client-index');
         }
         
         // set layout vars

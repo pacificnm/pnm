@@ -141,7 +141,7 @@ class ViewController extends BaseController
         if (! $clientEntity) {
             $this->flashmessenger()->addErrorMessage('Client was not found.');
             
-            return $this->redirect()->toRoute('client-list');
+            return $this->redirect()->toRoute('client-index');
         }
         
         // get invoice
