@@ -13,6 +13,8 @@ use Phone\Service\PhoneServiceInterface;
 use User\Service\UserServiceInterface;
 use Message\Service\MessageServiceInterface;
 use Employee\Service\EmployeeServiceInterface;
+use WorkorderCredit\Service\CreditServiceInterface;
+use WorkorderCredit\Entity\CreditEntity;
 
 class CreateController extends BaseController
 {
@@ -66,6 +68,12 @@ class CreateController extends BaseController
     protected $employeeService;
 
     /**
+     * 
+     * @var CreditServiceInterface
+     */
+    protected $creditService;
+    
+    /**
      *
      * @var WorkorderForm
      */
@@ -78,19 +86,20 @@ class CreateController extends BaseController
     protected $workorderEmployeeForm;
 
     /**
-     *
-     * @param ClientServiceInterface $clientService            
-     * @param WorkorderServiceInterface $workorderService            
-     * @param WorkorderEmployeeServiceInterface $workorderEmployeeService            
-     * @param LocationServiceInterface $locationService            
-     * @param PhoneServiceInterface $phoneService            
-     * @param UserServiceInterface $userService            
-     * @param MessageServiceInterface $messageService            
-     * @param EmployeeServiceInterface $employeeService            
-     * @param WorkorderForm $workorderForm            
-     * @param WorkorderEmployeeForm $workorderEmployeeForm            
+     * 
+     * @param ClientServiceInterface $clientService
+     * @param WorkorderServiceInterface $workorderService
+     * @param WorkorderEmployeeServiceInterface $workorderEmployeeService
+     * @param LocationServiceInterface $locationService
+     * @param PhoneServiceInterface $phoneService
+     * @param UserServiceInterface $userService
+     * @param MessageServiceInterface $messageService
+     * @param EmployeeServiceInterface $employeeService
+     * @param CreditServiceInterface $creditService
+     * @param WorkorderForm $workorderForm
+     * @param WorkorderEmployeeForm $workorderEmployeeForm
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, UserServiceInterface $userService, MessageServiceInterface $messageService, EmployeeServiceInterface $employeeService, WorkorderForm $workorderForm, WorkorderEmployeeForm $workorderEmployeeForm)
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, UserServiceInterface $userService, MessageServiceInterface $messageService, EmployeeServiceInterface $employeeService, CreditServiceInterface $creditService, WorkorderForm $workorderForm, WorkorderEmployeeForm $workorderEmployeeForm)
     {
         $this->clientService = $clientService;
         
@@ -107,6 +116,8 @@ class CreateController extends BaseController
         $this->messageService = $messageService;
         
         $this->employeeService = $employeeService;
+        
+        $this->creditService = $creditService;
         
         $this->workorderForm = $workorderForm;
         
@@ -125,23 +136,12 @@ class CreateController extends BaseController
         
         $clientEntity = $this->clientService->get($id);
         
+        // validate we have a client
         if (! $clientEntity) {
             $this->flashmessenger()->addErrorMessage('Client was not found.');
             
             return $this->redirect()->toRoute('client-index');
         }
-        
-        $this->layout()->setVariable('clientId', $id);
-        
-        $this->layout()->setVariable('pageTitle', 'Create Work Order');
-        
-        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
-        
-        $this->layout()->setVariable('activeMenuItem', 'client');
-        
-        $this->layout()->setVariable('activeSubMenuItem', 'workorder-list');
-        
-        $this->setHeadTitle($clientEntity->getClientName());
         
         $form = $this->workorderForm;
         
@@ -197,6 +197,28 @@ class CreateController extends BaseController
                 
                 $workorderEmployeeEntity = $this->workorderEmployeeService->save($workorderEmployeeEntity);
                 
+                // check if there is a credit balance if so map the balance
+                $creditEntityBalance = $this->creditService->getWorkorderCreditBalance($id);
+                
+                if($creditEntityBalance) {
+                    $creditEntity = new CreditEntity();
+                    
+                    $creditEntity->setAccountId($creditEntityBalance->getAccountId());
+                    $creditEntity->setAccountLedgerId($creditEntityBalance->getAccountLedgerId());
+                    $creditEntity->setPaymentOptionId($creditEntityBalance->getPaymentOptionId());
+                    $creditEntity->setWorkorderCreditAmount($creditEntityBalance->getWorkorderCreditAmount());
+                    $creditEntity->setWorkorderCreditAmountLeft($creditEntityBalance->getWorkorderCreditAmountLeft());
+                    $creditEntity->setWorkorderCreditDate($creditEntityBalance->getWorkorderCreditDate());
+                    $creditEntity->setWorkorderCreditDetail($creditEntityBalance->getWorkorderCreditDetail());
+                    $creditEntity->setWorkorderCreditId(0);
+                    $creditEntity->setWorkorderCreditType($creditEntityBalance->getWorkorderCreditType());
+                    $creditEntity->setWorkorderId($workorderEntity->getWorkorderId());
+                    
+                    
+                    $this->creditService->save($creditEntity);
+                }
+                
+                
                 // send messages
                 $employeeEntity = $this->employeeService->get($workorderEmployeeEntity->getEmployeeId());
                 
@@ -215,6 +237,7 @@ class CreateController extends BaseController
             } 
         }
         
+        // setup form
         $form->setClientId($id);
         
         $form->getLocation();
@@ -240,6 +263,19 @@ class CreateController extends BaseController
         $form->get('invoiceId')->setValue(0);
         
         $workorderEmployeeForm->get('workorderEmployeeId')->setValue(0);
+        
+        // set up layout
+        $this->layout()->setVariable('clientId', $id);
+        
+        $this->layout()->setVariable('pageTitle', 'Create Work Order');
+        
+        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
+        
+        $this->layout()->setVariable('activeMenuItem', 'client');
+        
+        $this->layout()->setVariable('activeSubMenuItem', 'workorder-list');
+        
+        $this->setHeadTitle($clientEntity->getClientName());
         
         // return View
         return new ViewModel(array(

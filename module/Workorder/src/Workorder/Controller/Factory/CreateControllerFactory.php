@@ -1,20 +1,18 @@
 <?php
 namespace Workorder\Controller\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Workorder\Controller\CreateController;
 
-class CreateControllerFactory implements FactoryInterface
+class CreateControllerFactory
 {
 
     /**
-     *
-     * {@inheritDoc}
-     *
-     * @see \Zend\ServiceManager\FactoryInterface::createService()
+     * 
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return \Workorder\Controller\CreateController
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
@@ -34,10 +32,12 @@ class CreateControllerFactory implements FactoryInterface
      
         $employeeService = $realServiceLocator->get('Employee\Service\EmployeeServiceInterface');
         
+        $creditService = $realServiceLocator->get('WorkorderCredit\Service\CreditServiceInterface');
+        
         $workorderForm = $realServiceLocator->get('Workorder\Form\WorkorderForm');
         
         $workorderEmployeeForm = $realServiceLocator->get('WorkorderEmployee\Form\WorkorderEmployeeForm');
         
-        return new CreateController($clientService, $workorderService, $workorderEmployeeService, $locationService, $phoneService, $userService, $messageService, $employeeService, $workorderForm, $workorderEmployeeForm);
+        return new CreateController($clientService, $workorderService, $workorderEmployeeService, $locationService, $phoneService, $userService, $messageService, $employeeService, $creditService, $workorderForm, $workorderEmployeeForm);
     }
 }

@@ -115,7 +115,6 @@ class CreditMapper implements CreditMapperInterface
             'payment_option_enabled'
         ), 'inner');
         
-        
         // join account
         $select->join('account', 'workorder_credit.account_id = account.account_id', array(
             'account_name',
@@ -275,6 +274,43 @@ class CreditMapper implements CreditMapperInterface
             $resultSet->buffer();
             
             return $resultSet->initialize($result);
+        }
+        
+        return array();
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderCredit\Mapper\CreditMapperInterface::getWorkorderCreditBalance()
+     */
+    public function getWorkorderCreditBalance($clientId)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder_credit');
+        
+        $select->join('workorder', 'workorder_credit.workorder_id = workorder.workorder_id', array(
+            'client_id'
+        ), 'inner');
+        
+        $select->where(array(
+            'workorder.client_id = ?' => $clientId
+        ));
+        
+        $select->where->greaterThan('workorder_credit.workorder_credit_amount_left', 0);
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+            $resultSet->buffer();
+        
+            return $resultSet->initialize($result)->current();
         }
         
         return array();
