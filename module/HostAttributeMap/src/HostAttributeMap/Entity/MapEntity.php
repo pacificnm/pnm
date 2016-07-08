@@ -26,6 +26,12 @@ class MapEntity
 
     /**
      *
+     * @var number
+     */
+    protected $hostAttributeValueId;
+
+    /**
+     *
      * @var string
      */
     protected $hostAttributeMapValue;
@@ -35,8 +41,9 @@ class MapEntity
      * @var AttributeEntity
      */
     protected $attributeEntity;
-    
+
     /**
+     *
      * @return the $hostAttributeMapId
      */
     public function getHostAttributeMapId()
@@ -45,6 +52,7 @@ class MapEntity
     }
 
     /**
+     *
      * @return the $hostId
      */
     public function getHostId()
@@ -53,6 +61,7 @@ class MapEntity
     }
 
     /**
+     *
      * @return the $hostAttributeId
      */
     public function getHostAttributeId()
@@ -61,6 +70,16 @@ class MapEntity
     }
 
     /**
+     *
+     * @return the $hostAttributeValueId
+     */
+    public function getHostAttributeValueId()
+    {
+        return $this->hostAttributeValueId;
+    }
+
+    /**
+     *
      * @return the $hostAttributeMapValue
      */
     public function getHostAttributeMapValue()
@@ -69,6 +88,7 @@ class MapEntity
     }
 
     /**
+     *
      * @return the $attributeEntity
      */
     public function getAttributeEntity()
@@ -77,7 +97,8 @@ class MapEntity
     }
 
     /**
-     * @param number $hostAttributeMapId
+     *
+     * @param number $hostAttributeMapId            
      */
     public function setHostAttributeMapId($hostAttributeMapId)
     {
@@ -85,7 +106,8 @@ class MapEntity
     }
 
     /**
-     * @param number $hostId
+     *
+     * @param number $hostId            
      */
     public function setHostId($hostId)
     {
@@ -93,7 +115,8 @@ class MapEntity
     }
 
     /**
-     * @param number $hostAttributeId
+     *
+     * @param number $hostAttributeId            
      */
     public function setHostAttributeId($hostAttributeId)
     {
@@ -101,7 +124,17 @@ class MapEntity
     }
 
     /**
-     * @param string $hostAttributeMapValue
+     *
+     * @param number $hostAttributeValueId            
+     */
+    public function setHostAttributeValueId($hostAttributeValueId)
+    {
+        $this->hostAttributeValueId = $hostAttributeValueId;
+    }
+
+    /**
+     *
+     * @param string $hostAttributeMapValue            
      */
     public function setHostAttributeMapValue($hostAttributeMapValue)
     {
@@ -109,13 +142,11 @@ class MapEntity
     }
 
     /**
-     * @param \HostAttribute\Entity\AttributeEntity $attributeEntity
+     *
+     * @param \HostAttribute\Entity\AttributeEntity $attributeEntity            
      */
     public function setAttributeEntity($attributeEntity)
     {
         $this->attributeEntity = $attributeEntity;
     }
-
-    
-    
 }

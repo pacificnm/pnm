@@ -120,6 +120,7 @@ class MapService implements MapServiceInterface
         
         $mapEntity->setHostId($hostId);
         $mapEntity->setHostAttributeId($hostAttributeId);
+        $mapEntity->setHostAttributeValueId($valueEntity->getHostAttributeValueId());
         $mapEntity->setHostAttributeMapValue($valueEntity->getHostAttributeValueName());
         
         $mapEntity = $this->mapper->save($mapEntity);
@@ -140,6 +141,7 @@ class MapService implements MapServiceInterface
         
         $mapEntity->setHostId($hostId);
         $mapEntity->setHostAttributeId($hostAttributeId);
+        $mapEntity->setHostAttributeValueId(0);
         $mapEntity->setHostAttributeMapValue($hostAttributeMapValue);
        
         
@@ -158,6 +160,16 @@ class MapService implements MapServiceInterface
     public function delete(MapEntity $entity)
     {
         return $this->mapper->delete($entity);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \HostAttributeMap\Service\MapServiceInterface::deleteHostMaps()
+     */
+    public function deleteHostMaps($hostId)
+    {
+        return $this->mapper->deleteHostMaps($hostId);
     }
     
     /**
@@ -242,7 +254,7 @@ class MapService implements MapServiceInterface
     public function saveTablet($hostId, $postData)
     {
         // save operating system
-        $this->saveManufacture($hostId, $postData);
+        $this->saveOperatingSystem($hostId, $postData);
         
         // save manufacture
         $this->saveManufacture($hostId, $postData);

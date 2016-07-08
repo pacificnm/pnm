@@ -17,6 +17,11 @@ CREATE TABLE IF NOT EXISTS `host_attribute_map` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Added mapping to attribute value for selects
+--
+ALTER TABLE `host_attribute_map` ADD `host_attribute_value_id` INT(20) NOT NULL AFTER `host_attribute_id`, ADD INDEX (`host_attribute_value_id`);
+
+--
 -- Constraints for table `host_attribute_map`
 --
 ALTER TABLE `host_attribute_map`

@@ -200,4 +200,26 @@ class MapMapper implements MapMapperInterface
         
         return (bool) $result->getAffectedRows();
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \HostAttributeMap\Mapper\MapMapperInterface::deleteHostMaps()
+     */
+    public function deleteHostMaps($hostId)
+    {
+        $action = new Delete('host_attribute_map');
+        
+        $action->where(array(
+            'host_attribute_map.host_id = ?' => $hostId
+        ));
+        
+        $sql = new Sql($this->writeAdapter);
+        
+        $stmt = $sql->prepareStatementForSqlObject($action);
+        
+        $result = $stmt->execute();
+        
+        return (bool) $result->getAffectedRows();
+    }
 }

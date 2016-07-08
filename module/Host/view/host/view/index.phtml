@@ -30,8 +30,13 @@
 					<?php echo $this->hostEntity->getHostName();?>
 					<span class="pull-right badge"><?php echo $this->translate($this->hostEntity->getHostStatus()); ?></span>
 				</h3>
-				<p class="text-muted"><?php echo $this->hostEntity->getTypeEntity()->getHostTypeName(); ?></p>
+				<p class="text-muted"><?php echo $this->hostEntity->getHostDescription(); ?></p>
 				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Type'); ?>:</b> 
+							<span class="pull-right"><?php echo $this->hostEntity->getTypeEntity()->getHostTypeName(); ?></span>
+					</li>
+				
 					<li class="list-group-item">
 						<b><?php echo $this->translate('Health'); ?>:</b> 
 							<span class="pull-right"><?php echo $this->hostEntity->getHostHealth(); ?></span>

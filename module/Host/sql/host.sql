@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS `host` (
   KEY `host_type_id` (`host_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+ALTER TABLE `host` ADD `host_description` TEXT NOT NULL AFTER `host_name`;
+
 --
 -- Constraints for table `host`
 --

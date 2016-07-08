@@ -91,6 +91,19 @@ class HostForm extends Form implements InputFilterProviderInterface
             )
         ));
         
+        // hostDescription
+        $this->add(array(
+            'name' => 'hostDescription',
+            'type' => 'Textarea',
+            'options' => array(
+                'label' => 'Host Description:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'hostName'
+            )
+        ));
+        
         // hostIp
         $this->add(array(
             'name' => 'hostIp',
@@ -154,7 +167,179 @@ class HostForm extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        // TODO Auto-generated method stub
+        return array(
+            // hostId
+            'hostId' => array(
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Host Id is required and cannot be empty."
+                            )
+                        )
+                    )
+                )
+            ),
+            
+            // clientId
+            'clientId' => array(
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Client Id is required and cannot be empty."
+                            )
+                        )
+                    )
+                )
+            ),
+            
+            // hostTypeId
+            'hostTypeId' => array(
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Host Type Id is required and cannot be empty."
+                            )
+                        )
+                    )
+                )
+            ),
+            
+            // hostName
+            'hostName' => array(
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Host Name is required and cannot be empty."
+                            )
+                        )
+                    )
+                )
+            ),
+            
+            // hostDescription
+            'hostDescription' => array(
+                'required' => false,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+            ),
+            
+            // hostIp
+            'hostIp' => array(
+                'required' => false,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'Ip',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\Ip::NOT_IP_ADDRESS => "The Host Ip Address is not valid."
+                            )
+                        )
+                    )
+                )
+            ),
+            
+            // hostStatus
+            'hostStatus' => array(
+                'required' => false,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+            ),
+            
+            // hostHealth
+            'hostHealth' => array(
+                'required' => false,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+            ),
+            
+            // hostCreated
+            'hostCreated' => array(
+                'required' => false,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+            ),
+        );
         
     }
 

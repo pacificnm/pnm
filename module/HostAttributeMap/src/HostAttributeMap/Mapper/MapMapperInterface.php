@@ -33,4 +33,10 @@ interface MapMapperInterface
      * @return boolean
      */
     public function delete(MapEntity $entity);
+    
+    /**
+     * 
+     * @param number $hostId
+     */
+    public function deleteHostMaps($hostId);
 }

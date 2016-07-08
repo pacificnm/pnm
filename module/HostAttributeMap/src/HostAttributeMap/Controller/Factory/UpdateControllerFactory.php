@@ -1,21 +1,17 @@
 <?php
 namespace HostAttributeMap\Controller\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use HostAttributeMap\Controller\CreateController;
-use HostAttributeMap\Form\TabletForm;
+use HostAttributeMap\Controller\UpdateController;
 
-class CreateControllerFactory implements FactoryInterface
+class UpdateControllerFactory
 {
-
     /**
-     *
-     * {@inheritDoc}
-     *
-     * @see \Zend\ServiceManager\FactoryInterface::createService()
+     * 
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return \HostAttributeMap\Controller\UpdateController
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
@@ -28,13 +24,13 @@ class CreateControllerFactory implements FactoryInterface
         $workstationForm = $realServiceLocator->get('HostAttributeMap\Form\WorkstationForm');
         
         $serverForm = $realServiceLocator->get('HostAttributeMap\Form\ServerForm');
-     
+        
         $laptopForm = $realServiceLocator->get('HostAttributeMap\Form\LaptopForm');
-
+        
         $valueService = $realServiceLocator->get('HostAttributeValue\Service\ValueServiceInterface');
         
         $tabletForm = $realServiceLocator->get('HostAttributeMap\Form\TabletForm');
-
+        
         $printerForm = $realServiceLocator->get('HostAttributeMap\Form\PrinterForm');
         
         $copierForm = $realServiceLocator->get('HostAttributeMap\Form\CopierForm');
@@ -49,6 +45,8 @@ class CreateControllerFactory implements FactoryInterface
         
         $otherForm = $realServiceLocator->get('HostAttributeMap\Form\OtherForm');
         
-        return new CreateController($clientService, $hostService, $mapService, $workstationForm, $serverForm, $laptopForm, $tabletForm, $printerForm, $copierForm, $scannerForm, $routerForm, $wirelessRouterForm, $accessPointForm, $otherForm);
+        $config = $realServiceLocator->get('config');
+        
+        return new UpdateController($clientService, $hostService, $mapService, $workstationForm, $serverForm, $laptopForm, $tabletForm, $printerForm, $copierForm, $scannerForm, $routerForm, $wirelessRouterForm, $accessPointForm, $otherForm, $config);
     }
 }

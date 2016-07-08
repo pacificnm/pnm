@@ -25,7 +25,7 @@ $config = array(
         // Dispatch errors, triggered in case of a problem or exception anywhere during dispatch lifecycle (unknown controller, exception thrown inside of controller,...)
         'dispatch' => true,
         // Router no match  (route not found = 404).
-        'dispatch\router_no_match' => true,
+        //'dispatch\router_no_match' => true,
         // Render errors, triggered in case of a problem during the render process (no renderer found...).
         'render' => true,
         // Fatal errors that halt execution of further code
@@ -41,7 +41,7 @@ $config = array(
     /**
      * Levels of errors which will show the nice error view defined in template under [templates][error] section
      */
-    'displayable_error_levels' => E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT,
+    'displayable_error_levels' => E_ALL & E_NOTICE & E_DEPRECATED & E_STRICT,
 
    /**
     * Set writers to be used.
@@ -97,7 +97,6 @@ $config = array(
     /**
      * Paths of templates to be used for output of errors
      */
-     /**
     'templates' => array(
          // error during dispatch lifecycle. comment out if you want to use the default zend skeleton one.
          'dispatch' => __DIR__ . '/../../module/Application/view/error/dispatch.phtml',
@@ -110,12 +109,11 @@ $config = array(
          // fatal errors while outside of mvc (i.e. while in module bootstrap,..)
          'fatal' => __DIR__ . '/../../module/Application/view/error/fatal.html',
          // error output while in CLI
-         'console' => __DIR__ . '/../../module/Application/view/error/console.txt',
+         //'console' => __DIR__ . '/../../module/Application/view/error/console.txt',
          // error output when json response requested
-         'json' => __DIR__ . '/../../module/Application/view/error/json.js'
+         //'json' => __DIR__ . '/../../module/Application/view/error/json.js'
     ),
-    
-    */
+
     /**
      * Zend\Db\Adapter\Adapter DI Alias
      *

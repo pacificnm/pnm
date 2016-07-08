@@ -16,9 +16,8 @@ return array(
                 ),
                 'accountant' => array(),
                 'administrator' => array()
-
-                
             )
+            
         )
     ),
     
@@ -30,9 +29,8 @@ return array(
             'HostAttributeMap\Controller\Delete' => 'HostAttributeMap\Controller\Factory\DeleteControllerFactory',
             'HostAttributeMap\Controller\Update' => 'HostAttributeMap\Controller\Factory\UpdateControllerFactory',
             'HostAttributeMap\Controller\View' => 'HostAttributeMap\Controller\Factory\ViewControllerFactory',
-            'HostAttributeMap\Form\TabletForm' => 'HostAttributeMap\Form\Factory\TabletFormFactory',
-            'HostAttributeMap\Form\PrinterForm' => 'HostAttributeMap\Form\Factory\PrinterFormFactory',
-        )
+            
+          )
     ),
     
     // service manager
@@ -49,7 +47,8 @@ return array(
             'HostAttributeMap\Form\ScannerForm' => 'HostAttributeMap\Form\Factory\ScannerFormFactory',
             'HostAttributeMap\Form\RouterForm' => 'HostAttributeMap\Form\Factory\RouterFormFactory',
             'HostAttributeMap\Form\WirelessRouterForm' => 'HostAttributeMap\Form\Factory\WirelessRouterFactory',
-            'HostAttributeMap\Form\AccessPointForm' => 'HostAttributeMap\Form\Factory\AccessPointFormFactory'
+            'HostAttributeMap\Form\AccessPointForm' => 'HostAttributeMap\Form\Factory\AccessPointFormFactory',
+            'HostAttributeMap\Form\OtherForm' => 'HostAttributeMap\Form\Factory\OtherFormFactory',
         )
     ),
     
@@ -82,7 +81,7 @@ return array(
                 'title' => 'Delete Host Attributes',
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/client/[:clientId]/host/[:hostId]/attribute/[:hostAttributeMapId]/delete',
+                    'route' => '/client/[:clientId]/host/[:hostId]/attribute/delete',
                     'defaults' => array(
                         'controller' => 'HostAttributeMap\Controller\Delete',
                         'action' => 'index'
@@ -93,7 +92,7 @@ return array(
                 'title' => 'Edit Host Attributes',
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/client/[:clientId]/host/[:hostId]/attribute/[:hostAttributeMapId]/update',
+                    'route' => '/client/[:clientId]/host/[:hostId]/attribute/update',
                     'defaults' => array(
                         'controller' => 'HostAttributeMap\Controller\Update',
                         'action' => 'index'

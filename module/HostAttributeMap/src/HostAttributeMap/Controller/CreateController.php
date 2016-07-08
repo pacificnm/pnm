@@ -16,6 +16,7 @@ use HostAttributeMap\Form\ScannerForm;
 use HostAttributeMap\Form\RouterForm;
 use HostAttributeMap\Form\WirelessRouterForm;
 use HostAttributeMap\Form\AccessPointForm;
+use HostAttributeMap\Form\OtherForm;
 
 class CreateController extends BaseController
 {
@@ -93,11 +94,17 @@ class CreateController extends BaseController
     protected $wirelessRouterForm;
 
     /**
-     * 
+     *
      * @var AccessPointForm
      */
     protected $accessPointForm;
 
+    /**
+     * 
+     * @var OtherForm
+     */
+    protected $otherForm;
+    
     /**
      *
      * @var ViewModel
@@ -120,7 +127,7 @@ class CreateController extends BaseController
      * @param WirelessRouterForm $wirelessRouterForm            
      * @param AccessPointForm $accessPointForm            
      */
-    public function __construct(ClientServiceInterface $clientService, HostServiceInterface $hostService, MapServiceInterface $mapService, WorkstationForm $workstationForm, ServerForm $serverForm, LaptopForm $laptopForm, TabletForm $tabletForm, PrinterForm $printerForm, CopierForm $copierForm, ScannerForm $scannerForm, RouterForm $routerForm, WirelessRouterForm $wirelessRouterForm, AccessPointForm $accessPointForm)
+    public function __construct(ClientServiceInterface $clientService, HostServiceInterface $hostService, MapServiceInterface $mapService, WorkstationForm $workstationForm, ServerForm $serverForm, LaptopForm $laptopForm, TabletForm $tabletForm, PrinterForm $printerForm, CopierForm $copierForm, ScannerForm $scannerForm, RouterForm $routerForm, WirelessRouterForm $wirelessRouterForm, AccessPointForm $accessPointForm, OtherForm $otherForm)
     {
         $this->clientService = $clientService;
         
@@ -147,6 +154,8 @@ class CreateController extends BaseController
         $this->wirelessRouterForm = $wirelessRouterForm;
         
         $this->accessPointForm = $accessPointForm;
+        
+        $this->otherForm = $otherForm;
         
         $this->viewModel = new ViewModel();
     }
@@ -228,7 +237,7 @@ class CreateController extends BaseController
                 $this->saveAccessPoint($id, $hostId);
                 break;
             default:
-                
+                $this->saveOther($id, $hostId);
                 break;
         }
         
@@ -251,7 +260,7 @@ class CreateController extends BaseController
      * @param number $clientId            
      * @param number $hostId            
      */
-    private function saveWorkstation($clientId, $hostId)
+    protected function saveWorkstation($clientId, $hostId)
     {
         $request = $this->getRequest();
         
@@ -274,12 +283,35 @@ class CreateController extends BaseController
         }
     }
 
+    protected function saveOther($clientId, $hostId)
+    {
+        $request = $this->getRequest();
+        
+        $this->viewModel->setTemplate('host-attribute-map/create/other.phtml');
+        
+        $this->viewModel->setVariable('form', $this->otherForm);
+        
+        if ($request->isPost()) {
+            // get post
+            $postData = $request->getPost();
+        
+            $this->mapService->saveServer($hostId, $postData);
+        
+            $this->flashMessenger()->addSuccessMessage('Host Attributes where saved');
+        
+            return $this->redirect()->toRoute('host-view', array(
+                'clientId' => $clientId,
+                'hostId' => $hostId
+            ));
+        }
+    }
+
     /**
      *
      * @param number $clientId            
      * @param number $hostId            
      */
-    private function saveServer($clientId, $hostId)
+    protected function saveServer($clientId, $hostId)
     {
         $request = $this->getRequest();
         
@@ -307,7 +339,7 @@ class CreateController extends BaseController
      * @param number $clientId            
      * @param number $hostId            
      */
-    private function saveLaptop($clientId, $hostId)
+    protected function saveLaptop($clientId, $hostId)
     {
         $request = $this->getRequest();
         
@@ -335,7 +367,7 @@ class CreateController extends BaseController
      * @param number $clientId            
      * @param number $hostId            
      */
-    private function saveTablet($clientId, $hostId)
+    protected function saveTablet($clientId, $hostId)
     {
         $request = $this->getRequest();
         
@@ -363,7 +395,7 @@ class CreateController extends BaseController
      * @param number $clientId            
      * @param number $hostId            
      */
-    private function savePrinter($clientId, $hostId)
+    protected function savePrinter($clientId, $hostId)
     {
         $request = $this->getRequest();
         
@@ -391,7 +423,7 @@ class CreateController extends BaseController
      * @param number $clientId            
      * @param number $hostId            
      */
-    private function saveCopier($clientId, $hostId)
+    protected function saveCopier($clientId, $hostId)
     {
         $request = $this->getRequest();
         
@@ -419,7 +451,7 @@ class CreateController extends BaseController
      * @param number $clientId            
      * @param number $hostId            
      */
-    private function saveScanner($clientId, $hostId)
+    protected function saveScanner($clientId, $hostId)
     {
         $request = $this->getRequest();
         
@@ -447,7 +479,7 @@ class CreateController extends BaseController
      * @param number $clientId            
      * @param number $hostId            
      */
-    private function saveRouter($clientId, $hostId)
+    protected function saveRouter($clientId, $hostId)
     {
         $request = $this->getRequest();
         
@@ -475,7 +507,7 @@ class CreateController extends BaseController
      * @param number $clientId            
      * @param number $hostId            
      */
-    private function saveSwitch($clientId, $hostId)
+    protected function saveSwitch($clientId, $hostId)
     {
         $request = $this->getRequest();
         
@@ -503,7 +535,7 @@ class CreateController extends BaseController
      * @param number $clientId            
      * @param number $hostId            
      */
-    private function saveWirelessRouter($clientId, $hostId)
+    protected function saveWirelessRouter($clientId, $hostId)
     {
         $request = $this->getRequest();
         
@@ -525,8 +557,8 @@ class CreateController extends BaseController
             ));
         }
     }
-    
-    private function saveAccessPoint($clientId, $hostId)
+
+    protected function saveAccessPoint($clientId, $hostId)
     {
         $request = $this->getRequest();
         
@@ -537,11 +569,11 @@ class CreateController extends BaseController
         if ($request->isPost()) {
             // get post
             $postData = $request->getPost();
-        
+            
             $this->mapService->saveAccessPoint($hostId, $postData);
-        
+            
             $this->flashMessenger()->addSuccessMessage('Host Attributes where saved');
-        
+            
             return $this->redirect()->toRoute('host-view', array(
                 'clientId' => $clientId,
                 'hostId' => $hostId

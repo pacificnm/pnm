@@ -541,6 +541,16 @@ return array(
                                                         'label' => 'Delete Host',
                                                         'route' => 'host-delete',
                                                         'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Add Attributes',
+                                                        'route' => 'host-attribute-map-create',
+                                                        'useRouteMatch' => true
+                                                    ),
+                                                    array(
+                                                        'label' => 'Edit Attributes',
+                                                        'route' => 'host-attribute-map-update',
+                                                        'useRouteMatch' => true
                                                     )
                                                 )
                                             ),

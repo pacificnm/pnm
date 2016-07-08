@@ -27,14 +27,13 @@ interface MapServiceInterface
      */
     public function getHostAttributes($hostId);
 
-    /**
-     *
-     * @param number $hostId            
-     * @param number $hostAttributeId            
-     * @param string $hostAttributeMapValue            
-     *
-     * @return MapEntity
-     */
+   /**
+    * 
+    * @param unknown $hostId
+    * @param unknown $hostAttributeId
+    * @param unknown $hostAttributeMapValue
+    * @return MapEntity
+    */
     public function saveSelect($hostId, $hostAttributeId, $hostAttributeMapValue);
 
     /**
@@ -48,83 +47,82 @@ interface MapServiceInterface
     public function saveText($hostId, $hostAttributeId, $hostAttributeMapValue);
 
     /**
-     * 
-     * @param number $hostId
-     * @param unknown $postData
+     *
+     * @param number $hostId            
+     * @param unknown $postData            
      */
     public function saveWorkstation($hostId, $postData);
-    
-    /**
-     * 
-     * @param number $hostId
-     * @param unknown $postData
-     */
-    public function saveServer($hostId, $postData);
-    
+
     /**
      *
-     * @param number $hostId
-     * @param unknown $postData
+     * @param number $hostId            
+     * @param unknown $postData            
+     */
+    public function saveServer($hostId, $postData);
+
+    /**
+     *
+     * @param number $hostId            
+     * @param unknown $postData            
      */
     public function saveLaptop($hostId, $postData);
-    
+
     /**
-     * 
-     * @param number $hostId
-     * @param unknown $postData
+     *
+     * @param number $hostId            
+     * @param unknown $postData            
      */
     public function saveTablet($hostId, $postData);
-    
+
     /**
-     * 
-     * @param unknown $hostId
-     * @param unknown $postData
+     *
+     * @param unknown $hostId            
+     * @param unknown $postData            
      */
     public function savePrinter($hostId, $postData);
-    
+
     /**
-     * 
-     * @param unknown $hostId
-     * @param unknown $postData
+     *
+     * @param unknown $hostId            
+     * @param unknown $postData            
      */
     public function saveCopier($hostId, $postData);
-    
+
     /**
-     * 
-     * @param unknown $hostId
-     * @param unknown $postdata
+     *
+     * @param unknown $hostId            
+     * @param unknown $postdata            
      */
     public function saveScanner($hostId, $postData);
-    
+
     /**
-     * 
-     * @param unknown $hostId
-     * @param unknown $postData
+     *
+     * @param unknown $hostId            
+     * @param unknown $postData            
      */
     public function saveRouter($hostId, $postData);
-    
+
     /**
-     * 
-     * @param unknown $hostId
-     * @param unknown $postData
+     *
+     * @param unknown $hostId            
+     * @param unknown $postData            
      */
     public function saveSwitch($hostId, $postData);
-    
+
     /**
-     * 
-     * @param unknown $hostId
-     * @param unknown $postData
+     *
+     * @param unknown $hostId            
+     * @param unknown $postData            
      */
     public function saveWirelessRouter($hostId, $postData);
-    
-    
+
     /**
-     * 
-     * @param unknown $hostId
-     * @param unknown $postData
+     *
+     * @param unknown $hostId            
+     * @param unknown $postData            
      */
     public function saveAccessPoint($hostId, $postData);
-    
+
     /**
      *
      * @param MapEntity $entity            
@@ -138,4 +136,10 @@ interface MapServiceInterface
      * @return boolean
      */
     public function delete(MapEntity $entity);
+
+    /**
+     *
+     * @param number $hostId            
+     */
+    public function deleteHostMaps($hostId);
 }

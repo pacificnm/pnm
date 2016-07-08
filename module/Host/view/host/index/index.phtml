@@ -85,6 +85,12 @@
     						</div>
     					</div>
     					<div class="row">
+    						<div class="col-xs-12">
+    							<b><?php echo $this->translate('Description'); ?>:</b> <?php echo $hostEntity->getHostDescription(); ?>
+    						</div>
+    					</div>
+    					
+    					<div class="row">
     						<div class="col-xs-12 col-sm-4">
     							<b><?php echo $this->translate('Host Type'); ?>:</b> <?php echo $hostEntity->getTypeEntity()->getHostTypeName(); ?>
     						</div>

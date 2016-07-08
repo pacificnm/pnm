@@ -41,6 +41,12 @@ class HostEntity
      *
      * @var string
      */
+    protected $hostDescription;
+
+    /**
+     *
+     * @var string
+     */
     protected $hostIp;
 
     /**
@@ -116,6 +122,15 @@ class HostEntity
     public function getHostName()
     {
         return $this->hostName;
+    }
+
+    /**
+     *
+     * @return the $hostDescription
+     */
+    public function getHostDescription()
+    {
+        return $this->hostDescription;
     }
 
     /**
@@ -215,6 +230,15 @@ class HostEntity
     public function setHostName($hostName)
     {
         $this->hostName = $hostName;
+    }
+
+    /**
+     *
+     * @param string $hostDescription            
+     */
+    public function setHostDescription($hostDescription)
+    {
+        $this->hostDescription = $hostDescription;
     }
 
     /**
