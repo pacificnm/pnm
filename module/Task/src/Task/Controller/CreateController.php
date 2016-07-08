@@ -98,6 +98,7 @@ class CreateController extends BaseController
         
         $this->taskForm->get('clientId')->setValue($id);
         
+        $this->taskForm->get('taskDateReminderActive')->setValue(1);
         
         // set up menu and layout
         $this->layout()->setVariable('clientId', $id);
