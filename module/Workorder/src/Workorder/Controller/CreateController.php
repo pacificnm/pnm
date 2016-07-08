@@ -157,7 +157,7 @@ class CreateController extends BaseController
             $form->setData($postData);
             
             $workorderEmployeeForm->setData($postData);
-            
+                        
             // if we are valid
             if ($form->isValid() && $workorderEmployeeForm->isValid()) {
                 
@@ -212,7 +212,7 @@ class CreateController extends BaseController
                     'clientId' => $id,
                     'workorderId' => $workorderEntity->getWorkorderId()
                 ));
-            }
+            } 
         }
         
         $form->setClientId($id);
@@ -238,6 +238,8 @@ class CreateController extends BaseController
         $form->get('workorderDateClose')->setValue(0);
         
         $form->get('invoiceId')->setValue(0);
+        
+        $workorderEmployeeForm->get('workorderEmployeeId')->setValue(0);
         
         // return View
         return new ViewModel(array(
