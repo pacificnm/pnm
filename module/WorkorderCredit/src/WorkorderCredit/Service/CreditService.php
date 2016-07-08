@@ -84,6 +84,16 @@ class CreditService implements CreditServiceInterface
     /**
      * 
      * {@inheritDoc}
+     * @see \WorkorderCredit\Service\CreditServiceInterface::getWorkorderCreditBalance()
+     */
+    public function getWorkorderCreditBalance($clientId)
+    {
+        return $this->mapper->getWorkorderCreditBalance($clientId);    
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
      * @see \WorkorderCredit\Service\CreditServiceInterface::getWorkorderLaborCredit()
      */
     public function getWorkorderLaborCredit($workorderId)

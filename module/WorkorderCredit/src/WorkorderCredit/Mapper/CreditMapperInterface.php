@@ -48,6 +48,13 @@ interface CreditMapperInterface
     
     /**
      * 
+     * @param number $clientId
+     * @return CreditEntity
+     */
+    public function getWorkorderCreditBalance($clientId);
+    
+    /**
+     * 
      * @param number $workorderId
      * @return CreditEntity
      */
