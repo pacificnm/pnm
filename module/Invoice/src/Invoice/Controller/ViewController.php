@@ -203,7 +203,7 @@ class ViewController extends BaseController
         
         $this->paymentForm->get('invoicePaymentDate')->setValue(date("m/d/Y"));
         
-        $this->paymentForm->get('invoicePaymentAmount')->setValue($invoiceEntity->getInvoiceTotal());
+        $this->paymentForm->get('invoicePaymentAmount')->setValue($invoiceEntity->getInvoiceBalance());
         
         $this->paymentForm->get('accountLedgerId')->setValue(0);
         

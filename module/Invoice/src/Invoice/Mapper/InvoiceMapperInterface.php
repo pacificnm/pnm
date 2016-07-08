@@ -40,4 +40,24 @@ interface InvoiceMapperInterface
      * @return boolean
      */
     public function delete(InvoiceEntity $entity);
+    
+    /**
+     * 
+     * @param number $start
+     * @param number $end
+     * @param string $invoiceStatus
+     * @param number $clientId
+     * @return InvoiceEntity
+     */
+    public function getTotalsFormMonth($start, $end, $invoiceStatus, $clientId = null);
+    
+    /**
+     *
+     * @param number $start
+     * @param number $end
+     * @param string $invoiceStatus
+     * @param number $clientId
+     * @return InvoiceEntity
+     */
+    public function getTotalsFormYear($start, $end, $invoiceStatus, $clientId = null);
 }

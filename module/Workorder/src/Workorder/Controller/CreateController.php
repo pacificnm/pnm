@@ -201,21 +201,23 @@ class CreateController extends BaseController
                 $creditEntityBalance = $this->creditService->getWorkorderCreditBalance($id);
                 
                 if($creditEntityBalance) {
-                    $creditEntity = new CreditEntity();
-                    
-                    $creditEntity->setAccountId($creditEntityBalance->getAccountId());
-                    $creditEntity->setAccountLedgerId($creditEntityBalance->getAccountLedgerId());
-                    $creditEntity->setPaymentOptionId($creditEntityBalance->getPaymentOptionId());
-                    $creditEntity->setWorkorderCreditAmount($creditEntityBalance->getWorkorderCreditAmount());
-                    $creditEntity->setWorkorderCreditAmountLeft($creditEntityBalance->getWorkorderCreditAmountLeft());
-                    $creditEntity->setWorkorderCreditDate($creditEntityBalance->getWorkorderCreditDate());
-                    $creditEntity->setWorkorderCreditDetail($creditEntityBalance->getWorkorderCreditDetail());
-                    $creditEntity->setWorkorderCreditId(0);
-                    $creditEntity->setWorkorderCreditType($creditEntityBalance->getWorkorderCreditType());
-                    $creditEntity->setWorkorderId($workorderEntity->getWorkorderId());
-                    
-                    
-                    $this->creditService->save($creditEntity);
+                    if($creditEntityBalance->getWorkorderCreditAmountLeft() > 0) {
+                        $creditEntity = new CreditEntity();
+                        
+                        $creditEntity->setAccountId($creditEntityBalance->getAccountId());
+                        $creditEntity->setAccountLedgerId($creditEntityBalance->getAccountLedgerId());
+                        $creditEntity->setPaymentOptionId($creditEntityBalance->getPaymentOptionId());
+                        $creditEntity->setWorkorderCreditAmount($creditEntityBalance->getWorkorderCreditAmountLeft());
+                        $creditEntity->setWorkorderCreditAmountLeft($creditEntityBalance->getWorkorderCreditAmountLeft());
+                        $creditEntity->setWorkorderCreditDate($creditEntityBalance->getWorkorderCreditDate());
+                        $creditEntity->setWorkorderCreditDetail($creditEntityBalance->getWorkorderCreditDetail());
+                        $creditEntity->setWorkorderCreditId(0);
+                        $creditEntity->setWorkorderCreditType($creditEntityBalance->getWorkorderCreditType());
+                        $creditEntity->setWorkorderId($workorderEntity->getWorkorderId());
+                        
+                        
+                        $this->creditService->save($creditEntity);
+                    }
                 }
                 
                 

@@ -126,7 +126,7 @@ class HomeController extends BaseController
         $accountEntitys = $this->accountService->getNonSystemAccounts();
         
         // get chart data 
-        $timeEntitys = $this->timeService->getTotalsForMonth($start, $end);
+        $charEntitys = $this->invoiceService->getTotalsFormMonth($start, $end, 'Paid');
         
         $data = array();
         
@@ -136,9 +136,9 @@ class HomeController extends BaseController
             $data[$x] = 0;
         }
         
-        foreach($timeEntitys as $timeEntity) {
-            $day = intval(date("d", $timeEntity->workorder_time_in));
-            $data2[$day] = $timeEntity->workorder_labor_total;
+        foreach($charEntitys as $charEntity) {
+            $day = intval(date("d", $charEntity->invoice_date));
+            $data2[$day] = $charEntity->invoice_total_day;
         }
         
         $dataSet = array_replace($data, $data2);

@@ -43,13 +43,13 @@
         			<li class="list-group-item">
         				<div class="alert alert-info">
         					<p><i class="fa fa-info-circle"></i> 
-        					<?php if($this->workorderStatus):?>
-        						<?php echo $this->translate("There where no {$this->workorderStatus} work orders found"); ?>
+        					<?php if($this->invoiceStatus):?>
+        						<?php echo $this->translate("There where no {$this->invoiceStatus} invoices found"); ?>
         						<?php if($this->keyword): ?>
         							<?php echo $this->translate("searching with {$this->keyword}"); ?>
         						<?php endif;?>
         					<?php else:?>
-        						<?php echo $this->translate('There where no work orders found'); ?>
+        						<?php echo $this->translate('There where no invoices found'); ?>
         						<?php if($this->keyword): ?>
         							<?php echo $this->translate("searching with {$this->keyword}"); ?>
         						<?php endif;?>

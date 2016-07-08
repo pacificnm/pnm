@@ -110,7 +110,6 @@ class UpdateController extends BaseController
         
         $this->workorderForm = $workorderForm;
         
-        $this->workorderEmployeeForm = $workorderEmployeeForm;
     }
 
     /**
@@ -167,22 +166,20 @@ class UpdateController extends BaseController
         
         // if we have a post
         if ($request->isPost()) {
+            
             // get post
             $postData = $request->getPost();
             
             $form->setData($postData);
-            
-            $workorderEmployeeForm->setData($postData);
-            
+                        
             // if we are valid
-            if ($form->isValid() && $workorderEmployeeForm->isValid()) {
+            if ($form->isValid()) {
                 
                 $workorderEntity = $form->getData();
                 
                 $workorderEntity->setLocationId($postData['locationId']);
                 
-                $workorderEmployeeEntity = $workorderEmployeeForm->getData();
-                
+                                
                 $locationEntity = $this->locationService->get($postData['locationId']);
                 
                 if ($locationEntity) {
@@ -207,31 +204,7 @@ class UpdateController extends BaseController
                 
                 // save work order
                 $workorderEntity = $this->workorderService->save($workorderEntity);
-                
-                // map to employee
-                $okToMap = true;
-                $workorderEmployeeEntitys = $this->workorderEmployeeService->getAll(array('workorderId' => $workorderId));
-                foreach($workorderEmployeeEntitys as $entity) {
-                    if($entity->getEmployeeId() == $postData['employeeId']) {
-                        $okToMap = false;
-                        break;
-                    }
-                }
-                if($okToMap) {
-                    $workorderEmployeeEntity->setWorkorderId($workorderEntity->getWorkorderId());
-                    
-                    $workorderEmployeeEntity = $this->workorderEmployeeService->save($workorderEmployeeEntity);
-                }
-                
-                // send messages
-                $employeeEntity = $this->employeeService->get($workorderEmployeeEntity->getEmployeeId());
-                
-                $this->messageService->saveEmployeeWorkorder($workorderEntity, $employeeEntity);
-                
-                if ($userEntity) {
-                    $this->messageService->saveUserWorkorder($workorderEntity, $userEntity);
-                }
-                
+
                 // create history
                 
                 $this->flashmessenger()->addSuccessMessage('The work order was saved.');
@@ -254,7 +227,6 @@ class UpdateController extends BaseController
             'clientEntity' => $clientEntity,
             'clientId' => $id,
             'form' => $form,
-            'workorderEmployeeForm' => $workorderEmployeeForm
         ));
     }
 }
