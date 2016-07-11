@@ -1,0 +1,60 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
+?>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-newspaper-o"></i>
+					<?php echo $this->translate('Estimates'); ?>
+				</h3>
+				<div class="box-tools">
+					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'estimate-create') ):?>
+					<a href="<?php echo $this->url('estimate-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create new estimate'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+					<?php endif; ?>
+				</div>
+			</div>
+			<div class="box-body">
+			<?php if($this->paginator->count() == 0): ?>
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('This client has no estimates.'); ?></p>
+				</div>
+			<?php else: ?>
+    			<ul class="list-group list-group-unbordered">
+    				<?php foreach($this->paginator as $estimateEntity): ?>
+    				<li class="list-group-item">
+    					<div class="row">
+    						<div class="col-xs-12">
+    							<h3>
+    								<a href="<?php echo $this->url('estimate-view', array('clientId' => $estimateEntity->getClientId(), 'estimateId' => $estimateEntity->getEstimateId()));?>" title="<?php echo $this->translate('View this estimate'); ?>">
+    									<?php echo $estimateEntity->getEstimateTitle();?>
+    								</a>
+    								<span class="badge pull-right">Active</span>
+    							</h3>
+    						</div>
+    					</div>
+    					<div class="row">
+    						<div class="col-xs-12">
+    							<?php echo $estimateEntity->getEstimateOverview(); ?>
+     						</div>
+    					</div>
+    					<div class="row">
+    						<div class="col-xs-12">
+    							<b><?php echo $this->translate('Due'); ?></b> <?php echo $estimateEntity->getEstimateDateDue(); ?>
+    						</div>
+    					</div>
+    				</li>
+    				<?php endforeach; ?>
+    			</ul>
+			<?php endif;?>
+			</div>
+		</div>
+	</div>
+</div>

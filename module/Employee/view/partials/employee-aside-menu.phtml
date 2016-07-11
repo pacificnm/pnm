@@ -121,6 +121,15 @@
 		<?php endif; ?>
 		<?php endif; ?>
 			
+		<!-- Estimate -->
+		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'estimate-index') ):?>
+		<li class="<?php if($this->activeSubMenuItem == 'estimate-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('estimate-index', array('clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Estimates')?>">
+				<i class="fa fa-newspaper-o"></i> <?php echo $this->translate('Estimates')?>
+			</a>
+		</li>
+		<?php endif; ?>
+		
 		<!-- Hosts -->
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'host-list') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'host-list'):?>active<?php endif;?>">

@@ -6,27 +6,25 @@
  * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
  * @license   https://www.pacificnm.com/license/new-bsd New BSD License
  */
-namespace Employee\Controller\Factory;
+namespace Estimate\Controller\Factory;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Employee\Controller\CalendarController;
-/**
- *
- * @author jaimie <pacificnm@gmail.com>
- * @version 2.5.0
- *
- */
-class CalendarControllerFactory
+use Estimate\Controller\DeleteController;
+class DeleteControllerFactory
 {
     /**
      * 
      * @param ServiceLocatorInterface $serviceLocator
-     * @return \Employee\Controller\CalendarController
-     */
+     * @return \Estimate\Controller\DeleteController
+     */   
     public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
-        return new CalendarController();
+        $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
+        
+        $estimateService = $realServiceLocator->get('Estimate\Service\EstimateServiceInterface');
+        
+        return new DeleteController($clientService, $estimateService);
     }
 }
