@@ -91,6 +91,8 @@ class UpdateController extends BaseController
             ));
         }
         
+        $estimateEntity->setEstimateDateDue(date("m/d/Y", $estimateEntity->getEstimateDateDue()));
+        
         $this->estimateForm->bind($estimateEntity);
         
         // if we have a post
@@ -104,7 +106,7 @@ class UpdateController extends BaseController
         
                 $entity = $this->estimateForm->getData();
         
-                $entity->setEstimateDateDue(strtotime($entity->getEstimateDateDue));
+                $entity->setEstimateDateDue(strtotime($entity->getEstimateDateDue()));
                 
                 // save the estimate
                 $estimateEntity = $this->estimateService->save($entity);
@@ -128,7 +130,7 @@ class UpdateController extends BaseController
         // set up layout
         $this->layout()->setVariable('pageTitle', 'Estimates');
         
-        $this->layout()->setVariable('pageSubTitle', '');
+        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
         
         $this->layout()->setVariable('activeMenuItem', 'client');
         

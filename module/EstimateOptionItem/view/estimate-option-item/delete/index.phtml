@@ -7,3 +7,31 @@
  * @license   https://www.pacificnm.com/license/new-bsd New BSD License
  */
 ?>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-newspaper-o"></i>
+					<?php echo $this->translate('Delete Estimate Item'); ?>
+				</h3>
+				<div class="box-tools"></div>
+			</div>
+			<div class="box-body">
+				<div class="alert alert-warning">
+					<p><i class="fa fa-warning fa-fw"></i> <?php echo $this->translate('Are you sure you want to delete the following estimate option item?'); ?></p>
+				</div>
+				<ul class="list-group list-group-unbordered">
+					
+					<li class="list-group-item">
+						<p><?php echo $this->itemEntity->getEstimateOptionTitle(); ?></p>
+					</li>
+				</ul>
+				<form method="post">
+                     <input type="submit" name="delete_confirmation" class="btn btn-danger" value="yes">
+                     <input type="submit" name="delete_confirmation" class="btn btn-primary" value="no">
+                </form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -523,6 +523,65 @@ return array(
                                         'useRouteMatch' => true
                                     ),
                                     array(
+                                        'label' => 'Estimates',
+                                        'route' => 'estimate-index',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'New',
+                                                'route' => 'estimate-create',
+                                                'useRouteMatch' => true,
+                                            ),
+                                            array(
+                                                'label' => 'View',
+                                                'route' => 'estimate-view',
+                                                'useRouteMatch' => true,
+                                                'pages' => array(
+                                                    array(
+                                                        'label' => 'Edit Estimate',
+                                                        'route' => 'estimate-update',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Estimate',
+                                                        'route' => 'estimate-delete',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'New Item',
+                                                        'route' => 'estimate-option-item-create',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'Edit Item',
+                                                        'route' => 'estimate-option-item-update',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Item',
+                                                        'route' => 'estimate-option-item-delete',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'New Option',
+                                                        'route' => 'estimate-option-create',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'Edit Option',
+                                                        'route' => 'estimate-option-update',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    array(
+                                                        'label' => 'Delete Option',
+                                                        'route' => 'estimate-option-update',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                ),
+                                            )
+                                        )
+                                    ),
+                                    array(
                                         'label' => 'Hosts',
                                         'route' => 'host-list',
                                         'useRouteMatch' => true,

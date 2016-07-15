@@ -85,9 +85,14 @@ class CreateController extends BaseController
             
             $this->estimateForm->setData($postData);
             
+            // if the form is valid
             if ($this->estimateForm->isValid()) {
                 
                 $entity = $this->estimateForm->getData();
+                
+                
+                
+                $entity->setEstimateDateDue(strtotime($entity->getEstimateDateDue()));
                 
                 // save the estimate
                 $estimateEntity = $this->estimateService->save($entity);

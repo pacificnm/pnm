@@ -20,7 +20,8 @@ return array(
                     'estimate-index',
                     'estimate-create',
                     'estimate-update',
-                    'estimate-delete'
+                    'estimate-delete',
+                    'estimate-print'
                 ),
                 'accountant' => array(),
                 'administrator' => array()
@@ -34,7 +35,8 @@ return array(
             'Estimate\Controller\DeleteController' => 'Estimate\Controller\Factory\DeleteControllerFactory',
             'Estimate\Controller\IndexController' => 'Estimate\Controller\Factory\IndexControllerFactory',
             'Estimate\Controller\UpdateController' => 'Estimate\Controller\Factory\UpdateControllerFactory',
-            'Estimate\Controller\ViewController' => 'Estimate\Controller\Factory\ViewControllerFactory'
+            'Estimate\Controller\ViewController' => 'Estimate\Controller\Factory\ViewControllerFactory',
+            'Estimate\\Controller\\PrintController' => 'Estimate\Controller\Factory\PrintControllerFactory'
         )
     ),
     // service manager
@@ -93,6 +95,16 @@ return array(
                     'route' => '/client/[:clientId]/estimate/view/[:estimateId]',
                     'defaults' => array(
                         'controller' => 'Estimate\\Controller\\ViewController',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'estimate-print' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/estimate/print/[:estimateId]',
+                    'defaults' => array(
+                        'controller' => 'Estimate\\Controller\\PrintController',
                         'action' => 'index'
                     )
                 )

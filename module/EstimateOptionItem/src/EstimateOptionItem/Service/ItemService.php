@@ -60,4 +60,28 @@ class ItemService implements ItemServiceInterface
     {
         return $this->mapper->delete($entity);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \EstimateOptionItem\Service\ItemServiceInterface::getEsitmateOptionItems()
+     */
+    public function getEsitmateOptionItems($estimateOptionId) 
+    {
+        $filter = array(
+            'estimateOptionId' => $estimateOptionId
+        );
+        
+        return $this->mapper->getAll($filter);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \EstimateOptionItem\Service\ItemServiceInterface::deleteOptionItems()
+     */
+    public function deleteOptionItems($estimateOptionId)
+    {
+        return $this->mapper->deleteOptionItems($estimateOptionId);
+    }
 }

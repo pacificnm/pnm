@@ -1,6 +1,8 @@
 <?php
 namespace EstimateOption\Entity;
 
+use EstimateOptionItem\Entity\ItemEntity;
+
 class OptionEntity
 {
 
@@ -27,6 +29,12 @@ class OptionEntity
      * @var string
      */
     protected $estimateOptionDecription;
+
+    /**
+     *
+     * @var ItemEntity
+     */
+    protected $itemEntity;
 
     /**
      *
@@ -66,6 +74,15 @@ class OptionEntity
 
     /**
      *
+     * @return the $itemEntity
+     */
+    public function getItemEntity()
+    {
+        return $this->itemEntity;
+    }
+
+    /**
+     *
      * @param number $estimateOptionId            
      */
     public function setEstimateOptionId($estimateOptionId)
@@ -98,5 +115,14 @@ class OptionEntity
     public function setEstimateOptionDecription($estimateOptionDecription)
     {
         $this->estimateOptionDecription = $estimateOptionDecription;
+    }
+
+    /**
+     *
+     * @param \EstimateOptionItem\Entity\ItemEntity $itemEntity            
+     */
+    public function setItemEntity($itemEntity)
+    {
+        $this->itemEntity = $itemEntity;
     }
 }

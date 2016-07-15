@@ -21,75 +21,73 @@ use EstimateOptionItem\Service\ItemServiceInterface;
  *
  * @author jaimie <pacificnm@gmail.com>
  * @version 2.5.0
- *         
+ *
  */
-class ViewController extends BaseController
+class PrintController extends BaseController
 {
-
     /**
      *
      * @var ClientServiceInterface
      */
     protected $clientService;
-
+    
     /**
      *
      * @var EstimateServiceInterface
      */
     protected $estimateService;
-
+    
     /**
      *
      * @var LocationServiceInterface
      */
     protected $locationService;
-
+    
     /**
      *
      * @var PhoneServiceInterface
      */
     protected $phoneService;
-
+    
     /**
      *
      * @var OptionServiceInterface
      */
     protected $optionService;
-
+    
     /**
      *
      * @var ItemServiceInterface
      */
     protected $itemService;
-
+    
     /**
      *
-     * @param ClientServiceInterface $clientService            
-     * @param EstimateServiceInterface $estimateService            
-     * @param LocationServiceInterface $locationService            
-     * @param PhoneServiceInterface $phoneService            
-     * @param OptionServiceInterface $optionService            
-     * @param ItemServiceInterface $itemService            
+     * @param ClientServiceInterface $clientService
+     * @param EstimateServiceInterface $estimateService
+     * @param LocationServiceInterface $locationService
+     * @param PhoneServiceInterface $phoneService
+     * @param OptionServiceInterface $optionService
+     * @param ItemServiceInterface $itemService
      */
     public function __construct(ClientServiceInterface $clientService, EstimateServiceInterface $estimateService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, OptionServiceInterface $optionService, ItemServiceInterface $itemService)
     {
         $this->clientService = $clientService;
-        
+    
         $this->estimateService = $estimateService;
-        
+    
         $this->locationService = $locationService;
-        
+    
         $this->phoneService = $phoneService;
-        
+    
         $this->optionService = $optionService;
-        
+    
         $this->itemService = $itemService;
     }
-
+    
     /**
-     *
+     * 
      * {@inheritDoc}
-     *
      * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
      */
     public function indexAction()
@@ -104,7 +102,7 @@ class ViewController extends BaseController
         // validate we got a client
         if (! $clientEntity) {
             $this->flashmessenger()->addErrorMessage('Client was not found.');
-            
+        
             return $this->redirect()->toRoute('client-index');
         }
         
@@ -123,23 +121,21 @@ class ViewController extends BaseController
         // loop through each option and get its items
         foreach ($optionEntitys as $optionsEntity) {
             $itemEntity = $this->itemService->getEsitmateOptionItems($optionsEntity->getEstimateOptionId());
-            
+        
             $optionsEntity->setItemEntity($itemEntity);
         }
         
         // set history
         $this->setHistory($this->getRequest()
             ->getUri(), 'READ', $this->identity()
-            ->getAuthId(), 'View Estimate ' . $clientEntity->getClientName() . ' estimate #' . $estimateId);
+            ->getAuthId(), 'Print Estimate ' . $clientEntity->getClientName() . ' estimate #' . $estimateId);
         
-        // set up layout
-        $this->layout()->setVariable('pageTitle', 'Estimates');
+        // set layout
+        $this->layout('/layout/print.phtml');
         
-        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
+        $this->setHeadTitle('Estimate ' . $estimateId);
         
-        $this->layout()->setVariable('activeMenuItem', 'client');
-        
-        $this->layout()->setVariable('activeSubMenuItem', 'estimate-index');
+        $this->setHeadTitle($clientEntity->getClientName());
         
         // return view model
         return new ViewModel(array(

@@ -25,6 +25,10 @@ class DeleteControllerFactory
         
         $estimateService = $realServiceLocator->get('Estimate\Service\EstimateServiceInterface');
         
-        return new DeleteController($clientService, $estimateService);
+        $optionService = $realServiceLocator->get('EstimateOption\Service\OptionServiceInterface');
+        
+        $itemService = $realServiceLocator->get('EstimateOptionItem\Service\ItemServiceInterface');
+        
+        return new DeleteController($clientService, $estimateService, $optionService, $itemService);
     }
 }

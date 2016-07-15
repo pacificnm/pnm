@@ -40,4 +40,18 @@ interface ItemServiceInterface
      * @return boolean
      */
     public function delete(ItemEntity $entity);
+
+    /**
+     *
+     * @param number $estimateOptionId            
+     * @return ItemEntity
+     */
+    public function getEsitmateOptionItems($estimateOptionId);
+    
+    /**
+     *
+     * @param number $estimateOptionId
+     * @return boolean
+     */
+    public function deleteOptionItems($estimateOptionId);
 }

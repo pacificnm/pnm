@@ -39,4 +39,11 @@ interface ItemMapperInterface
      * @return boolean
      */
     public function delete(ItemEntity $entity);
+    
+    /**
+     * 
+     * @param number $estimateOptionId
+     * @return boolean
+     */
+    public function deleteOptionItems($estimateOptionId);
 }

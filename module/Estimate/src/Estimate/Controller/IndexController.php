@@ -86,7 +86,7 @@ class IndexController extends BaseController
         // set up layout
         $this->layout()->setVariable('pageTitle', 'Estimates');
         
-        $this->layout()->setVariable('pageSubTitle', '');
+        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
         
         $this->layout()->setVariable('activeMenuItem', 'client');
         

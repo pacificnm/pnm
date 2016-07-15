@@ -70,7 +70,7 @@ return array(
             'estimate-option-item-update' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/client/[:clientId]/estimate/[:estimateId]/estimate-option/[:estimateOptionId]/estimate-option-item/[:estimateOptionItemId]update/',
+                    'route' => '/client/[:clientId]/estimate/[:estimateId]/estimate-option/[:estimateOptionId]/estimate-option-item/[:estimateOptionItemId]update',
                     'defaults' => array(
                         'controller' => 'EstimateOptionItem\\Controller\\UpdateController',
                         'action' => 'index'
@@ -80,7 +80,7 @@ return array(
             'estimate-option-item-delete' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/client/[:clientId]/estimate/[:estimateId]/estimate-option/[:estimateOptionId]/estimate-option-item/[:estimateOptionItenId]/delete',
+                    'route' => '/client/[:clientId]/estimate/[:estimateId]/estimate-option/[:estimateOptionId]/estimate-option-item/[:estimateOptionItemId]/delete',
                     'defaults' => array(
                         'controller' => 'EstimateOptionItem\\Controller\\DeleteController',
                         'action' => 'index'

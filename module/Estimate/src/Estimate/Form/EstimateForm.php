@@ -278,9 +278,6 @@ class EstimateForm extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'filters' => array(
                     array(
-                        'name' => 'StripTags'
-                    ),
-                    array(
                         'name' => 'StringTrim'
                     )
                 ),
@@ -301,9 +298,6 @@ class EstimateForm extends Form implements InputFilterProviderInterface
             'estimateDescription' => array(
                 'required' => true,
                 'filters' => array(
-                    array(
-                        'name' => 'StripTags'
-                    ),
                     array(
                         'name' => 'StringTrim'
                     )

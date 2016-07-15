@@ -306,9 +306,6 @@ class ItemForm extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'filters' => array(
                     array(
-                        'name' => 'StripTags'
-                    ),
-                    array(
                         'name' => 'StringTrim'
                     )
                 ),

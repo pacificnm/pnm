@@ -47,7 +47,7 @@
     					</div>
     					<div class="row">
     						<div class="col-xs-12">
-    							<b><?php echo $this->translate('Due'); ?></b> <?php echo $estimateEntity->getEstimateDateDue(); ?>
+    							<b><?php echo $this->translate('Due'); ?></b> <?php echo date($this->appConfig()->getConfigDateShort(), $estimateEntity->getEstimateDateDue()); ?>
     						</div>
     					</div>
     				</li>

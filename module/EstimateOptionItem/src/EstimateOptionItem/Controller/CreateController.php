@@ -122,6 +122,8 @@ class CreateController extends BaseController
                 
                 $entity = $this->itemForm->getData();
                 
+                $entity->setEstimateOptionItemTotal($entity->getEstimateOptionItemQty() * $entity->getEstimateOptionItemAmount());
+                
                 // save the estimate
                 $itemEntity = $this->itemService->save($entity);
                 

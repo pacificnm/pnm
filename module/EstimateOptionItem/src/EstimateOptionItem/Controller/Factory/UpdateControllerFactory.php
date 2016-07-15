@@ -17,6 +17,8 @@ class UpdateControllerFactory
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
+        $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
+        
         $estimateService = $realServiceLocator->get('Estimate\Service\EstimateServiceInterface');
         
         $optionService = $realServiceLocator->get('EstimateOption\Service\OptionServiceInterface');
@@ -25,6 +27,6 @@ class UpdateControllerFactory
         
         $itemForm = new ItemForm();
         
-        return new UpdateController($estimateService, $optionService, $itemService, $itemForm);
+        return new UpdateController($clientService, $estimateService, $optionService, $itemService, $itemForm);
     }
 }

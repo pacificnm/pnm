@@ -65,6 +65,8 @@ class UpdateController extends BaseController
         
         $estimateId = $this->params()->fromRoute('estimateId');
         
+        $estimateOptionId = $this->params()->fromRoute('estimateOptionId');
+        
         $request = $this->getRequest();
         
         // get client
@@ -89,6 +91,16 @@ class UpdateController extends BaseController
             ));
         }
         
+        $optionEntity = $this->optionService->get($estimateOptionId);
+        
+        if(! $optionEntity) {
+            $this->flashMessenger()->addErrorMessage('can not find estimate option');
+            
+            return $this->redirect()->toRoute('estimate-index', array(
+                'clientId' => $id
+            ));
+        }
+        
         // if we have a post
         if ($request->isPost()) {
             
@@ -105,8 +117,8 @@ class UpdateController extends BaseController
                 
                 // set history
                 $this->setHistory($this->getRequest()
-                    ->getUri(), 'CREATE', $this->identity()
-                    ->getAuthId(), 'Created Estimate Option' . $optionEntity->getEstimateOptionId());
+                    ->getUri(), 'UPDATE', $this->identity()
+                    ->getAuthId(), 'Updated Estimate Option' . $optionEntity->getEstimateOptionId());
                 
                 $this->flashMessenger()->addSuccessMessage('The estimate option was saved');
                 
@@ -118,6 +130,9 @@ class UpdateController extends BaseController
             }
         }
         
+        // bind to form
+        $this->optionForm->bind($optionEntity);
+        
         // set up layout
         $this->layout()->setVariable('pageTitle', 'Estimate Options');
         
@@ -127,6 +142,8 @@ class UpdateController extends BaseController
         
         $this->layout()->setVariable('activeSubMenuItem', 'estimate-index');
         
-        return new ViewModel(array());
+        return new ViewModel(array(
+            'form' => $this->optionForm,
+        ));
     }
 }

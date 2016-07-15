@@ -51,8 +51,8 @@ class OptionHydrator extends ClassMethods
         
         unset($data['employee_entity']);
         
+        unset($data['item_entity']);
+        
         return $data;
     }
 }
-
-?>

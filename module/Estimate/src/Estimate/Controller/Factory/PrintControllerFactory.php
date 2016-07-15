@@ -9,7 +9,7 @@
 namespace Estimate\Controller\Factory;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Estimate\Controller\ViewController;
+use Estimate\Controller\PrintController;
 
 /**
  *
@@ -17,29 +17,29 @@ use Estimate\Controller\ViewController;
  * @version 2.5.0
  *
  */
-class ViewControllerFactory
+class PrintControllerFactory
 {
     /**
      * 
      * @param ServiceLocatorInterface $serviceLocator
-     * @return \Estimate\Controller\ViewController
+     * @return \Estimate\Controller\PrintController
      */
     public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
-        
+    
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
-        
+    
         $estimateService = $realServiceLocator->get('Estimate\Service\EstimateServiceInterface');
-        
+    
         $locationService = $realServiceLocator->get('Location\Service\LocationServiceInterface');
-        
+    
         $phoneService = $realServiceLocator->get('Phone\Service\PhoneServiceInterface');
-        
+    
         $optionService = $realServiceLocator->get('EstimateOption\Service\OptionServiceInterface');
-        
+    
         $itemService = $realServiceLocator->get('EstimateOptionItem\Service\ItemServiceInterface');
-        
-        return new ViewController($clientService, $estimateService, $locationService, $phoneService, $optionService, $itemService);
+    
+        return new PrintController($clientService, $estimateService, $locationService, $phoneService, $optionService, $itemService);
     }
 }

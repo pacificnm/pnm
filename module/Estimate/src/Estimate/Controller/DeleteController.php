@@ -12,6 +12,8 @@ use Application\Controller\BaseController;
 use Client\Service\ClientServiceInterface;
 use Estimate\Service\EstimateServiceInterface;
 use Zend\View\Model\ViewModel;
+use EstimateOption\Service\OptionServiceInterface;
+use EstimateOptionItem\Service\ItemServiceInterface;
 
 /**
  *
@@ -35,14 +37,32 @@ class DeleteController extends BaseController
     
     /**
      * 
+     * @var OptionServiceInterface
+     */
+    protected $optionService;
+    
+    /**
+     * 
+     * @var ItemServiceInterface
+     */
+    protected $itemService;
+    
+    /**
+     * 
      * @param ClientServiceInterface $clientService
      * @param EstimateServiceInterface $estimateService
+     * @param OptionServiceInterface $optionService
+     * @param ItemServiceInterface $itemService
      */
-    public function __construct(ClientServiceInterface $clientService, EstimateServiceInterface $estimateService)
+    public function __construct(ClientServiceInterface $clientService, EstimateServiceInterface $estimateService, OptionServiceInterface $optionService, ItemServiceInterface $itemService)
     {
         $this->clientService = $clientService;
         
         $this->estimateService = $estimateService;
+        
+        $this->optionService = $optionService;
+        
+        $this->itemService = $itemService;
     }
     
     /**
@@ -54,6 +74,10 @@ class DeleteController extends BaseController
     {
         $id = $this->params()->fromRoute('clientId');
         
+        $estimateId = $this->params()->fromRoute('estimateId');
+        
+        $request = $this->getRequest();
+        
         // get client
         $clientEntity = $this->clientService->get($id);
         
@@ -64,16 +88,55 @@ class DeleteController extends BaseController
             return $this->redirect()->toRoute('client-index');
         }
         
+        $estimateEntity = $this->estimateService->get($estimateId);
+        
+        if(! $estimateEntity) {
+            $this->flashMessenger()->addErrorMessage('Estimate was not found');
+            
+            return $this->redirect()->toRoute('estimate-index', array('clientId' => $id));
+        }
+        
+        if ($request->isPost()) {
+            $del = $request->getPost('delete_confirmation', 'no');
+        
+            if ($del === 'yes') {
+        
+                // set history
+                $this->setHistory($this->getRequest()
+                    ->getUri(), 'DELETE', $this->identity()
+                    ->getAuthId(), 'Deleted Estimate ' . $estimateEntity->getEstimateId());
+        
+                // load all options and delete
+                $optionEntitys = $this->optionService->getEstimateOptions($estimateId);
+                
+                foreach($optionEntitys as $optionEntity) {
+                    $this->itemService->deleteOptionItems($optionEntity->getEstimateOptionId());
+                    
+                    $this->optionService->delete($optionEntity);
+                }
+                
+                $this->estimateService->delete($estimateEntity);
+        
+                $this->flashMessenger()->addSuccessMessage('The estimate was deleted');
+                
+                return $this->redirect()->toRoute('estimate-index', array('clientId' => $id));
+            }
+        
+            return $this->redirect()->toRoute('estimate-view', array('clientId' => $id, 'estimateId' => $estimateId));
+        }
+        
         // set up layout
         $this->layout()->setVariable('pageTitle', 'Estimates');
         
-        $this->layout()->setVariable('pageSubTitle', '');
+        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
         
         $this->layout()->setVariable('activeMenuItem', 'client');
         
         $this->layout()->setVariable('activeSubMenuItem', 'estimate-index');
         
         // return view model
-        return new ViewModel();
+        return new ViewModel(array(
+            'estimateEntity' => $estimateEntity
+        ));
     }
 }
