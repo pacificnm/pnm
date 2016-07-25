@@ -4,7 +4,9 @@
 			<div class="box-header">
 				<h3 class="box-title"><?php echo $this->translate('Clients'); ?></h3>
 				<div class="box-tools">
-					<a href="<?php echo $this->url('client-create', array());?>" title="<?php echo $this->translate('Create Client'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>	
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'client-create') ):?>
+						<a href="<?php echo $this->url('client-create', array());?>" title="<?php echo $this->translate('Create Client'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>	
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="box-body">

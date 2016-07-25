@@ -16,7 +16,7 @@
 					<?php echo $this->translate('Estimates'); ?>
 				</h3>
 				<div class="box-tools">
-					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'estimate-create') ):?>
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'estimate-create') ):?>
 					<a href="<?php echo $this->url('estimate-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create new estimate'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
 					<?php endif; ?>
 				</div>

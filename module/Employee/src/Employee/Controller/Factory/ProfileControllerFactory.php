@@ -35,6 +35,8 @@ class ProfileControllerFactory
         
         $taskService = $realServiceLocator->get('Task\Service\TaskServiceInterface');
         
-        return new ProfileController($employeeService, $workorderService, $taskService);
+        $logService = $realServiceLocator->get('CallLog\Service\LogServiceInterface');
+        
+        return new ProfileController($employeeService, $workorderService, $taskService, $logService);
     }
 }

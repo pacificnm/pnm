@@ -115,7 +115,8 @@
 						</div>
               		</div>
               	</div>
-				
+              	
+				<?php echo $this->formElement($this->form->get('taskDateReminderActive')); ?>
 				<?php echo $this->formElement($this->form->get('taskId')); ?>
 				<?php echo $this->formElement($this->form->get('clientId')); ?>
 				<?php echo $this->formSubmit($this->form->get('submit')); ?>
