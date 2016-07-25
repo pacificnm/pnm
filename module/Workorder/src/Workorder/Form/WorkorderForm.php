@@ -95,6 +95,11 @@ class WorkorderForm extends Form implements InputFilterProviderInterface
             'type' => 'hidden',
         ));
         
+        // workorderSignature
+        $this->add(array(
+            'name' => 'workorderSignature',
+            'type' => 'hidden',
+        ));
         
         
         // workorderStatus
@@ -112,6 +117,19 @@ class WorkorderForm extends Form implements InputFilterProviderInterface
             'attributes' => array(
                 'class' => 'form-control',
                 'id' => 'workorderStatus'
+            )
+        ));
+        
+        // workorderTitle
+        $this->add(array(
+            'name' => 'workorderTitle',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Title:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'workorderTitle'
             )
         ));
         
@@ -423,6 +441,29 @@ class WorkorderForm extends Form implements InputFilterProviderInterface
                 )
             ),
             
+            // workorderTitle
+            'workorderTitle' => array(
+                'required' => true,
+                'filters' => array(
+                    array(
+                        'name' => 'StripTags'
+                    ),
+                    array(
+                        'name' => 'StringTrim'
+                    )
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'NotEmpty',
+                        'break_chain_on_failure' => true,
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Work Order Title is required and cannot be empty."
+                            )
+                        )
+                    )
+                )
+            ),
             
             // workorderDateScheduled
             'workorderDateScheduled' => array(

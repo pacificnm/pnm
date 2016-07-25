@@ -308,8 +308,8 @@
     						<tr>
     							<th><?php echo $this->translate('Work Order #'); ?></th>
     							<th><?php echo $this->translate('Client'); ?></th>
-    							<th><?php echo $this->translate('Description'); ?></th>
-    							<th><?php echo $this->translate('Scheduled'); ?></th>	
+    							<th><?php echo $this->translate('Title'); ?></th>
+    							<th class="text-right"><?php echo $this->translate('Scheduled'); ?></th>	
     						</tr>
     					</thead>
     					<tbody>
@@ -329,8 +329,8 @@
     									<?php echo $workorderEntity->getClientEntity()->getClientName(); ?>
     								</a>
     							</td>
-    							<td><?php echo $workorderEntity->getWorkorderDescription(); ?></td>
-    							<td nowrap><?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderDateScheduled()); ?></td>
+    							<td><?php echo $workorderEntity->getWorkorderTitle(); ?></td>
+    							<td nowrap class="text-right"><?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderDateScheduled()); ?></td>
     						</tr>
     					<?php endforeach;?>	
     					</tbody>

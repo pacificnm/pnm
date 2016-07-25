@@ -1,3 +1,8 @@
+<style>
+@media print {
+    footer {page-break-after: always;}
+}
+</style>
 <section class="invoice small">
 	<div class="row">
 		<div class="col-xs-12">
@@ -113,4 +118,36 @@
     	</div>
     </div>
 
+	 
+
+</section>
+
+<footer></footer>
+
+<section class="invoice small">
+	<div class="row">
+		<div class="col-xs-12">
+			<p class="text-muted small"><?php echo $this->optionEntity->getWorkorderOptionDisclaimer();?></p>
+		</div>
+	</div>
+	<br />
+	<div class="row">
+		<div class="col-xs-12">
+			 I have read and understand the above Agreement, and am authorized to execute this Agreement and request <?php echo $this->appConfig()->getConfigCompanyName()?> to perform services under its terms:
+		</div>
+	</div>
+	<br />
+	
+	<div class="row">
+		<div class="col-xs-8">
+			<?php if(! $this->workorderEntity->getWorkorderSignature()): ?>
+			<p><b><?php echo $this->translate('Signature'); ?>:</b> _________________________________________________________________ </p>
+			<?php else: ?>
+			<img src="data:<?php echo $this->workorderEntity->getWorkorderSignature(); ?>" class="mg-responsive"  style="max-width:99%" title="<?php echo $this->translate('Work order signature'); ?>" />
+			<?php endif;?>
+		</div>
+		<div class="col-xs-4 text-right">
+			<p><b><?php echo $this->translate('Date'); ?>:</b> <?php echo date($this->appConfig()->getConfigDateShort(), time());?></p>
+		</div>
+	</div>
 </section>
