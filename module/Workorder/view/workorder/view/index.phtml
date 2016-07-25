@@ -1,3 +1,7 @@
+<style type="text/css">
+	canvas { border: 1px dotted #000; margin:10px 0; cursor: pointer; }
+	.imported { border:1px dotted #f00; margin: 10px 0; }
+</style>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="box <?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>box-primary<?php else: ?>box-danger<?php endif; ?>">
@@ -7,6 +11,8 @@
 					<?php echo $this->translate('View Work Order'); ?>
 				</h3>
 				<div class="box-tools hidden-xs">
+					
+				
 					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-print') ):?>
 					<a href="<?php echo $this->url('workorder-print', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" target="_blank" title="<?php echo $this->translate('Print this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
 					<?php endif; ?>
@@ -37,6 +43,13 @@
 					<?php echo $this->translate('Work Order #'); ?> <?php echo $this->workorderEntity->getWorkorderId(); ?>
 					<span class="pull-right badge"><?php echo $this->workorderEntity->getWorkorderStatus(); ?></span>
 				</h3>
+				<div class="row">
+					<div class="col-xs-12">
+						<p><b><?php echo $this->translate('Title'); ?>:</b> <?php echo $this->workorderEntity->getWorkorderTitle();?></p>
+					</div>
+				</div>
+				
+				<p></p>
 				<p><?php echo $this->workorderEntity->getWorkorderDescription(); ?></p>
 				<hr />
 				<div class="row">
@@ -162,6 +175,8 @@
 		</div>
 	</div>
 </div>
+
+
 
 <div class="row">
 	<div class="col-xs-12 col-sm-8">
@@ -307,6 +322,34 @@
     			</div>
     		</div>
     	</div>
+    	
+    	<!-- signature -->
+    	<div class="box box-primary">
+    		<div class="box-header">
+    			<h3 class="box-title"><i class="fa fa-pencil-square-o"></i> <?php echo $this->translate('Signature')?></h3>
+    			<div class="box-tools">
+    				<?php if(! $this->workorderEntity->getWorkorderSignature()): ?>
+    				<a href="#" title="<?php echo $this->translate('Sign Work Order');?>" class="btn btn-box-tool" data-toggle="modal" data-target="#signatureModal">
+    					<i class="fa fa-plus"></i> <?php echo $this->translate('New')?>
+    				</a>
+    				<?php endif; ?>
+    			</div>
+    		</div>
+    		<div class="box-body">
+    			<?php if(! $this->workorderEntity->getWorkorderSignature()): ?>
+        			<div class="alert alert-info">
+        				<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No signature'); ?>
+        			</div>
+        		<?php else: ?>
+        		<div class="row">
+        			<div class="col-xs-12">
+        				<img src="data:<?php echo $this->workorderEntity->getWorkorderSignature(); ?>" class="mg-responsive"  style="max-width:99%" title="<?php echo $this->translate('Work order signature'); ?>" />
+        			</div>
+        		</div>
+        			
+        		<?php endif;?>
+    		</div>
+    	</div>
 	</div>
 </div>
 
@@ -442,6 +485,10 @@
   </div>
 </div>
 <?php echo $this->form()->closeTag(); ?>
+
+
+
+
 
 <!-- part modal -->
 <?php echo $this->form()->openTag($this->partForm); ?>
@@ -691,11 +738,60 @@
 <?php echo $this->form()->closeTag(); ?>
        
 
+<!-- signature -->
+<div class="modal fade" id="signatureModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+    		<div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            	<h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil-square-o"></i> <?php echo $this->translate('Signature')?></h4>
+    		</div>
+    		<form method="post" action="<?php echo $this->url('workorder-signature', array('clientId' => $this->workorderEntity->getClientId(), 'workorderId' => $this->workorderEntity->getWorkorderid()));?>" id="signatureForm">
+			<div class="modal-body">
+				
+      			<div class="row">
+      				<div class="col-xs-12">
+      					<p class="text-muted small">
+      						<?php echo $this->optionEntity->getWorkorderOptionDisclaimer();?>
+      					</p>
+      				</div>
+      			</div>
+      			<div class="row">
+      				<div class="col-xs-12">
+      					<div id="signature"></div>
+      				</div>
+      			</div>
+      			<input type="hidden" name="clientId" id="clientId" value="<?php echo $this->workorderEntity->getClientId(); ?>" />
+      			<input type="hidden" name="workorderId" id="workorderId" value="<?php echo $this->workorderEntity->getWorkorderId(); ?>" />
+      			<input type="hidden" id="workorderSignature" name="workorderSignature" value="" />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" onclick="$('#signature').jSignature('clear')"><?php echo $this->translate('Clear'); ?></button>
+				<button type="button" class="btn btn-primary" id="saveSignatureBtn"><?php echo $this->translate('Agree To Terms'); ?></button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
 <script>
   $(function () {
 	  $('#workorderNotesDate').daterangepicker({singleDatePicker: true, format: 'MM/DD/YYYY'});
 	  $('#workorderDateClose').daterangepicker({singleDatePicker: true, format: 'MM/DD/YYYY'});
 	  $('#workorderTimeIn').daterangepicker({timePicker: true, timePickerIncrement: 15, format: 'MM/DD/YYYY h:mm A'});
 	  $("#workorderNotesNote").wysihtml5();
+
+	  $("#signatureModal").on('show.bs.modal', function (e) {  
+		  $("#signature").jSignature();
+		  $("#signature").resize();
+	  });
+
+	  $("#saveSignatureBtn").click(function(e) {
+		  var sigData = $('#signature').jSignature('getData','svgbase64');
+		  $("#workorderSignature").val(sigData);
+		  console.log(sigData);
+		  $( "#signatureForm" ).submit();
+	  });
   });
  </script>

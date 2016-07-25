@@ -21,13 +21,8 @@ class PrintControllerFactory implements FactoryInterface
         
         $workorderService = $realServiceLocator->get('Workorder\Service\WorkorderServiceInterface');
         
-        $noteService = $realServiceLocator->get('WorkorderNote\Service\NoteServiceInterface');
+        $optionService = $realServiceLocator->get('WorkorderOption\Service\OptionServiceInterface');
         
-        $timeService = $realServiceLocator->get('WorkorderTime\Service\TimeServiceInterface');
-        
-        $partService = $realServiceLocator->get('WorkorderPart\Service\PartServiceInterface');
-        
-        
-        return new PrintController($clientService, $workorderService, $noteService, $timeService, $partService);
+        return new PrintController($clientService, $workorderService, $optionService);
     }
 }

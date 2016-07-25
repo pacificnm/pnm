@@ -12,7 +12,7 @@ $config = array(
     /**
      * Set if error logging should be enabled.
      */
-    'enabled' => true,
+    'enabled' => false,
 
     /**
      * Set what error types should be logged

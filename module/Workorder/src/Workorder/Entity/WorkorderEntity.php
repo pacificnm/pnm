@@ -49,6 +49,12 @@ class WorkorderEntity
      *
      * @var string
      */
+    protected $workorderTitle;
+
+    /**
+     *
+     * @var string
+     */
     protected $workorderDescription;
 
     /**
@@ -86,6 +92,12 @@ class WorkorderEntity
      * @var number
      */
     protected $workorderDateClose;
+
+    /**
+     *
+     * @var string
+     */
+    protected $workorderSignature;
 
     /**
      *
@@ -173,6 +185,15 @@ class WorkorderEntity
 
     /**
      *
+     * @return the $workorderTitle
+     */
+    public function getWorkorderTitle()
+    {
+        return $this->workorderTitle;
+    }
+
+    /**
+     *
      * @return the $workorderDescription
      */
     public function getWorkorderDescription()
@@ -232,6 +253,15 @@ class WorkorderEntity
     public function getWorkorderDateClose()
     {
         return $this->workorderDateClose;
+    }
+
+    /**
+     *
+     * @return the $workorderSignature
+     */
+    public function getWorkorderSignature()
+    {
+        return $this->workorderSignature;
     }
 
     /**
@@ -335,6 +365,15 @@ class WorkorderEntity
 
     /**
      *
+     * @param string $workorderTitle            
+     */
+    public function setWorkorderTitle($workorderTitle)
+    {
+        $this->workorderTitle = $workorderTitle;
+    }
+
+    /**
+     *
      * @param string $workorderDescription            
      */
     public function setWorkorderDescription($workorderDescription)
@@ -394,6 +433,15 @@ class WorkorderEntity
     public function setWorkorderDateClose($workorderDateClose)
     {
         $this->workorderDateClose = $workorderDateClose;
+    }
+
+    /**
+     *
+     * @param string $workorderSignature            
+     */
+    public function setWorkorderSignature($workorderSignature)
+    {
+        $this->workorderSignature = $workorderSignature;
     }
 
     /**

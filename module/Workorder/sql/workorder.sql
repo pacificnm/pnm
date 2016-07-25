@@ -28,6 +28,11 @@ CREATE TABLE IF NOT EXISTS `workorder` (
   KEY `fk_workorder_client_id` (`client_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+ALTER TABLE `workorder` ADD `workorder_title` VARCHAR(255) NOT NULL AFTER `workorder_status`;
+
+ALTER TABLE `workorder` ADD `workorder_signature` TEXT NULL AFTER `workorder_date_close`;
+
 --
 -- Constraints for table `workorder`
 --

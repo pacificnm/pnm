@@ -16,6 +16,7 @@ return array(
                     1 => 'workorder-delete',
                     2 => 'workorder-update',
                     3 => 'workorder-complete',
+                    4 => 'workorder-signature',
                 ),
                 'accountant' => array(),
                 'administrator' => array(),
@@ -31,6 +32,7 @@ return array(
             'Workorder\\Controller\\View' => 'Workorder\\Controller\\Factory\\ViewControllerFactory',
             'Workorder\\Controller\\Print' => 'Workorder\\Controller\\Factory\\PrintControllerFactory',
             'Workorder\\Controller\\Complete' => 'Workorder\\Controller\\Factory\\CompleteControllerFactory',
+            'Workorder\Controller\SignatureController' => 'Workorder\Controller\Factory\SignatureControllerFactory',
         ),
     ),
     'service_manager' => array(
@@ -122,6 +124,18 @@ return array(
                     ),
                 ),
             ),
+            'workorder-signature' => array(
+                'title' => 'Complete Work Order',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/work-order/signature/[:workorderId]',
+                    'defaults' => array(
+                        'controller' => 'Workorder\Controller\SignatureController',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            
             'workorder.rest.client-total-count' => array(
                 'type' => 'Segment',
                 'options' => array(

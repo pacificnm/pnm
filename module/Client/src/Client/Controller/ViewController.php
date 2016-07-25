@@ -95,6 +95,9 @@ class ViewController extends BaseController
         
         $clientEntity = $this->clientService->get($id);
         
+        $data = array();
+        
+        $data2 = array();
                
         if (! $clientEntity) {
             $this->flashmessenger()->addErrorMessage('Client was not found.');
@@ -147,22 +150,20 @@ class ViewController extends BaseController
         $end = mktime(23, 59, 59, 12, 31, date("Y"));
         
         // get chart data
-        //$timeEntitys = $this->timeService->getTotalsForYear($start, $end, $id);
         
-        $chartEntitys = $this->invoiceService->getTotalsFormYear($start, $end, 'Paid', $id);
-        
-        
-        $data = array();
-        
-        $data2 = array();
         
         for($x = 1; $x <= 12; $x++) {
             $data[$x] = 0;
         }
         
+        //$chartEntitys = $this->invoiceService->getTotalsFormYear($start, $end, 'Paid', $id);
+        
+        
+        $chartEntitys = $this->timeService->getTotalsForYear($start, $end, $id);
+
         foreach($chartEntitys as $chartEntity) {
-            $month = intval(date("m", $chartEntity->invoice_date));
-            $data2[$month] = $chartEntity->invoice_total_month;
+            $month = intval(date("m", $chartEntity->workorder_time_in));
+            $data2[$month] = $chartEntity->workorder_labor_total;
         }
         
         $dataSet = array_replace($data, $data2);
