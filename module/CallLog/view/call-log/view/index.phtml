@@ -1,0 +1,157 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
+?>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa phone"></i>
+					<?php echo $this->translate('Call Log'); ?>
+				</h3>
+				<div class="box-tools">
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'call-log-note-create') ):?>
+					<a href="<?php echo $this->url('call-log-note-create', array('clientId' => $this->clientId, 'callLogId' => $this->logEntity->getCallLogId()));?>" title="<?php echo $this->translate('Create new call log note'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New Note'); ?></a>	
+					<?php endif; ?>
+					
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'call-log-delete') ):?>
+					<a href="<?php echo $this->url('call-log-delete', array('clientId' => $this->clientId, 'callLogId' => $this->logEntity->getCallLogId()));?>" title="<?php echo $this->translate('Delete this call log'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+					<?php endif;?>
+					
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'call-log-update') ):?>
+					<a href="<?php echo $this->url('call-log-update', array('clientId' => $this->clientId, 'callLogId' => $this->logEntity->getCallLogId()));?>" title="<?php echo $this->translate('Edit this call log'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>		
+					<?php endif; ?>
+				</div>
+			</div>
+			<div class="box-body">
+				<div class="col-xs-12 col-sm-8">
+
+					<div class="row">
+						<div class="col-xs-12">
+							<p><?php echo $this->logEntity->getCallLogDetail(); ?></p>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-xs-12">
+							<p><b><?php echo $this->translate('Call Time')?>: </b>
+								<?php echo date($this->appConfig()->getConfigdateLong(), $this->logEntity->getCallLogTime()); ?>
+							</p>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-xs-12">
+							<p><b><?php echo $this->translate('Call Taken By')?>: </b>
+								<a href="<?php echo $this->url('auth-view', array('authId' => $this->logEntity->getCallLogCreatedBy()));?>" title="<?php echo $this->translate('View created by'); ?>"><?php echo $this->logEntity->getAuthEntity()->getAuthName();?></a>
+							</p>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-xs-12">
+							<p><b><?php echo $this->translate('Call For')?>: </b>
+								<a href="<?php echo $this->url('employee-view', array('employeeId' => $this->logEntity->getEmployeeId()));?>" title="<?php echo $this->translate('View this employee'); ?>"><?php echo $this->logEntity->getEmployeeEntity()->getEmployeeName();?></a>
+							</p>
+						</div>
+					</div>
+					
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<div class="box box-default">
+						<div class="box-body">
+							<div class="row">
+								<div class="col-xs-12">
+    								<p><b><?php echo $this->translate('Require Call Back')?>:</b>
+    									<span class="pull-right"><?php echo ($this->logEntity->getCallLogRequireCallBack() == 1) ? $this->translate('Yes') : $this->translate('No'); ?></span>
+    								</p>
+    							</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-xs-12">
+    								<p><b><?php echo $this->translate('Will Call Back')?>:</b>
+    									<span class="pull-right"><?php echo ($this->logEntity->getCallLogWillCallBack() == 1) ? $this->translate('Yes') : $this->translate('No'); ?></span>	
+    								</p>
+    							</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-xs-12">
+    								<p><b><?php echo $this->translate('Left Voice Mail')?>:</b>
+    									<span class="pull-right"><?php echo ($this->logEntity->getCallLogVoiceMail() == 1) ? $this->translate('Yes') : $this->translate('No'); ?></span>	
+    								</p>
+    							</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-xs-12">
+    								<p><b><?php echo $this->translate('Call Is Urgent')?>:</b>
+    									<span class="pull-right"><?php echo ($this->logEntity->getCallLogUrgent() == 1) ? $this->translate('Yes') : $this->translate('No'); ?></span>	
+    								</p>
+    							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa phone"></i>
+					<?php echo $this->translate('Call Log Notes'); ?>
+				</h3>
+				<div class="box-tools">
+    				<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'call-log-note-create') ):?>
+    				<a href="<?php echo $this->url('call-log-note-create', array('clientId' => $this->clientId, 'callLogId' => $this->logEntity->getCallLogId()));?>" title="<?php echo $this->translate('Create new call log note'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New Note'); ?></a>	
+    				<?php endif; ?>
+    			</div>
+			</div>
+			<div class="box-body">
+				<?php if($this->noteEntitys->count() == 0): ?>
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no notes'); ?></p>
+				</div>
+				<?php else: ?>
+				<ul class="list-group list-group-unbordered">
+				<?php foreach($this->noteEntitys as $noteEntity): ?>
+    				<li class="list-group-item">
+    					<div class="row">
+    						<div class="col-xs-12">
+    							<p><?php echo $noteEntity->getCallLogNoteText();?></p>
+    						</div>
+    					</div>
+    					<div class="row">
+    						<div class="col-xs-12">
+    							<span class="text-muted small"><?php echo date($this->appConfig()->getConfigDateLong(), time()); ?></span>
+    							<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'employee-view') ):?>
+    							<a href="<?php echo $this->url('employee-view', array('employeeId' => $noteEntity->getEmployeeEntity()->getEmployeeId()));?>" title="<?php echo $this->translate('View this employee'); ?>"><?php echo $noteEntity->getEmployeeEntity()->getEmployeeName();?></a>
+    							<?php endif;?>
+    							
+    							<span class="pull-right">
+    								<a href="<?php echo $this->url('call-log-note-delete', array('clientId' => $this->clientId, 'callLogId' => $this->logEntity->getCallLogId(), 'callLogNoteId' => $noteEntity->getCallLogNoteId()));?>" title="<?php echo $this->translate('Delete this note'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+    							
+    								<a href="<?php echo $this->url('call-log-note-update', array('clientId' => $this->clientId, 'callLogId' => $this->logEntity->getCallLogId(), 'callLogNoteId' => $noteEntity->getCallLogNoteId()));?>" title="<?php echo $this->translate('Edit this note'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+    							</span>
+    						</div>
+    					</div>
+    				</li>
+				<?php endforeach;?>
+				</ul>
+				<?php endif;?>
+			</div>
+		</div>
+	</div>
+</div>
