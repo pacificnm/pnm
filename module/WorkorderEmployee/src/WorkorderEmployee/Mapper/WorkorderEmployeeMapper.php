@@ -154,8 +154,9 @@ class WorkorderEmployeeMapper implements WorkorderEmployeeMapperInterface
         ));
         
         // join workorder
-        $select->join('workorder', 'workorder_employee_id = workorder.workorder_id', array(
+        $select->join('workorder', 'workorder_employee.workorder_id = workorder.workorder_id', array(
             'client_id',
+            'workorder_title',
             'workorder_status',
             'workorder_description',
             'workorder_labor',

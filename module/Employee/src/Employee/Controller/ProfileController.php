@@ -67,7 +67,7 @@ class ProfileController extends BaseController
         $employeeEntity = $this->employeeService->get($this->identity()
             ->getEmployeeId());
         
-        $workorderEntitys = $this->workorderService->getEmployeeWorkorders($employeeEntity->getEmployeeId());
+        $workorderEntitys = $this->workorderService->getEmployeeWorkorders($employeeEntity->getEmployeeId(), 'Active');
         
         $taskEntitys = $this->taskService->getEmployeeActiveTasks($employeeEntity->getEmployeeId());
         

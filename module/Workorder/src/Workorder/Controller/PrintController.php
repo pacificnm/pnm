@@ -5,6 +5,7 @@ use Application\Controller\BaseController;
 use Client\Service\ClientServiceInterface;
 use Zend\View\Model\ViewModel;
 use Workorder\Service\WorkorderServiceInterface;
+use WorkorderOption\Service\OptionServiceInterface;
 
 class PrintController extends BaseController
 {
@@ -23,14 +24,23 @@ class PrintController extends BaseController
 
     /**
      * 
+     * @var OptionServiceInterface
+     */
+    protected $optionService;
+    
+    /**
+     * 
      * @param ClientServiceInterface $clientService
      * @param WorkorderServiceInterface $workorderService
+     * @param OptionServiceInterface $optionService
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService)
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, OptionServiceInterface $optionService)
     {
         $this->clientService = $clientService;
         
         $this->workorderService = $workorderService;
+        
+        $this->optionService = $optionService;
     }
 
     /**
@@ -68,6 +78,8 @@ class PrintController extends BaseController
             ->getUri(), 'READ', $this->identity()
             ->getAuthId(), 'View Client ' . $clientEntity->getClientName() . ' print work order #' . $workorderId);
         
+        $optionEntity = $this->optionService->get(1);
+        
         $this->setHeadTitle('Work Order ' . $workorderId);
         
         $this->setHeadTitle($clientEntity->getClientName());
@@ -78,7 +90,8 @@ class PrintController extends BaseController
         return new ViewModel(array(
             'clientEntity' => $clientEntity,
             'clientId' => $id,
-            'workorderEntity' => $workorderEntity
+            'workorderEntity' => $workorderEntity,
+            'optionEntity' => $optionEntity,
         ));
     }
 }

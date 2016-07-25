@@ -101,6 +101,10 @@ class HomeController extends BaseController
         // end time
         $end = mktime(23, 59, 59, date("m"), date("t"), date("Y"));
         
+        $data = array();
+        
+        $data2 = array();
+        
         // get open workorders
         $openWorkorderEntitys = $this->workorderService->getByDateRange(null, $end, 'Active');
         
@@ -124,21 +128,17 @@ class HomeController extends BaseController
         
         // get accounts
         $accountEntitys = $this->accountService->getNonSystemAccounts();
-        
-        // get chart data 
-        $charEntitys = $this->invoiceService->getTotalsFormMonth($start, $end, 'Paid');
-        
-        $data = array();
-        
-        $data2 = array();
-        
+
         for($x = 1; $x <= date("t"); $x++) {
             $data[$x] = 0;
         }
+
+        
+        $charEntitys = $this->timeService->getTotalsForMonth($start, $end);
         
         foreach($charEntitys as $charEntity) {
-            $day = intval(date("d", $charEntity->invoice_date));
-            $data2[$day] = $charEntity->invoice_total_day;
+            $day = intval(date("d", $charEntity->workorder_time_in));
+            $data2[$day] = $charEntity->workorder_labor_total;
         }
         
         $dataSet = array_replace($data, $data2);

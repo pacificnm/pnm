@@ -20,6 +20,7 @@ use Workorder\Form\CompleteForm;
 use WorkorderCredit\Form\CreditForm;
 use WorkorderCredit\Service\CreditServiceInterface;
 use WorkorderEmployee\Form\WorkorderEmployeeForm as EmployeeForm;
+use WorkorderOption\Service\OptionService;
 
 /**
  * View Work Order Controller
@@ -53,6 +54,12 @@ class ViewController extends BaseController
      * @var CreditServiceInterface
      */
     protected $creditService;
+    
+    /**
+     *
+     * @var OptionServiceInterface
+     */
+    protected $optionService;
     
     /**
      *
@@ -96,6 +103,7 @@ class ViewController extends BaseController
      * @param WorkorderServiceInterface $workorderService
      * @param WorkorderEmployeeServiceInterface $workorderEmployeeService
      * @param CreditServiceInterface $creditService
+     * @param OptionService $optionService
      * @param NoteForm $noteForm
      * @param TimeForm $timeForm
      * @param PartForm $partForm
@@ -103,7 +111,7 @@ class ViewController extends BaseController
      * @param CreditForm $creditForm
      * @param EmployeeForm $employeeForm
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, CreditServiceInterface $creditService, NoteForm $noteForm, TimeForm $timeForm, PartForm $partForm, CompleteForm $completeForm, CreditForm $creditForm, EmployeeForm $employeeForm)
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, CreditServiceInterface $creditService, OptionService $optionService, NoteForm $noteForm, TimeForm $timeForm, PartForm $partForm, CompleteForm $completeForm, CreditForm $creditForm, EmployeeForm $employeeForm)
     {
         $this->clientService = $clientService;
         
@@ -112,6 +120,8 @@ class ViewController extends BaseController
         $this->workorderEmployeeService = $workorderEmployeeService;
         
         $this->creditService = $creditService;
+        
+        $this->optionService = $optionService;
         
         $this->noteForm = $noteForm;
         
@@ -170,6 +180,9 @@ class ViewController extends BaseController
             ->getUri(), 'READ', $this->identity()
             ->getAuthId(), 'View Client ' . $clientEntity->getClientName() . ' work order #' . $workorderId);
         
+        // get work order options
+        $optionEntity = $this->optionService->get(1);
+        
         // note form
         $this->setUpNoteForm($id, $workorderId);
         
@@ -207,6 +220,7 @@ class ViewController extends BaseController
             'clientId' => $id,
             'workorderEntity' => $workorderEntity,
             'workorderEmployeEntitys' => $workorderEmployeEntitys,
+            'optionEntity' => $optionEntity,
             'creditTotal' => $this->creditService->getWorkorderTotal($workorderId),
             'noteForm' => $this->noteForm,
             'timeForm' => $this->timeForm,
