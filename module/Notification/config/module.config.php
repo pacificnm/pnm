@@ -21,14 +21,17 @@ return array(
     
     // service manager
     'service_manager' => array(
-        'factories' => array()
+        'factories' => array(
+            'Notification\Service\NotificationServiceInterface' => 'Notification\Service\Factory\NotificationServiceFactory',
+            'Notification\Mapper\NotificationMapperInterface' => 'Notification\Mapper\Factory\NotificationMapperFactory'
+        )
     ),
     
     // router
     'router' => array(
         'routes' => array(
             'notification-list' => array(
-                'title' => 'NOtifications',
+                'title' => 'Notifications',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/notification',
@@ -43,8 +46,8 @@ return array(
     
     // view helpers
     'view_helpers' => array(
-        'invokables' => array(
-            'NavBarNotification' => 'Notification\View\Helper\NavBarNotification'
+        'factories' => array(
+            'NavBarNotification' => 'Notification\View\Helper\Factory\NavBarNotificationFactory'
         )
     ),
     

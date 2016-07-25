@@ -13,6 +13,7 @@ use Employee\Service\EmployeeServiceInterface;
 use Zend\View\Model\ViewModel;
 use WorkorderEmployee\Service\WorkorderEmployeeServiceInterface;
 use Task\Service\TaskServiceInterface;
+use CallLog\Service\LogServiceInterface;
 
 /**
  *
@@ -41,19 +42,18 @@ class ProfileController extends BaseController
      */
     protected $taskService;
     
-    /**
-     * 
-     * @param EmployeeServiceInterface $employeeService
-     * @param WorkorderEmployeeServiceInterface $workorderService
-     * @param TaskServiceInterface $taskService
-     */
-    public function __construct(EmployeeServiceInterface $employeeService, WorkorderEmployeeServiceInterface $workorderService, TaskServiceInterface $taskService)
+    protected $logService;
+    
+    
+    public function __construct(EmployeeServiceInterface $employeeService, WorkorderEmployeeServiceInterface $workorderService, TaskServiceInterface $taskService, LogServiceInterface $logService)
     {
         $this->employeeService = $employeeService;
         
         $this->workorderService = $workorderService;
         
         $this->taskService = $taskService;
+        
+        $this->logService = $logService;
     }
 
     /**
@@ -71,6 +71,9 @@ class ProfileController extends BaseController
         
         $taskEntitys = $this->taskService->getEmployeeActiveTasks($employeeEntity->getEmployeeId());
         
+        $logEntitys = $this->logService->getEmployeeCallLogs($employeeEntity->getEmployeeId());
+        
+        // set layout up
         $this->layout()->setVariable('pageTitle', 'My Profile');
         
         $this->layout()->setVariable('pageSubTitle', $this->identity()
@@ -83,7 +86,8 @@ class ProfileController extends BaseController
         return new ViewModel(array(
             'employeeEntity' => $employeeEntity,
             'workorderEntitys' => $workorderEntitys,
-            'taskEntitys' => $taskEntitys
+            'taskEntitys' => $taskEntitys,
+            'logEntitys' => $logEntitys
         ));
     }
 }

@@ -48,6 +48,7 @@
 
         <!-- Scripts -->
         <?php echo $this->headScript()
+            ->prependFile($this->basePath('plugins/jquery-idletimer/dist/idle-timer.min.js'))
             ->prependFile($this->basePath('plugins/handelbars/handlebars-v4.0.5.js'))
             ->prependFile($this->basePath('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'))
             ->prependFile($this->basePath('plugins/daterangepicker/daterangepicker.js'))
@@ -130,7 +131,7 @@
 		}
 	
 		var taskReminder = function() {
-				$.ajax({
+			$.ajax({
 			    type: "get",
 			    data: {'access_token': '<?php echo $this->identity()->getAccessToken(); ?>'},
 			    url: "<?php echo $this->basePath('/api/task/get-reminder'); ?>",
@@ -146,7 +147,6 @@
         				    
         				    $('#reminderBody').html(html);
         				    if (!$('#reminderModal').is(':visible')) {
-        				    	
         				    	$("#reminderModal").modal('show');
         				    }
     				    }
@@ -156,8 +156,49 @@
 		};
 
 		var interval = 1000 * 60 * 1;
-		
 		setInterval(taskReminder, interval);
+
+		// session idle time out.
+		var idleTime = 1000 * 60 * 2; 
+		var timer;
+		var redirectAfter = 10;
+		var running = false;
+		
+		$( document ).on( "idle.idleTimer", function(event, elem, obj){
+
+	        $("#idleModal").modal("show");
+	        
+	        if(!running) {
+	        	running = true;
+	        	var counter = redirectAfter;
+    	        timer = setInterval(function(){
+                    counter -= 1;
+                    if(counter === 0) {
+                        window.location = "/sign-out";
+                    } else {
+                        $("#sessionTimeoutCountdownId").html(counter);
+                    };
+                }, 1000);
+			}
+
+	        $( "#closeIdleModal" ).click(function() {
+	        	$.ajax({
+	        		url: "/keep-alive",
+	        	}). success(function(response) {
+	        		console.log(response);
+					clearInterval(timer);
+					counter = 10;
+					running = false;
+					$("#idleModal").modal("hide");
+		        }).error(function(){
+		        	 window.location = "/sign-out";
+			    });
+			});    
+	    });
+
+		 // start the idle timer
+	    $( document ).idleTimer(idleTime);
+		
 	</script>
 	<?php endif;?>
     </head>
@@ -313,8 +354,37 @@
             </div>
           </div>
         </div>
+
+		<div class="modal fade" id="idleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><?php echo $this->translate('Session Expiration Warning'); ?></h4>
+              </div>
+              <div class="modal-body" id="reminderBody">
+        			<div class="alert alert-danger">
+        				<p><i class="fa fa-wrning"></i> <?php echo $this->translate('Your session will expire in ');?>
+        					<span id="sessionTimeoutCountdownId"></span>
+        					<?php echo $this->translate('seconds.'); ?>
+        					<br />
+        					<?php echo $this->translate('Click on OK to continue your session.'); ?>
+        				</p>
+        			</div>
+        		
+        		</div>
+              	<div class="modal-footer">
+                <button type="button" class="btn btn-default" id="closeIdleModal"><?php echo $this->translate('Ok'); ?></button>
+              </div>
+            </div>
+          </div>
+        </div>
+	
+
         <?php echo $this->inlineScript() ?>
         
+
+
 
     </body>
 </html>

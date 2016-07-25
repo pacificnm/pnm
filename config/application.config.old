@@ -79,6 +79,8 @@ return array(
         'HostAttributeMap',
         'Estimate',
         'EstimateOption',
+        'EstimateOptionItem',
+        'CallLog',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

@@ -25,8 +25,10 @@ class ConsoleControllerFactory implements FactoryInterface
         
         $aclService = $realServiceLocator->get('Acl\Service\AclServiceInterface');
         
+        $memcached = $realServiceLocator->get('memcached');
+        
         $config = $realServiceLocator->get('Config');
         
-        return new ConsoleController($installService, $resourceService, $roleService, $aclService, $config);
+        return new ConsoleController($installService, $resourceService, $roleService, $aclService, $memcached, $config);
     }
 }
