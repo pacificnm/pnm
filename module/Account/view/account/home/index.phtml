@@ -315,22 +315,22 @@
     					<tbody>
     					<?php foreach($this->openWorkorderEntitys as $workorderEntity): ?>
     						<tr>
-    							<td>
+    							<td nowrap>
     								<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'workorder-view') ):?>
-    								<a href="<?php echo $this->url('workorder-view', array('clientId' => $this->clientId, 'workorderId' => $workorderEntity->getWorkorderId()));?>" title="<?php echo $this->translate('View this work order'); ?>">
+    								<a href="<?php echo $this->url('workorder-view', array('clientId' => $workorderEntity->getClientId(), 'workorderId' => $workorderEntity->getWorkorderId()));?>" title="<?php echo $this->translate('View this work order'); ?>">
     									<?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?>
     								</a>
     								<?php else: ?>
     									<?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?>
     								<?php endif; ?>
     							</td>
-    							<td>
+    							<td nowrap>
     								<a href="<?php echo $this->url('client-view', array('clientId' => $workorderEntity->getClientId())); ?>" title="<?php echo $this->translate('View this client'); ?>">
     									<?php echo $workorderEntity->getClientEntity()->getClientName(); ?>
     								</a>
     							</td>
     							<td><?php echo $workorderEntity->getWorkorderDescription(); ?></td>
-    							<td><?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderDateScheduled()); ?></td>
+    							<td nowrap><?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderDateScheduled()); ?></td>
     						</tr>
     					<?php endforeach;?>	
     					</tbody>
