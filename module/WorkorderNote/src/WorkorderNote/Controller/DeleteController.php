@@ -107,6 +107,11 @@ class DeleteController extends BaseController
                 
                 $this->noteService->delete($noteEntity);
                 
+                // save history
+                $this->SetWorkorderHistory($this->getRequest()
+                    ->getUri(), 'DELETE', $this->identity()
+                    ->getAuthId(), 'Deleted note from work order #' . $workorderId, $workorderId);
+                
                 $this->flashmessenger()->addSuccessMessage('The work order note was deleted');
             }
             

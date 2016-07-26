@@ -21,10 +21,11 @@ CREATE TABLE IF NOT EXISTS `file` (
   KEY `client_id` (`client_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+ALTER TABLE `file` CHANGE `file_create` `file_create` INT(11) NOT NULL;
+ALTER TABLE `file` CHANGE `file_name` `file_name` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
 --
 -- Constraints for table `file`
 --
-ALTER TABLE `file`
-  ADD CONSTRAINT `fk_file_client_id` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON UPDATE CASCADE,
+ALTER TABLE `file`,
   ADD CONSTRAINT `fk_file_employee_id` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`) ON UPDATE CASCADE;
 SET FOREIGN_KEY_CHECKS=1;

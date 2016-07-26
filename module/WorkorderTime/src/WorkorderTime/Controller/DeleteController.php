@@ -101,6 +101,10 @@ class DeleteController extends BaseController
                 
                 $this->timeService->delete($workorderTimeEntity);
                 
+                // save history
+                $this->SetWorkorderHistory($this->getRequest()
+                    ->getUri(), 'DELETE', $this->identity()
+                    ->getAuthId(), 'Deleted time from work order #' . $workorderId, $workorderId);
                 
                 $this->flashmessenger()->addSuccessMessage('The work order time was deleted');
             }

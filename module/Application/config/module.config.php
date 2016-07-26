@@ -884,6 +884,16 @@ return array(
                                                         'route' => 'workorder-employee-delete',
                                                         'useRouteMatch' => true,
                                                     ),
+                                                    9 => array(
+                                                        'label' => 'Add File',
+                                                        'route' => 'workorder-file-create',
+                                                        'useRouteMatch' => true,
+                                                    ),
+                                                    10 => array(
+                                                        'label' => 'Remove File',
+                                                        'route' => 'workorder-file-delete',
+                                                        'useRouteMatch' => true,
+                                                    )
                                                 ),
                                             ),
                                         ),

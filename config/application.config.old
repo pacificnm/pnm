@@ -82,6 +82,7 @@ return array(
         'EstimateOptionItem',
         'CallLog',
         'CallLogNote',
+        'WorkorderOption',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

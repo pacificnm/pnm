@@ -124,6 +124,11 @@ class UpdateController extends BaseController
                 
                 $noteEntity = $this->noteService->save($entity);
                 
+                // save history
+                $this->SetWorkorderHistory($this->getRequest()
+                    ->getUri(), 'UPDATE', $this->identity()
+                    ->getAuthId(), 'Edit work order note #' . $noteEntity->getWorkorderNotesId(), $workorderId);
+                
                 $this->flashmessenger()->addSuccessMessage('The work order note was saved.');
                 
                 return $this->redirect()->toRoute('workorder-view', array(

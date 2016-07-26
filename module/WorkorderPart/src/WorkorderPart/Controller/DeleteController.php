@@ -108,6 +108,11 @@ class DeleteController extends BaseController
                 
                 $this->partService->delete($workorderPartEntity);
                 
+                // save history
+                $this->SetWorkorderHistory($this->getRequest()
+                    ->getUri(), 'DELETE', $this->identity()
+                    ->getAuthId(), 'Deleted part from work order #' . $workorderId, $workorderId);
+                
                 $this->flashmessenger()->addSuccessMessage('The work order part was deleted');
             }
             

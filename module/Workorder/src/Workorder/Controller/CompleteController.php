@@ -292,6 +292,9 @@ class CompleteController extends BaseController
                 
                 
                 // save history
+                $this->SetWorkorderHistory($this->getRequest()
+                    ->getUri(), 'UPDATE', $this->identity()
+                    ->getAuthId(), 'Completed work order #' . $workorderId, $workorderId);
                 
                 $this->flashmessenger()->addSuccessMessage('The work order was completed and the invoice was created.');
                 

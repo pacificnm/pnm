@@ -1,0 +1,23 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-wrench"></i>
+					<?php echo $this->translate('Remove File From Work Order'); ?>
+				</h3>
+				<div class="box-tools"></div>
+			</div>
+			<div class="box-body">
+				<div class="alert alert-warning">
+    				<p><i class="fa fa-warning fa-fw"></i> <?php echo $this->translate('Are you sure you want to delete the following file?'); ?></p>
+    			</div>
+    			<h3 class="profile-username"><?php echo $this->workorderFileEntity->getFileEntity()->getFileName(); ?></h3>
+    			<form method="post">
+                     <input type="submit" name="delete_confirmation" class="btn btn-danger" value="yes">
+                     <input type="submit" name="delete_confirmation" class="btn btn-primary" value="no">
+                </form>
+			</div>
+		</div>
+	</div>
+</div>
