@@ -21,12 +21,14 @@ use WorkorderCredit\Form\CreditForm;
 use WorkorderCredit\Service\CreditServiceInterface;
 use WorkorderEmployee\Form\WorkorderEmployeeForm as EmployeeForm;
 use WorkorderOption\Service\OptionService;
+use WorkorderFile\Service\WorkorderFileService;
+use WorkorderHistory\Service\WorkorderHistoryServiceInterface;
 
 /**
  * View Work Order Controller
  *
  * @author jaimie (pacificnm@gmail.com)
- *
+ *        
  */
 class ViewController extends BaseController
 {
@@ -50,16 +52,28 @@ class ViewController extends BaseController
     protected $workorderEmployeeService;
 
     /**
-     * 
+     *
      * @var CreditServiceInterface
      */
     protected $creditService;
-    
+
     /**
      *
      * @var OptionServiceInterface
      */
     protected $optionService;
+
+    /**
+     * 
+     * @var WorkorderFileService
+     */
+    protected $workorderFileService;
+    
+    /**
+     * 
+     * @var WorkorderHistoryServiceInterface
+     */
+    protected $workorderHistoryService;
     
     /**
      *
@@ -92,11 +106,11 @@ class ViewController extends BaseController
     protected $creditForm;
 
     /**
-     * 
+     *
      * @var EmployeeForm
      */
     protected $employeeForm;
-    
+
     /**
      * 
      * @param ClientServiceInterface $clientService
@@ -104,6 +118,8 @@ class ViewController extends BaseController
      * @param WorkorderEmployeeServiceInterface $workorderEmployeeService
      * @param CreditServiceInterface $creditService
      * @param OptionService $optionService
+     * @param WorkorderFileService $workorderFileService
+     * @param WorkorderHistoryServiceInterface $workorderHistoryService
      * @param NoteForm $noteForm
      * @param TimeForm $timeForm
      * @param PartForm $partForm
@@ -111,7 +127,7 @@ class ViewController extends BaseController
      * @param CreditForm $creditForm
      * @param EmployeeForm $employeeForm
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, CreditServiceInterface $creditService, OptionService $optionService, NoteForm $noteForm, TimeForm $timeForm, PartForm $partForm, CompleteForm $completeForm, CreditForm $creditForm, EmployeeForm $employeeForm)
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, CreditServiceInterface $creditService, OptionService $optionService, WorkorderFileService $workorderFileService, WorkorderHistoryServiceInterface $workorderHistoryService, NoteForm $noteForm, TimeForm $timeForm, PartForm $partForm, CompleteForm $completeForm, CreditForm $creditForm, EmployeeForm $employeeForm)
     {
         $this->clientService = $clientService;
         
@@ -122,6 +138,10 @@ class ViewController extends BaseController
         $this->creditService = $creditService;
         
         $this->optionService = $optionService;
+        
+        $this->workorderFileService = $workorderFileService;
+        
+        $this->workorderHistoryService = $workorderHistoryService;
         
         $this->noteForm = $noteForm;
         
@@ -138,7 +158,7 @@ class ViewController extends BaseController
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
      */
@@ -183,6 +203,12 @@ class ViewController extends BaseController
         // get work order options
         $optionEntity = $this->optionService->get(1);
         
+        // get workorder files
+        $fileEntitys = $this->workorderFileService->getWorkorderFiles($workorderId);
+        
+        // get hiistory
+        $workorderHistoryEntitys = $this->workorderHistoryService->getWorkorderHistory($workorderId);
+        
         // note form
         $this->setUpNoteForm($id, $workorderId);
         
@@ -214,6 +240,11 @@ class ViewController extends BaseController
         
         $this->setHeadTitle($clientEntity->getClientName());
         
+        // save history
+        $this->SetWorkorderHistory($this->getRequest()
+            ->getUri(), 'READ', $this->identity()
+            ->getAuthId(), 'Viewed work order #' . $workorderId, $workorderId);
+
         // return View
         return new ViewModel(array(
             'clientEntity' => $clientEntity,
@@ -221,6 +252,8 @@ class ViewController extends BaseController
             'workorderEntity' => $workorderEntity,
             'workorderEmployeEntitys' => $workorderEmployeEntitys,
             'optionEntity' => $optionEntity,
+            'fileEntitys' => $fileEntitys,
+            'workorderHistoryEntitys' => $workorderHistoryEntitys,
             'creditTotal' => $this->creditService->getWorkorderTotal($workorderId),
             'noteForm' => $this->noteForm,
             'timeForm' => $this->timeForm,
@@ -232,9 +265,9 @@ class ViewController extends BaseController
     }
 
     /**
-     * 
-     * @param unknown $clientId
-     * @param unknown $workorderId
+     *
+     * @param unknown $clientId            
+     * @param unknown $workorderId            
      * @return \Workorder\Controller\ViewController
      */
     protected function setUpCreditForm($clientId, $workorderId)
@@ -247,22 +280,21 @@ class ViewController extends BaseController
         
         $this->creditForm->get('workorderCreditAmountLeft')->setValue(0);
         
-        
         $this->creditForm->get('accountLedgerId')->setValue(0);
         
         $this->creditForm->setAttribute('action', $this->url()
             ->fromRoute('workorder-credit-create', array(
-                'clientId' => $clientId,
-                'workorderId' => $workorderId
-            )));
+            'clientId' => $clientId,
+            'workorderId' => $workorderId
+        )));
         
         return $this;
     }
-    
+
     /**
-     * 
-     * @param unknown $clientId
-     * @param unknown $workorderId
+     *
+     * @param unknown $clientId            
+     * @param unknown $workorderId            
      * @return \Workorder\Controller\ViewController
      */
     protected function setUpTimeForm($clientId, $workorderId)
@@ -283,17 +315,17 @@ class ViewController extends BaseController
         
         $this->timeForm->setAttribute('action', $this->url()
             ->fromRoute('workorder-time-create', array(
-                'clientId' => $clientId,
-                'workorderId' => $workorderId
-            )));
+            'clientId' => $clientId,
+            'workorderId' => $workorderId
+        )));
         
         return $this;
     }
-    
+
     /**
-     * 
-     * @param unknown $clientId
-     * @param unknown $workorderId
+     *
+     * @param unknown $clientId            
+     * @param unknown $workorderId            
      * @return \Workorder\Controller\ViewController
      */
     protected function setUpPartForm($clientId, $workorderId)
@@ -306,17 +338,17 @@ class ViewController extends BaseController
         
         $this->partForm->setAttribute('action', $this->url()
             ->fromRoute('workorder-part-create', array(
-                'clientId' => $clientId,
-                'workorderId' => $workorderId
-            )));
+            'clientId' => $clientId,
+            'workorderId' => $workorderId
+        )));
         
         return $this;
     }
-    
+
     /**
-     * 
-     * @param unknown $clientId
-     * @param unknown $workorderId
+     *
+     * @param unknown $clientId            
+     * @param unknown $workorderId            
      * @return \Workorder\Controller\ViewController
      */
     protected function setUpNoteForm($clientId, $workorderId)
@@ -329,17 +361,17 @@ class ViewController extends BaseController
         
         $this->noteForm->setAttribute('Action', $this->url()
             ->fromRoute('workorder-note-create', array(
-                'clientId' => $clientId,
-                'workorderId' => $workorderId
-            )));
-       
+            'clientId' => $clientId,
+            'workorderId' => $workorderId
+        )));
+        
         return $this;
     }
-    
+
     /**
-     * 
-     * @param unknown $clientId
-     * @param unknown $workorderId
+     *
+     * @param unknown $clientId            
+     * @param unknown $workorderId            
      * @return \Workorder\Controller\ViewController
      */
     protected function setUpCompleteForm($clientId, $workorderId)
@@ -350,17 +382,17 @@ class ViewController extends BaseController
         
         $this->completeForm->setAttribute('action', $this->url()
             ->fromRoute('workorder-complete', array(
-                'clientId' => $clientId,
-                'workorderId' => $workorderId
-            )));
+            'clientId' => $clientId,
+            'workorderId' => $workorderId
+        )));
         
         return $this;
     }
-    
+
     /**
-     * 
-     * @param unknown $clientId
-     * @param unknown $workorderId
+     *
+     * @param unknown $clientId            
+     * @param unknown $workorderId            
      * @return \Workorder\Controller\ViewController
      */
     protected function setUpEmployeeForm($clientId, $workorderId)
@@ -371,9 +403,9 @@ class ViewController extends BaseController
         
         $this->employeeForm->setAttribute('action', $this->url()
             ->fromRoute('workorder-employee-create', array(
-                'clientId' => $clientId,
-                'workorderId' => $workorderId
-            )));
+            'clientId' => $clientId,
+            'workorderId' => $workorderId
+        )));
         
         return $this;
     }

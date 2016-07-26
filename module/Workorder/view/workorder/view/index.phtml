@@ -10,9 +10,8 @@
 					<i class="fa fa-wrench"></i>
 					<?php echo $this->translate('View Work Order'); ?>
 				</h3>
+				<!-- hide from small screens -->
 				<div class="box-tools hidden-xs">
-					
-				
 					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-print') ):?>
 					<a href="<?php echo $this->url('workorder-print', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" target="_blank" title="<?php echo $this->translate('Print this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
 					<?php endif; ?>
@@ -37,6 +36,46 @@
 					<a href="<?php echo $this->url('workorder-update', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Edit this work order'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 					<?php endif; ?>
 				</div>
+				
+				<div class="btn-group visible-xs pull-right">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    					Action <span class="caret"></span>
+  					</button>
+					<ul class="dropdown-menu">
+						<li>
+							<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-print') ):?>
+        					<a href="<?php echo $this->url('workorder-print', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" target="_blank" title="<?php echo $this->translate('Print this work order'); ?>"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
+        					<?php endif; ?>
+						</li>
+						
+						<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
+						<li>
+							<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-credit-create') ):?>
+        					<a href="javascript:void(0);" data-toggle="modal" data-target="#creditModal" title="<?php echo $this->translate('Add credit to this work order'); ?>"><i class="fa fa-dollar"></i> <?php echo $this->translate('Credit'); ?></a>
+        					<?php endif; ?>
+						</li>
+						
+						<li>
+							<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-complete') ):?>
+        					<a href="javascript:void(0);" data-toggle="modal" data-target="#completeModal" title="<?php echo $this->translate('Complete this work order'); ?>"><i class="fa fa-check-circle"></i> <?php echo $this->translate('Complete'); ?></a>
+        					<?php endif; ?>
+						</li>
+						
+						<li>
+							<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-delete') ):?>
+        					<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+        					<?php endif; ?>
+						</li>
+						
+						<li>
+							<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-update') ):?>
+        					<a href="<?php echo $this->url('workorder-update', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Edit this work order'); ?>"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+        					<?php endif; ?>
+						</li>
+						<?php endif;?>
+					</ul>
+				</div>
+				
 			</div>
 			<div class="box-body">
 				<h3 class="profile-username">
@@ -77,11 +116,9 @@
     							<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Missing phone.')?></span>
     						<?php else: ?>
     							<?php $phoneEntity = $this->workorderEntity->getPhoneEntity(); ?>
-    							
     							<a href="tel:<?php echo $phoneEntity->getPhoneNum();?>" title="<?php echo $this->translate('call this phone number'); ?>">
     								<?php echo $phoneEntity->getPhoneNum();?>
-    							</a>
-    							
+    							</a>   							
     						<?php endif; ?>
 						</p>
 					</div>
@@ -161,16 +198,6 @@
 						</p>
 					</div>
 				</div>
-				
-			</div>
-			<div class="box-footer visible-xs">
-				<a href="<?php echo $this->url('workorder-print', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Print this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
-				<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>  			
-    			<a href="javascript:void(0);" data-toggle="modal" data-target="#creditModal" title="<?php echo $this->translate('Credit this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-dollar"></i> <?php echo $this->translate('Credit'); ?></a>
-    			<a href="javascript:void(0);" data-toggle="modal" data-target="#completeModal" title="<?php echo $this->translate('Complete this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-check-circle"></i> <?php echo $this->translate('Complete'); ?></a>
-    			<a href="<?php echo $this->url('workorder-delete', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Delete this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
-    			<?php endif;?>
-    			<a href="<?php echo $this->url('workorder-update', array('workorderId' => $this->workorderEntity->getWorkorderId(), 'clientId' => $this->clientId));?>" title="<?php echo $this->translate('Edit this work order'); ?>" class="btn btn-sm btn-flat btn-default"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>		
 			</div>
 		</div>
 	</div>
@@ -179,6 +206,7 @@
 
 
 <div class="row">
+	<!-- Notes -->
 	<div class="col-xs-12 col-sm-8">
 		<!-- Notes -->
 		<div class="box box-primary">
@@ -199,7 +227,6 @@
 		
 		<!-- Times -->
 		<div class="box box-primary">
-		
 			<div class="box-header">
 				<h3 class="box-title"><i class="fa fa-clock-o"></i> <?php echo $this->translate('Times')?></h3>
 				<div class="box-tools">
@@ -210,12 +237,12 @@
 					<?php endif;?>
 				</div>
 			</div>
-			
 			<div class="box-body">
 				<?php echo $this->getWorkorderTimes($this->workorderEntity);?>
     		</div>
 		</div>
 					
+		<!-- Parts -->
 		<div class="box box-primary">
 			<div class="box-header">
 				<h3 class="box-title"><i class="fa fa-hdd-o"></i> <?php echo $this->translate('Parts')?></h3>
@@ -231,10 +258,46 @@
 				<?php echo $this->getWorkorderParts($this->workorderEntity);?>
     		</div>
 		</div>
+		
+		<!-- Call Log -->
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title"><i class="fa fa-phone"></i> <?php echo $this->translate('Call Log')?></h3>
+			</div>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No calls'); ?></p>
+				</div>
+			</div>
+		</div>
+		
+		<!-- History -->
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title"><i class="fa fa-history" aria-hidden="true"></i> <?php echo $this->translate('History')?></h3>
+			</div>
+			<div class="box-body">
+				<?php if($this->workorderHistoryEntitys->count() == 0): ?>
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No History'); ?></p>
+				</div>
+				<?php else: ?>
+				<table class="table table-bordered table-hover" id="HistoryTable">
+				<?php foreach($this->workorderHistoryEntitys as $historyEntity): ?>
+					<tr>
+						<td><?php echo date($this->appConfig()->getConfigDateLong(), $historyEntity->getHistoryEntity()->getHistoryTime()); ?></td>
+						<td><?php echo $historyEntity->getHistoryEntity()->getAuthEntity()->getAuthName(); ?></td>
+						<td><?php echo $historyEntity->getHistoryEntity()->getHistoryNote(); ?></td>
+					</tr>
+				<?php endforeach; ?>
+				</table>
+				<?php endif;?>
+			</div>
+		</div>
 	</div>
 	
 	<div class="col-xs-12 col-sm-4">
-	
+		<!-- Employees -->
 		<div class="box box-primary">
     		<div class="box-header">
     			<h3 class="box-title"><i class="fa fa-user"></i> <?php echo $this->translate('Employee')?></h3>
@@ -275,6 +338,7 @@
     		</div>
     	</div>
     	
+    	<!-- Invoices -->
     	<div class="box box-primary">
     		<div class="box-header">
     			<h3 class="box-title"><i class="fa fa-credit-card"></i> <?php echo $this->translate('Invoice')?></h3>
@@ -282,7 +346,7 @@
     		<div class="box-body">
     			<?php if($this->workorderEntity->getInvoiceId() == 0): ?>
     			<div class="alert alert-info">
-    				<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No Invoice'); ?></p>
+    				<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No invoice'); ?></p>
     			</div>
     			<?php else: ?>
     			<p>
@@ -298,6 +362,7 @@
     		</div>
     	</div>
 
+		<!-- Credits -->
 		<div class="box box-primary">
     		<div class="box-header">
     			<h3 class="box-title"><i class="fa fa-dollar"></i> <?php echo $this->translate('Credits')?></h3>
@@ -307,19 +372,44 @@
     		</div>
     	</div>
 
+		<!-- Files -->
     	<div class="box box-primary">
     		<div class="box-header">
     			<h3 class="box-title"><?php echo $this->translate('Files')?></h3>
     			<div class="box-tools">
-    				<?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
-    				<a href="" title="<?php echo $this->translate('Add new file'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+    				<?php if($this->workorderEntity->getWorkorderStatus() == 'Active' && $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-file-create')): ?>
+    				<a href="<?php echo $this->url('workorder-file-create', array('clientId' => $this->clientId, 'workorderId' => $this->workorderEntity->getWorkorderId())); ?>" title="<?php echo $this->translate('Add new file'); ?>" class="btn btn-box-tool">
+    					<i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?>
+    				</a>
     				<?php endif;?>
     			</div>
     		</div>
     		<div class="box-body">
+    			<?php if($this->fileEntitys->count() == 0):?>
     			<div class="alert alert-info">
-    				<i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no files.'); ?>
+    				<i class="fa fa-info-circle"></i> <?php echo $this->translate('No files.'); ?>
     			</div>
+    			<?php else: ?>
+    			<ul class="list-group list-group-unbordered">
+    			<?php foreach($this->fileEntitys as $fileEntity): ?>
+    				<li class="list-group-item">
+    					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'file-view') ):?>
+    					<a href="<?php echo $this->url('file-download', array('fileId' => $fileEntity->getFileId())); ?>" title="<?php echo $this->translate('View this file')?>">
+    						<?php echo $fileEntity->getFileEntity()->getFileName(); ?>
+    					</a>
+    					<?php else: ?>
+    						<?php echo $fileEntity->getFileEntity()->getFileName(); ?>
+    					<?php endif; ?>
+    					
+    					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-file-delete') ):?>
+    					<a href="<?php echo $this->url('workorder-file-delete', array('clientId' => $this->clientId, 'workorderId' => $this->workorderEntity->getWorkorderId(), 'workorderFileId' => $fileEntity->getWorkorderFileId()));?>" title="<?php echo $this->translate('Delete this file'); ?>" class="btn btn-box-tool pull-right">
+    						<i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?>
+    					</a>
+    					<?php endif;?>
+    				</li>
+    			<?php endforeach;?>
+    			</ul>
+    			<?php endif; ?>
     		</div>
     	</div>
     	
@@ -352,6 +442,10 @@
     	</div>
 	</div>
 </div>
+
+<!-- 
+--- Modals Forms
+ -->
 
 <?php if($this->workorderEntity->getWorkorderStatus() == 'Active'): ?>
 <?php echo $this->form()->openTag($this->noteForm); ?>
@@ -793,5 +887,9 @@
 		  console.log(sigData);
 		  $( "#signatureForm" ).submit();
 	  });
+
+	  $("#HistoryTable").DataTable();
+
+	  $('form,input,select,textarea').attr("autocomplete", "off");
   });
  </script>

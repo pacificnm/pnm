@@ -103,6 +103,11 @@ class CreateController extends BaseController
                     $this->creditService->save($creditEntity);
                 }
                 
+                // save history
+                $this->SetWorkorderHistory($this->getRequest()
+                    ->getUri(), 'CREATE', $this->identity()
+                    ->getAuthId(), 'Added part to work order #' . $workorderId, $workorderId);
+                
                 $this->flashmessenger()->addSuccessMessage('The work order part was saved.');
                 
                 return $this->redirect()->toRoute('workorder-view', array(

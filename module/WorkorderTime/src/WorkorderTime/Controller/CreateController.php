@@ -141,7 +141,10 @@ class CreateController extends BaseController
                 
                 // @todo send email notifications that labor was added
                 
-                // @todo update user history, there are two evens 1 the employee added labor and 2 the workorder got labor
+                // save history
+                $this->SetWorkorderHistory($this->getRequest()
+                    ->getUri(), 'CREATE', $this->identity()
+                    ->getAuthId(), 'Added time to work order #' . $workorderId, $workorderId);
                 
                 $this->flashmessenger()->addSuccessMessage('The work order time was saved.');
                 

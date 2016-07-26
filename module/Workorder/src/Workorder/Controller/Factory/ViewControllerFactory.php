@@ -28,6 +28,10 @@ class ViewControllerFactory
         
         $optionService = $realServiceLocator->get('WorkorderOption\Service\OptionServiceInterface');
         
+        $workorderFileService = $realServiceLocator->get('WorkorderFile\Service\WorkorderFileServiceInterface');
+        
+        $workorderHistoryService = $realServiceLocator->get('WorkorderHistory\Service\WorkorderHistoryServiceInterface');
+        
         $noteForm = $realServiceLocator->get('WorkorderNote\Form\NoteForm');
         
         $timeForm = $realServiceLocator->get('WorkorderTime\Form\TimeForm');
@@ -39,7 +43,7 @@ class ViewControllerFactory
         $creditForm = $realServiceLocator->get('WorkorderCredit\Form\CreditForm');
         
         $employeeForm = $realServiceLocator->get('WorkorderEmployee\Form\WorkorderEmployeeForm');
-        
-        return new ViewController($clientService, $workorderService, $workorderEmployeeService, $creditService, $optionService, $noteForm, $timeForm, $partForm, $completeForm, $creditForm, $employeeForm);
+                
+        return new ViewController($clientService, $workorderService, $workorderEmployeeService, $creditService, $optionService, $workorderFileService, $workorderHistoryService, $noteForm, $timeForm, $partForm, $completeForm, $creditForm, $employeeForm);
     }
 }

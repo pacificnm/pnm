@@ -228,7 +228,10 @@ class CreateController extends BaseController
                 
                 $this->messageService->saveUserWorkorder($workorderEntity, $userEntity);
                 
-                // create history
+                // save history
+                $this->SetWorkorderHistory($this->getRequest()
+                    ->getUri(), 'CREATE', $this->identity()
+                    ->getAuthId(), 'Created work order #' . $workorderEntity->getWorkorderId(), $workorderEntity->getWorkorderId());
                 
                 $this->flashmessenger()->addSuccessMessage('The work order was saved.');
                 

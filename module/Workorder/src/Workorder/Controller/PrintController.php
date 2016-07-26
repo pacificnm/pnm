@@ -17,22 +17,22 @@ class PrintController extends BaseController
     protected $clientService;
 
     /**
-     * 
+     *
      * @var WorkorderServiceInterface
      */
     protected $workorderService;
 
     /**
-     * 
+     *
      * @var OptionServiceInterface
      */
     protected $optionService;
-    
+
     /**
-     * 
-     * @param ClientServiceInterface $clientService
-     * @param WorkorderServiceInterface $workorderService
-     * @param OptionServiceInterface $optionService
+     *
+     * @param ClientServiceInterface $clientService            
+     * @param WorkorderServiceInterface $workorderService            
+     * @param OptionServiceInterface $optionService            
      */
     public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, OptionServiceInterface $optionService)
     {
@@ -45,7 +45,7 @@ class PrintController extends BaseController
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
      */
@@ -74,9 +74,9 @@ class PrintController extends BaseController
         }
         
         // set history
-        $this->setHistory($this->getRequest()
+        $this->SetWorkorderHistory($this->getRequest()
             ->getUri(), 'READ', $this->identity()
-            ->getAuthId(), 'View Client ' . $clientEntity->getClientName() . ' print work order #' . $workorderId);
+            ->getAuthId(), 'Printed work order #' . $workorderEntity->getWorkorderId(), $workorderEntity->getWorkorderId());
         
         $optionEntity = $this->optionService->get(1);
         
@@ -91,7 +91,7 @@ class PrintController extends BaseController
             'clientEntity' => $clientEntity,
             'clientId' => $id,
             'workorderEntity' => $workorderEntity,
-            'optionEntity' => $optionEntity,
+            'optionEntity' => $optionEntity
         ));
     }
 }

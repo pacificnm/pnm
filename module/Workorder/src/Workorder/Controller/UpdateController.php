@@ -205,7 +205,10 @@ class UpdateController extends BaseController
                 // save work order
                 $workorderEntity = $this->workorderService->save($workorderEntity);
 
-                // create history
+                // set history
+                $this->SetWorkorderHistory($this->getRequest()
+                    ->getUri(), 'UPDATE', $this->identity()
+                    ->getAuthId(), 'Edit work order #' . $workorderEntity->getWorkorderId(), $workorderEntity->getWorkorderId());
                 
                 $this->flashmessenger()->addSuccessMessage('The work order was saved.');
                 

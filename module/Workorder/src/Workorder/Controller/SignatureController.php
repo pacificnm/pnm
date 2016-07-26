@@ -80,6 +80,11 @@ class SignatureController extends BaseController
                 
                 $this->workorderService->save($workorderEntity);
                 
+                // set history
+                $this->SetWorkorderHistory($this->getRequest()
+                    ->getUri(), 'UPDATE', $this->identity()
+                    ->getAuthId(), 'Client signed work order #' . $workorderEntity->getWorkorderId(), $workorderEntity->getWorkorderId());
+                
                 $this->flashMessenger()->addSuccessMessage('The signature was saved.');
                 
                 return $this->redirect()->toRoute('workorder-view', array('clientId' => $id, 'workorderId' => $workorderId));

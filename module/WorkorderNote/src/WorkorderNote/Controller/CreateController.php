@@ -58,6 +58,11 @@ class CreateController extends BaseController
                 
                 $noteEntity = $this->noteService->save($entity);
                 
+                // save history
+                $this->SetWorkorderHistory($this->getRequest()
+                    ->getUri(), 'CREATE', $this->identity()
+                    ->getAuthId(), 'Added note to work order #' . $workorderId, $workorderId);
+                
                 $this->flashmessenger()->addSuccessMessage('The work order note was saved.');
                 
                 return $this->redirect()->toRoute('workorder-view', array(
