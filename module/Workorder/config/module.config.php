@@ -165,6 +165,14 @@ return array(
             ),
         ),
     ),
+    'view_helpers' => array(
+        'invokables' => array(
+            'WorkorderSignature' => 'Workorder\View\Helper\WorkorderSignature'
+        ),
+        'factories' => array(
+            
+        )
+    ),
     'view_manager' => array(
         'template_path_stack' => array(
             0 => __DIR__ . '/../view',

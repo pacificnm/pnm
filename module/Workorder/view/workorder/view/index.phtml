@@ -283,13 +283,22 @@
 				</div>
 				<?php else: ?>
 				<table class="table table-bordered table-hover" id="HistoryTable">
-				<?php foreach($this->workorderHistoryEntitys as $historyEntity): ?>
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Employee</th>
+							<th>Note</th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->workorderHistoryEntitys as $historyEntity): ?>
 					<tr>
 						<td><?php echo date($this->appConfig()->getConfigDateLong(), $historyEntity->getHistoryEntity()->getHistoryTime()); ?></td>
 						<td><?php echo $historyEntity->getHistoryEntity()->getAuthEntity()->getAuthName(); ?></td>
 						<td><?php echo $historyEntity->getHistoryEntity()->getHistoryNote(); ?></td>
 					</tr>
-				<?php endforeach; ?>
+					<?php endforeach; ?>
+					</tbody>
 				</table>
 				<?php endif;?>
 			</div>
@@ -413,33 +422,11 @@
     		</div>
     	</div>
     	
+    	<!-- workorder hosts -->
+    	<?php echo $this->workorderHost($this->clientId, $this->workorderEntity->getWorkorderId(), $this->workorderEntity->getWorkorderStatus());?>
+    	
     	<!-- signature -->
-    	<div class="box box-primary">
-    		<div class="box-header">
-    			<h3 class="box-title"><i class="fa fa-pencil-square-o"></i> <?php echo $this->translate('Signature')?></h3>
-    			<div class="box-tools">
-    				<?php if(! $this->workorderEntity->getWorkorderSignature()): ?>
-    				<a href="#" title="<?php echo $this->translate('Sign Work Order');?>" class="btn btn-box-tool" data-toggle="modal" data-target="#signatureModal">
-    					<i class="fa fa-plus"></i> <?php echo $this->translate('New')?>
-    				</a>
-    				<?php endif; ?>
-    			</div>
-    		</div>
-    		<div class="box-body">
-    			<?php if(! $this->workorderEntity->getWorkorderSignature()): ?>
-        			<div class="alert alert-info">
-        				<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No signature'); ?>
-        			</div>
-        		<?php else: ?>
-        		<div class="row">
-        			<div class="col-xs-12">
-        				<img src="data:<?php echo $this->workorderEntity->getWorkorderSignature(); ?>" class="mg-responsive"  style="max-width:99%" title="<?php echo $this->translate('Work order signature'); ?>" />
-        			</div>
-        		</div>
-        			
-        		<?php endif;?>
-    		</div>
-    	</div>
+    	<?php echo $this->workorderSignature($this->workorderEntity->getWorkorderSignature()); ?>
 	</div>
 </div>
 
@@ -888,8 +875,16 @@
 		  $( "#signatureForm" ).submit();
 	  });
 
-	  $("#HistoryTable").DataTable();
+	  $('#HistoryTable').DataTable({
+	    	"paging": true,
+	        "lengthChange": false,
+	        "searching": false,
+	        "ordering": false,
+	        "info": true,
+	        "autoWidth": false
+		 });
 
-	  $('form,input,select,textarea').attr("autocomplete", "off");
+	  
   });
+
  </script>

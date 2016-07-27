@@ -84,6 +84,7 @@ return array(
         'CallLogNote',
         'WorkorderOption',
         'WorkorderHistory',
+        'WorkorderHost',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

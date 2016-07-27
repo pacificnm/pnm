@@ -76,6 +76,10 @@ class OptionMapper implements OptionMapperInterface
         
         $select = $sql->select('estimate_option');
         
+        if(array_key_exists('estimateId', $filter)) {
+            $select->where(array('estimate_option.estimate_id = ?' => $filter['estimateId']));
+        }
+        
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
         $paginatorAdapter = new DbSelect($select, $this->readAdapter, $resultSetPrototype);

@@ -45,6 +45,16 @@ class HostService implements HostServiceInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \Host\Service\HostServiceInterface::getClientHostNotInWorkorder()
+     */
+    public function getClientHostNotInWorkorder($clientId, $workorderId)
+    {
+        return $this->mapper->getClientHostNotInWorkorder($clientId, $workorderId);    
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *

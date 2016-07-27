@@ -21,6 +21,14 @@ interface HostMapperInterface
     public function get($id);
 
     /**
+     * 
+     * @param number $clientId
+     * @param number $workorderId
+     * @return HostEntity
+     */
+    public function getClientHostNotInWorkorder($clientId, $workorderId);
+    
+    /**
      *
      * @param HostEntity $entity            
      * @return HostEntity

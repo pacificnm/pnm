@@ -76,6 +76,10 @@ class EstimateMapper implements EstimateMapperInterface
         
         $select = $sql->select('estimate');
         
+        if(array_key_exists('clientId', $filter)) {
+            $select->where(array('estimate.client_id = ?' => $filter['clientId']));
+        }
+        
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
         $paginatorAdapter = new DbSelect($select, $this->readAdapter, $resultSetPrototype);

@@ -893,7 +893,12 @@ return array(
                                                         'label' => 'Remove File',
                                                         'route' => 'workorder-file-delete',
                                                         'useRouteMatch' => true,
-                                                    )
+                                                    ),
+                                                    11 => array(
+                                                        'label' => 'Remove Host',
+                                                        'route' => 'workorder-host-delete',
+                                                        'useRouteMatch' => true,
+                                                    ),
                                                 ),
                                             ),
                                         ),
