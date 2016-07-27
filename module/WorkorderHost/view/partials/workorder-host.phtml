@@ -1,0 +1,75 @@
+<div class="box box-primary">
+	<div class="box-header">
+		<h3 class="box-title"><i class="fa fa-desktop"></i> <?php echo $this->translate('Hosts')?></h3>
+		<div class="box-tools">
+			<?php if($this->workorderStatus == 'Active' && $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-host-create')): ?>
+				<a href="#" data-toggle="modal" data-target="#hostModal" title="<?php echo $this->translate('Add new host'); ?>" 
+					class="btn btn-box-tool">
+					<i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?>
+				</a>
+			<?php endif;?>
+		</div>
+	</div>
+	<div class="box-body">
+		<?php if(count($this->workorderHostEntitys) == 0): ?>
+		<div class="alert alert-info">
+			<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No hosts'); ?></p>
+		</div>
+		<?php else: ?>
+		<ul class="list-group list-group-unbordered">
+		<?php foreach($this->workorderHostEntitys as $entity):?>
+			<li class="list-group-item">
+			
+				<a href="<?php echo $this->url('host-view', array('clientId' => $this->clientId, 'hostId' => $entity->getHostId())); ?>" title="<?php echo $this->translate('View this host'); ?>">
+					<?php echo $entity->getHostEntity()->getHostName(); ?>
+				</a>
+				
+				<a href="<?php echo $this->url('workorder-host-delete', array('clientId' => $this->clientId, 'workorderId' => $this->workorderId, 'workorderHostId' => $entity->getWorkorderHostId())); ?>" title="<?php echo $this->translate('Remove this host from this work order');?>" class="btn btn-box-tool pull-right">
+					<i class="fa fa-times"></i> <?php echo $this->translate('Remove'); ?>
+				</a>
+			</li>
+		<?php endforeach;?>
+		</ul>
+		<?php endif;?>
+	</div>
+</div>
+
+<!-- add host modal -->
+<?php if($this->workorderStatus == 'Active' && $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'workorder-host-create')): ?>
+<?php $this->form->prepare(); ?>
+<?php echo $this->form()->openTag($this->form); ?>
+
+<div class="modal fade" id="hostModal" role="dialog" aria-labelledby="hostModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"><i class="fa fa-desktop"></i> <?php echo $this->translate('Work Order Host')?></h4>
+			</div>
+			<div class="modal-body">
+				
+				<div class="row">
+                	<div class="col-xs-12">
+        				<?php $element = $this->form->get('hostId'); ?>
+        				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+        					<label class="control-label"><?php echo $element->getLabel() ?></label>
+        					<?php echo $this->formElement($element); ?>
+        					<?php if($this->formElementErrors($element)): ?>
+        						<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+        					<?php endif; ?>
+        				</div>
+                   </div>
+                 </div>
+				
+				<?php echo $this->formElement($this->form->get('workorderHostId')); ?>
+       			<?php echo $this->formElement($this->form->get('workorderId')); ?>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+				<?php echo $this->formSubmit($this->form->get('submit')); ?>
+			</div>
+		</div>
+	</div>
+</div>
+<?php echo $this->form()->closeTag(); ?>
+<?php endif;?>	

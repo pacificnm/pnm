@@ -37,6 +37,7 @@
 
         <!-- Le styles -->
         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+            ->prependStylesheet($this->basePath('plugins/datatables/dataTables.bootstrap.css'))
             ->prependStylesheet($this->basePath('dist/css/skins/_all-skins.min.css'))
             ->prependStylesheet($this->basePath('dist/css/AdminLTE.min.css'))
             ->prependStylesheet($this->basePath('plugins/timepicker/bootstrap-timepicker.min.css'))
@@ -49,6 +50,7 @@
         <!-- Scripts -->
         <?php echo $this->headScript()
             ->prependFile($this->basePath('plugins/datatables/dataTables.bootstrap.min.js'))
+            ->prependFile($this->basePath('plugins/datatables/jquery.dataTables.min.js'))
             ->prependFile($this->basePath('plugins/jsignature/jSignature.min.js'))
             ->prependFile($this->basePath('plugins/jquery-idletimer/dist/idle-timer.min.js'))
             ->prependFile($this->basePath('plugins/handelbars/handlebars-v4.0.5.js'))

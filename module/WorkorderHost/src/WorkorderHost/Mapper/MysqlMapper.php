@@ -1,5 +1,5 @@
 <?php
-namespace Host\Mapper;
+namespace WorkorderHost\Mapper;
 
 use Zend\Db\Adapter\AdapterInterface;
 use Zend\Db\Adapter\Driver\ResultInterface;
@@ -11,9 +11,9 @@ use Zend\Db\Sql\Update;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\DbSelect;
-use Host\Entity\HostEntity;
+use WorkorderHost\Entity\WorkorderHostEntity;
 
-class HostMapper implements HostMapperInterface
+class MysqlMapper implements MysqlMapperInterface
 {
 
     /**
@@ -36,7 +36,7 @@ class HostMapper implements HostMapperInterface
 
     /**
      *
-     * @var HostEntity
+     * @var WorkorderHostEntity
      */
     protected $prototype;
 
@@ -45,9 +45,9 @@ class HostMapper implements HostMapperInterface
      * @param AdapterInterface $readAdapter            
      * @param AdapterInterface $writeAdapter            
      * @param HydratorInterface $hydrator            
-     * @param HostEntity $prototype            
+     * @param WorkorderHostEntity $prototype            
      */
-    public function __construct(AdapterInterface $readAdapter, AdapterInterface $writeAdapter, HydratorInterface $hydrator, HostEntity $prototype)
+    public function __construct(AdapterInterface $readAdapter, AdapterInterface $writeAdapter, HydratorInterface $hydrator, WorkorderHostEntity $prototype)
     {
         $this->readAdapter = $readAdapter;
         
@@ -62,59 +62,13 @@ class HostMapper implements HostMapperInterface
      *
      * {@inheritdoc}
      *
-     * @see \Host\Mapper\HostMapperInterface::getAll()
+     * @see \WorkorderHost\Mapper\WorkorderHostMapperInterface::getAll()
      */
     public function getAll($filter)
     {
         $sql = new Sql($this->readAdapter);
         
-        $select = $sql->select('host');
-        
-        // client id
-        if (array_key_exists('clientId', $filter) && ! empty($filter['clientId'])) {
-            $select->where(array(
-                'host.client_Id = ?' => $filter['clientId']
-            ));
-        }
-        
-        // host status
-        if (array_key_exists('hostStatus', $filter) && ! empty($filter['hostStatus'])) {
-            $select->where(array(
-                'host.host_status = ?' => $filter['hostStatus']
-            ));
-        }
-        
-        // host type
-        if (array_key_exists('hostTypeId', $filter) && ! empty($filter['hostTypeId'])) {
-            $select->where(array(
-                'host.host_type_id = ?' => $filter['hostTypeId']
-            ));
-        }
-        
-        // keyword
-        if (array_key_exists('keyword', $filter) && ! empty($filter['keyword'])) {
-            $select->where->like('host.host_name', $filter['keyword'] . '%');
-        }
-        
-        $select->where(array(
-            'host.host_status != ?' => 'Deleted'
-        ));
-        
-        // join host type
-        $select->join('host_type', 'host.host_type_id = host_type.host_type_id', array(
-            'host_type_name'
-        ), 'inner');
-        
-        // join location
-        $select->join('location', 'host.location_id = location.location_id', array(
-            'location_type',
-            'location_street',
-            'location_street_cont',
-            'location_city',
-            'location_state',
-            'location_zip',
-            'location_Status'
-        ), 'inner');
+        $select = $sql->select('workorder_host');
         
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
@@ -126,36 +80,94 @@ class HostMapper implements HostMapperInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderHost\Mapper\WorkorderHostMapperInterface::getWorkorderHosts()
+     */
+    public function getWorkorderHosts($workorderId)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder_host');
+        
+        $select->where(array(
+            'workorder_host.workorder_id = ?' => $workorderId
+        ));
+        
+        $select->join('host', 'workorder_host.host_id = host.host_id', array(
+            'host_name',
+            'host_description',
+            'host_ip'
+        ), 'inner');
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+            $resultSet->buffer();
+        
+            return $resultSet->initialize($result);
+        }
+        
+        return array();
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderHost\Mapper\MysqlMapperInterface::getNotInWorkorderHosts()
+     */
+    public function getNotInWorkorderHosts($clientId, $workorderId)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('workorder_host');
+       
+        
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+            $resultSet->buffer();
+        
+            return $resultSet->initialize($result);
+        }
+        
+        return array();
+    }
+    
+    /**
      *
      * {@inheritdoc}
      *
-     * @see \Host\Mapper\HostMapperInterface::get()
+     * @see \WorkorderHost\Mapper\WorkorderHostMapperInterface::get()
      */
     public function get($id)
     {
         $sql = new Sql($this->readAdapter);
         
-        $select = $sql->select('host');
+        $select = $sql->select('workorder_host');
         
         $select->where(array(
-            'host.host_id = ?' => $id
+            'workorder_host.workorder_host_id = ?' => $id
         ));
         
-        // join type
-        $select->join('host_type', 'host.host_type_id = host_type.host_type_id', array(
-            'host_type_name'
+        $select->join('host', 'workorder_host.host_id = host.host_id', array(
+            'host_name',
+            'host_description',
+            'host_ip'
         ), 'inner');
         
-        // join location
-        $select->join('location', 'location.location_id = host.location_id', array(
-            'location_type',
-            'location_street',
-            'location_city',
-            'location_state',
-            'location_zip',
-            'location_Status'
-        ), 'inner');
-        
+
         $stmt = $sql->prepareStatementForSqlObject($select);
         
         $result = $stmt->execute();
@@ -172,57 +184,29 @@ class HostMapper implements HostMapperInterface
         return array();
     }
 
-    public function getClientHostNotInWorkorder($clientId, $workorderId)
-    {
-        
-        
-        $sql = new Sql($this->readAdapter);
-        
-        $select = $sql->select('host');
-        
-        $select->where(array(
-            'host.client_id = ?' => $clientId
-        ));
-        
-        $stmt = $sql->prepareStatementForSqlObject($select);
-        
-        $result = $stmt->execute();
-        
-        if ($result instanceof ResultInterface && $result->isQueryResult()) {
-            
-            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
-            
-            $resultSet->buffer();
-            
-            return $resultSet->initialize($result);
-        }
-        
-        return array();
-    }
-
     /**
      *
      * {@inheritdoc}
      *
-     * @see \Host\Mapper\HostMapperInterface::save()
+     * @see \WorkorderHost\Mapper\WorkorderHostMapperInterface::save()
      */
-    public function save(HostEntity $entity)
+    public function save(WorkorderHostEntity $entity)
     {
         $postData = $this->hydrator->extract($entity);
         
-        if ($entity->getHostId()) {
+        if ($entity->getWorkorderHostId()) {
             
             // ID present, it's an Update
-            $action = new Update('host');
+            $action = new Update('workorder_host');
             
             $action->set($postData);
             
             $action->where(array(
-                'host.host_id = ?' => $entity->getHostId()
+                'workorder_host.workorder_host_id = ?' => $entity->getWorkorderHostId()
             ));
         } else {
             // ID NOT present, it's an Insert
-            $action = new Insert('host');
+            $action = new Insert('workorder_host');
             
             $action->values($postData);
         }
@@ -238,7 +222,7 @@ class HostMapper implements HostMapperInterface
             
             if ($newId) {
                 // When a value has been generated, set it on the object
-                $entity->setHostId($newId);
+                $entity->setWorkorderHostId($newId);
             }
             
             return $entity;
@@ -251,14 +235,14 @@ class HostMapper implements HostMapperInterface
      *
      * {@inheritdoc}
      *
-     * @see \Host\Mapper\HostMapperInterface::delete()
+     * @see \WorkorderHost\Mapper\WorkorderHostMapperInterface::delete()
      */
-    public function delete(HostEntity $entity)
+    public function delete(WorkorderHostEntity $entity)
     {
-        $action = new Delete('host');
+        $action = new Delete('workorder_host');
         
         $action->where(array(
-            'host.host_id = ?' => $entity->getHostId()
+            'workorder_host.workorder_host_id = ?' => $entity->getWorkorderHostId()
         ));
         
         $sql = new Sql($this->writeAdapter);
@@ -270,3 +254,4 @@ class HostMapper implements HostMapperInterface
         return (bool) $result->getAffectedRows();
     }
 }
+
