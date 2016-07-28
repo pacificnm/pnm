@@ -1,44 +1,151 @@
-<div class="jumbotron">
-    <h1><?php echo sprintf($this->translate('Welcome to %sZend Framework 2%s'), '<span class="zf-green">', '</span>') ?></h1>
-    <p><?php echo sprintf($this->translate('Congratulations! You have successfully installed the %sZF2 Skeleton Application%s. You are currently running Zend Framework version %s. This skeleton can serve as a simple starting point for you to begin building your application on ZF2.'), '<a href="https://github.com/zendframework/ZendSkeletonApplication" target="_blank">', '</a>', \Zend\Version\Version::VERSION) ?></p>
-    <p><a class="btn btn-success btn-lg" href="https://github.com/zendframework/zf2" target="_blank"><?php echo $this->translate('Fork Zend Framework 2 on GitHub') ?> &raquo;</a></p>
-</div>
+<?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
+?>
+<div class="box">
+	<div class="box-body">
 
-<div class="row">
+		<section id="introduction">
+			<h2 class="page-header">
+				<a href="#introduction">Introduction</a>
+			</h2>
+			<p class="lead">
+				<b>PacificNM</b> is an open source service management solution for
+				IT service companies. PacificNM is built and backed by a profesional
+				IT provider so we know what you need and what you want.
+			</p>
+		</section>
 
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Follow Development') ?></h3>
-            </div>
-            <div class="panel-body">
-                <p><?php echo sprintf($this->translate('Zend Framework 2 is under active development. If you are interested in following the development of ZF2, there is a special ZF2 portal on the official Zend Framework website which provides links to the ZF2 %swiki%s, %sdev blog%s, %sissue tracker%s, and much more. This is a great resource for staying up to date with the latest developments!'), '<a href="http://framework.zend.com/wiki/display/ZFDEV2/Home">', '</a>', '<a href="http://framework.zend.com/zf2/blog">', '</a>', '<a href="https://github.com/zendframework/zf2/issues">', '</a>') ?></p>
-                <p><a class="btn btn-success pull-right" href="http://framework.zend.com/zf2" target="_blank"><?php echo $this->translate('ZF2 Development Portal') ?> &raquo;</a></p>
-            </div>
-        </div>
-    </div>
+		<section id="introduction">
+			<h2 class="page-header">
+				<a href="#introduction">Current Status &amp; Issues</a>
+			</h2>
+			<p class="lead">
+				The source code for PacificNM is hosted at <a href="https://github.com/pacificnm/pnm" title="View the code" target="_blank">GitHub</a>
+			</p>
+			<h3 class="profile-username">Current Known Issues</h3>
+			<ul class="list-group list-group-unbordered">
+			<?php foreach($this->paginator as $entity): ?>
+				
+				<li class="list-group-item">
+					<a href="<?php echo $entity->getHtmlUrl(); ?>" title="View this issue" target="_blank">
+					<?php echo $entity->getTitle();?>
+					</a>
+					<p><?php echo $entity->getBody();?></p>
+				</li>
+			<?php endforeach; ?>
+			</ul>
+		</section>		
 
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Discover Modules') ?></h3>
-            </div>
-            <div class="panel-body">
-                <p><?php echo sprintf($this->translate('The community is working on developing a community site to serve as a repository and gallery for ZF2 modules. The project is available %son GitHub%s. The site is currently live and currently contains a list of some of the modules already available for ZF2.'), '<a href="https://github.com/zendframework/modules.zendframework.com">', '</a>') ?></p>
-                <p><a class="btn btn-success pull-right" href="http://modules.zendframework.com/" target="_blank"><?php echo $this->translate('Explore ZF2 Modules') ?> &raquo;</a></p>
-            </div>
-        </div>
-    </div>
+		<section id="plugins">
+			<h2 class="page-header">
+				<a href="#plugins">Plugins</a>
+			</h2>
+			<p class="lead">PacificNM makes use of the following plugins. For
+				documentation, updates or license information, please visit the
+				provided links.</p>
+			<a href="https://almsaeedstudio.com/" target="_blank">AdminLTE Control Panel Template</a>
+			<div class="row bring-up">
+				<div class="col-xs-12 col-sm-3">
+					<ul class="list-unstyled">
+						<li><h4>Charts</h4></li>
+						<li><a href="http://www.chartjs.org/" target="_blank">ChartJS</a></li>
+						<li><a href="http://www.flotcharts.org/" target="_blank">Flot</a></li>
+						<li><a href="http://morrisjs.github.io/morris.js/" target="_blank">Morris.js</a></li>
+						<li><a href="http://omnipotent.net/jquery.sparkline/"
+							target="_blank">Sparkline</a></li>
+					</ul>
+				</div>
+				<!-- /.col -->
+				<div class="col-xs-12 col-sm-3">
+					<ul class="list-unstyled">
+						<li><h4>Form Elements</h4></li>
+						<li><a href="https://github.com/seiyria/bootstrap-slider/">Bootstrap
+								Slider</a></li>
+						<li><a href="http://ionden.com/a/plugins/ion.rangeSlider/en.html"
+							target="_blank">Ion Slider</a></li>
+						<li><a href="http://bootstrap-datepicker.readthedocs.org/"
+							target="_blank">Date Picker</a></li>
+						<li><a href="http://www.daterangepicker.com/" target="_blank">Date
+								Range Picker</a></li>
+						<li><a href="http://mjolnic.com/bootstrap-colorpicker/"
+							target="_blank">Color Picker</a></li>
+						<li><a href="https://github.com/jdewit/bootstrap-timepicker/"
+							target="_blank">Time Picker</a></li>
+						<li><a href="http://fronteed.com/iCheck/" target="_blank">iCheck</a></li>
+						<li><a href="https://github.com/RobinHerbots/jquery.inputmask/"
+							target="_blank">Input Mask</a></li>
+					</ul>
+				</div>
+				<!-- /.col -->
+				<div class="col-xs-12 col-sm-3">
+					<ul class="list-unstyled">
+						<li><h4>Editors</h4></li>
+						<li><a
+							href="https://github.com/bootstrap-wysiwyg/bootstrap3-wysiwyg/"
+							target="_blank">Bootstrap WYSIHTML5</a></li>
+						<li><a href="http://ckeditor.com/" target="_blank">CK Editor</a></li>
+					</ul>
+				</div>
+				<!-- /. col -->
+				<div class="col-xs-12 col-sm-3">
+					<ul class="list-unstyled">
+						<li><h4>Other</h4></li>
+						<li><a
+							href="https://datatables.net/examples/styling/bootstrap.html"
+							target="_blank">DataTables</a></li>
+						<li><a href="http://fullcalendar.io/" target="_blank">Full
+								Calendar</a></li>
+						<li><a href="http://jqueryui.com/" target="_blank">jQuery UI</a></li>
+						<li><a href="http://anthonyterrien.com/knob/" target="_blank">jQuery
+								Knob</a></li>
+						<li><a href="http://jvectormap.com/" target="_blank">jVector Map</a></li>
+						<li><a href="http://rocha.la/jQuery-slimScroll/" target="_blank">Slim
+								Scroll</a></li>
+						<li><a href="http://github.hubspot.com/pace/docs/welcome/"
+							target="_blank">Pace</a></li>
+					</ul>
+				</div>
+			</div>
+		</section>
 
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Help &amp; Support') ?></h3>
-            </div>
-            <div class="panel-body">
-                <p><?php echo sprintf($this->translate('If you need any help or support while developing with ZF2, you may reach us via IRC: %s#zftalk on Freenode%s. We\'d love to hear any questions or feedback you may have regarding the beta releases. Alternatively, you may subscribe and post questions to the %smailing lists%s.'), '<a href="irc://irc.freenode.net/zftalk">', '</a>', '<a href="http://framework.zend.com/wiki/display/ZFDEV/Mailing+Lists">', '</a>') ?></p>
-                <p><a class="btn btn-success pull-right" href="http://webchat.freenode.net?channels=zftalk" target="_blank"><?php echo $this->translate('Ping us on IRC') ?> &raquo;</a></p>
-            </div>
-        </div>
-    </div>
+
+		<section id="license">
+			<h2 class="page-header">
+				<a href="#license">License</a>
+			</h2>
+			<h3>PacificNM</h3>
+			<p class="lead">
+		PacificNM is an open source project that is licensed under the MIT
+		license. Copyright (c)
+		2013 - <?php echo date("Y", time()); ?> Pacific Network Management
+	
+	</p>
+			<p class="lead">Permission is hereby granted, free of charge, to any
+				person obtaining a copy of this software and associated
+				documentation files (the "Software"), to deal in the Software
+				without restriction, including without limitation the rights to use,
+				copy, modify, merge, publish, distribute, sublicense, and/or sell
+				copies of the Software, and to permit persons to whom the Software
+				is furnished to do so, subject to the following conditions:</p>
+
+			<p class="lead">The above copyright notice and this permission notice
+				shall be included in all copies or substantial portions of the
+				Software.</p>
+
+			<p class="lead">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF
+				ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+				WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+				NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+				BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+				ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+				CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+				SOFTWARE.</p>
+		</section>
+	</div>
 </div>
