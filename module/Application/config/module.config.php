@@ -23,7 +23,7 @@ return array(
                 'options' => array(
                     'route' => '/',
                     'defaults' => array(
-                        'controller' => 'Application\\Controller\\Index',
+                        'controller' => 'Application\Controller\IndexController',
                         'action' => 'index',
                     ),
                 ),
@@ -73,6 +73,8 @@ return array(
         'factories' => array(
             'translator' => 'Zend\\Mvc\\Service\\TranslatorServiceFactory',
             'navigation' => 'Zend\\Navigation\\Service\\DefaultNavigationFactory',
+            'Application\Service\GitHubServiceInterface' => 'Application\Service\Factory\GitHubServiceFactory',
+            'Application\Mapper\GitHubMapperInterface' => 'Application\Mapper\Factory\GitHubMapperFactory'
         ),
     ),
     'translator' => array(
@@ -87,9 +89,10 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\\Controller\\Index' => 'Application\\Controller\\IndexController',
+            
         ),
         'factories' => array(
+            'Application\Controller\IndexController' => 'Application\Controller\Factory\IndexControllerFactory',
             'Application\\Controller\\BaseController' => 'Application\\Controller\\Factory\\BaseControllerFactory',
             'Application\\Controller\\KeepAliveController' => 'Application\\Controller\\Factory\\KeepAliveControllerFactory',
         ),
