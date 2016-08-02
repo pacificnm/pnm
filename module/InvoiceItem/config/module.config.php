@@ -7,6 +7,8 @@ return array(
             'acl' => array(
                 'guest' => array(),
                 'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(
                     'invoice-item-create',
                     'invoice-item-delete'

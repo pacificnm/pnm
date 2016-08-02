@@ -8,6 +8,8 @@ return array(
             'acl' => array(
                 'guest' => array(),
                 'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(
                     'workorder-note-create',
                     'workorder-note-update',

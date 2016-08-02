@@ -85,6 +85,9 @@ return array(
         'WorkorderOption',
         'WorkorderHistory',
         'WorkorderHost',
+        'Ticket',
+        'TicketNote',
+        'WorkorderTicket',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

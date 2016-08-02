@@ -29,18 +29,6 @@ class WorkorderEntity
 
     /**
      *
-     * @var number
-     */
-    protected $userId;
-
-    /**
-     *
-     * @var number
-     */
-    protected $phoneId;
-
-    /**
-     *
      * @var string
      */
     protected $workorderStatus;
@@ -154,24 +142,6 @@ class WorkorderEntity
     public function getClientId()
     {
         return $this->clientId;
-    }
-
-    /**
-     *
-     * @return the $userId
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    /**
-     *
-     * @return the $phoneId
-     */
-    public function getPhoneId()
-    {
-        return $this->phoneId;
     }
 
     /**
@@ -334,24 +304,6 @@ class WorkorderEntity
     public function setClientId($clientId)
     {
         $this->clientId = $clientId;
-    }
-
-    /**
-     *
-     * @param number $userId            
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-    }
-
-    /**
-     *
-     * @param number $phoneId            
-     */
-    public function setPhoneId($phoneId)
-    {
-        $this->phoneId = $phoneId;
     }
 
     /**

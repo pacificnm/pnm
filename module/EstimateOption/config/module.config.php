@@ -16,6 +16,8 @@ return array(
                 'user' => array(
                     'estimate-option-view'
                 ),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(
                     'estimate-option-index',
                     'estimate-option-create',

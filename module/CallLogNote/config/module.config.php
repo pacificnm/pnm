@@ -7,6 +7,8 @@ return array(
             'acl' => array(
                 'guest' => array(),
                 'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(
                     0 => 'call-log-note-create',
                     1 => 'call-log-note-delete',

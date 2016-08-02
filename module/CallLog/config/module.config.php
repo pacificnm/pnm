@@ -6,13 +6,17 @@ return array(
             'version' => '2.5',
             'acl' => array(
                 'guest' => array(),
-                'user' => array(),
-                'employee' => array(
+                'user' => array(
                     0 => 'call-log-index',
-                    1 => 'call-log-create',
-                    2 => 'call-log-delete',
-                    3 => 'call-log-update',
-                    4 => 'call-log-view',
+                    1 => 'call-log-view',
+                ),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(
+                    0 => 'call-log-create',
+                    1 => 'call-log-delete',
+                    2 => 'call-log-update',
+                    
                 ),
                 'accountant' => array(),
                 'administrator' => array(),

@@ -10,6 +10,8 @@ return array(
                     0 => 'home',
                     1 => 'keep-alive',
                 ),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(),
                 'accountant' => array(),
                 'administrator' => array(),

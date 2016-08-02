@@ -10,6 +10,8 @@ return array(
                     'host-list',
                     'host-view',
                 ),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(
                     'host-create',
                     'host-update',

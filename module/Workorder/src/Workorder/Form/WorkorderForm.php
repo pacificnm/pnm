@@ -47,18 +47,7 @@ class WorkorderForm extends Form implements InputFilterProviderInterface
             'type' => 'hidden',
         ));
         
-        // userId
-        $this->add(array(
-            'name' => 'userId',
-            'type' => 'hidden',
-        ));
-        
-        // phoneId
-        $this->add(array(
-            'name' => 'phoneId',
-            'type' => 'hidden',
-        ));
-        
+               
         // invoiceId
         $this->add(array(
             'name' => 'invoiceId',
@@ -249,53 +238,6 @@ class WorkorderForm extends Form implements InputFilterProviderInterface
                 )
             ),
             
-            // userId
-            'userId' => array(
-                'required' => true,
-                'filters' => array(
-                    array(
-                        'name' => 'StripTags'
-                    ),
-                    array(
-                        'name' => 'StringTrim'
-                    )
-                ),
-                'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'break_chain_on_failure' => true,
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => "The User Id is required and cannot be empty."
-                            )
-                        )
-                    )
-                )
-            ),
-            
-            // phoneId
-            'phoneId' => array(
-                'required' => true,
-                'filters' => array(
-                    array(
-                        'name' => 'StripTags'
-                    ),
-                    array(
-                        'name' => 'StringTrim'
-                    )
-                ),
-                'validators' => array(
-                    array(
-                        'name' => 'NotEmpty',
-                        'break_chain_on_failure' => true,
-                        'options' => array(
-                            'messages' => array(
-                                \Zend\Validator\NotEmpty::IS_EMPTY => "The Phone Id is required and cannot be empty."
-                            )
-                        )
-                    )
-                )
-            ),
             
             // workorderLabor
             'workorderLabor' => array(

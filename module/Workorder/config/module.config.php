@@ -11,6 +11,8 @@ return array(
                     1 => 'workorder-view',
                     2 => 'workorder-print',
                 ),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(
                     0 => 'workorder-create',
                     1 => 'workorder-delete',

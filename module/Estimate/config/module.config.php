@@ -14,10 +14,13 @@ return array(
             'acl' => array(
                 'guest' => array(),
                 'user' => array(
-                    'estimate-view'
-                ),
-                'employee' => array(
+                    'estimate-view',
                     'estimate-index',
+                ),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(
+                    
                     'estimate-create',
                     'estimate-update',
                     'estimate-delete',

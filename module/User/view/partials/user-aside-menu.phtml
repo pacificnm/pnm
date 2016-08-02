@@ -1,31 +1,43 @@
-<li class="header"><?php echo $this->translate('MAIN NAVIGATION'); ?></li>
-
-	<li class="treeview <?php if($this->activeMenuItem == 'user'):?>active<?php endif;?>">
-		<a href="#">
-			<i class="fa fa-table"></i> <span><?php echo $this->translate('My Profile'); ?></span>
-		</a>
-		<ul class="treeview-menu">
-		
-			<!-- home -->
-			<li class="<?php if($this->activeSubMenuItem == 'user-profile'):?>active<?php endif;?>">
-				<a href="<?php echo $this->url('user-profile'); ?>" title="My Profile">
-					<i class="fa fa-home"></i> <span><?php echo $this->translate('Home')?></span>
-				</a>
-			</li>
-			
-			<!-- password -->
-			<li class="<?php if($this->activeSubMenuItem == 'employee-password'):?>active<?php endif;?>">
-				<a href="<?php echo $this->url('employee-password');?>" title="<?php echo $this->translate('Change Password')?>">
-					<i class="fa fa-lock"></i> <span><?php echo $this->translate('Change Password')?></span>
-				</a>
-			</li>
-		</ul>
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
+?>
+<li class="treeview <?php if($this->activeMenuItem == 'user'):?>active<?php endif;?>">
+	<a href="#">
+		<i class="fa fa-table"></i> <span><?php echo $this->translate('My Profile'); ?></span>
+	</a>
+	<ul class="treeview-menu">
+        <!-- home -->
+    	<li class="<?php if($this->activeSubMenuItem == 'user-profile'):?>active<?php endif;?>">
+    		<a href="<?php echo $this->url('user-profile'); ?>" title="My Profile">
+    			<i class="fa fa-home"></i> <span><?php echo $this->translate('Home')?></span>
+    		</a>
+    	</li>
+    
+    	<!-- create support ticket -->
+    	<li class="<?php if($this->activeSubMenuItem == 'ticket-create'):?>active<?php endif;?>">
+    		<a href="<?php echo $this->url('ticket-create',  array('clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('New Support Ticket');?>">
+    			<i class="fa fa-life-ring" aria-hidden="true"></i> <span><?php echo $this->translate('Support')?></span>
+    		</a>
+    	</li>
+    
+        <!-- password -->
+    	<li class="<?php if($this->activeSubMenuItem == 'employee-password'):?>active<?php endif;?>">
+    		<a href="<?php echo $this->url('employee-password');?>" title="<?php echo $this->translate('Change Password')?>">
+    			<i class="fa fa-lock"></i> <span><?php echo $this->translate('Change Password')?></span>
+    		</a>
+    	</li>
+	</ul>
 </li>
 <?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'client-view') ):?>
-<li class="header"><?php echo $this->translate('MY COMPANY'); ?></li>
 <li class="treeview <?php if($this->activeMenuItem == 'client'):?>active<?php endif;?>">
 	<a href="#">
-		<i class="fa fa-table"></i> <span><?php echo $this->translate('Client'); ?></span>
+		<i class="fa fa-table"></i> <span><?php echo $this->translate('My Company'); ?></span>
 	</a>
 	<ul class="treeview-menu">
 		<!-- Client Menu -->
@@ -36,7 +48,24 @@
 					<i class="fa fa-home"></i> <?php echo $this->translate('Home')?>
 				</a>
 			</li>
-			
+			<!-- Call Log -->
+		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'call-log-index') ):?>
+		<li class="<?php if($this->activeSubMenuItem == 'call-log-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('call-log-index', array('clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Estimates')?>">
+				<i class="fa fa-phone"></i> <?php echo $this->translate('Call Log')?>
+			</a>
+		</li>
+		<?php endif; ?>
+		
+		
+		<!-- Estimate -->
+		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'estimate-index') ):?>
+		<li class="<?php if($this->activeSubMenuItem == 'estimate-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('estimate-index', array('clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Estimates')?>">
+				<i class="fa fa-newspaper-o"></i> <?php echo $this->translate('Estimates')?>
+			</a>
+		</li>
+		<?php endif; ?>
 			<!-- Hosts -->
 			<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'host-list') ):?>
 			<li class="<?php if($this->activeSubMenuItem == 'host-list'):?>active<?php endif;?>">
@@ -78,6 +107,15 @@
 			<li class="<?php if($this->activeSubMenuItem == 'task-list'):?>active<?php endif;?>">
 				<a href="<?php echo $this->url('task-list', array('clientId' => $this->clientId)); ?>">
 					<i class="fa fa-tasks"></i> <?php echo $this->translate('Tasks')?>
+				</a>
+			</li>
+			<?php endif;?>
+			
+			<!--  tickets -->
+			<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'ticket-index') ):?>
+			<li class="<?php if($this->activeSubMenuItem == 'ticket-index'):?>active<?php endif;?>">
+				<a href="<?php echo $this->url('ticket-index', array('clientId' => $this->clientId)); ?>">
+					<i class="fa fa-life-ring" aria-hidden="true"></i> <?php echo $this->translate('Support Tickets')?>
 				</a>
 			</li>
 			<?php endif;?>

@@ -10,6 +10,8 @@ return array(
                     'password-list',
                     'password-view'
                 ),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(
                     
                     'password-create',

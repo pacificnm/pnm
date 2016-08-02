@@ -7,19 +7,21 @@ return array(
             'acl' => array(
                 'guest' => array(),
                 'user' => array(
-                    0 => 'client-view',
+                    0 => 'client-view'
                 ),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(
                     0 => 'client-index',
                     1 => 'client-view',
                     2 => 'client-update',
                     3 => 'client-create',
-                    4 => 'client-delete',
+                    4 => 'client-delete'
                 ),
                 'accountant' => array(),
-                'administrator' => array(),
-            ),
-        ),
+                'administrator' => array()
+            )
+        )
     ),
     'controllers' => array(
         'factories' => array(
@@ -27,16 +29,21 @@ return array(
             'Client\\Controller\\View' => 'Client\\Controller\\Factory\\ViewControllerFactory',
             'Client\\Controller\\Create' => 'Client\\Controller\\Factory\\CreateControllerFactory',
             'Client\\Controller\\Update' => 'Client\\Controller\\Factory\\UpdateControllerFactory',
-            'Client\\Controller\\Delete' => 'Client\\Controller\\Factory\\DeleteControllerFactory',
-        ),
+            'Client\\Controller\\Delete' => 'Client\\Controller\\Factory\\DeleteControllerFactory'
+        )
+    ),
+    'controller_plugins' => array(
+        'factories' => array(
+            'getClient' => 'Client\Controller\Plugin\Factory\ClientControllerPluginFactory'
+        )
     ),
     'service_manager' => array(
         'factories' => array(
             'Client\\Mapper\\ClientMapperInterface' => 'Client\\Mapper\\Factory\\ClientMapperFactory',
             'Client\\Service\\ClientServiceInterface' => 'Client\\Service\\Factory\\ClientServiceFactory',
             'Client\\V1\\Rest\\Client\\ClientResource' => 'Client\\V1\\Rest\\Client\\ClientResourceFactory',
-            'Client\\V1\\Rest\\ClientService\\ClientServiceResource' => 'Client\\V1\\Rest\\ClientService\\ClientServiceResourceFactory',
-        ),
+            'Client\\V1\\Rest\\ClientService\\ClientServiceResource' => 'Client\\V1\\Rest\\ClientService\\ClientServiceResourceFactory'
+        )
     ),
     'router' => array(
         'routes' => array(
@@ -47,9 +54,9 @@ return array(
                     'route' => '/client/[:clientId]',
                     'defaults' => array(
                         'controller' => 'Client\\Controller\\View',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
             ),
             'client-index' => array(
                 'title' => 'List Clients',
@@ -58,9 +65,9 @@ return array(
                     'route' => '/client',
                     'defaults' => array(
                         'controller' => 'Client\\Controller\\Index',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
             ),
             'client-update' => array(
                 'title' => 'Edit Client',
@@ -69,9 +76,9 @@ return array(
                     'route' => '/client/[:clientId]/update',
                     'defaults' => array(
                         'controller' => 'Client\\Controller\\Update',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
             ),
             'client-delete' => array(
                 'title' => 'Delete Client',
@@ -80,9 +87,9 @@ return array(
                     'route' => '/client/[:clientId]/delete',
                     'defaults' => array(
                         'controller' => 'Client\\Controller\\Delete',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
             ),
             'client-create' => array(
                 'title' => 'New Client',
@@ -91,33 +98,33 @@ return array(
                     'route' => '/client/create',
                     'defaults' => array(
                         'controller' => 'Client\\Controller\\Create',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
             ),
             'client.rest.client-service' => array(
                 'type' => 'Segment',
                 'options' => array(
                     'route' => '/api/client[/:client_id]',
                     'defaults' => array(
-                        'controller' => 'Client\\V1\\Rest\\ClientService\\Controller',
-                    ),
-                ),
-            ),
-        ),
+                        'controller' => 'Client\\V1\\Rest\\ClientService\\Controller'
+                    )
+                )
+            )
+        )
     ),
     'view_helpers' => array(
-        'invokables' => array(),
+        'invokables' => array()
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-            0 => __DIR__ . '/../view',
-        ),
+            0 => __DIR__ . '/../view'
+        )
     ),
     'zf-versioning' => array(
         'uri' => array(
-            0 => 'client.rest.client-service',
-        ),
+            0 => 'client.rest.client-service'
+        )
     ),
     'zf-rest' => array(
         'Client\\V1\\Rest\\ClientService\\Controller' => array(
@@ -129,37 +136,37 @@ return array(
                 0 => 'GET',
                 1 => 'PUT',
                 2 => 'DELETE',
-                3 => 'POST',
+                3 => 'POST'
             ),
             'collection_http_methods' => array(
                 0 => 'GET',
-                1 => 'POST',
+                1 => 'POST'
             ),
             'collection_query_whitelist' => array(),
             'page_size' => 25,
             'page_size_param' => null,
             'entity_class' => 'Client\\Entity\\ClientEntity',
             'collection_class' => 'Client\\V1\\Rest\\ClientService\\ClientServiceCollection',
-            'service_name' => 'ClientService',
-        ),
+            'service_name' => 'ClientService'
+        )
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
-            'Client\\V1\\Rest\\ClientService\\Controller' => 'HalJson',
+            'Client\\V1\\Rest\\ClientService\\Controller' => 'HalJson'
         ),
         'accept_whitelist' => array(
             'Client\\V1\\Rest\\ClientService\\Controller' => array(
                 0 => 'application/vnd.client.v1+json',
                 1 => 'application/hal+json',
-                2 => 'application/json',
-            ),
+                2 => 'application/json'
+            )
         ),
         'content_type_whitelist' => array(
             'Client\\V1\\Rest\\ClientService\\Controller' => array(
                 0 => 'application/vnd.client.v1+json',
-                1 => 'application/json',
-            ),
-        ),
+                1 => 'application/json'
+            )
+        )
     ),
     'zf-hal' => array(
         'metadata_map' => array(
@@ -167,15 +174,15 @@ return array(
                 'entity_identifier_name' => 'client_id',
                 'route_name' => 'client.rest.client-service',
                 'route_identifier_name' => 'client_id_service',
-                'hydrator' => 'Client\\Hydrator\\ClientHydrator',
+                'hydrator' => 'Client\\Hydrator\\ClientHydrator'
             ),
             'Client\\V1\\Rest\\ClientService\\ClientServiceCollection' => array(
                 'entity_identifier_name' => 'client_id',
                 'route_name' => 'client.rest.client-service',
                 'route_identifier_name' => 'client_id_service',
-                'is_collection' => true,
-            ),
-        ),
+                'is_collection' => true
+            )
+        )
     ),
     'zf-mvc-auth' => array(
         'authorization' => array(
@@ -185,16 +192,16 @@ return array(
                     'POST' => true,
                     'PUT' => false,
                     'PATCH' => false,
-                    'DELETE' => false,
+                    'DELETE' => false
                 ),
                 'entity' => array(
                     'GET' => true,
                     'POST' => true,
                     'PUT' => true,
                     'PATCH' => true,
-                    'DELETE' => true,
-                ),
-            ),
-        ),
-    ),
+                    'DELETE' => true
+                )
+            )
+        )
+    )
 );
