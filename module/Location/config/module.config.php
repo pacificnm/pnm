@@ -14,6 +14,8 @@ return array(
             'acl' => array(
                 'guest' => array(),
                 'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(
                     'location-update',
                     'location-view',
@@ -33,7 +35,11 @@ return array(
             'Location\Controller\Create' => 'Location\Controller\Factory\CreateControllerFactory'
         )
     ),
-    
+    'controller_plugins' => array(
+        'factories' => array(
+            'GetLocation' => 'Location\Controller\Plugin\Factory\LocationControllerPluginFactory'
+         ),
+    ),
     // service manager
     'service_manager' => array(
         'factories' => array(

@@ -146,7 +146,7 @@ class TaskMapper implements TaskMapperInterface
             'employee_status'
         ), 'left');
         
-        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+
         
         $stmt = $sql->prepareStatementForSqlObject($select);
         

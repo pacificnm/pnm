@@ -7,7 +7,7 @@ use Zend\View\Helper\AbstractHelper;
 class UserAsideMenu extends AbstractHelper
 {
 
-    public function __invoke($clientId)
+    public function __invoke()
     {
         $view = $this->getView();
         

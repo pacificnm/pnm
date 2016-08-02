@@ -36,6 +36,8 @@ class SetPageTitle extends AbstractPlugin
         if (array_key_exists('title', $this->config['router']['routes'][$matchedRouteName])) {
             $this->phpRenderer->headTitle($this->config['router']['routes'][$matchedRouteName]['title']);
         }
+        
+        return $this->config['router']['routes'][$matchedRouteName]['title'];
     }
     
     

@@ -10,6 +10,8 @@ return array(
                     'network-view',
                 ),
                 'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(
                     'network-create',
                     'network-delete',

@@ -7,6 +7,8 @@ return array(
             'acl' => array(
                 'guest' => array(),
                 'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(),
                 'accountant' => array(),
                 'administrator' => array(

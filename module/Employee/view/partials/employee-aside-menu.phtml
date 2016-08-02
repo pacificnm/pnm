@@ -61,6 +61,8 @@
 				<i class="fa fa-truck" aria-hidden="true"></i> <span><?php echo $this->translate('Mileage')?></span>
 			</a>
 		</li>
+		
+		
 			
 		<!-- Time -->
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'employee-time') ):?>
@@ -175,6 +177,15 @@
 			</a>
 		</li>
 		<?php endif; ?>
+			
+		<!--  tickets -->
+		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'ticket-index') ):?>
+		<li class="<?php if($this->activeSubMenuItem == 'ticket-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('ticket-index', array('clientId' => $this->clientId)); ?>">
+				<i class="fa fa-life-ring" aria-hidden="true"></i> <?php echo $this->translate('Support Tickets')?>
+			</a>
+		</li>
+		<?php endif;?>
 			
 		<!-- Tasks -->
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'task-list') ):?>

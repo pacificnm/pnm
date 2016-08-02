@@ -163,7 +163,7 @@
 		setInterval(taskReminder, interval);
 
 		// session idle time out.
-		var idleTime = 1000 * 60 * 2; 
+		var idleTime = 1000 * 60 * <?php echo $this->maxlifetime; ?>; 
 		var timer;
 		var redirectAfter = 10;
 		var running = false;

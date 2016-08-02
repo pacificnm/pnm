@@ -84,9 +84,14 @@ class BaseController extends AbstractActionController
         $this->layout()->setVariable('clientId', $clientId);
         
         // set page title
-        $this->setPageTitle($router->getMatchedRouteName());
+        $pageTitle = $this->setPageTitle($router->getMatchedRouteName());
         
+        $this->layout()->setVariable('pageTitle', $pageTitle);
         
+        // set session timeout
+        $maxlifetime = ini_get("session.gc_maxlifetime") - 120;
+        
+        $this->layout()->setVariable('maxlifetime', $maxlifetime);
         
         // return parent dispatch
         return parent::onDispatch($e);

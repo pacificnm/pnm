@@ -11,6 +11,8 @@ return array(
                     'user-list',
                     'user-view'
                 ),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(
                     'user-create',
                     'user-delete',

@@ -1,0 +1,125 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">
+					<i class="fa fa-life-ring" aria-hidden="true"></i>
+					<?php echo $this->translate('Notes'); ?>
+				</h3>
+				<div class="box-tools">
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'ticket-note-create') && $this->ticketStatus != 'Closed'):?>
+					<a href="#" data-toggle="modal" data-target="#ticketNoteModal" title="<?php echo $this->translate('New note'); ?>" class="btn btn-box-tool">
+						<i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?>
+					</a>
+					<?php endif;?>	
+				</div>
+			</div>
+			<div class="box-body">
+			<?php if($this->noteEntitys->count() == 0): ?>
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No notes.'); ?>
+				</div>
+			<?php else: ?>
+			<?php foreach($this->noteEntitys as $noteEntity): ?>
+				<div class="row">
+					<div class="col-xs-12">
+						<p><?php echo $noteEntity->getTicketNoteText();?></p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<p class="text-muted small">
+							<?php echo date($this->appConfig()->getConfigDateLong(), $noteEntity->getTicketNoteDateCreate());?>
+							<a href="" title="">
+								<?php echo $noteEntity->getAuthEntity()->getAuthName(); ?>
+							</a>
+							
+							<?php if($this->identity()->getAuthType() == 'Employee'): ?>
+								<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'ticket-note-update') && $this->ticketStatus != 'Closed'):?>
+								<a href="" title="" class="btn btn-box-tool pull-right">
+									<i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?>
+								</a>
+								<?php endif; ?>
+							<?php else: ?>
+								<?php if($this->identity()->getAuthId() == $noteEntity->getAuthId()): ?>
+									<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'ticket-note-update') && $this->ticketStatus != 'Closed'):?>
+									<a href="" title="" class="btn btn-box-tool pull-right">
+										<i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?>
+									</a>
+									<?php endif;?>
+								<?php endif;?>
+							<?php endif;?>
+						</p>
+						<hr class="text-muted"/>
+					</div>
+				</div>
+			<?php endforeach;?>
+			<?php endif;?>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- note modal form -->
+<?php $this->form->prepare(); ?>
+<?php echo $this->form()->openTag($this->form); ?>
+
+<div class="modal fade" id="ticketNoteModal" role="dialog" aria-labelledby="hostModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel"><i class="fa fa-life-ring" aria-hidden="true"></i> <?php echo $this->translate('New Note')?></h4>
+			</div>
+			
+			<div class="modal-body">
+				<?php echo $this->partial('partials/form-errors.phtml', array('errorMsg' => $this->form->getMessages())); ?>
+				
+				<div class="row">
+              		<div class="col-xs-12">
+						<?php $element = $this->form->get('ticketNoteText'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+				
+				<?php if($this->identity()->getAuthType() == 'Employee'): ?>
+              	<div class="row">
+              		<div class="col-xs-12">
+						<?php $element = $this->form->get('ticketNoteClientView'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+				<?php else:?>
+				<?php echo $this->formElement($this->form->get('ticketNoteClientView')); ?>
+				<?php endif; ?>
+				
+				<?php echo $this->formElement($this->form->get('ticketNoteId')); ?>
+				<?php echo $this->formElement($this->form->get('ticketId')); ?>
+				<?php echo $this->formElement($this->form->get('authId')); ?>
+				<?php echo $this->formElement($this->form->get('ticketNoteDateCreate')); ?>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+				<?php echo $this->formSubmit($this->form->get('submit')); ?>
+			</div>
+		</div>
+	</div>
+</div>
+<?php echo $this->form()->closeTag(); ?>
+
+<script>
+  $(function () {
+	  $("#ticketNoteText").wysihtml5();
+  });
+ </script>

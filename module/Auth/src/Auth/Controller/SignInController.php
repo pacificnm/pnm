@@ -137,7 +137,7 @@ class SignInController extends AbstractActionController
                             
                             $authEntity->setRefreshToken($oauthIdentity['refresh_token']);
                             
-                            $authEntity->setExpiresIn($oauthIdentity->expires_in);
+                            //$authEntity->setExpiresIn($oauthIdentity->expires_in);
                             
                             $storage = $this->authService->getStorage();
                             
@@ -166,7 +166,7 @@ class SignInController extends AbstractActionController
                             
                             $this->flashmessenger()->addSuccessMessage('Welcome back ' . $authEntity->getAuthName());
                             
-                            return $this->redirect()->toRoute('home');
+                            return $this->redirect()->toRoute('user-profile');
                         }
                         
                         break;

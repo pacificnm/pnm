@@ -10,8 +10,6 @@ CREATE TABLE IF NOT EXISTS `workorder` (
   `workorder_id` int(20) NOT NULL AUTO_INCREMENT,
   `location_id` int(20) NOT NULL,
   `client_id` int(20) NOT NULL,
-  `user_id` int(20) NOT NULL,
-  `phone_id` int(20) NOT NULL,
   `workorder_status` enum('Active','Closed','Deleted') NOT NULL DEFAULT 'Active',
   `workorder_description` longtext NOT NULL,
   `workorder_labor` float(11,2) DEFAULT '0.00',
@@ -33,12 +31,16 @@ ALTER TABLE `workorder` ADD `workorder_title` VARCHAR(255) NOT NULL AFTER `worko
 
 ALTER TABLE `workorder` ADD `workorder_signature` TEXT NULL AFTER `workorder_date_close`;
 
+ALTER TABLE workorder DROP FOREIGN KEY fk_workorder_user_id;
+
+ALTER TABLE workorder DROP FOREIGN KEY fk_workorder_phone_id;
+
+ALTER TABLE `workorder` DROP `user_id`, DROP `phone_id`;
+
 --
 -- Constraints for table `workorder`
 --
 ALTER TABLE `workorder`
   ADD CONSTRAINT `fk_workorder_client_id` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_workorder_location_id` FOREIGN KEY (`location_id`) REFERENCES `location` (`location_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_workorder_phone_id` FOREIGN KEY (`phone_id`) REFERENCES `phone` (`phone_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_workorder_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON UPDATE CASCADE;
 SET FOREIGN_KEY_CHECKS=1;

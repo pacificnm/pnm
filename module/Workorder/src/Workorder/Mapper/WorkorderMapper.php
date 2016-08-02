@@ -167,13 +167,14 @@ class WorkorderMapper implements WorkorderMapperInterface
         ), 'left');
         
         // join phone
-        $select->join('phone', 'phone.phone_id = workorder.phone_id', array(
+        $select->join('phone', 'location.location_id = phone.phone_id', array(
             'phone_type',
             'phone_num'
         ), 'left');
         
         // join user
-        $select->join('user', 'user.user_id = workorder.user_id', array(
+        $exspresion = new Expression("location.location_id = user.location_id AND user.user_type = 'Primary' AND user.user_status = 'Active'");
+        $select->join('user', $exspresion, array(
             'user_status',
             'user_name_first',
             'user_name_last',
@@ -513,13 +514,14 @@ class WorkorderMapper implements WorkorderMapperInterface
         ), 'left');
         
         // join phone
-        $select->join('phone', 'phone.phone_id = workorder.phone_id', array(
+        $select->join('phone', 'location.location_id = phone.phone_id', array(
             'phone_type',
             'phone_num'
         ), 'left');
         
-        // join user
-        $select->join('user', 'user.user_id = workorder.user_id', array(
+        // join primary user
+        $exspresion = new Expression("location.location_id = user.location_id AND user.user_type = 'Primary' AND user.user_status = 'Active'");
+        $select->join('user', $exspresion, array(
             'user_status',
             'user_name_first',
             'user_name_last',

@@ -2,28 +2,21 @@
 namespace Workorder\Controller;
 
 use Application\Controller\BaseController;
-use Client\Service\ClientServiceInterface;
 use Zend\View\Model\ViewModel;
 use Workorder\Service\WorkorderServiceInterface;
 use Workorder\Form\WorkorderForm;
 use WorkorderEmployee\Service\WorkorderEmployeeServiceInterface;
 use WorkorderEmployee\Form\WorkorderEmployeeForm;
-use Location\Service\LocationServiceInterface;
-use Phone\Service\PhoneServiceInterface;
-use User\Service\UserServiceInterface;
 use Message\Service\MessageServiceInterface;
 use Employee\Service\EmployeeServiceInterface;
 use WorkorderCredit\Service\CreditServiceInterface;
 use WorkorderCredit\Entity\CreditEntity;
+use Ticket\Service\TicketServiceInterface;
+use Zend\Form\Form;
+use WorkorderTicket\Service\WorkorderTicketServiceInterface;
 
 class CreateController extends BaseController
 {
-
-    /**
-     *
-     * @var ClientServiceInterface
-     */
-    protected $clientService;
 
     /**
      *
@@ -37,23 +30,6 @@ class CreateController extends BaseController
      */
     protected $workorderEmployeeService;
 
-    /**
-     *
-     * @var LocationServiceInterface
-     */
-    protected $locationService;
-
-    /**
-     *
-     * @var PhoneServiceInterface
-     */
-    protected $phoneService;
-
-    /**
-     *
-     * @var UserServiceInterface
-     */
-    protected $userService;
 
     /**
      *
@@ -74,6 +50,18 @@ class CreateController extends BaseController
     protected $creditService;
     
     /**
+     * 
+     * @var TicketServiceInterface
+     */
+    protected $ticketService;
+    
+    /**
+     * 
+     * @var WorkorderTicketServiceInterface
+     */
+    protected $workorderTicketService;
+    
+    /**
      *
      * @var WorkorderForm
      */
@@ -87,37 +75,31 @@ class CreateController extends BaseController
 
     /**
      * 
-     * @param ClientServiceInterface $clientService
      * @param WorkorderServiceInterface $workorderService
      * @param WorkorderEmployeeServiceInterface $workorderEmployeeService
-     * @param LocationServiceInterface $locationService
-     * @param PhoneServiceInterface $phoneService
-     * @param UserServiceInterface $userService
      * @param MessageServiceInterface $messageService
      * @param EmployeeServiceInterface $employeeService
      * @param CreditServiceInterface $creditService
+     * @param TicketServiceInterface $ticketService
+     * @param WorkorderTicketServiceInterface $workorderTicketService
      * @param WorkorderForm $workorderForm
      * @param WorkorderEmployeeForm $workorderEmployeeForm
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, LocationServiceInterface $locationService, PhoneServiceInterface $phoneService, UserServiceInterface $userService, MessageServiceInterface $messageService, EmployeeServiceInterface $employeeService, CreditServiceInterface $creditService, WorkorderForm $workorderForm, WorkorderEmployeeForm $workorderEmployeeForm)
-    {
-        $this->clientService = $clientService;
-        
+    public function __construct(WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, MessageServiceInterface $messageService, EmployeeServiceInterface $employeeService, CreditServiceInterface $creditService, TicketServiceInterface $ticketService, WorkorderTicketServiceInterface $workorderTicketService, WorkorderForm $workorderForm, WorkorderEmployeeForm $workorderEmployeeForm)
+    {        
         $this->workorderService = $workorderService;
         
         $this->workorderEmployeeService = $workorderEmployeeService;
-        
-        $this->locationService = $locationService;
-        
-        $this->phoneService = $phoneService;
-        
-        $this->userService = $userService;
         
         $this->messageService = $messageService;
         
         $this->employeeService = $employeeService;
         
         $this->creditService = $creditService;
+        
+        $this->ticketService = $ticketService;
+        
+        $this->workorderTicketService = $workorderTicketService;
         
         $this->workorderForm = $workorderForm;
         
@@ -132,16 +114,11 @@ class CreateController extends BaseController
      */
     public function indexAction()
     {
-        $id = $this->params()->fromRoute('clientId');
+        $clientId = $this->params()->fromRoute('clientId');
         
-        $clientEntity = $this->clientService->get($id);
+        $ticketId = $this->params()->fromQuery('ticketId', null);
         
-        // validate we have a client
-        if (! $clientEntity) {
-            $this->flashmessenger()->addErrorMessage('Client was not found.');
-            
-            return $this->redirect()->toRoute('client-index');
-        }
+        $clientEntity = $this->getClient($clientId);
         
         $form = $this->workorderForm;
         
@@ -151,6 +128,7 @@ class CreateController extends BaseController
         
         // if we have a post
         if ($request->isPost()) {
+            
             // get post
             $postData = $request->getPost();
             
@@ -165,24 +143,10 @@ class CreateController extends BaseController
                 
                 $workorderEntity->setLocationId($postData['locationId']);
                 
+                // get employee data from form
                 $workorderEmployeeEntity = $workorderEmployeeForm->getData();
-                
-                $locationEntity = $this->locationService->get($postData['locationId']);
-                
-                if ($locationEntity) {
-                    $phoneEntity = $this->phoneService->getPrimaryPhoneByLocation($postData['locationId']);
-                
-                    if ($phoneEntity) {
-                        $workorderEntity->setPhoneId($phoneEntity->getPhoneId());
-                    }
-                
-                    $userEntity = $this->userService->getPrimaryUserByLocation($postData['locationId']);
-                
-                    if ($userEntity) {
-                        $workorderEntity->setUserId($userEntity->getUserId());
-                    }
-                }
-                
+                       
+                // get the data from range and set start and stop dates
                 $datePieces = explode('-', $postData['workorderDateScheduled']);
                 
                 $workorderEntity->setWorkorderDateScheduled(strtotime($datePieces[0]));
@@ -193,40 +157,20 @@ class CreateController extends BaseController
                 $workorderEntity = $this->workorderService->save($workorderEntity);
                 
                 // map to employee
-                $workorderEmployeeEntity->setWorkorderId($workorderEntity->getWorkorderId());
+                $this->mapEmployee($workorderEmployeeEntity, $workorderEntity->getWorkorderId());
                 
-                $workorderEmployeeEntity = $this->workorderEmployeeService->save($workorderEmployeeEntity);
+                // save credit
+                $this->saveCredit($clientId, $workorderEntity->getWorkorderId());
                 
-                // check if there is a credit balance if so map the balance
-                $creditEntityBalance = $this->creditService->getWorkorderCreditBalance($id);
-                
-                if($creditEntityBalance) {
-                    if($creditEntityBalance->getWorkorderCreditAmountLeft() > 0) {
-                        $creditEntity = new CreditEntity();
-                        
-                        $creditEntity->setAccountId($creditEntityBalance->getAccountId());
-                        $creditEntity->setAccountLedgerId($creditEntityBalance->getAccountLedgerId());
-                        $creditEntity->setPaymentOptionId($creditEntityBalance->getPaymentOptionId());
-                        $creditEntity->setWorkorderCreditAmount($creditEntityBalance->getWorkorderCreditAmountLeft());
-                        $creditEntity->setWorkorderCreditAmountLeft($creditEntityBalance->getWorkorderCreditAmountLeft());
-                        $creditEntity->setWorkorderCreditDate($creditEntityBalance->getWorkorderCreditDate());
-                        $creditEntity->setWorkorderCreditDetail($creditEntityBalance->getWorkorderCreditDetail());
-                        $creditEntity->setWorkorderCreditId(0);
-                        $creditEntity->setWorkorderCreditType($creditEntityBalance->getWorkorderCreditType());
-                        $creditEntity->setWorkorderId($workorderEntity->getWorkorderId());
-                        
-                        
-                        $this->creditService->save($creditEntity);
-                    }
-                }
+                // close ticket
+                $this->closeTicket($clientId, $ticketId);
                 
                 
-                // send messages
+                // send employee messages
                 $employeeEntity = $this->employeeService->get($workorderEmployeeEntity->getEmployeeId());
                 
                 $this->messageService->saveEmployeeWorkorder($workorderEntity, $employeeEntity);
-                
-                $this->messageService->saveUserWorkorder($workorderEntity, $userEntity);
+
                 
                 // save history
                 $this->SetWorkorderHistory($this->getRequest()
@@ -236,41 +180,16 @@ class CreateController extends BaseController
                 $this->flashmessenger()->addSuccessMessage('The work order was saved.');
                 
                 return $this->redirect()->toRoute('workorder-view', array(
-                    'clientId' => $id,
+                    'clientId' => $clientId,
                     'workorderId' => $workorderEntity->getWorkorderId()
                 ));
             } 
         }
-        
-        // setup form
-        $form->setClientId($id);
-        
-        $form->getLocation();
-        
-        $form->get('workorderId')->setValue(0);
-        
-        $form->get('userId')->setValue(0);
-        
-        $form->get('phoneId')->setValue(0);
-        
-        $form->get('workorderParts')->setValue(0);
-        
-        $form->get('workorderLabor')->setValue(0);
-        
-        $form->get('clientId')->setValue($id);
-        
-        $form->get('workorderDateCreate')->setValue(time());
-        
-        $form->get('workorderDateEnd')->setValue(0);
-        
-        $form->get('workorderDateClose')->setValue(0);
-        
-        $form->get('invoiceId')->setValue(0);
-        
+ 
         $workorderEmployeeForm->get('workorderEmployeeId')->setValue(0);
         
         // set up layout
-        $this->layout()->setVariable('clientId', $id);
+        $this->layout()->setVariable('clientId', $clientId);
         
         $this->layout()->setVariable('pageTitle', 'Create Work Order');
         
@@ -285,9 +204,105 @@ class CreateController extends BaseController
         // return View
         return new ViewModel(array(
             'clientEntity' => $clientEntity,
-            'clientId' => $id,
-            'form' => $form,
+            'clientId' => $clientId,
+            'form' =>  $this->setForm($form, $clientId, $ticketId),
             'workorderEmployeeForm' => $workorderEmployeeForm
         ));
+    }
+    
+    /**
+     * 
+     * @param unknown $clientId
+     * @param unknown $ticketId
+     */
+    protected function closeTicket($clientId, $ticketId)
+    {
+        if($ticketId) {
+            $ticketEntity = $this->getTicket($clientId, $ticketId);
+            
+            $ticketEntity->setTicketStatus('Closed');
+            
+            $this->ticketService->save($ticketEntity);
+            
+            // map ticket to work order
+        }
+    }
+    
+    /**
+     * 
+     * @param unknown $clientId
+     * @param unknown $workorderId
+     */
+    protected function saveCredit($clientId, $workorderId)
+    {
+        // check if there is a credit balance if so map the balance
+        $creditEntityBalance = $this->creditService->getWorkorderCreditBalance($clientId);
+        
+        if($creditEntityBalance && $creditEntityBalance->getWorkorderCreditAmountLeft() > 0) {
+            
+            $creditEntity = new CreditEntity();
+        
+            $creditEntity->setAccountId($creditEntityBalance->getAccountId());
+            $creditEntity->setAccountLedgerId($creditEntityBalance->getAccountLedgerId());
+            $creditEntity->setPaymentOptionId($creditEntityBalance->getPaymentOptionId());
+            $creditEntity->setWorkorderCreditAmount($creditEntityBalance->getWorkorderCreditAmountLeft());
+            $creditEntity->setWorkorderCreditAmountLeft($creditEntityBalance->getWorkorderCreditAmountLeft());
+            $creditEntity->setWorkorderCreditDate($creditEntityBalance->getWorkorderCreditDate());
+            $creditEntity->setWorkorderCreditDetail($creditEntityBalance->getWorkorderCreditDetail());
+            $creditEntity->setWorkorderCreditId(0);
+            $creditEntity->setWorkorderCreditType($creditEntityBalance->getWorkorderCreditType());
+            
+            $creditEntity->setWorkorderId($workorderId);
+        
+        
+            $this->creditService->save($creditEntity);
+        }
+    }
+    
+    protected function mapEmployee($workorderEmployeeEntity, $workorderId)
+    {
+        $workorderEmployeeEntity->setWorkorderId($workorderId);
+        
+        $workorderEmployeeEntity = $this->workorderEmployeeService->save($workorderEmployeeEntity);
+    }
+    
+    /**
+     * 
+     * @param unknown $form
+     * @param unknown $clientId
+     * @return unknown
+     */
+    protected function setForm(WorkorderForm $form, $clientId, $ticketId)
+    {
+        $form->setClientId($clientId);
+        
+        $form->getLocation();
+        
+        $form->get('workorderId')->setValue(0);
+        
+        $form->get('workorderParts')->setValue(0);
+        
+        $form->get('workorderLabor')->setValue(0);
+        
+        $form->get('clientId')->setValue($clientId);
+        
+        $form->get('workorderDateCreate')->setValue(time());
+        
+        $form->get('workorderDateEnd')->setValue(0);
+        
+        $form->get('workorderDateClose')->setValue(0);
+        
+        $form->get('invoiceId')->setValue(0);
+        
+        // if we have ticket set the description and title.
+        if($ticketId) {
+            $ticketEntity = $this->GetTicket($clientId, $ticketId);
+            
+            $form->get('workorderTitle')->setValue($ticketEntity->getTicketTitle());
+            
+            $form->get('workorderDescription')->setValue($ticketEntity->getTicketText());
+        }
+        
+        return $form;
     }
 }

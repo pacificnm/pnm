@@ -11,6 +11,8 @@ return array(
                     'invoice-print',
                     'invoice-view',
                 ),
+                'user-accountant' => array(),
+                'user-manager' => array(),
                 'employee' => array(
                     'invoice-create',
                     'invoice-delete',
