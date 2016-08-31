@@ -6,6 +6,8 @@ use Client\Service\ClientServiceInterface;
 use Zend\View\Model\ViewModel;
 use Host\Service\HostServiceInterface;
 use HostAttributeMap\Service\MapServiceInterface;
+use Zabbix\Client;
+use Zabbix\Zabbix;
 
 class ViewController extends BaseController
 {
@@ -90,6 +92,7 @@ class ViewController extends BaseController
         
         $this->setHeadTitle($clientEntity->getClientName());
         
+                
         // return View
         return new ViewModel(array(
             'clientEntity' => $clientEntity,
