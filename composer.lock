@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4c96ee852b3381a2000ffeab64265859",
-    "content-hash": "eef74c192e3994a1b806b82dfcc14f56",
+    "hash": "e57840fe7f80363701df609e17c20ac6",
+    "content-hash": "e76e68644b79e6785ac502c735fd9c6e",
     "packages": [
         {
             "name": "bshaffer/oauth2-server-php",
@@ -55,6 +55,49 @@
                 "oauth2"
             ],
             "time": "2015-09-18 18:05:10"
+        },
+        {
+            "name": "confirm-it-solutions/php-zabbix-api",
+            "version": "v2.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/confirm/PhpZabbixApi.git",
+                "reference": "1e9affbd5e3d693efe3950c6619f9f121f448891"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/confirm/PhpZabbixApi/zipball/1e9affbd5e3d693efe3950c6619f9f121f448891",
+                "reference": "1e9affbd5e3d693efe3950c6619f9f121f448891",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ZabbixApi": "build"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dominique Barton",
+                    "email": "dbarton@confirm.ch",
+                    "homepage": "http://www.confirm.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PhpZabbixApi library",
+            "homepage": "http://github.com/confirm-it-solutions/PhpZabbixApi",
+            "keywords": [
+                "api",
+                "zabbix"
+            ],
+            "time": "2015-06-03 14:40:35"
         },
         {
             "name": "container-interop/container-interop",

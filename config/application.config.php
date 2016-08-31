@@ -88,6 +88,7 @@ return array(
         'Ticket',
         'TicketNote',
         'WorkorderTicket',
+        'Zabbix',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
