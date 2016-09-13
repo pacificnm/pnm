@@ -24,9 +24,11 @@ class CreateControllerFactory
         
         $workorderFileService = $realServiceLocator->get('WorkorderFile\Service\WorkorderFileServiceInterface');
         
+        $clientFileService = $realServiceLocator->get('ClientFile\Service\ClientFileServiceInterface');
+        
         $fileForm = new FileForm();
         
-        return new CreateController($clientService, $workorderService, $fileService, $workorderFileService, $fileForm);
+        return new CreateController($clientService, $workorderService, $fileService, $workorderFileService, $clientFileService, $fileForm);
     }
 }
 

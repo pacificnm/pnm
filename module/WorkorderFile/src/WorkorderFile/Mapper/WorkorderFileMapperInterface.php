@@ -40,5 +40,12 @@ interface WorkorderFileMapperInterface
      * @return boolean
      */
     public function delete(WorkorderFileEntity $entity);
+    
+    /**
+     *
+     * @param number $fileId
+     * @return boolean
+     */
+    public function deleteWorkorderFile($fileId);
 }
 

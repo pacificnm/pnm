@@ -109,7 +109,6 @@ class UpdateController extends BaseController
         $this->employeeService = $employeeService;
         
         $this->workorderForm = $workorderForm;
-        
     }
 
     /**
@@ -171,7 +170,7 @@ class UpdateController extends BaseController
             $postData = $request->getPost();
             
             $form->setData($postData);
-                        
+            
             // if we are valid
             if ($form->isValid()) {
                 
@@ -179,22 +178,7 @@ class UpdateController extends BaseController
                 
                 $workorderEntity->setLocationId($postData['locationId']);
                 
-                                
                 $locationEntity = $this->locationService->get($postData['locationId']);
-                
-                if ($locationEntity) {
-                    $phoneEntity = $this->phoneService->getPrimaryPhoneByLocation($postData['locationId']);
-                    
-                    if ($phoneEntity) {
-                        $workorderEntity->setPhoneId($phoneEntity->getPhoneId());
-                    }
-                    
-                    $userEntity = $this->userService->getPrimaryUserByLocation($postData['locationId']);
-                    
-                    if ($userEntity) {
-                        $workorderEntity->setUserId($userEntity->getUserId());
-                    }
-                }
                 
                 $datePieces = explode('-', $postData['workorderDateScheduled']);
                 
@@ -204,7 +188,7 @@ class UpdateController extends BaseController
                 
                 // save work order
                 $workorderEntity = $this->workorderService->save($workorderEntity);
-
+                
                 // set history
                 $this->SetWorkorderHistory($this->getRequest()
                     ->getUri(), 'UPDATE', $this->identity()
@@ -229,7 +213,7 @@ class UpdateController extends BaseController
         return new ViewModel(array(
             'clientEntity' => $clientEntity,
             'clientId' => $id,
-            'form' => $form,
+            'form' => $form
         ));
     }
 }

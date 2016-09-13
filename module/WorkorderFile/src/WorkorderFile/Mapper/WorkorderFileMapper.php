@@ -250,5 +250,27 @@ class WorkorderFileMapper implements WorkorderFileMapperInterface
         
         return (bool) $result->getAffectedRows();
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderFile\Mapper\WorkorderFileMapperInterface::deleteWorkorderFile()
+     */
+    public function deleteWorkorderFile($fileId)
+    {
+        $action = new Delete('workorder_file');
+        
+        $action->where(array(
+            'workorder_file.file_id = ?' => $fileId
+        ));
+        
+        $sql = new Sql($this->writeAdapter);
+        
+        $stmt = $sql->prepareStatementForSqlObject($action);
+        
+        $result = $stmt->execute();
+        
+        return (bool) $result->getAffectedRows();
+    }
 }
 

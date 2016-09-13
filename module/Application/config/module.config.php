@@ -25,7 +25,7 @@ return array(
                 'options' => array(
                     'route' => '/',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\IndexController',
+                        'controller' => 'Application\\Controller\\IndexController',
                         'action' => 'index',
                     ),
                 ),
@@ -65,6 +65,16 @@ return array(
                     ),
                 ),
             ),
+            'application.rpc.ping' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/ping',
+                    'defaults' => array(
+                        'controller' => 'Application\\V1\\Rpc\\Ping\\Controller',
+                        'action' => 'ping',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -75,8 +85,8 @@ return array(
         'factories' => array(
             'translator' => 'Zend\\Mvc\\Service\\TranslatorServiceFactory',
             'navigation' => 'Zend\\Navigation\\Service\\DefaultNavigationFactory',
-            'Application\Service\GitHubServiceInterface' => 'Application\Service\Factory\GitHubServiceFactory',
-            'Application\Mapper\GitHubMapperInterface' => 'Application\Mapper\Factory\GitHubMapperFactory'
+            'Application\\Service\\GitHubServiceInterface' => 'Application\\Service\\Factory\\GitHubServiceFactory',
+            'Application\\Mapper\\GitHubMapperInterface' => 'Application\\Mapper\\Factory\\GitHubMapperFactory',
         ),
     ),
     'translator' => array(
@@ -90,13 +100,12 @@ return array(
         ),
     ),
     'controllers' => array(
-        'invokables' => array(
-            
-        ),
+        'invokables' => array(),
         'factories' => array(
-            'Application\Controller\IndexController' => 'Application\Controller\Factory\IndexControllerFactory',
+            'Application\\Controller\\IndexController' => 'Application\\Controller\\Factory\\IndexControllerFactory',
             'Application\\Controller\\BaseController' => 'Application\\Controller\\Factory\\BaseControllerFactory',
             'Application\\Controller\\KeepAliveController' => 'Application\\Controller\\Factory\\KeepAliveControllerFactory',
+            'Application\\V1\\Rpc\\Ping\\Controller' => 'Application\\V1\\Rpc\\Ping\\PingControllerFactory',
         ),
     ),
     'controller_plugins' => array(
@@ -830,6 +839,30 @@ return array(
                                         ),
                                     ),
                                     11 => array(
+                                        'label' => 'Files',
+                                        'route' => 'client-file-index',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            0 => array(
+                                                'label' => 'Create File',
+                                                'route' => 'client-file-create',
+                                                'useRouteMatch' => true,
+                                            ),
+                                            1 => array(
+                                                'label' => 'View File',
+                                                'route' => 'client-file-view',
+                                                'useRouteMatch' => true,
+                                                'pages' => array(
+                                                    0 => array(
+                                                        'label' => 'Delete File',
+                                                        'route' => 'client-file-delete',
+                                                        'useRouteMatch' => true,
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    ),
+                                    12 => array(
                                         'label' => 'Work Orders',
                                         'route' => 'workorder-list',
                                         'useRouteMatch' => true,
@@ -908,6 +941,7 @@ return array(
                                             ),
                                         ),
                                     ),
+                                    
                                 ),
                             ),
                             1 => array(
@@ -922,15 +956,39 @@ return array(
         ),
     ),
     'zf-versioning' => array(
-        'uri' => array(),
+        'uri' => array(
+            0 => 'application.rpc.ping',
+        ),
     ),
     'zf-rest' => array(),
     'zf-content-negotiation' => array(
-        'controllers' => array(),
-        'accept_whitelist' => array(),
-        'content_type_whitelist' => array(),
+        'controllers' => array(
+            'Application\\V1\\Rpc\\Ping\\Controller' => 'Json',
+        ),
+        'accept_whitelist' => array(
+            'Application\\V1\\Rpc\\Ping\\Controller' => array(
+                0 => 'application/vnd.application.v1+json',
+                1 => 'application/json',
+                2 => 'application/*+json',
+            ),
+        ),
+        'content_type_whitelist' => array(
+            'Application\\V1\\Rpc\\Ping\\Controller' => array(
+                0 => 'application/vnd.application.v1+json',
+                1 => 'application/json',
+            ),
+        ),
     ),
     'zf-hal' => array(
         'metadata_map' => array(),
+    ),
+    'zf-rpc' => array(
+        'Application\\V1\\Rpc\\Ping\\Controller' => array(
+            'service_name' => 'ping',
+            'http_methods' => array(
+                0 => 'GET',
+            ),
+            'route_name' => 'application.rpc.ping',
+        ),
     ),
 );

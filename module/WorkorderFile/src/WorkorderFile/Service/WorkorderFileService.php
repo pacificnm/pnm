@@ -89,5 +89,15 @@ class WorkorderFileService implements WorkorderFileServiceInterface
     {
         return $this->mapper->delete($entity);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderFile\Service\WorkorderFileServiceInterface::deleteWorkorderFile()
+     */
+    public function deleteWorkorderFile($fileId)
+    {
+        return $this->mapper->deleteWorkorderFile($fileId);
+    }
 }
 

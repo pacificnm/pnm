@@ -8,6 +8,7 @@ use WorkorderFile\Service\WorkorderFileServiceInterface;
 use File\Form\FileForm;
 use Client\Service\ClientServiceInterface;
 use Zend\View\Model\ViewModel;
+use ClientFile\Service\ClientFileServiceInterface;
 
 class CreateController extends BaseController
 {
@@ -37,20 +38,27 @@ class CreateController extends BaseController
     protected $workorderFileService;
 
     /**
+     * 
+     * @var ClientFileServiceInterface
+     */
+    protected $clientFileService;
+    
+    /**
      *
      * @var FileForm
      */
     protected $fileForm;
 
     /**
-     *
-     * @param ClientServiceInterface $clientService            
-     * @param WorkorderServiceInterface $workorderService            
-     * @param FileServiceInterface $fileService            
-     * @param WorkorderFileServiceInterface $workorderFileService            
-     * @param FileForm $fileForm            
+     * 
+     * @param ClientServiceInterface $clientService
+     * @param WorkorderServiceInterface $workorderService
+     * @param FileServiceInterface $fileService
+     * @param WorkorderFileServiceInterface $workorderFileService
+     * @param ClientFileServiceInterface $clientFileService
+     * @param FileForm $fileForm
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, FileServiceInterface $fileService, WorkorderFileServiceInterface $workorderFileService, FileForm $fileForm)
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, FileServiceInterface $fileService, WorkorderFileServiceInterface $workorderFileService, ClientFileServiceInterface $clientFileService, FileForm $fileForm)
     {
         $this->clientService = $clientService;
         
@@ -60,9 +68,16 @@ class CreateController extends BaseController
         
         $this->workorderFileService = $workorderFileService;
         
+        $this->clientFileService = $clientFileService;
+        
         $this->fileForm = $fileForm;
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
+     */
     public function indexAction()
     {
         $id = $this->params()->fromRoute('clientId');
@@ -128,6 +143,9 @@ class CreateController extends BaseController
                 
                 // map file
                 $this->workorderFileService->createWorkorderFile($fileEntity->getFileId(), $workorderId);
+                
+                // map file to client files
+                $this->clientFileService->createClientFile($fileEntity->getFileId(), $id);
                 
                 // save history
                 $this->SetWorkorderHistory($this->getRequest()

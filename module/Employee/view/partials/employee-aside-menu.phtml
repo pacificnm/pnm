@@ -16,7 +16,7 @@
 		<!-- home -->
 		<li class="<?php if($this->activeSubMenuItem == 'employee-profile'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('employee-profile'); ?>" title="My Profile">
-				<i class="fa fa-home"></i> <span><?php echo $this->translate('Home')?></span>
+				<i class="fa fa-home" aria-hidden="true"></i> <span><?php echo $this->translate('Home')?></span>
 			</a>
 		</li>
 			
@@ -25,7 +25,7 @@
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'client-favorite-index') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'client-favorite-index'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('client-favorite-index'); ?>" title="Client Favorites">
-				<i class="fa fa-star"></i> <span><?php echo $this->translate('Client Favorites')?></span>
+				<i class="fa fa-star" aria-hidden="true"></i> <span><?php echo $this->translate('Client Favorites')?></span>
 			</a>
 		</li>
 		<?php endif; ?>
@@ -34,7 +34,7 @@
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'employee-password') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'employee-password'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('employee-password');?>" title="<?php echo $this->translate('Change Password')?>">
-				<i class="fa fa-lock"></i> <span><?php echo $this->translate('Change Password')?></span>
+				<i class="fa fa-lock" aria-hidden="true"></i> <span><?php echo $this->translate('Change Password')?></span>
 			</a>
 		</li>
 		<?php endif; ?>
@@ -42,7 +42,7 @@
 		<!-- messages -->
 		<li class="<?php if($this->activeSubMenuItem == ''):?>active<?php endif;?>">
 			<a href="" >
-				<i class="fa fa-envelope"></i> <span><?php echo $this->translate('Messages')?></span>
+				<i class="fa fa-envelope" aria-hidden="true"></i> <span><?php echo $this->translate('Messages')?></span>
 			</a>
 		</li>
 			
@@ -86,7 +86,7 @@
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'client-index') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'client-index'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('client-index'); ?>" title="<?php echo $this->translate('Clients'); ?>">
-				<i class="fa fa-group"></i> <?php echo $this->translate('Clients'); ?>
+				<i class="fa fa-group" aria-hidden="true"></i> <?php echo $this->translate('Clients'); ?>
 			</a>
 		</li>
 		<?php endif; ?>
@@ -99,7 +99,7 @@
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'client-view') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'client-view'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('client-view', array('clientId' => $this->clientId)); ?>">
-				<i class="fa fa-home"></i> <?php echo $this->translate('Client Home')?>
+				<i class="fa fa-home" aria-hidden="true"></i> <?php echo $this->translate('Client Home')?>
 			</a>
 		</li>
 		<?php endif; ?>
@@ -111,13 +111,13 @@
 		<?php if($favoriteEntity): ?>
 		<li class="<?php if($this->activeSubMenuItem == 'client-favorite-create'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('client-favorite-delete', array('clientId' => $this->clientId, 'clientFavoriteId' => $favoriteEntity->getclientFavoriteId())); ?>" title="<?php echo $this->translate('Remove From Favorite')?>">
-				<i class="fa fa-star"></i> <?php echo $this->translate('Remove From Favorite')?>
+				<i class="fa fa-star" aria-hidden="true"></i> <?php echo $this->translate('Remove From Favorite')?>
 			</a>
 		</li>
 		<?php else: ?>
 		<li class="<?php if($this->activeSubMenuItem == 'client-favorite-create'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('client-favorite-create', array('clientId' => $this->clientId)); ?>">
-				<i class="fa fa-star"></i> <?php echo $this->translate('Add To Favorite')?>
+				<i class="fa fa-star" aria-hidden="true"></i> <?php echo $this->translate('Add To Favorite')?>
 			</a>
 		</li>
 		<?php endif; ?>
@@ -127,7 +127,7 @@
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'call-log-index') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'call-log-index'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('call-log-index', array('clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Estimates')?>">
-				<i class="fa fa-phone"></i> <?php echo $this->translate('Call Log')?>
+				<i class="fa fa-phone" aria-hidden="true"></i> <?php echo $this->translate('Call Log')?>
 			</a>
 		</li>
 		<?php endif; ?>
@@ -137,7 +137,16 @@
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'estimate-index') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'estimate-index'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('estimate-index', array('clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Estimates')?>">
-				<i class="fa fa-newspaper-o"></i> <?php echo $this->translate('Estimates')?>
+				<i class="fa fa-newspaper-o" aria-hidden="true"></i> <?php echo $this->translate('Estimates')?>
+			</a>
+		</li>
+		<?php endif; ?>
+		
+		<!-- File -->
+		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'client-file-index') ):?>
+		<li class="<?php if($this->activeSubMenuItem == 'client-file-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('client-file-index', array('clientId' => $this->clientId)); ?>" title="<?php echo $this->translate('Files')?>">
+				<i class="fa fa-file" aria-hidden="true"></i> <?php echo $this->translate('Files')?>
 			</a>
 		</li>
 		<?php endif; ?>
@@ -146,7 +155,7 @@
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'host-list') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'host-list'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('host-list', array('clientId' => $this->clientId)); ?>">
-				<i class="fa fa-desktop"></i> <?php echo $this->translate('Hosts')?>
+				<i class="fa fa-desktop" aria-hidden="true"></i> <?php echo $this->translate('Hosts')?>
 			</a>
 		</li>
 		<?php endif; ?>
@@ -155,7 +164,7 @@
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'invoice-list') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'invoice-list'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('invoice-list', array('clientId' => $this->clientId)); ?>">
-				<i class="fa fa-credit-card"></i> <?php echo $this->translate('Invoices')?>
+				<i class="fa fa-credit-card" aria-hidden="true"></i> <?php echo $this->translate('Invoices')?>
 			</a>
 		</li>
 		<?php endif; ?>
@@ -164,7 +173,7 @@
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'network-list') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'network-list'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('network-list', array('clientId' => $this->clientId)); ?>">
-				<i class="fa fa-sitemap"></i> <?php echo $this->translate('Network')?>
+				<i class="fa fa-sitemap" aria-hidden="true"></i> <?php echo $this->translate('Network')?>
 			</a>
 		</li>
 		<?php endif; ?>
@@ -173,7 +182,7 @@
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'password-list') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'password-list'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('password-list', array('clientId' => $this->clientId)); ?>">
-				<i class="fa fa-lock"></i> <?php echo $this->translate('Passwords')?>
+				<i class="fa fa-lock" aria-hidden="true"></i> <?php echo $this->translate('Passwords')?>
 			</a>
 		</li>
 		<?php endif; ?>
@@ -191,7 +200,7 @@
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'task-list') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'task-list'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('task-list', array('clientId' => $this->clientId)); ?>">
-				<i class="fa fa-tasks"></i> <?php echo $this->translate('Tasks')?>
+				<i class="fa fa-tasks" aria-hidden="true"></i> <?php echo $this->translate('Tasks')?>
 			</a>
 		</li>
 		<?php endif; ?>
@@ -200,7 +209,7 @@
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'user-list') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'user-list'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('user-list', array('clientId' => $this->clientId)); ?>">
-				<i class="fa fa-user"></i> <?php echo $this->translate('Users')?>
+				<i class="fa fa-user" aria-hidden="true"></i> <?php echo $this->translate('Users')?>
 			</a>
 		</li>
 		<?php endif; ?>
@@ -209,7 +218,7 @@
 		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'workorder-list') ):?>
 		<li class="<?php if($this->activeSubMenuItem == 'workorder-list'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('workorder-list', array('clientId' => $this->clientId)); ?>">
-				<i class="fa fa-wrench"></i> <?php echo $this->translate('Work Orders')?>
+				<i class="fa fa-wrench" aria-hidden="true"></i> <?php echo $this->translate('Work Orders')?>
 			</a>
 		</li>
 		<?php endif; ?>

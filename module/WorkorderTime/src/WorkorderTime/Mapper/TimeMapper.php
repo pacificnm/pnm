@@ -240,9 +240,7 @@ class TimeMapper implements TimeMapperInterface
             'workorder.client_id = ?' => $clientId
         ));
         
-        $select->where(array(
-            'workorder.workorder_status = ?' => 'Closed'
-        ));
+        
         
         $select->group('labor_id');
         
@@ -286,11 +284,7 @@ class TimeMapper implements TimeMapperInterface
             'workorder_date_close'
         ), 'inner');
         
-        // status
-        $select->where(array(
-            'workorder.workorder_status = ?' => 'Closed'
-        ));
-        
+                
         if ($start) {
             $select->where->greaterThanOrEqualTo('workorder.workorder_date_scheduled', $start);
         }
@@ -435,11 +429,7 @@ class TimeMapper implements TimeMapperInterface
         $select->join('workorder', 'workorder_time.workorder_id = workorder.workorder_id', array(
         ), 'inner');
         
-        // status
-        $select->where(array(
-            'workorder.workorder_status = ?' => 'Closed'
-        ));
-        
+
         if ($start) {
            $select->where->greaterThanOrEqualTo('workorder.workorder_date_scheduled', $start);
         }
@@ -469,6 +459,11 @@ class TimeMapper implements TimeMapperInterface
         return 0;
     }
     
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \WorkorderTime\Mapper\TimeMapperInterface::getTotalsForYear()
+     */
     public function getTotalsForYear($start, $end, $clientId = null)
     {
         $sql = new Sql($this->readAdapter);
@@ -487,10 +482,7 @@ class TimeMapper implements TimeMapperInterface
         $select->join('workorder', 'workorder_time.workorder_id = workorder.workorder_id', array(
         ), 'inner');
     
-        // status
-        $select->where(array(
-            'workorder.workorder_status = ?' => 'Closed'
-        ));
+        
     
         if ($start) {
             $select->where->greaterThanOrEqualTo('workorder.workorder_date_scheduled', $start);
