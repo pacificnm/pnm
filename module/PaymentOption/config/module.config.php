@@ -1,4 +1,11 @@
 <?php
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
 return array(
     'module' => array(
         'PaymentOption' => array(
@@ -13,6 +20,10 @@ return array(
                 'accountant' => array(),
                 'administrator' => array(
                     'payment-option-index',
+                    'payment-option-create',
+                    'payment-option-view',
+                    'payment-option-update',
+                    'payment-option-delete'
                 )
             )
         ),
@@ -25,7 +36,7 @@ return array(
             'PaymentOption\Controller\Create' => 'PaymentOption\Controller\Factory\CreateControllerFactory',
             'PaymentOption\Controller\Update' => 'PaymentOption\Controller\Factory\UpdateControllerFactory',
             'PaymentOption\Controller\View' => 'PaymentOption\Controller\Factory\ViewControllerFactory',
-            'PaymentOption\Controller\Delete' => 'PaymentOption\Controller\Factory\DeleteControllerFactoryF'
+            'PaymentOption\Controller\Delete' => 'PaymentOption\Controller\Factory\DeleteControllerFactory'
         )
     ),
     
@@ -42,6 +53,8 @@ return array(
         'routes' => array(
             'payment-option-index' => array(
                 'title' => 'Payment Options',
+                'activeMenuItem' => 'admin',
+                'activeSubMenuItem' => 'payment-option-index',
                 'type' => 'literal',
                 'options' => array(
                     'route' => '/admin/payment-options',
@@ -53,6 +66,8 @@ return array(
             ),
             'payment-option-create' => array(
                 'title' => 'Create Payment Options',
+                'activeMenuItem' => 'admin',
+                'activeSubMenuItem' => 'payment-option-index',
                 'type' => 'literal',
                 'options' => array(
                     'route' => '/admin/payment-options/create',
@@ -64,6 +79,8 @@ return array(
             ),
             'payment-option-view' => array(
                 'title' => 'View Payment Options',
+                'activeMenuItem' => 'admin',
+                'activeSubMenuItem' => 'payment-option-index',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/admin/payment-options/view/[:paymentOptionId]',
@@ -75,6 +92,8 @@ return array(
             ),
             'payment-option-update' => array(
                 'title' => 'Edit Payment Options',
+                'activeMenuItem' => 'admin',
+                'activeSubMenuItem' => 'payment-option-index',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/admin/payment-options/update/[:paymentOptionId]',
@@ -86,6 +105,8 @@ return array(
             ),
             'payment-option-delete' => array(
                 'title' => 'Edit Payment Options',
+                'activeMenuItem' => 'admin',
+                'activeSubMenuItem' => 'payment-option-index',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/admin/payment-options/delete/[:paymentOptionId]',
