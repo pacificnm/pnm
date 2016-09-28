@@ -320,7 +320,23 @@ return array(
                                 'label' => 'Payment Options',
                                 'route' => 'payment-option-index',
                                 'useRouteMatch' => true,
-                                'pages' => array(),
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Create',
+                                        'route' => 'payment-option-create',
+                                        'useRouteMatch' => true,
+                                    ),
+                                    array(
+                                        'label' => 'Edit',
+                                        'route' => 'payment-option-update',
+                                        'useRouteMatch' => true,
+                                    ),
+                                    array(
+                                        'label' => 'Delete',
+                                        'route' => 'payment-option-delete',
+                                        'useRouteMatch' => true,
+                                    )
+                                ),
                             ),
                             2 => array(
                                 'label' => 'Invoice Options',
