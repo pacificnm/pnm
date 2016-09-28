@@ -100,11 +100,12 @@ class ScheduleResource extends AbstractResourceListener
         $workorderEntitys = $this->workorderService->getWorkorderSchedule($filter);
         
         foreach($workorderEntitys as $workorderEntity) {
+            $title = $workorderEntity->getClientEntity()->getClientName() . ' - #' . $workorderEntity->getWorkorderId() . ' ' .$workorderEntity->getWorkorderTitle();
             $data[] = array(
                 'id' => $workorderEntity->getWorkorderId(),
-                'title' => strip_tags($workorderEntity->getWorkorderDescription()),
-                'start' => date("Y-m-d H:i A", $workorderEntity->getWorkorderDateScheduled()),
-                'end' => date("Y-m-d  H:i A", $workorderEntity->getWorkorderDateEnd()),
+                'title' => $title,
+                'start' => date("c", $workorderEntity->getWorkorderDateScheduled()),
+                'end' => date("c", $workorderEntity->getWorkorderDateEnd()),
                 'url' => '/client/'.$workorderEntity->getClientId().'/work-order/'.$workorderEntity->getWorkorderId().'/view'
             );
         }

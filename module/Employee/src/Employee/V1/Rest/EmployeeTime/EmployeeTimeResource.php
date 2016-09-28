@@ -77,9 +77,8 @@ class EmployeeTimeResource extends AbstractResourceListener
     {
         $timeEntitys = $this->timeService->getEmployeeTime(1);
         
-        return $timeEntitys;
         
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        return $timeEntitys;
     }
 
     /**
