@@ -1,27 +1,35 @@
 <?php
 namespace Client\Controller\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Client\Controller\UpdateController;
 use Client\Form\ClientForm;
+use Phone\Form\PhoneForm;
 
-class UpdateControllerFactory implements FactoryInterface
+class UpdateControllerFactory
 {
 
     /**
-     * 
-     * {@inheritDoc}
-     * @see \Zend\ServiceManager\FactoryInterface::createService()
+     *
+     * @param ServiceLocatorInterface $serviceLocator            
+     * @return \Client\Controller\UpdateController
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
         $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
         
+        $locationService = $realServiceLocator->get('Location\Service\LocationServiceInterface');
+        
+        $phoneService = $realServiceLocator->get('Phone\Service\PhoneServiceInterface');
+        
         $clientForm = new ClientForm();
         
-        return new UpdateController($clientService, $clientForm);
+        $locationForm = $realServiceLocator->get('Location\Form\LocationForm');
+        
+        $phoneForm = new PhoneForm();
+        
+        return new UpdateController($clientService, $locationService, $phoneService, $clientForm, $locationForm, $phoneForm);
     }
 }

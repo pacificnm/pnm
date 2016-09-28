@@ -51,18 +51,7 @@ class ClientService implements ClientServiceInterface
      */
     public function get($id)
     {
-        $key = 'client-service-get-' . $id;
-        
-        $clientEntity = $this->memcached->getItem($key);
-        
-        if (! $clientEntity) {
-            
-            $clientEntity = $this->mapper->get($id);
-            
-            $this->memcached->setItem($key, $clientEntity);
-        }
-        
-        return $clientEntity;
+        return $this->mapper->get($id);
     }
 
     /**
@@ -74,6 +63,7 @@ class ClientService implements ClientServiceInterface
     public function save(ClientEntity $entity)
     {
         return $this->mapper->save($entity);
+
     }
 
     /**
