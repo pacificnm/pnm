@@ -31,6 +31,15 @@ CREATE TABLE IF NOT EXISTS `config` (
 
 -- updated 
 ALTER TABLE `config` ADD `config_google_api_key` VARCHAR(100) NOT NULL AFTER `config_currency`;
+
+
+ALTER TABLE `config` ADD `config_smtp_host` VARCHAR(255) NULL AFTER `config_google_api_key`;
+ALTER TABLE `config` ADD `config_smtp_port` INT(4) NULL AFTER `config_smtp_host`;
+ALTER TABLE `config` ADD `config_smtp_security` VARCHAR(60) NULL AFTER `config_smtp_port`;
+ALTER TABLE `config` ADD `config_smtp_display` VARCHAR(255) NULL AFTER `config_smtp_security`;
+ALTER TABLE `config` ADD `config_smtp_email` VARCHAR(255) NULL AFTER `config_smtp_display`;
+ALTER TABLE `config` ADD `config_smtp_password` VARCHAR(255) NOT NULL AFTER `config_smtp_email`;
+
 --
 -- RELATIONS FOR TABLE `config`:
 --

@@ -23,7 +23,8 @@ return array(
     ),
     'controllers' => array(
         'factories' => array(
-            'TicketNote\Controller\CreateController' => 'TicketNote\Controller\Factory\CreateControllerFactory'
+            'TicketNote\Controller\CreateController' => 'TicketNote\Controller\Factory\CreateControllerFactory',
+            'TicketNote\Controller\UpdateController' => 'TicketNote\Controller\Factory\UpdateControllerFactory',
         )
     ),
     'service_manager' => array(
@@ -41,6 +42,17 @@ return array(
                     'route' => '/client/[:clientId]/ticket/[:ticketId]/ticket-note/create',
                     'defaults' => array(
                         'controller' => 'TicketNote\Controller\CreateController',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'ticket-note-update' => array(
+                'title' => 'Edit Note',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/ticket/[:ticketId]/ticket-note/update/[:ticketNoteId]',
+                    'defaults' => array(
+                        'controller' => 'TicketNote\Controller\UpdateController',
                         'action' => 'index',
                     ),
                 ),

@@ -86,7 +86,28 @@
 				<h3 class="profile-username"><?php echo $this->translate('Email Settings'); ?></h3>
 				<ul class="list-group list-group-unbordered">
 					<li class="list-group-item">
-						<b><?php echo $this->translate('Default E-Mail')?></b> <a class="pull-right"><?php echo $this->configEntity->getConfigCompanyName();?></a>
+						<b><?php echo $this->translate('SMTP Host')?></b> 
+							<a class="pull-right"><?php echo $this->configEntity->getConfigSmtpHost();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('SMTP Port')?></b> 
+							<a class="pull-right"><?php echo $this->configEntity->getConfigSmtpPort();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('SMTP Security')?></b> 
+							<a class="pull-right"><?php echo $this->configEntity->getConfigSmtpSecurity();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('SMTP Display Name')?></b> 
+							<a class="pull-right"><?php echo $this->configEntity->getConfigSmtpDisplay();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('SMTP E-Mail')?></b> 
+							<a class="pull-right"><?php echo $this->configEntity->getConfigSmtpEmail();?></a>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('SMTP Password')?></b> 
+							<a class="pull-right">********</a>
 					</li>
 				</ul>
 			</div>

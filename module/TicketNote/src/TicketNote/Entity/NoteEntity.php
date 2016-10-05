@@ -2,6 +2,7 @@
 namespace TicketNote\Entity;
 
 use Auth\Entity\AuthEntity;
+use Ticket\Entity\TicketEntity;
 
 class NoteEntity
 {
@@ -47,6 +48,12 @@ class NoteEntity
      * @var AuthEntity
      */
     protected $authEntity;
+
+    /**
+     *
+     * @var TicketEntity
+     */
+    protected $ticketEntity;
 
     /**
      *
@@ -113,6 +120,15 @@ class NoteEntity
 
     /**
      *
+     * @return the $ticketEntity
+     */
+    public function getTicketEntity()
+    {
+        return $this->ticketEntity;
+    }
+
+    /**
+     *
      * @param number $ticketNoteId            
      */
     public function setTicketNoteId($ticketNoteId)
@@ -172,6 +188,15 @@ class NoteEntity
     public function setAuthEntity($authEntity)
     {
         $this->authEntity = $authEntity;
+    }
+
+    /**
+     *
+     * @param \Ticket\Entity\TicketEntity $ticketEntity            
+     */
+    public function setTicketEntity($ticketEntity)
+    {
+        $this->ticketEntity = $ticketEntity;
     }
 }
 

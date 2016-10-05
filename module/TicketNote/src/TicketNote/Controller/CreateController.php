@@ -1,14 +1,14 @@
 <?php
 namespace TicketNote\Controller;
 
-use Application\Controller\BaseController;
 use TicketNote\Form\EmployeeForm;
 use TicketNote\Form\UserForm;
 use Zend\View\Model\ViewModel;
 use TicketNote\Service\NoteServiceInterface;
 use Ticket\Service\TicketServiceInterface;
+use Client\Controller\ClientBaseController;
 
-class CreateController extends BaseController
+class CreateController extends ClientBaseController
 {
     /**
      * 
@@ -41,15 +41,14 @@ class CreateController extends BaseController
      */
     public function indexAction()
     {
+        parent::indexAction();
+        
         $request = $this->getRequest();
         
-        $clientId = $this->params()->fromRoute('clientId');
-        
         $ticketId = $this->params()->fromRoute('ticketId');
-        
-        $clientEntity = $this->getClient($clientId);
-        
-        $ticketEntity = $this->GetTicket($clientId, $ticketId);
+
+        // get ticket
+        $ticketEntity = $this->GetTicket($this->clientId,$ticketId);
         
         $authType = $this->identity()->getAuthType();
         
@@ -76,10 +75,6 @@ class CreateController extends BaseController
              
                 // save the note
                 $noteEntity = $this->noteService->save($entity);
-
-                // set history
-                $this->SetTicketHistory($request->getUri(), 'CREATE', $this->identity()
-                    ->getAuthId(), 'Note was added to ticket #', $ticketId);
                 
                 // if status is not active set it
                 if($ticketEntity->getTicketStatus() != 'Active') {
@@ -88,10 +83,19 @@ class CreateController extends BaseController
                     $this->ticketService->save($ticketEntity);
                 }
                 
+                // trigger event
+                $this->getEventManager()->trigger('ticketNoteCreate', $this, array(
+                    'ticketEntity' => $ticketEntity,
+                    'noteEntity' => $noteEntity,
+                    'authId' => $this->identity()->getAuthId(),
+                    'historyUrl' => $this->getRequest()->getUri()
+                ));
+                
                 $this->flashMessenger()->addSuccessMessage('Your note was saved.');
                 
+                // return to view ticket
                 return $this->redirect()->toRoute('ticket-view', array(
-                    'clientId' => $clientId,
+                    'clientId' => $this->clientId,
                     'ticketId' => $ticketId
                 ));
             }
@@ -106,9 +110,9 @@ class CreateController extends BaseController
         
         // return view
         return new ViewModel(array(
-            'clientId' => $clientId,
+            'clientId' => $this->clientId,
             'ticketId' => $ticketId,
-            'clientEnitity' => $clientEntity,
+            'clientEnitity' => $this->clientEntity,
             'ticketEntity' => $ticketEntity,
             'form' => $form
         ));

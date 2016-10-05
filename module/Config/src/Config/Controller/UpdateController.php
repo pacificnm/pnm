@@ -12,6 +12,8 @@ use Application\Controller\BaseController;
 use Zend\View\Model\ViewModel;
 use Config\Service\ConfigServiceInterface;
 use Config\Form\ConfigForm;
+use Zend\Crypt\Password\Bcrypt;
+use Zend\Crypt\BlockCipher;
 
 /**
  *
@@ -35,14 +37,23 @@ class UpdateController extends BaseController
     
     /**
      * 
+     * @var array
+     */
+    protected $config;
+    
+    /**
+     * 
      * @param ConfigServiceInterface $configService
      * @param ConfigForm $configForm
+     * @param array $config
      */
-    public function __construct(ConfigServiceInterface $configService, ConfigForm $configForm)
+    public function __construct(ConfigServiceInterface $configService, ConfigForm $configForm, array $config)
     {
         $this->configService = $configService;
         
         $this->configForm = $configForm;
+        
+        $this->config = $config;
     }
     
     /**
@@ -66,6 +77,8 @@ class UpdateController extends BaseController
         
         $request = $this->getRequest();
         
+        $tempSmtpPassword = $configEntity->getConfigSmtpPassword();
+        
         // if we have a post
         if ($request->isPost()) {
             // get post
@@ -78,6 +91,19 @@ class UpdateController extends BaseController
                 
                 $configEntity = $this->configForm->getData();
                 
+                // check if smtp password is differnt
+                if($tempSmtpPassword != $configEntity->getConfigSmtpPassword()) {
+                    $blockCipher = BlockCipher::factory('mcrypt', array(
+                        'algo' => 'aes'
+                    ));
+                    
+                    $blockCipher->setKey($this->config['encryption-key']);
+                    
+                    $configEntity->setConfigSmtpPassword($blockCipher->encrypt($configEntity->getConfigSmtpPassword()));
+                } else {
+                    $configEntity->setConfigSmtpPassword($tempSmtpPassword);
+                }
+                
                 $this->configService->save($configEntity);
                 
                 $this->flashmessenger()->addSuccessMessage('The config was saved');
@@ -85,8 +111,11 @@ class UpdateController extends BaseController
                 return $this->redirect()->toRoute('config-index');
             }
         }
+        
+        // return view model
         return new ViewModel(array(
             'form' => $this->configForm
         ));
     }
+    
 }

@@ -1,12 +1,12 @@
 <?php
 namespace Ticket\Controller;
 
-use Application\Controller\BaseController;
 use Ticket\Service\TicketServiceInterface;
 use Ticket\Form\EmployeeForm;
 use Zend\View\Model\ViewModel;
+use Client\Controller\ClientBaseController;
 
-class EmployeeController extends BaseController
+class EmployeeController extends ClientBaseController
 {
 
     /**
@@ -35,15 +35,12 @@ class EmployeeController extends BaseController
      */
     public function indexAction()
     {
-        $clientId = $this->params()->fromRoute('clientId');
+        $request = $this->getRequest();
         
         $ticketId = $this->params()->fromRoute('ticketId');
         
-        $request = $this->getRequest();
-        
-        $clientEntity = $this->getClient($clientId);
-        
-        $ticketEntity = $this->ticketService->get($ticketId);
+        // get ticket entity
+        $ticketEntity = $this->GetTicket($this->clientId, $ticketId);
         
         // if we have a post
         if ($request->isPost()) {
@@ -56,19 +53,22 @@ class EmployeeController extends BaseController
             // if we are valid
             if ($this->form->isValid()) {
                 
-                // get hydrated form results
-                $entity = $this->form->getData();
+                // save ticket
+                $ticketEntity = $this->ticketService->save($this->form->getData());
                 
-                $ticketEntity = $this->ticketService->save($entity);
+                // trigger ticketUpdate event
+                $this->getEventManager()->trigger('ticketUpdate', $this, array(
+                    'ticketEntity' => $ticketEntity,
+                    'authId' => $this->identity()->getAuthId(),
+                    'historyUrl' => $this->getRequest()->getUri()
+                ));
                 
-                // @todo complete history for ticket
-                $this->SetTicketHistory($request->getUri(), CREATE, $this->identity()
-                    ->getAuthId(), 'Ticket was updated', $ticketEntity->getTicketId());
-                
+                // set flash messages
                 $this->flashMessenger()->addSuccessMessage('The support ticket was saved.');
                 
+                // return to view the ticket
                 return $this->redirect()->toRoute('ticket-view', array(
-                    'clientId' => $clientId,
+                    'clientId' => $this->clientId,
                     'ticketId' => $ticketEntity->getTicketId()
                 ));
             }
@@ -76,19 +76,12 @@ class EmployeeController extends BaseController
         
         // bind to form
         $this->form->bind($ticketEntity);
-        
-        // set layout up
-        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
-        
-        $this->layout()->setVariable('activeMenuItem', 'client');
-        
-        $this->layout()->setVariable('activeSubMenuItem', 'ticket-index');
-        
+              
         // return view model
         return new ViewModel(array(
             'ticketEntity' => $ticketEntity,
-            'clientEntity' => $clientEntity,
-            'clientId' => $clientId,
+            'clientEntity' => $this->clientEntity,
+            'clientId' => $this->clientId,
             'ticketId' => $ticketId,
             'form' => $this->form
         ));

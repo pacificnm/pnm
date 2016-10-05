@@ -15,52 +15,53 @@ use TicketNote\Entity\NoteEntity;
 
 class MysqlMapper implements MysqlMapperInterface
 {
+
     /**
      *
      * @var AdapterInterface
      */
     protected $readAdapter;
-    
+
     /**
      *
      * @var AdapterInterface
      */
     protected $writeAdapter;
-    
+
     /**
      *
      * @var HydratorInterface
      */
     protected $hydrator;
-    
+
     /**
      *
      * @var NoteEntity
      */
     protected $prototype;
-    
+
     /**
      *
-     * @param AdapterInterface $readAdapter
-     * @param AdapterInterface $writeAdapter
-     * @param HydratorInterface $hydrator
-     * @param NoteEntity $prototype
+     * @param AdapterInterface $readAdapter            
+     * @param AdapterInterface $writeAdapter            
+     * @param HydratorInterface $hydrator            
+     * @param NoteEntity $prototype            
      */
     public function __construct(AdapterInterface $readAdapter, AdapterInterface $writeAdapter, HydratorInterface $hydrator, NoteEntity $prototype)
     {
         $this->readAdapter = $readAdapter;
-    
+        
         $this->writeAdapter = $writeAdapter;
-    
+        
         $this->hydrator = $hydrator;
-    
+        
         $this->prototype = $prototype;
     }
-    
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \TicketNote\Mapper\MysqlMapperInterface::getAll()
      */
     public function getAll($filter)
@@ -78,7 +79,17 @@ class MysqlMapper implements MysqlMapperInterface
             'employee_id'
         ), 'inner');
         
-        if(array_key_exists('ticketId', $filter)) {
+        // join ticket
+        $select->join('ticket', 'ticket_note.ticket_id = ticket.ticket_id', array(
+            'client_id',
+            'user_id',
+            'ticket_title',
+            'ticket_status',
+            'ticket_date_open',
+            'ticket_date_close'
+        ), 'inner');
+        
+        if (array_key_exists('ticketId', $filter)) {
             $select->where(array(
                 'ticket_note.ticket_id = ?' => $filter['ticketId']
             ));
@@ -94,8 +105,9 @@ class MysqlMapper implements MysqlMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \TicketNote\Mapper\MysqlMapperInterface::get()
      */
     public function get($id)
@@ -103,6 +115,15 @@ class MysqlMapper implements MysqlMapperInterface
         $sql = new Sql($this->readAdapter);
         
         $select = $sql->select('ticket_note');
+        
+        $select->join('auth', 'ticket_note.auth_id = auth.auth_id', array(
+            'auth_role',
+            'auth_email',
+            'auth_name',
+            'auth_type',
+            'user',
+            'employee_id'
+        ), 'inner');
         
         $select->where(array(
             'ticket_note.ticket_note_id = ?' => $id
@@ -113,11 +134,11 @@ class MysqlMapper implements MysqlMapperInterface
         $result = $stmt->execute();
         
         if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
+            
             $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
-        
+            
             $resultSet->buffer();
-        
+            
             return $resultSet->initialize($result)->current();
         }
         
@@ -125,29 +146,29 @@ class MysqlMapper implements MysqlMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \TicketNote\Mapper\MysqlMapperInterface::save()
      */
     public function save(NoteEntity $entity)
     {
         $postData = $this->hydrator->extract($entity);
-         
         
         if ($entity->getTicketNoteId()) {
-        
+            
             // ID present, it's an Update
             $action = new Update('ticket_note');
-        
+            
             $action->set($postData);
-        
+            
             $action->where(array(
                 'ticket_note.ticket_note_id = ?' => $entity->getTicketNoteId()
             ));
         } else {
             // ID NOT present, it's an Insert
             $action = new Insert('ticket_note');
-        
+            
             $action->values($postData);
         }
         
@@ -159,12 +180,12 @@ class MysqlMapper implements MysqlMapperInterface
         
         if ($result instanceof ResultInterface) {
             $newId = $result->getGeneratedValue();
-        
+            
             if ($newId) {
                 // When a value has been generated, set it on the object
                 $entity->setTicketNoteId($newId);
             }
-        
+            
             return $entity;
         }
         
@@ -172,8 +193,9 @@ class MysqlMapper implements MysqlMapperInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \TicketNote\Mapper\MysqlMapperInterface::delete()
      */
     public function delete(NoteEntity $entity)

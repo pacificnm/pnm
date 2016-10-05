@@ -232,6 +232,87 @@
               		</div>
               	</div>
               	
+              	<h4><?php echo $this->translate('SMTP Settings'); ?></h4>
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-6">
+						<?php $element = $this->form->get('configSmtpHost'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-2">
+						<?php $element = $this->form->get('configSmtpPort'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-6">
+						<?php $element = $this->form->get('configSmtpSecurity'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-12">
+						<?php $element = $this->form->get('configSmtpDisplay'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-12">
+						<?php $element = $this->form->get('configSmtpEmail'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-12">
+						<?php $element = $this->form->get('configSmtpPassword'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
 				<?php echo $this->formElement($this->form->get('configId')); ?>
 				<?php echo $this->formElement($this->form->get('configVersion')); ?>
 				<?php echo $this->formElement($this->form->get('configHttpAddress')); ?>

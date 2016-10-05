@@ -3,6 +3,7 @@ namespace Application\Controller\Plugin;
 
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\View\Renderer\PhpRenderer;
+use Zend\View\Model\ViewModel;
 
 class SetPageTitle extends AbstractPlugin
 {
@@ -31,13 +32,23 @@ class SetPageTitle extends AbstractPlugin
         $this->phpRenderer = $phpRenderer;
     }
 
-    public function __invoke($matchedRouteName)
+    /**
+     * 
+     * @param string $matchedRouteName
+     * @param ViewModel $layout
+     * @return mixed
+     */
+    public function __invoke($matchedRouteName, $layout)
     {
         if (array_key_exists('title', $this->config['router']['routes'][$matchedRouteName])) {
             $this->phpRenderer->headTitle($this->config['router']['routes'][$matchedRouteName]['title']);
         }
         
-        return $this->config['router']['routes'][$matchedRouteName]['title'];
+        $pageTitle = $this->config['router']['routes'][$matchedRouteName]['title'];
+        
+        $layout->setVariable('pageTitle', $pageTitle);
+        
+        return $pageTitle;
     }
     
     

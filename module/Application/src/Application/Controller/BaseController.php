@@ -18,13 +18,13 @@ class BaseController extends AbstractActionController
     {
         
         // check if we are installed
-        if(! file_exists(APPLICATION_PATH . '/data/install')) {
+        if (! file_exists(APPLICATION_PATH . '/data/install')) {
             return $this->redirect()->toRoute('install-index');
         }
         
         // get router
         $router = $e->getRouteMatch();
-
+        
         // module array
         $moduleArray = explode('\\', $router->getParam('controller'));
         
@@ -43,50 +43,53 @@ class BaseController extends AbstractActionController
         // check if we are allowed to view the controller
         if (! $this->acl()->checkAcl($this->identity()
             ->getAuthRole(), $router->getMatchedRouteName())) {
+            
             return $this->redirect()
                 ->toRoute()
                 ->setStatusCode(403);
         }
         
-      
-        if($this->identity()->getAuthRole() == 'administrator') {
+        if ($this->identity()->getAuthRole() == 'administrator') {
             $adminAcl = true;
         } else {
             $adminAcl = false;
         }
         
         // if we are a user validate we own the client id we are requesting
-        if($this->identity()->getUser() != 0) {
+        if ($this->identity()->getUser() != 0) {
             $id = $this->params()->fromRoute('clientId', null);
             
-            if($id) {
-            
-                if($this->identity()->getUserEntity()->getClientId() != $id) {
+            if ($id) {
+                
+                if ($this->identity()
+                    ->getUserEntity()
+                    ->getClientId() != $id) {
                     return $this->redirect()
-                    ->toRoute()
-                    ->setStatusCode(403);
+                        ->toRoute()
+                        ->setStatusCode(403);
                 }
             }
         }
         
-        $clientId = $this->getEvent()->getRouteMatch()->getParam('clientId', null);
-
+        $clientId = $this->getEvent()
+            ->getRouteMatch()
+            ->getParam('clientId', null);
         
-        // set menu
-        $this->layout()->setVariable('activeSubMenuItem', $router->getMatchedRouteName());
-        
-        $this->layout()->setVariable('activeMenuItem', strtolower($module));
-        
-        $this->layout()->setVariable('adminAcl', $adminAcl);
-        
-        $this->layout()->setVariable('acl', $this->acl()->getAcl());
-        
-        $this->layout()->setVariable('clientId', $clientId);
+        // set active Menu
+        $this->SetActiveMenu($router->getMatchedRouteName(), $this->layout());
         
         // set page title
-        $pageTitle = $this->setPageTitle($router->getMatchedRouteName());
+        $this->setPageTitle($router->getMatchedRouteName(), $this->layout());
         
-        $this->layout()->setVariable('pageTitle', $pageTitle);
+        // set admin acl
+        $this->layout()->setVariable('adminAcl', $adminAcl);
+        
+        // assign acl to layout
+        $this->layout()->setVariable('acl', $this->acl()
+            ->getAcl());
+        
+        // assign client id to layout
+        $this->layout()->setVariable('clientId', $clientId);
         
         // set session timeout
         $maxlifetime = ini_get("session.gc_maxlifetime") - 120;
@@ -96,6 +99,4 @@ class BaseController extends AbstractActionController
         // return parent dispatch
         return parent::onDispatch($e);
     }
-
-    
 }

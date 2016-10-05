@@ -63,7 +63,9 @@ class NoteService implements NoteServiceInterface
      */
     public function save(NoteEntity $entity)
     {
-        return $this->mapper->save($entity);
+        $noteEntity = $this->mapper->save($entity);
+        
+        return $this->get($noteEntity->getTicketNoteId());
     }
 
     /**

@@ -133,6 +133,42 @@ class ConfigEntity
 
     /**
      *
+     * @var string
+     */
+    protected $configSmtpHost;
+
+    /**
+     *
+     * @var number
+     */
+    protected $configSmtpPort;
+
+    /**
+     *
+     * @var string
+     */
+    protected $configSmtpSecurity;
+
+    /**
+     *
+     * @var string
+     */
+    protected $configSmtpDisplay;
+
+    /**
+     *
+     * @var string
+     */
+    protected $configSmtpEmail;
+
+    /**
+     *
+     * @var string
+     */
+    protected $configSmtpPassword;
+
+    /**
+     *
      * @return the $configId
      */
     public function getConfigId()
@@ -304,6 +340,60 @@ class ConfigEntity
 
     /**
      *
+     * @return the $configSmtpHost
+     */
+    public function getConfigSmtpHost()
+    {
+        return $this->configSmtpHost;
+    }
+
+    /**
+     *
+     * @return the $configSmtpPort
+     */
+    public function getConfigSmtpPort()
+    {
+        return $this->configSmtpPort;
+    }
+
+    /**
+     *
+     * @return the $configSmtpSecurity
+     */
+    public function getConfigSmtpSecurity()
+    {
+        return $this->configSmtpSecurity;
+    }
+
+    /**
+     *
+     * @return the $configSmtpDisplay
+     */
+    public function getConfigSmtpDisplay()
+    {
+        return $this->configSmtpDisplay;
+    }
+
+    /**
+     *
+     * @return the $configSmtpEmail
+     */
+    public function getConfigSmtpEmail()
+    {
+        return $this->configSmtpEmail;
+    }
+
+    /**
+     *
+     * @return the $configSmtpPassword
+     */
+    public function getConfigSmtpPassword()
+    {
+        return $this->configSmtpPassword;
+    }
+
+    /**
+     *
      * @param number $configId            
      */
     public function setConfigId($configId)
@@ -471,5 +561,59 @@ class ConfigEntity
     public function setConfigGoogleApiKey($configGoogleApiKey)
     {
         $this->configGoogleApiKey = $configGoogleApiKey;
+    }
+
+    /**
+     *
+     * @param string $configSmtpHost            
+     */
+    public function setConfigSmtpHost($configSmtpHost)
+    {
+        $this->configSmtpHost = $configSmtpHost;
+    }
+
+    /**
+     *
+     * @param number $configSmtpPort            
+     */
+    public function setConfigSmtpPort($configSmtpPort)
+    {
+        $this->configSmtpPort = $configSmtpPort;
+    }
+
+    /**
+     *
+     * @param string $configSmtpSecurity            
+     */
+    public function setConfigSmtpSecurity($configSmtpSecurity)
+    {
+        $this->configSmtpSecurity = $configSmtpSecurity;
+    }
+
+    /**
+     *
+     * @param string $configSmtpDisplay            
+     */
+    public function setConfigSmtpDisplay($configSmtpDisplay)
+    {
+        $this->configSmtpDisplay = $configSmtpDisplay;
+    }
+
+    /**
+     *
+     * @param string $configSmtpEmail            
+     */
+    public function setConfigSmtpEmail($configSmtpEmail)
+    {
+        $this->configSmtpEmail = $configSmtpEmail;
+    }
+
+    /**
+     *
+     * @param string $configSmtpPassword            
+     */
+    public function setConfigSmtpPassword($configSmtpPassword)
+    {
+        $this->configSmtpPassword = $configSmtpPassword;
     }
 }
