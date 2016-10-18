@@ -28,6 +28,13 @@ interface NotificationServiceInterface
     public function get($id);
 
     /**
+     * 
+     * @param number $employeeId
+     * @return NotificationEntity
+     */
+    public function clearNotifications($employeeId);
+    
+    /**
      *
      * @param NotificationEntity $entity            
      * @return NotificationEntity

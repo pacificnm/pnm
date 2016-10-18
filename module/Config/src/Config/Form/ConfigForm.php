@@ -365,6 +365,19 @@ class ConfigForm extends Form implements InputFilterProviderInterface
             )
         ));
         
+        // configPanoramaKey
+        $this->add(array(
+            'name' => 'configPanoramaKey',
+            'type' => 'Password',
+            'options' => array(
+                'label' => 'Panorama9 API Key:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'configPanoramaKey'
+            )
+        ));
+        
         // button
         $this->add(array(
             'name' => 'submit',

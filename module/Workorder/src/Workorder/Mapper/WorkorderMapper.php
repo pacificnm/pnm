@@ -593,7 +593,9 @@ class WorkorderMapper implements WorkorderMapperInterface
                 $entity->setWorkorderId($newId);
             }
             
-            return $entity;
+            
+            
+            return $this->get($entity->getWorkorderId());
         }
         
         throw new \Exception("Database error");

@@ -169,6 +169,12 @@ class ConfigEntity
 
     /**
      *
+     * @var String
+     */
+    protected $configPanoramaKey;
+
+    /**
+     *
      * @return the $configId
      */
     public function getConfigId()
@@ -394,6 +400,15 @@ class ConfigEntity
 
     /**
      *
+     * @return the $configPanoramaKey
+     */
+    public function getConfigPanoramaKey()
+    {
+        return $this->configPanoramaKey;
+    }
+
+    /**
+     *
      * @param number $configId            
      */
     public function setConfigId($configId)
@@ -615,5 +630,14 @@ class ConfigEntity
     public function setConfigSmtpPassword($configSmtpPassword)
     {
         $this->configSmtpPassword = $configSmtpPassword;
+    }
+
+    /**
+     *
+     * @param \Config\Entity\String $configPanoramaKey            
+     */
+    public function setConfigPanoramaKey($configPanoramaKey)
+    {
+        $this->configPanoramaKey = $configPanoramaKey;
     }
 }

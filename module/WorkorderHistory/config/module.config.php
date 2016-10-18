@@ -25,6 +25,7 @@ return array(
             'WorkorderHistory\\Service\\WorkorderHistoryServiceInterface' => 'WorkorderHistory\\Service\\Factory\\WorkorderHistoryServiceFactory',
             'WorkorderHistory\\Mapper\\WorkorderHistoryMapperInterface' => 'WorkorderHistory\\Mapper\\Factory\\WorkorderHistoryMapperFactory',
             'WorkorderHistory\\V1\\Rest\\WorkorderHistory\\WorkorderHistoryResource' => 'WorkorderHistory\\V1\\Rest\\WorkorderHistory\\WorkorderHistoryResourceFactory',
+            'WorkorderHistory\Listener\WorkorderHistoryListener' => 'WorkorderHistory\Listener\Factory\WorkorderHistoryListenerFactory',
         ),
     ),
     'router' => array(

@@ -4,30 +4,59 @@ namespace Ticket\Listener;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\EventInterface;
+use Ticket\Service\TicketServiceInterface;
 
 class TicketListener implements ListenerAggregateInterface
 {
+
     protected $listeners = array();
-    
-    
-    
-    public function __construct()
-    {
-    }
-    
+
     /**
-     * 
-     * @param EventInterface $event
+     *
+     * @var TicketServiceInterface
+     */
+    protected $ticketService;
+
+    /**
+     *
+     * @param TicketServiceInterface $ticketService            
+     */
+    public function __construct(TicketServiceInterface $ticketService)
+    {
+        $this->ticketService = $ticketService;
+    }
+
+    /**
+     *
+     * @param EventInterface $event            
      * @return \Ticket\Listener\TicketListener
      */
     public function ticketCreate(EventInterface $event)
     {
         return $this;
     }
-    
-    
+
     /**
+     *
+     * @param EventInterface $event            
+     */
+    public function workorderCreate(EventInterface $event)
+    {
+        $ticketId = $event->getParam('ticketId');
+        
+        if ($ticketId) {
+            $entity = $this->ticketService->get($ticketId);
+            
+            $entity->setTicketStatus('Closed');
+            
+            $this->ticketService->save($entity);
+        }
+    }
+
+    /**
+     *
      * {@inheritDoc}
+     *
      * @see \Zend\EventManager\ListenerAggregateInterface::attach()
      */
     public function attach(\Zend\EventManager\EventManagerInterface $events)
@@ -36,11 +65,21 @@ class TicketListener implements ListenerAggregateInterface
         $this->listeners[] = $events->attach('ticketCreate', array(
             $this,
             'ticketCreate'
-        ));  
+        ));
+        
+        // create work order
+        $this->listeners = array(
+            $events->attach('workorderCreate', array(
+                $this,
+                'workorderCreate'
+            ))
+        );
     }
 
     /**
+     *
      * {@inheritDoc}
+     *
      * @see \Zend\EventManager\ListenerAggregateInterface::detach()
      */
     public function detach(\Zend\EventManager\EventManagerInterface $events)
@@ -52,7 +91,5 @@ class TicketListener implements ListenerAggregateInterface
         }
         
         return $this;
-        
     }
-
 }

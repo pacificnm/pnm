@@ -12,7 +12,6 @@ use Application\Controller\BaseController;
 use Zend\View\Model\ViewModel;
 use Config\Service\ConfigServiceInterface;
 use Config\Form\ConfigForm;
-use Zend\Crypt\Password\Bcrypt;
 use Zend\Crypt\BlockCipher;
 
 /**
@@ -79,6 +78,8 @@ class UpdateController extends BaseController
         
         $tempSmtpPassword = $configEntity->getConfigSmtpPassword();
         
+        $tempPanoramaKey = $configEntity->getConfigPanoramaKey();
+        
         // if we have a post
         if ($request->isPost()) {
             // get post
@@ -102,6 +103,19 @@ class UpdateController extends BaseController
                     $configEntity->setConfigSmtpPassword($blockCipher->encrypt($configEntity->getConfigSmtpPassword()));
                 } else {
                     $configEntity->setConfigSmtpPassword($tempSmtpPassword);
+                }
+                
+                // check if we got a new panorama9 key
+                if($tempPanoramaKey != $configEntity->getConfigPanoramaKey()) {
+                    $blockCipher = BlockCipher::factory('mcrypt', array(
+                        'algo' => 'aes'
+                    ));
+                    
+                    $blockCipher->setKey($this->config['encryption-key']);
+                    
+                    $configEntity->setConfigPanoramaKey($blockCipher->encrypt($configEntity->getConfigPanoramaKey()));
+                } else {
+                    $configEntity->setConfigPanoramaKey($tempPanoramaKey);
                 }
                 
                 $this->configService->save($configEntity);

@@ -16,7 +16,9 @@ class WorkorderHistoryServiceFactory
     {
         $mapper = $serviceLocator->get('WorkorderHistory\Mapper\WorkorderHistoryMapperInterface');
         
-        return new WorkorderHsitoryService($mapper);
+        $historyService = $serviceLocator->get('History\Service\HistoryServiceInterface');
+        
+        return new WorkorderHsitoryService($mapper, $historyService);
     }
 }
 

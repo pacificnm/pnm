@@ -1,16 +1,9 @@
 <?php
-/**
- * Pacific NM (https://www.pacificnm.com)
- *
- * @link      https://github.com/pacificnm/pnm for the canonical source repository
- * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
- * @license   https://www.pacificnm.com/license/new-bsd New BSD License
- */
 namespace CallLog\Mapper;
 
 use CallLog\Entity\LogEntity;
 
-interface LogMapperInterface
+interface MysqlMapperInterface
 {
 
     /**
@@ -28,12 +21,12 @@ interface LogMapperInterface
     public function get($id);
 
     /**
-     * 
-     * @param number $employeeId
+     *
+     * @param number $employeeId            
      * @return LogEntity
      */
     public function getEmployeeCallLogs($employeeId);
-    
+
     /**
      *
      * @param LogEntity $entity            

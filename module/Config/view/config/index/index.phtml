@@ -110,6 +110,23 @@
 							<a class="pull-right">********</a>
 					</li>
 				</ul>
+				
+				<h3 class="profile-username"><?php echo $this->translate('Panorama9 API Key'); ?>
+				<a href="https://www.panorama9.com" target="_blank" class="pull-right small"><?php echo $this->translate('Visit Panorama9'); ?></a>
+				
+				</h3>
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b><?php echo $this->translate('API Key')?></b> 
+							<a class="pull-right">
+								<?php if($this->configEntity->getConfigPanoramaKey()): ?>
+								********
+								<?php else:?>
+									<?php echo $this->translate('Not Set');?>
+								<?php endif;?>
+							</a>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>

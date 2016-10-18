@@ -10,25 +10,23 @@ namespace CallLog\Controller\Factory;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 use CallLog\Controller\CreateController;
+
 class CreateControllerFactory
 {
+
     /**
-     * 
-     * @param ServiceLocatorInterface $serviceLocator
+     *
+     * @param ServiceLocatorInterface $serviceLocator            
      * @return \CallLog\Controller\CreateController
      */
     public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
-        $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
-        
         $logService = $realServiceLocator->get('CallLog\Service\LogServiceInterface');
-        
-        $notificationService = $realServiceLocator->get('Notification\Service\NotificationServiceInterface');
         
         $logForm = $realServiceLocator->get('CallLog\Form\LogForm');
         
-        return new CreateController($clientService, $logService, $notificationService, $logForm);
+        return new CreateController($logService, $logForm);
     }
 }

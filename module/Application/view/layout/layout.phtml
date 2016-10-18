@@ -272,9 +272,11 @@
   						  						
   						<?php echo $this->EmployeeAsideMenu(1); ?>
   						
-  						<?php echo $this->AccountAsideMenu();?>
+  						<?php echo $this->AccountAsideMenu(); ?>
   						
   						<?php echo $this->AdminAsideMenu(); ?>
+  						
+  						<?php echo $this->IntegrationAsideMenu(); ?>
   						
   					<?php else:?>
   						<?php $this->clientId = $this->identity()->getUserEntity()->getClientId();?>

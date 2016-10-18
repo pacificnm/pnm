@@ -1,0 +1,59 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-group"></i>
+					<?php echo $this->translate('Clients'); ?>
+				</h3>
+				<div class="box-tools">
+				
+				</div>
+			</div>
+			<div class="box-body">
+				<?php if(count($this->paginator) == 0): ?>
+				<div class="alert alert-info">
+					<i class="fa fa-info-circle"></i> <?php echo $this->translate('No clients'); ?>
+				</div>
+				<?php else: ?>
+				<table class="table table-bordered table-hover table-striped table-condensed">
+					<thead>
+						<tr>
+							<th></th>
+							<th><?php echo $this->translate('Client'); ?></th>
+							<th></th>
+							<th></th>
+							<th><?php echo $this->translate('Responsible'); ?></th>
+							<th><?php echo $this->translate('Vulnerabilities'); ?></th>
+							<th><?php echo $this->translate('Availability'); ?></th>
+							<th><?php echo $this->translate('Compliance'); ?></th>
+							<th><?php echo $this->translate('Server Issue'); ?></th>
+							<th></th>
+							<th><?php echo $this->translate('Patch Issues'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($this->paginator as $mspEntity): ?>
+						<tr>
+							<td><a href="" class="btn btn-default"><i class="fa fa-gear"></i></a></td>
+							<td><a href="<?php echo $this->url('panorama-view', array('cid' => $mspEntity->getCid()));?>" title="<?php echo $this->translate('View Client'); ?>"><?php echo $mspEntity->getName();?></a></td>
+							<td class="text-right"><?php echo $mspEntity->getAgents(); ?></td>
+							<td class="text-right"><?php echo $mspEntity->getBlindspotted();?></td>
+							<td></td>
+							<td class="text-right"><?php echo $mspEntity->getVulnerabilities(); ?></td>
+							<td class="text-right"><?php echo $mspEntity->getAvailability(); ?></td>
+							<td class="text-right"><?php echo $mspEntity->getCompliance(); ?></td>
+							<td class="text-right"><?php echo $mspEntity->getServerIssues(); ?></td>
+							<td class="text-right"><?php echo $mspEntity->getUnreachable(); ?></td>
+							<td class="text-right"><?php echo $mspEntity->getPatchIssues(); ?></td>
+							
+						</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+				<?php endif;?>
+			</div>
+		</div>
+	</div>
+</div>
+				

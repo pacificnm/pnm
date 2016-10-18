@@ -3,6 +3,8 @@ namespace WorkorderHistory\Service;
 
 use WorkorderHistory\Entity\WorkorderHistoryEntity;
 use WorkorderHistory\Mapper\WorkorderHistoryMapperInterface;
+use History\Service\HistoryServiceInterface;
+use History\Entity\HistoryEntity;
 
 class WorkorderHsitoryService implements WorkorderHistoryServiceInterface
 {
@@ -14,11 +16,20 @@ class WorkorderHsitoryService implements WorkorderHistoryServiceInterface
     
     /**
      * 
-     * @param WorkorderHistoryMapperInterface $mapper
+     * @var HistoryServiceInterface
      */
-    public function __construct(WorkorderHistoryMapperInterface $mapper)
+    protected $historyService;
+    
+    /**
+     * 
+     * @param WorkorderHistoryMapperInterface $mapper
+     * @param HistoryServiceInterface $historyService
+     */
+    public function __construct(WorkorderHistoryMapperInterface $mapper, HistoryServiceInterface $historyService)
     {
         $this->mapper = $mapper;
+        
+        $this->historyService = $historyService;
     }
 
     /**
@@ -61,6 +72,30 @@ class WorkorderHsitoryService implements WorkorderHistoryServiceInterface
         return $this->mapper->save($entity);
     }
 
+    public function create($workorderId, $authId, $historyUrl, $historyAction, $historyNote)
+    {
+        $entity = new HistoryEntity();
+        
+        $entity->setAuthId($authId);
+        $entity->setHistoryAction($historyAction);
+        $entity->setHistoryId(0);
+        $entity->setHistoryTime(time());
+        $entity->setHistoryUrl($historyUrl);
+        $entity->setHistoryNote($historyNote);
+        
+        $historyEntity = $this->historyService->save($entity);
+        
+        $entity = new WorkorderHistoryEntity();
+        
+        $entity->setHistoryId($historyEntity->getHistoryId());
+        $entity->setWorkorderId($workorderId);       
+        $entity->setWorkorderHistoryId(0);
+        
+        $workorderHistoryEntity = $this->save($entity);
+        
+        return $workorderHistoryEntity;
+    }
+    
     /**
      * 
      * {@inheritDoc}

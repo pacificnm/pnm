@@ -7,23 +7,35 @@ class Module
 {
 
     /**
-     * 
-     * @param MvcEvent $e
+     *
+     * @param MvcEvent $e            
      */
     public function onBootstrap(MvcEvent $e)
     {
         $eventManager = $e->getApplication()->getEventManager();
-        $sharedManager = $eventManager->getSharedManager();
-        $sm = $e->getApplication()->getServiceManager();
         
-        $sharedManager->attach('Zend\Mvc\Controller\AbstractActionController', 'dispatch', function ($e) use($sm) {
-            $controller = $e->getTarget();
-            $controller->getEventManager()
-                ->attachAggregate($sm->get('Ticket\Listener\TicketListener'));
-        }, 10);
+        $sharedEventManager = $eventManager->getSharedManager();
+        
+        $sharedEventManager->attach('Zend\Mvc\Controller\AbstractActionController', 'dispatch', array(
+            $this,
+            'ticketEventController'
+        ), 100);
     }
 
     /**
+     *
+     * @param MvcEvent $e            
+     */
+    public function ticketEventController(MvcEvent $e)
+    {
+        $controller = $e->getTarget();
+        
+        $controller->getEventManager()->attachAggregate($controller->getServiceLocator()
+            ->get('Ticket\Listener\TicketListener'));
+    }
+
+    /**
+     *
      * @return string
      */
     public function getConfig()
@@ -32,7 +44,7 @@ class Module
     }
 
     /**
-     * 
+     *
      * @return string[][][]
      */
     public function getAutoloaderConfig()

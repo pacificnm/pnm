@@ -9,7 +9,7 @@
 namespace Notification\Service;
 
 use Notification\Entity\NotificationEntity;
-use Notification\Mapper\NotificationMapperInterface;
+use Notification\Mapper\MysqlMapperInterface;
 
 
 class NotificationService implements NotificationServiceInterface
@@ -17,15 +17,15 @@ class NotificationService implements NotificationServiceInterface
 
     /**
      * 
-     * @var NotificationMapperInterface
+     * @var MysqlMapperInterface
      */
     protected $mapper;
     
     /**
      * 
-     * @param NotificationMapperInterface $mapper
+     * @param MysqlMapperInterface $mapper
      */
-    public function __construct(NotificationMapperInterface $mapper)
+    public function __construct(MysqlMapperInterface $mapper)
     {
         $this->mapper = $mapper;
     }
@@ -50,6 +50,16 @@ class NotificationService implements NotificationServiceInterface
         return $this->mapper->get($id);
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Notification\Service\NotificationServiceInterface::clearNotifications()
+     */
+    public function clearNotifications($employeeId)
+    {
+        return $this->mapper->clearNotifications($employeeId);    
+    }
+    
     /**
      * 
      * {@inheritDoc}

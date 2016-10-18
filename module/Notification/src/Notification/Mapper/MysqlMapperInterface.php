@@ -1,16 +1,9 @@
 <?php
-/**
- * Pacific NM (https://www.pacificnm.com)
- *
- * @link      https://github.com/pacificnm/pnm for the canonical source repository
- * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
- * @license   https://www.pacificnm.com/license/new-bsd New BSD License
- */
 namespace Notification\Mapper;
 
 use Notification\Entity\NotificationEntity;
 
-interface NotificationMapperInterface
+interface MysqlMapperInterface
 {
 
     /**
@@ -27,6 +20,13 @@ interface NotificationMapperInterface
      */
     public function get($id);
 
+    /**
+     * 
+     * @param number $employeeId
+     * @return NotificationEntity
+     */
+    public function clearNotifications($employeeId);
+    
     /**
      *
      * @param NotificationEntity $entity            

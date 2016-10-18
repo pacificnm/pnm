@@ -19,7 +19,8 @@ class NavBarNotification extends AbstractHelper
         $partialHelper = $view->plugin('partial');
         
         $filter = array(
-           'employeeId' => $view->Identity()->getEmployeeId() 
+           'employeeId' => $view->Identity()->getEmployeeId(),
+            'notificationStatus' => 'Active'
            
         );
         

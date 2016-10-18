@@ -21,7 +21,7 @@ class LogServiceFactory
      */
     public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
-        $mapper = $serviceLocator->get('CallLog\Mapper\LogMapperInterface');
+        $mapper = $serviceLocator->get('CallLog\Mapper\MysqlMapperInterface');
         
         return new LogService($mapper);
     }

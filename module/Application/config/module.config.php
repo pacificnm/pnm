@@ -120,6 +120,7 @@ return array(
     'view_helpers' => array(
         'invokables' => array(
             'Paginator' => 'Application\\View\\Helper\\Paginator',
+            'IntegrationAsideMenu' => 'Application\View\Helper\IntegrationAsideMenu'
         ),
     ),
     'view_manager' => array(

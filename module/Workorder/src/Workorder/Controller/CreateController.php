@@ -145,10 +145,11 @@ class CreateController extends BaseController
                 
                 // get employee data from form
                 $workorderEmployeeEntity = $workorderEmployeeForm->getData();
-                       
+                      
                 // get the data from range and set start and stop dates
                 $datePieces = explode('-', $postData['workorderDateScheduled']);
                 
+                // set dates
                 $workorderEntity->setWorkorderDateScheduled(strtotime($datePieces[0]));
                 
                 $workorderEntity->setWorkorderDateEnd(strtotime($datePieces[1]));
@@ -156,29 +157,31 @@ class CreateController extends BaseController
                 // save work order
                 $workorderEntity = $this->workorderService->save($workorderEntity);
                 
-                // map to employee
-                $this->mapEmployee($workorderEmployeeEntity, $workorderEntity->getWorkorderId());
+                // @todo move to event listeners for each module
                 
                 // save credit
                 $this->saveCredit($clientId, $workorderEntity->getWorkorderId());
-                
-                // close ticket
-                $this->closeTicket($clientId, $ticketId);
-                
                 
                 // send employee messages
                 $employeeEntity = $this->employeeService->get($workorderEmployeeEntity->getEmployeeId());
                 
                 $this->messageService->saveEmployeeWorkorder($workorderEntity, $employeeEntity);
-
+                // @todo done
                 
-                // save history
-                $this->SetWorkorderHistory($this->getRequest()
-                    ->getUri(), 'CREATE', $this->identity()
-                    ->getAuthId(), 'Created work order #' . $workorderEntity->getWorkorderId(), $workorderEntity->getWorkorderId());
+                // trigger callLogCreate event
+                $this->getEventManager()->trigger('workorderCreate', $this, array(
+                    'workorderEntity' => $workorderEntity,
+                    'employeeEntity' => $workorderEmployeeEntity,
+                    'clientEntity' => $workorderEntity->getClientEntity(),
+                    'ticketId' => $ticketId,
+                    'authId' => $this->identity()->getAuthId(),
+                    'historyUrl' => $this->getRequest()->getUri()
+                ));
                 
+                // set flash messenger
                 $this->flashmessenger()->addSuccessMessage('The work order was saved.');
                 
+                // return to view the work order
                 return $this->redirect()->toRoute('workorder-view', array(
                     'clientId' => $clientId,
                     'workorderId' => $workorderEntity->getWorkorderId()
@@ -210,23 +213,6 @@ class CreateController extends BaseController
         ));
     }
     
-    /**
-     * 
-     * @param unknown $clientId
-     * @param unknown $ticketId
-     */
-    protected function closeTicket($clientId, $ticketId)
-    {
-        if($ticketId) {
-            $ticketEntity = $this->getTicket($clientId, $ticketId);
-            
-            $ticketEntity->setTicketStatus('Closed');
-            
-            $this->ticketService->save($ticketEntity);
-            
-            // map ticket to work order
-        }
-    }
     
     /**
      * 
@@ -257,13 +243,6 @@ class CreateController extends BaseController
         
             $this->creditService->save($creditEntity);
         }
-    }
-    
-    protected function mapEmployee($workorderEmployeeEntity, $workorderId)
-    {
-        $workorderEmployeeEntity->setWorkorderId($workorderId);
-        
-        $workorderEmployeeEntity = $this->workorderEmployeeService->save($workorderEmployeeEntity);
     }
     
     /**
