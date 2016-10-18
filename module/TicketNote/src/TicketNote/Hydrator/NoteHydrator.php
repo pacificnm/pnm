@@ -4,6 +4,7 @@ namespace TicketNote\Hydrator;
 use Zend\Stdlib\Hydrator\ClassMethods;
 use TicketNote\Entity\NoteEntity;
 use Auth\Entity\AuthEntity;
+use Ticket\Entity\TicketEntity;
 
 class NoteHydrator extends ClassMethods
 {
@@ -31,9 +32,15 @@ class NoteHydrator extends ClassMethods
         
         parent::hydrate($data, $object);
         
+        // auth entity
         $authEntity = parent::hydrate($data, new AuthEntity());
         
         $object->setAuthEntity($authEntity);
+        
+        // ticket entity
+        $ticketEntity = parent::hydrate($data, new TicketEntity());
+        
+        $object->setTicketEntity($ticketEntity);
         
         return $object;
     }
@@ -53,6 +60,8 @@ class NoteHydrator extends ClassMethods
         $data = parent::extract($object);
         
         unset($data['auth_entity']);
+        
+        unset($data['ticket_entity']);
         
         return $data;
     }

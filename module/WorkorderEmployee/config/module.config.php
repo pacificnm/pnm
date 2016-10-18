@@ -32,7 +32,8 @@ return array(
         'factories' => array(
             'WorkorderEmployee\Mapper\WorkorderEmployeeMapperInterface' => 'WorkorderEmployee\Mapper\Factory\WorkorderEmployeeMapperFactory',
             'WorkorderEmployee\Service\WorkorderEmployeeServiceInterface' => 'WorkorderEmployee\Service\Factory\WorkorderEmployeeServiceFactory',
-            'WorkorderEmployee\Form\WorkorderEmployeeForm' => 'WorkorderEmployee\Form\Factory\WorkorderEmployeeFormFactory'
+            'WorkorderEmployee\Form\WorkorderEmployeeForm' => 'WorkorderEmployee\Form\Factory\WorkorderEmployeeFormFactory',
+            'WorkorderEmployee\Listener\WorkorderEmployeeListener' => 'WorkorderEmployee\Listener\Factory\WorkorderEmployeeListenerFactory',
         )
     ),
     

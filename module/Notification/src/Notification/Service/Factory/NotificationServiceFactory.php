@@ -10,17 +10,18 @@ namespace Notification\Service\Factory;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Notification\Service\NotificationService;
+
 class NotificationServiceFactory
 {
+
     /**
-     * 
-     * @param ServiceLocatorInterface $serviceLocator
+     *
+     * @param ServiceLocatorInterface $serviceLocator            
      * @return \Notification\Service\NotificationService
      */
     public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
-     
-        $mapper = $serviceLocator->get('Notification\Mapper\NotificationMapperInterface');
+        $mapper = $serviceLocator->get('Notification\Mapper\MysqlMapperInterface');
         
         return new NotificationService($mapper);
     }

@@ -9,17 +9,12 @@
 			<ul class="menu">
 			<?php if($this->notificationEntitys->getTotalItemCount() > 0): ?>
 			<?php foreach($this->notificationEntitys as $notificationEntity): ?>
-				<li>
-					<div class="row">
-						<div class="col-xs-12">
-							<p><?php echo $notificationEntity->getNotificationText(); ?></p>
-						</div>
-					</div>
-					
-				</li>
+				<li><?php echo $notificationEntity->getNotificationText(); ?></li>
 			<?php endforeach;?>
 			<?php endif;?>
+			
 			</ul>
 		</li>
+		<li><a href="<?php echo $this->url('notification-clear'); ?>" title="<?php echo $this->translate('Clear Notifications'); ?>" class="text-center"><?php echo $this->translate('Clear Notifications'); ?></a></li>
 	</ul>
 </li>

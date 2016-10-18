@@ -91,6 +91,14 @@ return array(
         'Zabbix',
         'ClientFile',
         'HostFile',
+        'EmployeeEmail',
+        'UserEmail',
+        'TicketEmail',
+        'TicketHistory',
+        'EmailTemplate',
+        'CallLogEmail',
+        'WorkorderEmail',
+        'Panorama',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

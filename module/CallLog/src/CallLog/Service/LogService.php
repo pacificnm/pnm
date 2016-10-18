@@ -9,22 +9,22 @@
 namespace CallLog\Service;
 
 use CallLog\Entity\LogEntity;
-use CallLog\Mapper\LogMapperInterface;
+use CallLog\Mapper\MysqlMapper;
 
 
 class LogService implements LogServiceInterface
 {
     /**
      * 
-     * @var LogMapperInterface
+     * @var MysqlMapper
      */
     protected $mapper;
     
     /**
      * 
-     * @param LogMapperInterface $mapper
+     * @param MysqlMapper $mapper
      */
-    public function __construct(LogMapperInterface $mapper)
+    public function __construct(MysqlMapper $mapper)
     {
         $this->mapper = $mapper;
     }

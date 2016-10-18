@@ -11,13 +11,13 @@ return array(
                     'ticket-create',
                     'ticket-view',
                     'ticket-update',
-                    'ticket-close'
+                    
                 ),
                 'user-accountant' => array(),
                 'user-manager' => array(),
                 'employee' => array(
-                   
                     'ticket-delete',
+                    'ticket-close'
                 ),
                 'accountant' => array(),
                 'administrator' => array()
@@ -44,6 +44,7 @@ return array(
         'factories' => array(
             'Ticket\Service\TicketServiceInterface' => 'Ticket\Service\Factory\TicketServiceFactory',
             'Ticket\Mapper\MysqlMapperInterface' => 'Ticket\Mapper\Factory\MysqlMapperFactory',
+            'Ticket\Listener\TicketListener' => 'Ticket\Listener\Factory\TicketListenerFactory'
             
         )
     ),
@@ -52,6 +53,8 @@ return array(
             'ticket-index' => array(
                 'title' => 'Client Support Tickets',
                 'type' => 'segment',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'ticket-index',
                 'options' => array(
                     'route' => '/client/[:clientId]/ticket',
                     'defaults' => array(
@@ -62,6 +65,8 @@ return array(
             ),
             'ticket-create' => array(
                 'title' => 'New Support Ticket',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'ticket-index',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/client/[:clientId]/ticket/create',
@@ -74,6 +79,8 @@ return array(
             
             'ticket-view' => array(
                 'title' => 'View Support Ticket',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'ticket-index',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/client/[:clientId]/ticket/[:ticketId]/view',
@@ -86,6 +93,8 @@ return array(
             'ticket-update' => array(
                 'title' => 'Edit Support Ticket',
                 'type' => 'segment',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'ticket-index',
                 'options' => array(
                     'route' => '/client/[:clientId]/ticket/[:ticketId]/update',
                     'defaults' => array(
@@ -97,6 +106,8 @@ return array(
             'ticket-close' => array(
                 'title' => 'Close Support Ticket',
                 'type' => 'segment',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'ticket-index',
                 'options' => array(
                     'route' => '/client/[:clientId]/ticket/[:ticketId]/close',
                     'defaults' => array(
@@ -108,6 +119,8 @@ return array(
             'ticket-delete' => array(
                 'title' => 'Delete Support Ticket',
                 'type' => 'segment',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'ticket-index',
                 'options' => array(
                     'route' => '/client/[:clientId]/ticket/[:ticketId]/delete',
                     'defaults' => array(

@@ -112,6 +112,7 @@ return array(
         'factories' => array(
             'SetPageTitle' => 'Application\\Controller\\Plugin\\Factory\\SetPageTitleFactory',
             'SetHeadTitle' => 'Application\\Controller\\Plugin\\Factory\\SetHeadTitleFactory',
+            'SetActiveMenu' => 'Application\Controller\Plugin\Factory\SetActiveMenuFactory',
             'Acl' => 'Application\\Controller\\Plugin\\Factory\\ApplicationAclFactory',
         ),
         'invokables' => array(),
@@ -119,6 +120,7 @@ return array(
     'view_helpers' => array(
         'invokables' => array(
             'Paginator' => 'Application\\View\\Helper\\Paginator',
+            'IntegrationAsideMenu' => 'Application\View\Helper\IntegrationAsideMenu'
         ),
     ),
     'view_manager' => array(
@@ -878,7 +880,19 @@ return array(
                                             )
                                         )
                                     ),
-                                    12 => array(
+                                    12  => array(
+                                        'label' => 'Support Tickets',
+                                        'route' => 'ticket-index',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'View',
+                                                'route' => 'ticket-view',
+                                                'useRouteMatch' => true,
+                                            )
+                                        )
+                                    ),
+                                    13 => array(
                                         'label' => 'Work Orders',
                                         'route' => 'workorder-list',
                                         'useRouteMatch' => true,

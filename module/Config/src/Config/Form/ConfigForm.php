@@ -281,6 +281,103 @@ class ConfigForm extends Form implements InputFilterProviderInterface
             )
         ));
         
+        // configSmtpHost
+        $this->add(array(
+            'name' => 'configSmtpHost',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'SMTP Host:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'configSmtpHost'
+            )
+        ));
+        
+        // configSmtpPort
+        $this->add(array(
+            'name' => 'configSmtpPort',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'SMTP Port:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'configSmtpPort'
+            )
+        ));
+        
+        // configSmtpSecurity
+        $this->add(array(
+            'type' => 'Select',
+            'name' => 'configSmtpSecurity',
+            'options' => array(
+                'label' => 'SMTP Security:',
+                'value_options' => array(
+                    '' => 'None',
+                    'PLAIN AUTH' => 'PLAIN AUTH',
+                    'LOGIN AUTH' => 'LOGIN AUTH',
+                    'CRAM-MD5 AUTH' => 'CRAM-MD5 AUTH',
+                    'PLAIN AUTH over TLS' => 'PLAIN AUTH over TLS',
+                )
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'configSmtpSecurity'
+            )
+        ));
+        // configSmtpDisplay
+        $this->add(array(
+            'name' => 'configSmtpDisplay',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'SMTP Display Name:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'configSmtpDisplay'
+            )
+        ));
+        
+        // configSmtpEmail
+        $this->add(array(
+            'name' => 'configSmtpEmail',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'SMTP E-Mail Address:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'configSmtpEmail'
+            )
+        ));
+        
+        // configSmtpPassword
+        $this->add(array(
+            'name' => 'configSmtpPassword',
+            'type' => 'Password',
+            'options' => array(
+                'label' => 'SMTP Password:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'configSmtpPassword'
+            )
+        ));
+        
+        // configPanoramaKey
+        $this->add(array(
+            'name' => 'configPanoramaKey',
+            'type' => 'Password',
+            'options' => array(
+                'label' => 'Panorama9 API Key:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'configPanoramaKey'
+            )
+        ));
+        
         // button
         $this->add(array(
             'name' => 'submit',
@@ -291,6 +388,8 @@ class ConfigForm extends Form implements InputFilterProviderInterface
                 'class' => 'btn btn-primary btn-flat'
             )
         ));
+        
+        
         
         return $this;
     }

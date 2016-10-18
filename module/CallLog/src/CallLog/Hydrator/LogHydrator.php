@@ -13,6 +13,7 @@ use CallLog\Entity\LogEntity;
 use Employee\Entity\EmployeeEntity;
 use Auth\Entity\AuthEntity;
 use Client\Entity\ClientEntity;
+use Phone\Entity\PhoneEntity;
 
 class LogHydrator extends ClassMethods
 {
@@ -40,17 +41,25 @@ class LogHydrator extends ClassMethods
         
         parent::hydrate($data, $object);
         
+        // employee
         $employeeEntity = parent::hydrate($data, new EmployeeEntity());
         
         $object->setEmployeeEntity($employeeEntity);
         
+        // auth
         $authEntity = parent::hydrate($data, new AuthEntity());
         
         $object->setAuthEntity($authEntity);
         
+        // client
         $clientEntity = parent::hydrate($data, new ClientEntity());
         
         $object->setClientEntity($clientEntity);
+        
+        // client phone
+        $phoneEntity = parent::hydrate($data, new PhoneEntity());
+        
+        $object->getClientEntity()->setPhoneEntity($phoneEntity);
         
         return $object;
     }

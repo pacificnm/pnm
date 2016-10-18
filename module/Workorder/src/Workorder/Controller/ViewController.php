@@ -240,10 +240,12 @@ class ViewController extends BaseController
         
         $this->setHeadTitle($clientEntity->getClientName());
         
-        // save history
-        $this->SetWorkorderHistory($this->getRequest()
-            ->getUri(), 'READ', $this->identity()
-            ->getAuthId(), 'Viewed work order #' . $workorderId, $workorderId);
+        // trigger callLogCreate event
+        $this->getEventManager()->trigger('workorderView', $this, array(
+            'workorderEntity' => $workorderEntity,
+            'authId' => $this->identity()->getAuthId(),
+            'historyUrl' => $this->getRequest()->getUri()
+        ));
 
         // return View
         return new ViewModel(array(

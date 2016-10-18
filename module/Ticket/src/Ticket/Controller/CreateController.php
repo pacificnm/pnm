@@ -1,14 +1,13 @@
 <?php
 namespace Ticket\Controller;
 
-use Application\Controller\BaseController;
 use Ticket\Service\TicketServiceInterface;
 use Ticket\Form\UserForm;
 use Zend\View\Model\ViewModel;
+use Client\Controller\ClientBaseController;
 
-class CreateController extends BaseController
+class CreateController extends ClientBaseController
 {
-
 
     /**
      *
@@ -22,9 +21,13 @@ class CreateController extends BaseController
      */
     protected $userForm;
 
-    
+    /**
+     *
+     * @param TicketServiceInterface $ticketService            
+     * @param UserForm $userForm            
+     */
     public function __construct(TicketServiceInterface $ticketService, UserForm $userForm)
-    {   
+    {
         $this->ticketService = $ticketService;
         
         $this->userForm = $userForm;
@@ -38,16 +41,12 @@ class CreateController extends BaseController
      */
     public function indexAction()
     {
-        $clientId = $this->params()->fromRoute('clientId');
-        
         $request = $this->getRequest();
         
         // @todo refactor user from identity to userId
         $userId = $this->identity()->getUser();
         
-        // get the client entity
-        $clientEntity = $this->getClient($clientId);
-        
+        // if we have a post
         if ($request->isPost()) {
             
             // get post
@@ -60,22 +59,28 @@ class CreateController extends BaseController
                 
                 // get hydrated form results
                 $entity = $this->userForm->getData();
- 
-                $ticketEntity = $this->ticketService->save($entity);              
                 
-                // @todo email employees
+                // save ticket
+                $ticketEntity = $this->ticketService->save($entity);
                 
-                // @todo complete history for ticket
-                $this->SetTicketHistory($request->getUri(), 'CREATE', $this->identity()
-                    ->getAuthId(), 'Ticket was created', $ticketEntity->getTicketId());
+                // trigger event
+                $this->getEventManager()->trigger('ticketCreate', $this, array(
+                    'ticketEntity' => $ticketEntity,
+                    'authId' => $this->identity()
+                        ->getAuthId(),
+                    'historyUrl' => $this->getRequest()
+                        ->getUri()
+                ));
                 
+                // set flash message
                 $this->flashMessenger()->addSuccessMessage('Your support ticket was saved and our staff have been notified.');
                 
+                // return to ticket view
                 return $this->redirect()->toRoute('ticket-view', array(
-                    'clientId' => $clientId,
+                    'clientId' => $this->clientId,
                     'ticketId' => $ticketEntity->getTicketId()
                 ));
-            }   
+            }
         }
         
         // set some defaults
@@ -83,7 +88,7 @@ class CreateController extends BaseController
         
         $this->userForm->get('userId')->setValue($userId);
         
-        $this->userForm->get('clientId')->setValue($clientId);
+        $this->userForm->get('clientId')->setValue($this->clientId);
         
         $this->userForm->get('ticketStatus')->setValue('New');
         
@@ -91,18 +96,10 @@ class CreateController extends BaseController
         
         $this->userForm->get('ticketDateClose')->setValue(0);
         
-        // set layout up
-        $this->layout()->setVariable('pageSubTitle', $this->identity()
-            ->getAuthName());
-        
-        $this->layout()->setVariable('activeMenuItem', 'user');
-        
-        $this->layout()->setVariable('activeSubMenuItem', 'ticket-create');
-        
         // return view model
         return new ViewModel(array(
-            'clientId' => $clientId,
-            'clientEntity' => $clientEntity,
+            'clientId' => $this->clientId,
+            'clientEntity' => $this->clientEntity,
             'form' => $this->userForm
         ));
     }

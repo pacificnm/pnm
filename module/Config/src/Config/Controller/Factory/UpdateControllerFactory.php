@@ -34,6 +34,8 @@ class UpdateControllerFactory
         
         $configForm = new ConfigForm();
         
-        return new UpdateController($configService, $configForm);
+        $config = $realServiceLocator->get('config');
+        
+        return new UpdateController($configService, $configForm, $config);
     }
 }

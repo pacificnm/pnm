@@ -1,76 +1,64 @@
 <?php
 namespace Ticket\Controller;
 
-use Application\Controller\BaseController;
 use Ticket\Service\TicketServiceInterface;
 use Zend\View\Model\ViewModel;
+use Client\Controller\ClientBaseController;
 
-class IndexController extends BaseController
+class IndexController extends ClientBaseController
 {
+
     /**
-     * 
+     *
      * @var TicketServiceInterface
      */
     protected $ticketService;
-    
-   /**
-    * 
-    * @param TicketServiceInterface $ticketService
-    */
+
+    /**
+     *
+     * @param TicketServiceInterface $ticketService            
+     */
     public function __construct(TicketServiceInterface $ticketService)
     {
-        
         $this->ticketService = $ticketService;
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
      */
     public function indexAction()
     {
-        $clientId = $this->params()->fromRoute('clientId');
+        parent::indexAction();
         
         $ticketStatus = $this->params()->fromQuery('ticketStatus', null);
         
-        $page = $this->params()->fromQuery('page', 1);
-        
-        $countPerPage = $this->params()->fromQuery('count-per-page', 25);
-        
-        // get client
-        $clientEntity = $this->getClient($clientId);
-        
-        
+        // create filter
         $filter = array(
-            'clientId' => $clientId,
+            'clientId' => $this->clientId,
             'ticketStatus' => $ticketStatus
         );
         
+        // get paginator
         $paginator = $this->ticketService->getAll($filter);
         
-        $paginator->setCurrentPageNumber($page);
+        $paginator->setCurrentPageNumber($this->page);
         
-        $paginator->setItemCountPerPage($countPerPage);
+        $paginator->setItemCountPerPage($this->countPerPage);
         
-        // set layout up
-        $this->layout()->setVariable('pageTitle', 'Support Tickets');
-        
-        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
-        
-        $this->layout()->setVariable('activeMenuItem', 'client');
-        
-        $this->layout()->setVariable('activeSubMenuItem', 'ticket-index');
-        
+        // return view
         return new ViewModel(array(
-            'clientId' => $clientId,
+            'clientId' => $this->clientId,
             'paginator' => $paginator,
-            'page' => $page,
+            'page' => $this->page,
+            'count-per-page' => $this->countPerPage,
             'itemCount' => $paginator->getTotalItemCount(),
             'pageCount' => $paginator->count(),
             'queryParams' => $this->params()->fromQuery(),
             'routeParams' => array(
-                'clientId' => $clientId
+                'clientId' => $this->clientId
             ),
             'ticketStatus' => $ticketStatus
         ));

@@ -1,63 +1,86 @@
 <?php
 namespace Ticket\Controller;
 
-use Application\Controller\BaseController;
 use Ticket\Service\TicketServiceInterface;
 use Zend\View\Model\ViewModel;
+use Client\Controller\ClientBaseController;
 
-class CloseController extends BaseController
+class CloseController extends ClientBaseController
 {
+
+    /**
+     *
+     * @var TicketServiceInterface
+     */
     protected $ticketService;
-    
+
+    /**
+     *
+     * @param TicketServiceInterface $ticketService            
+     */
     public function __construct(TicketServiceInterface $ticketService)
     {
         $this->ticketService = $ticketService;
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
      */
     public function indexAction()
     {
-        $request = $this->getRequest();
+        parent::indexAction();
         
-        $clientId = $this->params()->fromRoute('clientId');
+        
+        
+        $request = $this->getRequest();
         
         $ticketId = $this->params()->fromRoute('ticketId');
         
-        // get client
-        $clientEntity = $this->getClient($clientId);
-        
         // get ticket
-        $ticketEntity = $this->getTicket($clientId, $ticketId);
+        $ticketEntity = $this->GetTicket($this->clientId, $ticketId);
         
+        // if post
         if ($request->isPost()) {
+            
             $del = $request->getPost('delete_confirmation', 'no');
-        
+            
+            // if yes delete
             if ($del === 'yes') {
                 
                 $ticketEntity->setTicketStatus('Closed');
-        
-                $this->ticketService->save($ticketEntity);
                 
-                // @todo complete history for ticket
-                $this->SetTicketHistory($request->getUri(), 'UPDATE', $this->identity()
-                    ->getAuthId(), 'Ticket was closed #', $ticketEntity->getTicketId());
-        
+                $ticketEntity->setTicketDateClose(time());
+                
+                $ticketEntity = $this->ticketService->save($ticketEntity);
+                
+                // trigger close event
+                $this->getEventManager()->trigger('ticketClose', $this, array(
+                    'ticketEntity' => $ticketEntity,
+                    'authId' => $this->identity()
+                        ->getAuthId(),
+                    'historyUrl' => $this->getRequest()
+                        ->getUri()
+                ));
+                
+                // set flash messenger
                 $this->flashMessenger()->addSuccessMessage('The ticket was closed');
-               
             }
-        
-            return $this->redirect()->toRoute('ticket-view', array('clientId' => $clientId, 'ticketId' => $ticketId));
+            
+            // return to view ticket
+            return $this->redirect()->toRoute('ticket-view', array(
+                'clientId' => $ticketEntity->getClientId(),
+                'ticketId' => $ticketEntity->getTicketId()
+            ));
         }
         
         // return view model
         return new ViewModel(array(
-            'clientId' => $clientId,
+            'clientId' => $this->clientId,
             'ticketId' => $ticketId,
-            'clientEntity' => $clientEntity,
+            'clientEntity' => $this->clientEntity,
             'ticketEntity' => $ticketEntity
         ));
     }

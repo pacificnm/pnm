@@ -1,11 +1,11 @@
 <?php
 namespace Ticket\Controller;
 
-use Application\Controller\BaseController;
 use Ticket\Service\TicketServiceInterface;
 use Zend\View\Model\ViewModel;
+use Client\Controller\ClientBaseController;
 
-class DeleteController extends BaseController
+class DeleteController extends ClientBaseController
 {
 
     /**
@@ -15,8 +15,8 @@ class DeleteController extends BaseController
     protected $ticketService;
 
     /**
-     * 
-     * @param TicketServiceInterface $ticketService
+     *
+     * @param TicketServiceInterface $ticketService            
      */
     public function __construct(TicketServiceInterface $ticketService)
     {
@@ -31,46 +31,39 @@ class DeleteController extends BaseController
      */
     public function indexAction()
     {
-        $clientId = $this->params()->fromRoute('clientId');
+        $request = $this->getRequest();
         
         $ticketId = $this->params()->fromRoute('ticketId');
         
-        $request = $this->getRequest();
-        
-        // get client
-        $clientEntity = $this->getClient($clientId);
-        
-        $ticketEntity = $this->ticketService->get($ticketId);
+        // get ticket
+        $ticketEntity = $this->GetTicket($this->clientId, $ticketId);
         
         if ($request->isPost()) {
             $del = $request->getPost('delete_confirmation', 'no');
             
+            // if yes
             if ($del === 'yes') {
                 $this->ticketService->delete($ticketEntity);
                 
-                // @todo complete history for ticket
-                $this->SetTicketHistory($request->getUri(), 'DELETE', $this->identity()
-                    ->getAuthId(), 'Ticket was deleted', $ticketEntity->getTicketId());
-                
                 $this->flashMessenger()->addSuccessMessage('The ticket was deleted');
                 
-                return $this->redirect()->toRoute('ticket-index', array('clientId' => $clientId));
+                return $this->redirect()->toRoute('ticket-index', array(
+                    'clientId' => $this->clientId
+                ));
             }
             
-            return $this->redirect()->toRoute('ticket-view', array('clientId' => $clientId, 'ticketId' => $ticketId));
+            // no redirect to view the ticket
+            return $this->redirect()->toRoute('ticket-view', array(
+                'clientId' => $this->clientId,
+                'ticketId' => $ticketId
+            ));
         }
         
-        // set layout up
-        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
-        
-        $this->layout()->setVariable('activeMenuItem', 'client');
-        
-        $this->layout()->setVariable('activeSubMenuItem', 'ticket-index');
-        
+        // return view model
         return new ViewModel(array(
             'ticketEntity' => $ticketEntity,
-            'clientEntity' => $clientEntity,
-            'clientId' => $clientId
+            'clientEntity' => $this->clientEntity,
+            'clientId' => $this->clientId
         ));
     }
 }

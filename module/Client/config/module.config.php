@@ -50,6 +50,8 @@ return array(
             'client-view' => array(
                 'title' => 'View Client',
                 'type' => 'segment',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'client-view',
                 'options' => array(
                     'route' => '/client/[:clientId]',
                     'defaults' => array(

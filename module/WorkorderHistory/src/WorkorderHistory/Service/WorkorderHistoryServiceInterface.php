@@ -35,6 +35,16 @@ interface WorkorderHistoryServiceInterface
     public function save(WorkorderHistoryEntity $entity);
 
     /**
+     * 
+     * @param number $workorderId
+     * @param number $authId
+     * @param string $historyUrl
+     * @param string $historyAction
+     * @param string $historyNote
+     */
+    public function create($workorderId, $authId, $historyUrl, $historyAction, $historyNote);
+    
+    /**
      *
      * @param WorkorderHistoryEntity $entity            
      * @return boolean

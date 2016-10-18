@@ -1,0 +1,20 @@
+<h4>New note added to ticket #<?php echo $this->ticketEntity->getTicketId();?> <?php echo $this->ticketEntity->getTicketTitle(); ?></h4>
+
+<p><b>Client:</b> <?php echo $this->clientEntity->getClientName();?></p>
+<p><b>User:</b> <?php echo $this->userEntity->getUserNameFirst(); ?> <?php echo $this->userEntity->getUserNameLast(); ?></p>
+
+<hr />
+
+<p><b>Subject:</b> <?php echo $this->ticketEntity->getTicketTitle(); ?></p>
+<p><?php echo $this->ticketEntity->getTicketText()?></p>
+<p><b>Created:</b> <?php echo date("m/d/Y h:i a", $this->ticketEntity->getTicketDateOpen()); ?></p>
+<p><b>Status:</b> <?php echo $this->ticketEntity->getTicketStatus(); ?>
+
+<hr />
+
+<p><b>Note:</b><br /> <?php echo $this->noteEntity->getTicketNoteText();?></p>
+<p><b>Client Can View:</b> <?php echo $this->noteEntity->getTicketNoteClientView();?></p>
+<p><b>Created:</b> <?php echo date("m/d/Y h:i a", $this->noteEntity->getTicketNoteDateCreate()); ?></p>
+<p><b>Created By:</b> <?php echo $this->noteEntity->getAuthEntity()->getAuthName();?></p>
+<hr />
+<p>You can view this ticket <a href="<?php echo $this->serverUrl($this->url('ticket-view', array('clientId' => $this->ticketEntity->getClientId(), 'ticketId' => $this->ticketEntity->getTicketId())));?>">here</a></p>

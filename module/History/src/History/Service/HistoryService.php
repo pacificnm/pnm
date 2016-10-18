@@ -49,6 +49,10 @@ class HistoryService implements HistoryServiceInterface
      */
     public function save(HistoryEntity $entity)
     {
+        if(! in_array($entity->getHistoryAction(), array('CREATE', 'READ', 'UPDATE', 'DELETE'))) {
+            throw new \Exception("History Action must be one of the following: 'CREATE', 'READ', 'UPDATE', 'DELETE'");
+        }
+        
         return $this->mapper->save($entity);
     }
 

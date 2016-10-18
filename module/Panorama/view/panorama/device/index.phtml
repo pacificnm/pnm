@@ -1,0 +1,46 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-group"></i>
+					<?php echo $this->deviceEntity->getName(); ?>
+					<?php if(!$this->deviceEntity->getIsOnline()): ?>
+					<span class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('Off-Line'); ?>!</span>
+					<?php endif;?>
+				</h3>
+				<div class="box-tools">
+				
+				</div>
+			</div>
+			<div class="box-body">
+				<ul class="nav nav-tabs">
+					<li role="presentation" class="active"><a href="#"><?php echo $this->translate('Overview')?></a></li>
+					<li role="presentation" class="active"><a href="#"><?php echo $this->translate('Hardware')?></a></li>
+					<li role="presentation" class="active"><a href="#"><?php echo $this->translate('Software')?></a></li>
+					<li role="presentation" class="active"><a href="#"><?php echo $this->translate('Users')?></a></li>
+					<li role="presentation" class="active"><a href="#"><?php echo $this->translate('Network')?></a></li>
+				</ul>
+				<br />
+				<div class="row">
+					<div class="col-sm-4">
+						<img src="<?php echo $this->deviceEntity->getImagesEntity()->getDevice();?>" class="img-responsive pull-left" />
+						<p><b><?php echo $this->translate('Model');?>:</b> <?php echo $this->deviceEntity->getModel();?></p>
+						<p><b><?php echo $this->translate('Os');?>:</b> <?php echo $this->deviceEntity->getOs();?></p>
+						<p><b><?php echo $this->translate('Uptime');?>:</b> <?php echo $this->deviceEntity->getUptime();?></p>
+						<p><b><?php echo $this->translate('Last Seen');?>:</b> <?php echo $this->deviceEntity->getLastSeen();?></p>
+					</div>
+					<div class="col-sm-8">
+						<ul class="nav nav-tabs">
+							<li role="presentation" class="active"><a href="#"><?php echo $this->translate('Vulnerability')?></a></li>
+							<li role="presentation" class="active"><a href="#"><?php echo $this->translate('Availibility')?></a></li>
+							<li role="presentation" class="active"><a href="#"><?php echo $this->translate('Compliance')?></a></li>
+							<li role="presentation" class="active"><a href="#"><?php echo $this->translate('System Events')?></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php \Zend\Debug\Debug::dump($this->deviceEntity->getImagesEntity()->getManufacturer());?>

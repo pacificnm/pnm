@@ -1,0 +1,14 @@
+<h4>New Call Log</h4>
+
+<p><b>Client:</b> <?php echo $this->clientEntity->getClientName(); ?></p>
+<p><b>Phone:</b> <a href="tel:<?php echo $this->clientEntity->getPhoneEntity()->getPhoneNum();?>" title="Call client"><?php echo $this->clientEntity->getPhoneEntity()->getPhoneNum();?></a></p>
+<p><b>Call Time:</b> <?php echo date("m/d/Y h:i a", $this->logEntity->getCallLogTime()); ?></p>
+<p><b>Require Call Back:</b> <?php echo ($this->logEntity->getCallLogRequireCallBack() == 1) ? $this->translate('Yes') : $this->translate('No'); ?></p>
+<p><b>Will Call Back:</b> <?php echo ($this->logEntity->getCallLogWillCallBack() == 1) ? $this->translate('Yes') : $this->translate('No'); ?></p>
+<p><b>Left Voice Mail:</b> <?php echo ($this->logEntity->getCallLogVoiceMail() == 1) ? $this->translate('Yes') : $this->translate('No'); ?></p>
+<p><b>Call Is Urgent:</b> <?php echo ($this->logEntity->getCallLogUrgent() == 1) ? $this->translate('Yes') : $this->translate('No'); ?></p>
+
+<p><?php echo $this->logEntity->getCallLogDetail()?></p>
+
+<hr />
+<p>You can view this call log <a href="<?php echo $this->serverUrl($this->url('call-log-view', array('clientId' => $this->clientEntity->getClientId(), 'callLogId' => $this->logEntity->getCallLogId()))); ?>" title="View this call log">here</a></p>

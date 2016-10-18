@@ -18,14 +18,17 @@ return array(
     
     // controllers
     'controllers' => array(
-        'factories' => array()
+        'factories' => array(
+            'Notification\Controller\ClearController' => 'Notification\Controller\Factory\ClearControllerFactory',
+        )
     ),
     
     // service manager
     'service_manager' => array(
         'factories' => array(
             'Notification\Service\NotificationServiceInterface' => 'Notification\Service\Factory\NotificationServiceFactory',
-            'Notification\Mapper\NotificationMapperInterface' => 'Notification\Mapper\Factory\NotificationMapperFactory'
+            'Notification\Mapper\MysqlMapperInterface' => 'Notification\Mapper\Factory\MysqlMapperFactory',
+             'Notification\Listener\NotificationListener' => 'Notification\Listener\Factory\NotificationListenerFactory'
         )
     ),
     
@@ -39,6 +42,17 @@ return array(
                     'route' => '/notification',
                     'defaults' => array(
                         'controller' => 'Notification\Controller\Index',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'notification-clear' => array(
+                'title' => 'Notifications',
+                'type' => 'literal',
+                'options' => array(
+                    'route' => '/notification/clear',
+                    'defaults' => array(
+                        'controller' => 'Notification\Controller\ClearController',
                         'action' => 'index'
                     )
                 )

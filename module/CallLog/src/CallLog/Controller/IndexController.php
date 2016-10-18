@@ -12,96 +12,56 @@ use Zend\View\Model\ViewModel;
 use Application\Controller\BaseController;
 use Client\Service\ClientServiceInterface;
 use CallLog\Service\LogServiceInterface;
+use Client\Controller\ClientBaseController;
 
-
-class IndexController extends BaseController
+class IndexController extends ClientBaseController
 {
-    /**
-     *
-     * @var ClientServiceInterface
-     */
-    protected $clientService;
-    
+
+
     /**
      *
      * @var LogServiceInterface
      */
     protected $logService;
-    
-    
+
     /**
      * 
-     * @param ClientServiceInterface $clientService
      * @param LogServiceInterface $logService
-     * @param LogForm $logForm
      */
-    public function __construct(ClientServiceInterface $clientService, LogServiceInterface $logService)
+    public function __construct(LogServiceInterface $logService)
     {
-        $this->clientService = $clientService;
-    
         $this->logService = $logService;
-        
-        
     }
-    
+
     /**
      *
      * {@inheritDoc}
+     *
      * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
      */
     public function indexAction()
     {
-        // client id
-        $id = $this->params()->fromRoute('clientId');
-    
-        // page
-        $page = $this->params()->fromQuery('page', 1);
-        
-        // count per page
-        $countPerPage = $this->params()->fromQuery('count-per-page', 24);
-        
-        // get client
-        $clientEntity = $this->clientService->get($id);
-    
-        // validate we got a client
-        if (! $clientEntity) {
-            $this->flashmessenger()->addErrorMessage('Client was not found.');
-    
-            return $this->redirect()->toRoute('client-index');
-        }
+        parent::indexAction();
         
         $filter = array(
-            'clientId' => $id
+            'clientId' => $this->clientId
         );
         
+        // get paginator
         $paginator = $this->logService->getAll($filter);
         
-        $paginator->setCurrentPageNumber($page);
+        $paginator->setCurrentPageNumber($this->page);
         
-        $paginator->setItemCountPerPage($countPerPage);
-        
-        // set history
-        $this->setHistory($this->getRequest()
-            ->getUri(), 'READ', $this->identity()
-            ->getAuthId(), 'List Call Log for ' . $clientEntity->getClientName());
-        
-        // set up layout
-        $this->layout()->setVariable('pageTitle', 'Call Log');
-        
-        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
-        
-        $this->layout()->setVariable('activeMenuItem', 'client');
-        
-        $this->layout()->setVariable('activeSubMenuItem', 'call-log-index');
+        $paginator->setItemCountPerPage($this->countPerPage);
         
         return new ViewModel(array(
-            'clientId' => $id,
+            'clientId' => $this->clientId,
             'paginator' => $paginator,
-            'page' => $page,
+            'page' => $this->page,
             'itemCount' => $paginator->getTotalItemCount(),
             'pageCount' => $paginator->count(),
             'queryParams' => $this->params()->fromQuery(),
-            'routeParams' => array(),
+            'routeParams' => array()
         ));
     }
 }

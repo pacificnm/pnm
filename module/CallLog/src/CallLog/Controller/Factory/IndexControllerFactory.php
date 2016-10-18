@@ -22,10 +22,8 @@ class IndexControllerFactory
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
-        $clientService = $realServiceLocator->get('Client\Service\ClientServiceInterface');
-        
         $logService = $realServiceLocator->get('CallLog\Service\LogServiceInterface');
         
-        return new IndexController($clientService, $logService);
+        return new IndexController($logService);
     }
 }

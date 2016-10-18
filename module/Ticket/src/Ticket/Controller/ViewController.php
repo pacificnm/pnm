@@ -1,11 +1,11 @@
 <?php
 namespace Ticket\Controller;
 
-use Application\Controller\BaseController;
 use Ticket\Service\TicketServiceInterface;
 use Zend\View\Model\ViewModel;
+use Client\Controller\ClientBaseController;
 
-class ViewController extends BaseController
+class ViewController extends ClientBaseController
 {
 
     /**
@@ -31,28 +31,28 @@ class ViewController extends BaseController
      */
     public function indexAction()
     {
-        $clientId = $this->params()->fromRoute('clientId');
+        parent::indexAction();
         
+        // ticket id from route
         $ticketId = $this->params()->fromRoute('ticketId');
         
-        // get client
-        $clientEntity = $this->getClient($clientId);
-        
         // get ticket
-        $ticketEntity = $this->ticketService->get($ticketId);
+        $ticketEntity = $this->GetTicket($this->clientId, $ticketId);
         
-        // set sub title
-        $this->layout()->setVariable('pageSubTitle', $clientEntity->getClientName());
+        // trigger event
+        $this->getEventManager()->trigger('ticketView', $this, array(
+            'ticketEntity' => $ticketEntity,
+            'authId' => $this->identity()
+                ->getAuthId(),
+            'historyUrl' => $this->getRequest()
+                ->getUri()
+        ));
         
-        // @todo move these two to a menu plugin called in the base controller
-        $this->layout()->setVariable('activeMenuItem', 'client');
-        
-        $this->layout()->setVariable('activeSubMenuItem', 'ticket-index');
-        
+        // return view model
         return new ViewModel(array(
             'ticketEntity' => $ticketEntity,
-            'clientEntity' => $clientEntity,
-            'clientId' => $clientId,
+            'clientEntity' => $this->clientEntity,
+            'clientId' => $this->clientId,
             'ticketId' => $ticketId
         ));
     }

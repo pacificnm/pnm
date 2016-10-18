@@ -41,8 +41,11 @@ class ClientControllerPlugin extends AbstractPlugin
 
         if(! $clientEntity) {
            $flashmessenger = $this->controllerPluginManager->get('flashMessenger');
+           
            $flashmessenger->addErrorMessage('Client was not found.');
+           
            $redirect = $this->controllerPluginManager->get('redirect');
+           
            return $redirect->toRoute('client-index');
         }
         

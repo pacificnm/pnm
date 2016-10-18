@@ -21,6 +21,9 @@
 				</div>
 			<?php else: ?>
 			<?php foreach($this->noteEntitys as $noteEntity): ?>
+				<?php if($this->identity()->getAuthType() == "User" && $noteEntity->getTicketNoteClientView() == 0): ?>
+				
+				<?php else:?>
 				<div class="row">
 					<div class="col-xs-12">
 						<p><?php echo $noteEntity->getTicketNoteText();?></p>
@@ -29,30 +32,23 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<p class="text-muted small">
-							<?php echo date($this->appConfig()->getConfigDateLong(), $noteEntity->getTicketNoteDateCreate());?>
-							<a href="" title="">
-								<?php echo $noteEntity->getAuthEntity()->getAuthName(); ?>
-							</a>
+							<?php echo date($this->appConfig()->getConfigDateLong(), $noteEntity->getTicketNoteDateCreate());?> | 
+							<?php echo $noteEntity->getAuthEntity()->getAuthName(); ?>
 							
-							<?php if($this->identity()->getAuthType() == 'Employee'): ?>
-								<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'ticket-note-update') && $this->ticketStatus != 'Closed'):?>
-								<a href="" title="" class="btn btn-box-tool pull-right">
-									<i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?>
-								</a>
-								<?php endif; ?>
-							<?php else: ?>
-								<?php if($this->identity()->getAuthId() == $noteEntity->getAuthId()): ?>
-									<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'ticket-note-update') && $this->ticketStatus != 'Closed'):?>
-									<a href="" title="" class="btn btn-box-tool pull-right">
-										<i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?>
-									</a>
-									<?php endif;?>
-								<?php endif;?>
-							<?php endif;?>
+							<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'ticket-note-update') && $this->ticketStatus != 'Closed'):?>
+							<?php if($noteEntity->getAuthId() == $this->identity()->getAuthId() || $this->identity()->getAuthType() == "Employee"): ?>
+							<a href="<?php echo $this->url('ticket-note-update', array('clientId' => $noteEntity->getTicketEntity()->getClientId(), 
+							     'ticketId' => $noteEntity->getTicketId(), 'ticketNoteId' => $noteEntity->getTicketNoteId())); ?>" title="<?php echo $this->translate('Edit ticket note'); ?>" class="btn btn-box-tool pull-right">
+								<i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?>
+							</a>
+							<?php endif; ?>
+							<?php endif; ?>
+							
 						</p>
 						<hr class="text-muted"/>
 					</div>
 				</div>
+				<?php endif; ?>
 			<?php endforeach;?>
 			<?php endif;?>
 			</div>

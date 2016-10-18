@@ -35,14 +35,18 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'CallLog\\Service\\LogServiceInterface' => 'CallLog\\Service\\Factory\\LogServiceFactory',
-            'CallLog\\Mapper\\LogMapperInterface' => 'CallLog\\Mapper\\Factory\\LogMapperFactory',
+            'CallLog\Mapper\MysqlMapperInterface' => 'CallLog\Mapper\Factory\MysqlMapperFactory',
             'CallLog\\Form\\LogForm' => 'CallLog\\Form\\Factory\\LogFormFactory',
             'CallLog\\V1\\Rest\\CallLog\\CallLogResource' => 'CallLog\\V1\\Rest\\CallLog\\CallLogResourceFactory',
+            'CallLog\Listener\CallLogListener' => 'CallLog\Listener\Factory\CallLogListenerFactory'
         ),
     ),
     'router' => array(
         'routes' => array(
             'call-log-index' => array(
+                'title' => 'Client Call Logs',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'call-log-index',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/client/[:clientId]/call-log',
@@ -53,6 +57,9 @@ return array(
                 ),
             ),
             'call-log-create' => array(
+                'title' => 'New Call Log',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'call-log-index',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/client/[:clientId]/call-log/create',
@@ -63,6 +70,9 @@ return array(
                 ),
             ),
             'call-log-update' => array(
+                'title' => 'Edit Call Log',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'call-log-index',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/client/[:clientId]/call-log/update/[:callLogId]',
@@ -73,6 +83,9 @@ return array(
                 ),
             ),
             'call-log-delete' => array(
+                'title' => 'Delete Call Log',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'call-log-index',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/client/[:clientId]/call-log/delete/[:callLogId]',

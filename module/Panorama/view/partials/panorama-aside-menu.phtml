@@ -1,0 +1,14 @@
+<li class="treeview <?php if($this->activeMenuItem == 'panorama-index'):?>active<?php endif;?>">
+	<a href="#">
+		<i class="fa fa-cogs"></i> <span><?php echo $this->translate('Panorama9'); ?></span>
+		<i class="fa fa-angle-left pull-right"></i>
+	</a>
+	<ul class="treeview-menu">
+		<!--  Panorama Home -->
+		<li class="<?php if($this->activeSubMenuItem == 'panorama-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('panorama-index'); ?>" title="<?php echo $this->translate('Home'); ?>">
+				<i class="fa fa-home"></i> <?php echo $this->translate('Home'); ?>
+			</a>
+		</li>
+	</ul>
+</li>
