@@ -71,7 +71,7 @@ class CreateController extends ClientBaseController
                 $entity->setCallLogTime(strtotime($entity->getCallLogTime()));
                 
                 $logEntity = $this->logService->save($entity);
-                
+     
                 // trigger callLogCreate event
                 $this->getEventManager()->trigger('callLogCreate', $this, array(
                     'logEntity' => $logEntity,

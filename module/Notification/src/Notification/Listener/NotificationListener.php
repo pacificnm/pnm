@@ -38,19 +38,22 @@ class NotificationListener implements ListenerAggregateInterface
     {
         $logEntity = $event->getParam('logEntity');
         
-        $entity = new NotificationEntity();
+        if($logEntity) {
         
-        $entity->setEmployeeId($logEntity->getEmployeeId());
-        
-        $entity->setNotificationDate(time());
-        
-        $entity->setNotificationId(0);
-        
-        $entity->setNotificationStatus('Active');
-        
-        $entity->setNotificationText('<a href="/client/'.$logEntity->getClientId().'/call-log/view/'.$logEntity->getCallLogId().'" title="View call log">New call log from ' . $logEntity->getClientEntity()->getClientName() . '</a>');
-        
-        $this->notificationService->save($entity);
+            $entity = new NotificationEntity();
+            
+            $entity->setEmployeeId($logEntity->getEmployeeId());
+            
+            $entity->setNotificationDate(time());
+            
+            $entity->setNotificationId(0);
+            
+            $entity->setNotificationStatus('Active');
+            
+            $entity->setNotificationText('<a href="/client/'.$logEntity->getClientId().'/call-log/view/'.$logEntity->getCallLogId().'" title="View call log">New call log from ' . $logEntity->getClientEntity()->getClientName() . '</a>');
+            
+            $this->notificationService->save($entity);
+        }
     }
     
     /**

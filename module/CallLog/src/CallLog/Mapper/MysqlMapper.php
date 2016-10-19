@@ -97,7 +97,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
     public function save(LogEntity $entity)
     {
         $postData = $this->hydrator->extract($entity);
-        
+         
         // if we have id then its an update
         if ($entity->getCallLogId()) {
             $this->update = new Update('call_log');
@@ -117,6 +117,8 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
             $id = $this->createRow();
             
             $entity->setCallLogId($id);
+
+           
         }
         
         return $this->get($entity->getCallLogId());
@@ -167,7 +169,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
             'employee_phone_mobile',
             'employee_image',
             'employee_status'
-        ), 'inner');
+        ), 'left');
         
         return $this;
     }
@@ -182,7 +184,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
             'client_name',
             'client_status',
             'client_created'
-        ), 'inner');
+        ), 'left');
         
         // join phone number
         $expresion = new Expression("client.client_id = phone.client_id AND phone.phone_type = 'Primary'");
@@ -190,7 +192,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
         $this->select->join('phone', $expresion, array(
             'phone_type',
             'phone_num'
-        ), 'inner');
+        ), 'left');
         
         // join address
         
@@ -209,7 +211,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
             'auth_email',
             'auth_name',
             'auth_type'
-        ), 'inner');
+        ), 'left');
         
         return $this;
     }

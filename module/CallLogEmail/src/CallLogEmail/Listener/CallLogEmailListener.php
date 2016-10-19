@@ -34,8 +34,11 @@ class CallLogEmailListener implements ListenerAggregateInterface
      * @param EventInterface $event
      */
     public function callLogCreate(EventInterface $event)
-    {
-        $this->callLogEmailService->sendCallLogEmail($event->getParam('logEntity'));
+    {        
+        $logEntity = $event->getParam('logEntity');
+        if($logEntity) {
+            $this->callLogEmailService->sendCallLogEmail($logEntity);
+        }
     }
     
     /**
