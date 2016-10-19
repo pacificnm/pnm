@@ -2,15 +2,15 @@
 namespace Client\Service;
 
 use Client\Entity\ClientEntity;
-use Client\Mapper\ClientMapperInterface;
 use Zend\Cache\Storage\Adapter\Memcached;
+use Client\Mapper\MysqlMapperInterface;
 
 class ClientService implements ClientServiceInterface
 {
 
     /**
      *
-     * @var ClientMapperInterface
+     * @var MysqlMapperInterface
      */
     protected $mapper;
 
@@ -22,10 +22,10 @@ class ClientService implements ClientServiceInterface
 
     /**
      *
-     * @param ClientMapperInterface $mapper            
+     * @param MysqlMapperInterface $mapper            
      * @param Memcached $memcached            
      */
-    public function __construct(ClientMapperInterface $mapper, Memcached $memcached)
+    public function __construct(MysqlMapperInterface $mapper, Memcached $memcached)
     {
         $this->mapper = $mapper;
         
@@ -58,12 +58,33 @@ class ClientService implements ClientServiceInterface
      *
      * {@inheritDoc}
      *
+     * @see \Client\Service\ClientServiceInterface::getClientByName()
+     */
+    public function getClientByName($clientName)
+    {
+        return $this->mapper->getClientByName($clientName);
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
      * @see \Client\Service\ClientServiceInterface::save()
      */
     public function save(ClientEntity $entity)
     {
         return $this->mapper->save($entity);
+    }
 
+    /**
+     *
+     * {@inheritDoc}
+     *
+     * @see \Client\Service\ClientServiceInterface::createClient()
+     */
+    public function createClient($clientName, $clientStatus)
+    {
+        return $this->mapper->createClient($clientName, $clientStatus);
     }
 
     /**

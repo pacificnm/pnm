@@ -10,6 +10,7 @@ use Task\Service\TaskServiceInterface;
 use Location\Service\LocationServiceInterface;
 use User\Service\UserServiceInterface;
 use WorkorderTime\Service\TimeServiceInterface;
+use PanoramaClient\Service\PanoramaClientServiceInterface;
 
 class ViewController extends BaseController
 {
@@ -58,6 +59,12 @@ class ViewController extends BaseController
     
     /**
      * 
+     * @var PanoramaClientServiceInterface
+     */
+    protected $panoramaClientService;
+    
+    /**
+     * 
      * @param ClientServiceInterface $clientService
      * @param WorkorderServiceInterface $workorderService
      * @param InvoiceServiceInterface $invoiceService
@@ -65,8 +72,9 @@ class ViewController extends BaseController
      * @param LocationServiceInterface $locationService
      * @param UserServiceInterface $userService
      * @param TimeServiceInterface $timeService
+     * @param PanoramaClientServiceInterface $panoramaClientService
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, InvoiceServiceInterface $invoiceService, TaskServiceInterface $taskService, LocationServiceInterface $locationService, UserServiceInterface $userService, TimeServiceInterface $timeService)
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, InvoiceServiceInterface $invoiceService, TaskServiceInterface $taskService, LocationServiceInterface $locationService, UserServiceInterface $userService, TimeServiceInterface $timeService, PanoramaClientServiceInterface $panoramaClientService)
     {
         $this->clientService = $clientService;
         
@@ -81,6 +89,8 @@ class ViewController extends BaseController
         $this->userService = $userService;
         
         $this->timeService = $timeService;
+        
+        $this->panoramaClientService = $panoramaClientService;
     }
 
     /**
@@ -143,6 +153,9 @@ class ViewController extends BaseController
         // get primary user
         $userEntity = $this->userService->getClientPrimaryUser($id);
         
+        // get panorama client
+        $panoramaClientEntity = $this->panoramaClientService->getByClientId($id);
+        
         // start time
         $start = mktime(0, 0, 0, 1, 1, date("Y"));
         
@@ -182,7 +195,8 @@ class ViewController extends BaseController
             'taskEntitys' => $taskEntitys,
             'locationEntitys' => $locationEntitys,
             'userEntity' => $userEntity,
-            'dataSet' => $dataSet
+            'dataSet' => $dataSet,
+            'panoramaClientEntity' => $panoramaClientEntity
         ));
     }
 }

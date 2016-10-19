@@ -3,7 +3,7 @@ namespace Client\Mapper;
 
 use Client\Entity\ClientEntity;
 
-interface ClientMapperInterface
+interface MysqlMapperInterface
 {
 
     /**
@@ -21,12 +21,27 @@ interface ClientMapperInterface
     public function get($id);
 
     /**
+     * 
+     * @param string $clientName
+     * @return ClientEntity
+     */
+    public function getClientByName($clientName);
+    
+    /**
      *
      * @param ClientEntity $entity            
      * @return ClientEntity
      */
     public function save(ClientEntity $entity);
 
+    /**
+     * 
+     * @param string $clientName
+     * @param string $clientStatus
+     * @return ClientEntity
+     */
+    public function createClient($clientName, $clientStatus);
+    
     /**
      *
      * @param ClientEntity $entity            

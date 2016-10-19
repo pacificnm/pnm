@@ -6,6 +6,7 @@ use Panorama\Service\MspServiceInterface;
 use Zend\View\Model\ViewModel;
 use Panorama\Service\IssueServiceInterface;
 use Panorama\Service\DeviceServiceInterface;
+use PanoramaClient\Service\PanoramaClientServiceInterface;
 
 class ViewController extends BaseController
 {
@@ -29,18 +30,24 @@ class ViewController extends BaseController
     protected $deviceService;
 
     /**
-     *
-     * @param MspServiceInterface $mspService            
-     * @param IssueServiceInterface $issueService            
-     * @param DeviceServiceInterface $deviceService            
+     * 
+     * @var PanoramaClientServiceInterface
      */
-    public function __construct(MspServiceInterface $mspService, IssueServiceInterface $issueService, DeviceServiceInterface $deviceService)
+    protected $panoramaClientService;
+    
+    /**
+     * 
+     * @param MspServiceInterface $mspService
+     * @param DeviceServiceInterface $deviceService
+     * @param PanoramaClientServiceInterface $panoramaClientService
+     */
+    public function __construct(MspServiceInterface $mspService,  DeviceServiceInterface $deviceService, PanoramaClientServiceInterface $panoramaClientService)
     {
         $this->mspService = $mspService;
         
-        $this->issueService = $issueService;
-        
         $this->deviceService = $deviceService;
+        
+        $this->panoramaClientService = $panoramaClientService;
     }
 
     /**
@@ -55,6 +62,8 @@ class ViewController extends BaseController
         
         $mspEntity = $this->mspService->getClient($cid);
         
+        $panoramaClientEntity = $this->panoramaClientService->getByCid($mspEntity->getCid());
+        
         $paginator = $this->deviceService->getDevices($cid);
         
         $this->layout()->setVariable('pageTitle', 'Panorama9');
@@ -67,7 +76,8 @@ class ViewController extends BaseController
         
         return new ViewModel(array(
             'mspEntity' => $mspEntity,
-            'paginator' => $paginator
+            'paginator' => $paginator,
+            'panoramaClientEntity' => $panoramaClientEntity
         ));
     }
 }

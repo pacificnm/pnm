@@ -20,6 +20,10 @@ class DeviceControllerFactory
         
         $deviceService = $realServiceLocator->get('Panorama\Service\DeviceServiceInterface');
         
-        return new DeviceController($mspService, $deviceService);
+        $panoramaHostService = $realServiceLocator->get('PanoramaHost\Service\PanoramaHostServiceInterface');
+        
+        $panoramaClientService = $realServiceLocator->get('PanoramaClient\Service\PanoramaClientServiceInterface');
+        
+        return new DeviceController($mspService, $deviceService, $panoramaHostService, $panoramaClientService);
     }
 }

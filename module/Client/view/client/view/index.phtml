@@ -146,7 +146,9 @@
 			<div class="box-body">
 				<?php if(! $this->userEntity): ?>
 					<div class="alert alert-danger">
-						<p><i class="fa fa-warning"></i> <?php echo $this->translate('Missing primary user.'); ?></p>
+						<p><i class="fa fa-warning"></i> <?php echo $this->translate('Missing primary user.'); ?>
+							<a href="<?php echo $this->url('user-create', array('clientId' => $this->clientId));?>" class="pull-right " title="<?php echo $this->translate('Create new user'); ?>"><i class="fa fa-plus"></i> <?php echo $this->translate('Create'); ?></a>
+						</p>
 					</div>
 				<?php else: ?>
 				<div class="row">
@@ -383,6 +385,14 @@
 		<?php endif; ?>
 		
 		<!-- Host Alerts -->
+		<?php if($this->appConfig()->getConfigPanoramaKey()): ?>
+			<?php if($this->panoramaClientEntity): ?>
+				<?php echo $this->getClientIssues($this->panoramaClientEntity->getPanoramaClientCid()); ?>
+			<?php else: ?>
+			
+			<?php endif;?>
+		<?php else: ?>
+		
 		<a id="hostAlerts"></a>
 		<div class="box box-danger">
     		<div class="box-header with-border">
@@ -395,6 +405,8 @@
     			</div>
     		</div>
     	</div>
+    	<?php endif; ?>
+    	
 	</div>
 </div>
 <script>

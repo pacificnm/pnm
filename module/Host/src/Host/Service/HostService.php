@@ -66,6 +66,39 @@ class HostService implements HostServiceInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \Host\Service\HostServiceInterface::create()
+     */
+    public function create($clientId, $hostDescription, $hostHealth, $hostIp, $hostName, $hostStatus, $hostTypeId, $locationId)
+    {
+        $entity = new HostEntity();
+        
+        $entity->setClientId($clientId);
+        
+        $entity->setLocationId($locationId);
+        
+        $entity->setHostCreated(time());
+        
+        $entity->setHostDescription($hostDescription);
+        
+        $entity->setHostHealth($hostHealth);
+        
+        $entity->setHostId(0);
+        
+        $entity->setHostIp($hostIp);
+        
+        $entity->setHostName($hostName);
+        
+        $entity->setHostStatus($hostStatus);
+        
+        $entity->setHostTypeId($hostTypeId);
+        
+        
+        return $this->save($entity);
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *

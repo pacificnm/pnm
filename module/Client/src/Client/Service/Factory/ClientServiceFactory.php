@@ -16,7 +16,7 @@ class ClientServiceFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $mapper = $serviceLocator->get('Client\Mapper\ClientMapperInterface');
+        $mapper = $serviceLocator->get('Client\Mapper\MysqlMapperInterface');
         
         $memcached = $serviceLocator->get('memcached');
         

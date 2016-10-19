@@ -9,6 +9,7 @@ use Location\Service\LocationServiceInterface;
 use Phone\Service\PhoneServiceInterface;
 use Location\Form\LocationForm;
 use Phone\Form\PhoneForm;
+use Phone\Entity\PhoneEntity;
 class UpdateController extends BaseController
 {
     /**
@@ -88,8 +89,6 @@ class UpdateController extends BaseController
             return $this->redirect()->toRoute('client-index');
         }
         
-        
-        
         $request = $this->getRequest();
         
         // if we have a post
@@ -119,16 +118,17 @@ class UpdateController extends BaseController
                
                 $clientEntity = $this->clientForm->getData();
                 
-                $phoneEntity = $this->phoneForm->getData();
-                
-                
                 $locationEntity = $this->locationForm->getData();
                 
+                $phoneEntity = $this->phoneForm->getData();
+
                 $clientEntity = $this->clientService->save($clientEntity);
                 
-                $phoneEntity = $this->phoneService->save($phoneEntity);
-                
                 $locationEntity = $this->locationService->save($locationEntity);
+                
+                $phoneEntity->setLocationId($locationEntity->getLocationId());
+                
+                $phoneEntity = $this->phoneService->save($phoneEntity);
                 
                 $this->flashmessenger()->addSuccessMessage('The client was saved.');
                 
@@ -141,9 +141,9 @@ class UpdateController extends BaseController
         // bind forms
         $this->clientForm->bind($clientEntity);
         
-        $this->locationForm->bind($clientEntity->getLocationEntity());
+        $this->bindLocationForm($id);
         
-        $this->phoneForm->bind($clientEntity->getPhoneEntity());
+        $this->bindPhoneForm($clientEntity->getPhoneEntity());
         
         // set vars
         $this->layout()->setVariable('clientId', $id);
@@ -160,5 +160,34 @@ class UpdateController extends BaseController
             'locationForm' => $this->locationForm,
             'phoneForm' => $this->phoneForm
         ));
+    }
+    
+    /**
+     * 
+     * @param unknown $clientId
+     */
+    protected function bindLocationForm($clientId)
+    {
+        $locationEntity = $this->locationService->getClientLocationByType($clientId, 'Primary');
+        
+        if(! $locationEntity) {
+            $this->locationForm->get('locationId')->setValue(0);
+        } else {
+            $this->locationForm->bind($locationEntity);
+        }
+            
+    }
+   
+    /**
+     * 
+     */
+    protected function bindPhoneForm(PhoneEntity $phoneEntity)
+    {
+        
+        if(! $phoneEntity->getPhoneId()) {
+            $this->phoneForm->get('phoneId')->setValue(0);
+        } else {
+            $this->phoneForm->bind($phoneEntity);
+        }
     }
 }

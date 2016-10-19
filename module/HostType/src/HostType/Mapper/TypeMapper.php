@@ -119,6 +119,39 @@ class TypeMapper implements TypeMapperInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \HostType\Mapper\TypeMapperInterface::getTypeByName()
+     */
+    public function getTypeByName($hostTypeName)
+    {
+        $sql = new Sql($this->readAdapter);
+        
+        $select = $sql->select('host_type');
+        
+        $select->where(array(
+            'host_type.host_type_name = ?' => $hostTypeName
+        ));
+        
+        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+        $stmt = $sql->prepareStatementForSqlObject($select);
+        
+        $result = $stmt->execute();
+        
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+        
+            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
+        
+            $resultSet->buffer();
+        
+            return $resultSet->initialize($result)->current();
+        }
+        
+        return array();
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *

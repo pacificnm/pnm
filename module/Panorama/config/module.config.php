@@ -12,7 +12,8 @@ return array(
                 'employee' => array(
                     'panorama-index',
                     'panorama-view',
-                    'panorama-view-device'
+                    'panorama-view-device',
+                    'panorama-user'
                 ),
                 'accountant' => array(),
                 'administrator' => array()
@@ -26,6 +27,7 @@ return array(
             'Panorama\Controller\IndexController' => 'Panorama\Controller\Factory\IndexControllerFactory',
             'Panorama\Controller\ViewController' => 'Panorama\Controller\Factory\ViewControllerFactory',
             'Panorama\Controller\DeviceController' => 'Panorama\Controller\Factory\DeviceControllerFactory',
+            'Panorama\Controller\UserController' => 'Panorama\Controller\Factory\UserControllerFactory',
         )
     ),
     
@@ -35,6 +37,7 @@ return array(
             'Panorama\Service\MspServiceInterface' => 'Panorama\Service\Factory\MspServiceFactory',
             'Panorama\Service\IssueServiceInterface' => 'Panorama\Service\Factory\IssueServiceFactory',
             'Panorama\Service\DeviceServiceInterface' => 'Panorama\Service\Factory\DeviceServiceFactory',
+            'Panorama\Service\UserServiceInterface' => 'Panorama\Service\Factory\UserServiceFactory',
         )
     ),
     
@@ -74,13 +77,28 @@ return array(
                     )
                 )
             ),
+            'panorama-user' => array(
+                'title' => 'Panorama9',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/admin/panorama/client/[:cid]/user',
+                    'defaults' => array(
+                        'controller' => 'Panorama\Controller\UserController',
+                        'action' => 'index'
+                    )
+                )
+            )
         )
     ),
     
     'view_helpers' => array(
         'invokables' => array(
-            'PanoramaAsideMenu' => 'Panorama\View\Helper\PanoramaAsideMenu'
+            'PanoramaAsideMenu' => 'Panorama\View\Helper\PanoramaAsideMenu',
         ),
+        'factories' => array(
+            'GetClientIssues' => 'Panorama\View\Helper\Factory\GetClientIssuesFactory',
+            'GetDeviceDetails' => 'Panorama\View\Helper\Factory\GetDeviceDetailsFactory',
+        )
     ),
     
     // view manager

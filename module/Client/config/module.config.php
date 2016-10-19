@@ -39,7 +39,7 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
-            'Client\\Mapper\\ClientMapperInterface' => 'Client\\Mapper\\Factory\\ClientMapperFactory',
+            'Client\Mapper\MysqlMapperInterface' => 'Client\Mapper\Factory\MysqlMapperFactory',
             'Client\\Service\\ClientServiceInterface' => 'Client\\Service\\Factory\\ClientServiceFactory',
             'Client\\V1\\Rest\\Client\\ClientResource' => 'Client\\V1\\Rest\\Client\\ClientResourceFactory',
             'Client\\V1\\Rest\\ClientService\\ClientServiceResource' => 'Client\\V1\\Rest\\ClientService\\ClientServiceResourceFactory'

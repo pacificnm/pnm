@@ -15,6 +15,7 @@ use Panorama\Entity\UserEntity;
 use Panorama\Entity\RemoteControlEntity;
 use Panorama\Entity\ViewsEntity;
 use Panorama\Entity\ImagesEntity;
+use Panorama\Entity\Ipv4Entity;
 
 class DeviceHydrator extends ClassMethods
 {
@@ -41,16 +42,26 @@ class DeviceHydrator extends ClassMethods
         }
         
         parent::hydrate($data, $object);
-        
+
         // cpu
-        $cpuEntity = parent::hydrate($data, new CpuEntity());
-        
-        $object->setCpuEntity($cpuEntity);
+        if(array_key_exists('cpu', $data)) {
+            $cpuEntity = parent::hydrate($data["cpu"], new CpuEntity());
+            
+            $object->setCpuEntity($cpuEntity);
+        } else {
+            $object->setCpuEntity(new CpuEntity());
+        }
         
         // disksEntity
-        $disksEntity = parent::hydrate($data, new DisksEntity());
+        if(array_key_exists('disks', $data) && $data['disks'][0]) {
+            $disksEntity = parent::hydrate($data['disks'][0], new DisksEntity());
+            
+            $object->setDisksEntity($disksEntity);
+        } else {
+            $object->setDisksEntity(new DisksEntity());
+        }
         
-        $object->setDisksEntity($disksEntity);
+        
         
         // partitionsEntity
         $partitionsEntity = parent::hydrate($data, new PartitionsEntity());
@@ -68,7 +79,12 @@ class DeviceHydrator extends ClassMethods
         $object->setAudioEntity($audioEntity);
         
         // assetStateEntity
-        $assetStateEntity = parent::hydrate($data, new AssetStateEntity());
+        if(array_key_exists('asset_state', $data)) {
+            $assetStateEntity = parent::hydrate($data['asset_state'], new AssetStateEntity());
+        } else {
+            $assetStateEntity = new AssetStateEntity();
+        }
+        
         
         $object->setAssetStateEntity($assetStateEntity);
         
@@ -78,9 +94,29 @@ class DeviceHydrator extends ClassMethods
         $object->setLocationEntity($locationEntity);
         
         // networkEntity
-        $networkEntity = parent::hydrate($data, new NetworkEntity());
+        //\Zend\Debug\Debug::dump($data['network']); die;
+        if(array_key_exists('network', $data)) {
+            if (count($data['network']) == count($data['network'], COUNT_RECURSIVE)) {
+                $networkEntity = parent::hydrate($data['network'], new NetworkEntity());
+            } else {
+                $networkEntity = parent::hydrate($data['network'][0], new NetworkEntity());
+            }
+            
+        } else {
+            $networkEntity = new NetworkEntity();
+        }
+       
         
         $object->setNetworkEntity($networkEntity);
+        
+        // ipEntity
+        if($data['network'][0]['ipv4'][0]) {
+            $ipv4Entity = parent::hydrate($data['network'][0]['ipv4'][0], new Ipv4Entity());
+        
+            $object->getNetworkEntity()->setIpv4Entity($ipv4Entity);
+        } else {
+            $object->getNetworkEntity()->setIpv4Entity(new Ipv4Entity());
+        }
         
         // userEntity
         $userEntity = parent::hydrate($data, new UserEntity());
@@ -88,9 +124,20 @@ class DeviceHydrator extends ClassMethods
         $object->setUserEntity($userEntity);
         
         // remoteControlEntity
-        $remoteControlEntity = parent::hydrate($data, new RemoteControlEntity());
+        if(array_key_exists('remote_control', $data)) {
+            $remoteControlEntity = array();
+            
+            foreach($data['remote_control'] as $array) {
+                
+                $remoteControlEntity[] = parent::hydrate($array, new RemoteControlEntity());
+            }
+        } else {
+            $remoteControlEntity = new RemoteControlEntity();
+        }
         
         $object->setRemoteControlEntity($remoteControlEntity);
+        
+        
         
         // viewsEntity
         $viewsEntity = parent::hydrate($data, new ViewsEntity());

@@ -4,11 +4,11 @@ namespace Client\Mapper\Factory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator;
-use Client\Mapper\ClientMapper;
 use Client\Hydrator\ClientHydrator;
 use Client\Entity\ClientEntity;
+use Client\Mapper\MysqlMapper;
 
-class ClientMapperFactory implements FactoryInterface
+class MysqlMapperFactory implements FactoryInterface
 {
 
     /**
@@ -29,6 +29,6 @@ class ClientMapperFactory implements FactoryInterface
         
         $writeAdapter = $serviceLocator->get('db2');
         
-        return new ClientMapper($readAdapter, $writeAdapter, $hydrator, $prototype);
+        return new MysqlMapper($readAdapter, $writeAdapter, $hydrator, $prototype);
     }
 }

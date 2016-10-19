@@ -27,6 +27,8 @@ class IssueServiceFactory
         
         $hydrator->add(new IssueHydrator());
         
-        return new IssueService($configService, $config['encryption-key'], $prototype, $hydrator);
+        $memcached = $serviceLocator->get('memcached');
+        
+        return new IssueService($configService, $config['encryption-key'], $prototype, $hydrator, $memcached);
     }
 }
