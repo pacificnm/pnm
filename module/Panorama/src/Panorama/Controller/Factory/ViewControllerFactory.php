@@ -17,11 +17,11 @@ class ViewControllerFactory
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
         $mspService = $realServiceLocator->get('Panorama\Service\MspServiceInterface');
-        
-        $issueService = $realServiceLocator->get('Panorama\Service\IssueServiceInterface');
-        
+
         $deviceService = $realServiceLocator->get('Panorama\Service\DeviceServiceInterface');
         
-        return new ViewController($mspService, $issueService, $deviceService);
+        $panoramaClientService = $realServiceLocator->get('PanoramaClient\Service\PanoramaClientServiceInterface');
+        
+        return new ViewController($mspService, $deviceService, $panoramaClientService);
     }
 }

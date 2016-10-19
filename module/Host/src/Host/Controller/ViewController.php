@@ -7,6 +7,8 @@ use Zend\View\Model\ViewModel;
 use Host\Service\HostServiceInterface;
 use HostAttributeMap\Service\MapServiceInterface;
 use Zabbix\Client;
+use PanoramaHost\Service\PanoramaHostServiceInterface;
+use PanoramaClient\Service\PanoramaClientServiceInterface;
 
 
 class ViewController extends BaseController
@@ -32,17 +34,35 @@ class ViewController extends BaseController
     
     /**
      * 
+     * @var PanoramaHostServiceInterface
+     */
+    protected $panoramaHostService;
+    
+    /**
+     * 
+     * @var PanoramaClientServiceInterface
+     */
+    protected $panoramaClientService;
+    
+    /**
+     * 
      * @param ClientServiceInterface $clientService
      * @param HostServiceInterface $hostService
      * @param MapServiceInterface $mapService
+     * @param PanoramaHostServiceInterface $panoramaHostService
+     * @param PanoramaClientServiceInterface $panoramaClientService
      */
-    public function __construct(ClientServiceInterface $clientService, HostServiceInterface $hostService, MapServiceInterface $mapService)
+    public function __construct(ClientServiceInterface $clientService, HostServiceInterface $hostService, MapServiceInterface $mapService, PanoramaHostServiceInterface $panoramaHostService, PanoramaClientServiceInterface $panoramaClientService)
     {
         $this->clientService = $clientService;
         
         $this->hostService = $hostService;
         
         $this->mapService = $mapService;
+        
+        $this->panoramaHostService = $panoramaHostService;
+        
+        $this->panoramaClientService = $panoramaClientService;
     }
 
     /**
@@ -79,6 +99,12 @@ class ViewController extends BaseController
         // load attributes
         $mapEnitys = $this->mapService->getHostAttributes($hostId);
         
+        // get panorma host
+        $panormaHostEntity = $this->panoramaHostService->getByHostId($hostId);
+        
+        // get panorama client
+        $panoramaClientEntity = $this->panoramaClientService->getByClientId($id);
+        
         // set up layout
         $this->layout()->setVariable('clientId', $id);
         
@@ -91,14 +117,15 @@ class ViewController extends BaseController
         $this->layout()->setVariable('activeSubMenuItem', 'host-list');
         
         $this->setHeadTitle($clientEntity->getClientName());
-        
                 
         // return View
         return new ViewModel(array(
             'clientEntity' => $clientEntity,
             'clientId' => $id,
             'hostEntity' => $hostEntity,
-            'mapEnitys' => $mapEnitys
+            'mapEnitys' => $mapEnitys,
+            'panormaHostEntity' => $panormaHostEntity,
+            'panoramaClientEntity' => $panoramaClientEntity
         ));
     }
 }

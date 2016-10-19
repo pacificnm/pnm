@@ -1,0 +1,64 @@
+<?php //\Zend\Debug\Debug::dump($this->deviceEntity); ?>
+<div class="box box-widget widget-user-2">
+	<div class="widget-user-header">
+		<div class="widget-user-image">
+			<img class="img-responsive" src="<?php echo $this->deviceEntity->getImagesEntity()->getDevice(); ?>" alt="Device Image">
+		</div>
+		<h3 class="widget-user-username"><?php echo $this->deviceEntity->getManufacturer(); ?></h3>
+		<h5 class="widget-user-desc"><?php echo $this->deviceEntity->getModel(); ?></h5>
+	</div>
+	<div class="box-body">
+		<ul class="list-group list-group-unbordered">
+			<?php if($this->deviceEntity->getOs()): ?>
+			<li class="list-group-item"><b><?php echo $this->translate('OS');?>:</b> <span class="pull-right"><?php echo $this->deviceEntity->getOs();?></span></li>
+			<?php endif; ?>
+			
+			<?php if($this->deviceEntity->getSerialNumber()): ?>
+			<li class="list-group-item"><b><?php echo $this->translate('Serial Number'); ?>:</b> 
+				<span class="pull-right"><?php echo $this->deviceEntity->getSerialNumber(); ?></span>
+			</li>
+			<?php endif; ?>
+			
+			<?php if($this->deviceEntity->getMemory()):?>
+			<li class="list-group-item"><b><?php echo $this->translate('Memory'); ?>:</b> 
+				<span class="pull-right"><?php echo $this->deviceEntity->getMemory(); ?> MB</span>
+			</li>
+			<?php endif;?>
+			
+			<?php if($this->deviceEntity->getCpuEntity()->getSpeed()): ?>
+			<li class="list-group-item"><b><?php echo $this->translate('CPU'); ?>:</b> 
+				<span class="pull-right">
+					<?php echo $this->deviceEntity->getCpuEntity()->getSpeed(); ?> <?php echo $this->deviceEntity->getCpuEntity()->getModel(); ?>
+				</span>
+			</li>
+			<?php endif; ?>
+			
+			<?php if($this->deviceEntity->getDisksEntity()->getManufacturer()): ?>
+			<li class="list-group-item"><b><?php echo $this->translate('Disk'); ?>:</b> 
+				<span class="pull-right">
+					<?php echo $this->deviceEntity->getDisksEntity()->getManufacturer(); ?>  <?php echo $this->deviceEntity->getDisksEntity()->getModel(); ?>
+					- <?php echo $this->deviceEntity->getDisksEntity()->getSize(); ?> MB
+				</span>
+			</li>
+			<?php endif; ?>
+			
+			<li class="list-group-item"><b><?php echo $this->translate('Online'); ?>:</b>
+				<span class="pull-right"><?php echo $this->deviceEntity->getIsOnline(); ?></span>
+			</li>
+			
+		</ul>
+	</div>
+	<div class="box-footer no-padding">
+		<?php if($this->deviceEntity->getRemoteControlEntity()): ?>
+			<ul class="nav nav-pills">
+			<?php foreach($this->deviceEntity->getRemoteControlEntity() as $remoteControlEntity): ?>
+				<li><a href="<?php echo $remoteControlEntity->getUrl(); ?>" 
+					title="<?php echo $remoteControlEntity->getProvider(); ?>" target="_blank">
+						<?php echo $remoteControlEntity->getProvider(); ?>
+					</a>
+				</li>
+			<?php endforeach;?>
+			</ul>
+		<?php endif;?>
+	</div>
+</div>

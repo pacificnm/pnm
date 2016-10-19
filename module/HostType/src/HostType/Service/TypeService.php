@@ -6,24 +6,26 @@ use HostType\Mapper\TypeMapperInterface;
 
 class TypeService implements TypeServiceInterface
 {
+
     /**
-     * 
+     *
      * @var TypeMapperInterface
      */
     protected $mapper;
-    
+
     /**
-     * 
-     * @param TypeMapperInterface $mapper
+     *
+     * @param TypeMapperInterface $mapper            
      */
     public function __construct(TypeMapperInterface $mapper)
     {
         $this->mapper = $mapper;
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \HostType\Service\TypeServiceInterface::getAll()
      */
     public function getAll($filter)
@@ -32,8 +34,9 @@ class TypeService implements TypeServiceInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \HostType\Service\TypeServiceInterface::get()
      */
     public function get($id)
@@ -42,8 +45,20 @@ class TypeService implements TypeServiceInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
+     * @see \HostType\Service\TypeServiceInterface::getTypeByName()
+     */
+    public function getTypeByName($hostTypeName)
+    {
+        return $this->mapper->getTypeByName($hostTypeName);
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
      * @see \HostType\Service\TypeServiceInterface::save()
      */
     public function save(TypeEntity $entity)
@@ -52,8 +67,9 @@ class TypeService implements TypeServiceInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \HostType\Service\TypeServiceInterface::delete()
      */
     public function delete(TypeEntity $entity)

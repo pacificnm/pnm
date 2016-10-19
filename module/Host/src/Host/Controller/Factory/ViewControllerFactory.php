@@ -1,11 +1,10 @@
 <?php
 namespace Host\Controller\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Host\Controller\ViewController;
 
-class ViewControllerFactory implements FactoryInterface
+class ViewControllerFactory
 {
 
     /**
@@ -14,7 +13,7 @@ class ViewControllerFactory implements FactoryInterface
      *
      * @see \Zend\ServiceManager\FactoryInterface::createService()
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
@@ -24,6 +23,10 @@ class ViewControllerFactory implements FactoryInterface
         
         $mapService = $realServiceLocator->get('HostAttributeMap\Service\MapServiceInterface');
         
-        return new ViewController($clientService, $hostService, $mapService);
+        $panoramaHostService = $realServiceLocator->get('PanoramaHost\Service\PanoramaHostServiceInterface');
+        
+        $panoramaClientService = $realServiceLocator->get('PanoramaClient\Service\PanoramaClientServiceInterface');
+        
+        return new ViewController($clientService, $hostService, $mapService, $panoramaHostService, $panoramaClientService);
     }
 }

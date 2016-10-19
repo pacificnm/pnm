@@ -20,7 +20,31 @@ class UserEntity
      *
      * @var string
      */
-    protected $lastUse;
+    protected $fullName;
+
+    /**
+     *
+     * @var EmailAddressesEntity
+     */
+    protected $emailAddressesEntity;
+
+    /**
+     *
+     * @var string
+     */
+    protected $firstSeen;
+
+    /**
+     *
+     * @var string
+     */
+    protected $lastSeen;
+
+    /**
+     *
+     * @var string
+     */
+    protected $lastDeviceId;
 
     /**
      *
@@ -42,11 +66,47 @@ class UserEntity
 
     /**
      *
-     * @return the $lastUse
+     * @return the $fullName
      */
-    public function getLastUse()
+    public function getFullName()
     {
-        return $this->lastUse;
+        return $this->fullName;
+    }
+
+    /**
+     *
+     * @return the $emailAddressesEntity
+     */
+    public function getEmailAddressesEntity()
+    {
+        return $this->emailAddressesEntity;
+    }
+
+    /**
+     *
+     * @return the $firstSeen
+     */
+    public function getFirstSeen()
+    {
+        return $this->firstSeen;
+    }
+
+    /**
+     *
+     * @return the $lastSeen
+     */
+    public function getLastSeen()
+    {
+        return $this->lastSeen;
+    }
+
+    /**
+     *
+     * @return the $lastDeviceId
+     */
+    public function getLastDeviceId()
+    {
+        return $this->lastDeviceId;
     }
 
     /**
@@ -69,10 +129,46 @@ class UserEntity
 
     /**
      *
-     * @param string $lastUse            
+     * @param string $fullName            
      */
-    public function setLastUse($lastUse)
+    public function setFullName($fullName)
     {
-        $this->lastUse = $lastUse;
+        $this->fullName = $fullName;
+    }
+
+    /**
+     *
+     * @param \Panorama\Entity\EmailAddressesEntity $emailAddressesEntity            
+     */
+    public function setEmailAddressesEntity($emailAddressesEntity)
+    {
+        $this->emailAddressesEntity = $emailAddressesEntity;
+    }
+
+    /**
+     *
+     * @param string $firstSeen            
+     */
+    public function setFirstSeen($firstSeen)
+    {
+        $this->firstSeen = $firstSeen;
+    }
+
+    /**
+     *
+     * @param string $lastSeen            
+     */
+    public function setLastSeen($lastSeen)
+    {
+        $this->lastSeen = $lastSeen;
+    }
+
+    /**
+     *
+     * @param string $lastDeviceId            
+     */
+    public function setLastDeviceId($lastDeviceId)
+    {
+        $this->lastDeviceId = $lastDeviceId;
     }
 }

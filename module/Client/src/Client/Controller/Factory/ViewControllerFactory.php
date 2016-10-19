@@ -31,6 +31,8 @@ class ViewControllerFactory implements FactoryInterface
         
         $timeService = $realServiceLocator->get('WorkorderTime\Service\TimeServiceInterface');
         
-        return new ViewController($clientService, $workorderService, $invoiceService, $taskService, $locationService, $userService, $timeService);
+        $panoramaClientService = $realServiceLocator->get('PanoramaClient\Service\PanoramaClientServiceInterface');
+        
+        return new ViewController($clientService, $workorderService, $invoiceService, $taskService, $locationService, $userService, $timeService, $panoramaClientService);
     }
 }

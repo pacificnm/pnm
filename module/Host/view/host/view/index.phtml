@@ -99,7 +99,13 @@
 
 <div class="row">
 	<div class="col-xs-12 col-sm-6">
-	
+		<?php if($this->appConfig()->getConfigPanoramaKey()): ?>
+		
+			<?php if($this->panormaHostEntity): ?>
+			
+				<?php echo $this->getDeviceDetails($this->panoramaClientEntity->getPanoramaClientCid(), $this->panormaHostEntity->getPanoramaDeviceId()); ?>
+			<?php endif;?>
+		<?php endif;?>
 	</div>
 	<div class="col-xs-12 col-sm-6">
 	

@@ -1,11 +1,23 @@
 <?php
 namespace Panorama\Service;
 
+use Panorama\Entity\UserEntity;
+
 interface UserServiceInterface
 {
-    public function getUser($id);
-    
-    public function getUsers();
-}
 
-?>
+    /**
+     *
+     * @param number $cid            
+     * @param number $id            
+     * @return UserEntity
+     */
+    public function getUser($cid, $id);
+
+    /**
+     *
+     * @param number $cid            
+     * @return UserEntity
+     */
+    public function getUsers($cid);
+}

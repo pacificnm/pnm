@@ -58,7 +58,7 @@ abstract class PanoramaService
         $blockCipher->setKey($encryptionKey);
         
         $this->apiKey = $blockCipher->decrypt($configEntity->getConfigPanoramaKey());
-        
+ 
         $this->request = new Request();
         
         $this->request->getHeaders()->addHeaders(array(

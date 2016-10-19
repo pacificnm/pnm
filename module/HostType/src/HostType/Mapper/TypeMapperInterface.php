@@ -21,6 +21,13 @@ interface TypeMapperInterface
     public function get($id);
 
     /**
+     * 
+     * @param string $hostTypeName
+     * @return TypeEntity
+     */
+    public function getTypeByName($hostTypeName);
+    
+    /**
      *
      * @param TypeEntity $entity            
      * @return TypeEntity

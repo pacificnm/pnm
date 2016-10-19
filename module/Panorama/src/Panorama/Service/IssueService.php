@@ -4,6 +4,7 @@ namespace Panorama\Service;
 use Panorama\Entity\IssueEntity;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Config\Service\ConfigServiceInterface;
+use Zend\Cache\Storage\Adapter\Memcached;
 
 class IssueService extends PanoramaService implements IssueServiceInterface
 {
@@ -22,16 +23,25 @@ class IssueService extends PanoramaService implements IssueServiceInterface
 
     /**
      *
+     * @var Memcached
+     */
+    protected $memcached;
+
+    /**
+     *
      * @param ConfigServiceInterface $configService            
-     * @param string $encryptionKey            
+     * @param unknown $encryptionKey            
      * @param IssueEntity $prototype            
      * @param HydratorInterface $hydrator            
+     * @param Memcached $memcached            
      */
-    public function __construct(ConfigServiceInterface $configService, $encryptionKey, IssueEntity $prototype, HydratorInterface $hydrator)
+    public function __construct(ConfigServiceInterface $configService, $encryptionKey, IssueEntity $prototype, HydratorInterface $hydrator, Memcached $memcached)
     {
         $this->prototype = $prototype;
         
         $this->hydrator = $hydrator;
+        
+        $this->memcached = $memcached;
         
         parent::__construct($configService, $encryptionKey);
     }
@@ -70,22 +80,30 @@ class IssueService extends PanoramaService implements IssueServiceInterface
      */
     public function getAllIssues($cid)
     {
-        $this->request->setUri('https://dashboard.panorama9.com/api/' . $cid . '/issues');
+        $key = 'panorama-getAllIssues-' . $cid;
         
-        $this->request->setMethod('GET');
+        $data = $this->memcached->getItem($key);
         
-        $response = $this->send();
-        
-        // if we have a success
-        if ($response->isSuccess()) {
-            $data = json_decode($response->getBody(), true);
+        if (! $data) {
+            $this->request->setUri('https://dashboard.panorama9.com/api/' . $cid . '/issues');
             
-            $result = $this->hydrator->hydrate($data, clone $this->prototype);
+            $this->request->setMethod('GET');
             
-            return $result;
-        } else {
-            $this->getError($response);
+            $response = $this->send();
+            
+            // if we have a success
+            if ($response->isSuccess()) {
+                $data = json_decode($response->getBody(), true);
+                
+                $this->memcached->setItem($key, $data);
+            } else {
+                $this->getError($response);
+            }
         }
+        
+        $result = $this->hydratingResultSet($data);
+        
+        return $result;
     }
 
     /**

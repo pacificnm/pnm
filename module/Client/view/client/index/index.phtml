@@ -71,6 +71,9 @@
                     	</div>
                     	<div class="row">
                     		<div class="col-xs-12 col-sm-9">
+                    			<?php if(! $clientEntity->getLocationEntity()->getLocationId()) :?>
+                    			<p class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('No location'); ?></p>
+                    			<?php else: ?>
                         		<b><?php echo $this->translate('Location'); ?>:</b>
                         		<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'location-view') ):?>
                         		<a href="<?php echo $this->url('location-view', array('clientId' => $clientEntity->getClientId(), 'locationId' => $clientEntity->getLocationEntity()->getLocationId()));?>" title="<?php echo $this->translate('View this location'); ?>">
@@ -85,12 +88,17 @@
                         			<?php echo $clientEntity->getLocationEntity()->getLocationState(); ?>
                         			<?php echo $clientEntity->getLocationEntity()->getLocationZip(); ?>
                         		<?php endif; ?>
+                        		<?php endif;?>
                         	</div>
                         	<div class="col-xs-12 col-sm-3 text-right">
+                        		<?php if(! $clientEntity->getPhoneEntity()->getPhoneId()): ?>
+                        			<p class="text-danger"><i class="fa fa-warning"></i> <?php echo $this->translate('No phone'); ?>
+                        		<?php else: ?>
                         		<b><?php echo $this->translate('Phone'); ?>:</b>
                         		<a href="tel:<?php echo $clientEntity->getPhoneEntity()->getPhoneNum(); ?>" title="<?php echo $this->translate('Call this phone number'); ?>">
                         			<?php echo $clientEntity->getPhoneEntity()->getPhoneNum(); ?>
                         		</a>
+                        		<?php endif; ?>
                         	</div>
                     	</div>
                     </li>
