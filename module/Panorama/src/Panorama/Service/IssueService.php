@@ -80,9 +80,11 @@ class IssueService extends PanoramaService implements IssueServiceInterface
      */
     public function getAllIssues($cid)
     {
+        
         $key = 'panorama-getAllIssues-' . $cid;
         
         $data = $this->memcached->getItem($key);
+        
         
         if (! $data) {
             $this->request->setUri('https://dashboard.panorama9.com/api/' . $cid . '/issues');
@@ -94,8 +96,9 @@ class IssueService extends PanoramaService implements IssueServiceInterface
             // if we have a success
             if ($response->isSuccess()) {
                 $data = json_decode($response->getBody(), true);
-                
+                                
                 $this->memcached->setItem($key, $data);
+                
             } else {
                 $this->getError($response);
             }

@@ -14,7 +14,7 @@
  			<div class="info-box-content">
  				<a href="#openWorkorders" title="<?php echo $this->translate('View open work orders'); ?>">
  					<span class="info-box-text"><?php echo $this->translate('Work Orders')?></span>
- 					<span class="info-box-number"><?php echo $this->workorderEntitys->getTotalItemCount(); ?></span>
+ 					<span class="info-box-number"></span>
  				</a>
  			</div>
  		</div>
@@ -53,7 +53,7 @@
  			<div class="info-box-content">
  				<a href="#openTasks" title="<?php echo $this->translate('View open tasks'); ?>">
  					<span class="info-box-text"><?php echo $this->translate('Tasks'); ?></span>
- 					<span class="info-box-number"><?php echo $this->taskEntitys->getTotalItemCount(); ?></span>
+ 					<span class="info-box-number"></span>
  				</a>
  			</div>
  		</div>
@@ -62,241 +62,27 @@
  
  <div class="row">
  	<div class="col-xs-12 col-sm-6">
- 		<div class="box box-primary">
- 			<div class="box-header with-border">
- 				<h3 class="box-title">
- 					<i class="fa fa-user"></i>
- 					<?php echo $this->translate('My Info'); ?>
-				</h3>
- 				<div class="box-tools">
- 					<a href="<?php echo $this->url('employee-profile-update'); ?>" title="<?php echo $this->translate('Edit my information'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
- 				</div>
- 				<div class="box-body box-profile">
- 					<h3 class="profile-username"><?php echo $this->employeeEntity->getEmployeeName(); ?></h3>
- 					<p class="text-muted"><?php echo $this->employeeEntity->getEmployeeTitle(); ?></p>
- 					<ul class="list-group list-group-unbordered">
-     					<li class="list-group-item">
-     						<b><?php echo $this->translate('E-Mail'); ?></b> <a class="pull-right"><?php echo $this->employeeEntity->getEmployeeEmail(); ?></a>
-     					</li>
-     					<li class="list-group-item">
-     						<b><?php echo $this->translate('Phone'); ?></b> 
-     							<a href="tel:<?php echo $this->employeeEntity->getEmployeePhone();?>" title="<?php echo $this->translate('Call this phone number'); ?>" class="pull-right"><?php echo $this->employeeEntity->getEmployeePhone();?></a>
-     					</li>
-     					<li class="list-group-item">
-     						<b><?php echo $this->translate('Adddress'); ?></b> <a class="pull-right">
-     							<?php echo $this->employeeEntity->getEmployeeStreet();?>
-     							<?php echo $this->employeeEntity->getEmployeeCity();?>,
-     							<?php echo $this->employeeEntity->getEmployeeState();?>
-     							<?php echo $this->employeeEntity->getEmployeePostal();?>
-     						</a>
-     					</li>
-     					<li class="list-group-item">
-     						<b><?php echo $this->translate('Status'); ?></b> <a class="pull-right"><?php echo $this->employeeEntity->getEmployeeStatus(); ?></a>
-     					</li>
-     				</ul>
- 				</div>
- 			</div>
- 		</div>
+ 		<section id="employeeDetails"><?php echo $this->getEmployeeDetails($this->employeeId);?></section>
  	</div>
  	<div class="col-xs-12 col-sm-6">
- 		<div class="box box-primary">
- 			<div class="box-header with-border">
- 				<h3 class="box-title">
- 					<i class="fa fa-cog"></i>
- 					<?php echo $this->translate('My Auth'); ?>
- 				</h3>
- 				<div class="box-tools">
- 				
- 				</div>
- 				<div class="box-body box-profile">
- 					<h3 class="profile-username">
- 						<?php echo $this->employeeEntity->getAuthEntity()->getAuthName(); ?>
- 					</h3>
- 					<p class="text-muted"><?php echo $this->employeeEntity->getAuthEntity()->getAuthEmail(); ?></p>
- 					<ul class="list-group list-group-unbordered">
-     					<li class="list-group-item">
-     				 		<b><?php echo $this->translate('Role');?></b> <a class="pull-right"><?php echo $this->employeeEntity->getAuthEntity()->getAuthRole(); ?></a>
-     				 	</li>
-     				 	<li class="list-group-item">
-     				 		<b><?php echo $this->translate('Type'); ?></b> <a class="pull-right"><?php echo $this->employeeEntity->getAuthEntity()->getAuthType(); ?></a>
-      				 	</li>
-      				 	<li class="list-group-item">
-      				 		<b><?php echo $this->translate('Last Sign In'); ?></b> 
-      				 			<a class="pull-right"><?php echo ($this->employeeEntity->getAuthEntity()->getAuthLastLogin() > 0) ? date($this->appConfig()->getConfigDateLong(), $this->employeeEntity->getAuthEntity()->getAuthLastLogin()) : $this->translate('Never Signed In'); ?></a>
-      				 	</li>
-      				 	<li class="list-group-item">
-      				 		<b><?php echo $this->translate('Ip Address');?></b> <a class="pull-right"><?php echo ($this->employeeEntity->getAuthEntity()->getAuthLastIp() != null) ? $this->employeeEntity->getAuthEntity()->getAuthLastIp() : $this->translate('Never Signed In'); ?></a>
-      				 	</li>
-     				</ul>
- 				</div>
- 			</div>
- 		</div>
+ 		<section id="authDetails"><?php echo $this->getEmployeeAuthDetails($this->authId);?></section>
  	</div>
  </div>
  
  <div class="row">
  	<div class="col-sm-4 col-xs-12">
- 		<!-- Open Tasks -->
- 		<a id="openTasks"></a>
- 		<div class="box box-warning">
- 			<div class="box-header with-border">
- 				<h3 class="box-title"><i class="fa fa-flag f-fw"></i> <?php echo $this->translate('Active Tasks'); ?></h3>
- 				<div class="box-tools pull-right"></div>
- 			</div>
- 			<?php if($this->taskEntitys->getTotalItemCount() == 0): ?>
- 			<div class="box-body">
- 				<div class="alert alert-info">
- 					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('You do not have any active tasks'); ?></p>
- 				</div>
- 			</div>
- 			<?php else: ?>
- 			<div class="box-body table-responsive no-padding">
- 				<table class="table table-hover">
- 					<thead>
- 						<tr>
- 							<th><?php echo $this->translate('Task Title'); ?></th>
- 							<th><?php echo $this->translate('Start'); ?></th>
- 							<th><?php echo $this->translate('End'); ?></th>
- 							<th><?php echo $this->translate('Priority'); ?></th>
- 						</tr>
- 					</thead>
- 					<tbody>
- 					<?php foreach($this->taskEntitys as $taskEntity): ?>
- 						<tr>
- 							<td>
- 								<a href="<?php echo $this->url('task-view', array('clientId' => $this->clientId, 'taskId' => $taskEntity->getTaskId())); ?>" title="<?php echo $this->translate('View this task'); ?>">
- 									<?php echo $taskEntity->getTaskTitle(); ?>
- 								</a>
- 							</td>
- 							<td><?php echo date($this->appConfig()->getConfigDateLong(), $taskEntity->getTaskDateStart()); ?></td>
- 							<td><?php echo date($this->appConfig()->getConfigDateLong(), $taskEntity->getTaskDateEnd()); ?></td>
- 							<td><?php echo $taskEntity->getPriorityEntity()->getTaskPriorityValue(); ?></td>
- 						</tr>
- 					<?php endforeach; ?>
- 					</tbody>
- 				</table>
- 			</div>
- 			<?php endif;?>
- 		</div>
+ 		<section id="openEmployeeTasks"><?php echo $this->getEmployeeTasks($this->employeeId);?></section>
  		
- 		<!-- host alerts -->
- 		<a id="openHostAlerts"></a>
- 		<div class="box box-danger">
- 			<div class="box-header with-border">
-     			<h3 class="box-title"><i class="fa fa-bell f-fw"></i> <?php echo $this->translate('Host Alerts'); ?></h3>
-     			<div class="box-tools pull-right"></div>
-     		</div>
- 			<div class="box-body">
- 				<div class="alert alert-info">
- 					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no host alerts'); ?></p>
- 				</div>
- 			</div>
- 		</div>
+ 		<section id="openCallLogs"><?php echo $this->getEmployeeCallLogs($this->employeeId); ?></section>
  		
- 		<?php echo $this->Ticket(0, 'Open'); ?>
+ 		<section id="openSupportTickets"><?php echo $this->Ticket(0, 'Open'); ?></section>
  	</div>
  	<div class="col-sm-8 col-xs-12">
- 		<a id="openWorkorders"></a>
- 		<!-- Work Orders -->
- 		<div class="box box-primary">
- 			<div class="box-header with-border">
- 				<h3 class="box-title"><i class="fa fa-wrench"></i> <?php echo $this->translate('Active Work Orders'); ?></h3>
- 				<div class="box-tools pull-right"></div>
- 			</div>
- 			<?php if($this->workorderEntitys->getTotalItemCount() == 0): ?>
- 			<div class="box-body">
- 				<div class="alert alert-info">
- 					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('You do not have any active work orders.'); ?></p>
- 				</div>
- 			</div>
- 			<?php else: ?>
- 			<div class="box-body table-responsive no-padding">
- 				<table class="table table-hover">
- 					<thead>
- 						<tr>
- 							<th><?php echo $this->translate('Work Order #'); ?></th>
- 							<th><?php echo $this->translate('Client'); ?></th>
- 							<th><?php echo $this->translate('Title'); ?></th>
- 							<th class="text-right"><?php echo $this->translate('Scheduled'); ?></th>	
- 						</tr>
- 					</thead>
- 					<tbody>
-					<?php foreach($this->workorderEntitys as $workorderEntity): ?>
-						<tr>
- 							<td nowrap><a href="<?php echo $this->url('workorder-view', array('clientId' => $workorderEntity->getWorkorderEntity()->getClientId(), 'workorderId' => $workorderEntity->getWorkorderId()));?>" title="<?php echo $this->translate('View this work order'); ?>"><?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?></a></td>
- 							<td nowrap>
- 								<a href="<?php echo $this->url('client-view', array('clientId' => $workorderEntity->getWorkorderEntity()->getClientId())); ?>" title="<?php echo $this->translate('View this client'); ?>">
-									<?php echo $workorderEntity->getWorkorderEntity()->getClientEntity()->getClientName(); ?>
-								</a>
- 							</td>
- 							<td><?php echo $workorderEntity->getWorkorderEntity()->getWorkorderTitle(); ?></td>
- 							<td nowrap class="text-right"><?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderEntity()->getWorkorderDateScheduled()); ?></td>
- 						</tr>
- 					<?php endforeach;?>	
- 					</tbody>
- 				</table>
- 			</div>
- 			<?php endif; ?>
- 		</div>
+ 		<section id="openWorkorders"><?php echo $this->getEmployeeWorkorders($this->employeeId);?></section>
  		
- 		<!-- messages -->
- 		<a id="openMessages"></a>
- 		<div class="box box-success">
- 			<div class="box-header with-border">
-     			<h3 class="box-title"><i class="fa fa-envelope f-fw"></i> <?php echo $this->translate('Messages'); ?></h3>
-     			<div class="box-tools pull-right"></div>
-     		</div>
- 			<div class="box-body">
- 				<div class="alert alert-info">
- 					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('You have new messages'); ?></p>
- 				</div>
- 			</div>
- 		</div>
+ 		<section id="openMessages"><?php echo $this->getEmployeeMessages($this->employeeId); ?></section>
  		
- 		<!-- Call Logs -->
- 		<div class="box box-primary">
- 			<div class="box-header with-border">
- 				<h3 class="box-title"><i class="fa fa-phone"></i> <?php echo $this->translate('Call Logs'); ?></h3>
- 				<div class="box-tools pull-right"></div>
- 			</div>
- 			<?php if($this->logEntitys->count() == 0): ?>
- 			<div class="box-body">
- 				<div class="alert alert-info">
- 					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no call logs.')?></p>
- 				</div>
- 			</div>
- 			<?php else: ?>
- 			<div class="box-body table-responsive no-padding">
- 				<table class="table table-hover">
- 					<thead>
- 						<tr>
- 							<th><?php echo $this->translate('Date'); ?></th>
- 							<th><?php echo $this->translate('Client'); ?></th>
- 							<th><?php echo $this->translate('Require Call Back');?></th>
- 							<th><?php echo $this->translate('Will Call Back')?></th>
- 						</tr>
- 					</thead>
- 					<tbody>
- 					<?php foreach($this->logEntitys as $logEntity): ?>
- 						<tr>
- 							<td>
- 								<a href="<?php echo $this->url('call-log-view', array('clientId' => $logEntity->getClientId(), 'callLogId' => $logEntity->getCallLogId())); ?>" title="<?php echo $this->translate('View this call log'); ?>">
- 									<?php echo date($this->appConfig()->getConfigdateLong(), $logEntity->getCallLogTime()); ?>
- 								</a>
- 							</td>
- 							<td>
- 								<a href="<?php echo $this->url('client-view', array('clientId' => $logEntity->getClientId())); ?>" title="<?php echo $this->translate('View this client'); ?>">
- 									<?php echo $logEntity->getClientEntity()->getClientName(); ?>
- 								</a>
- 							</td>
- 							<td><?php echo ($logEntity->getCallLogRequireCallBack() == 1)? $this->translate('Yes') : $this->translate('No');?></td>
- 							<td><?php echo ($logEntity->getCallLogWillCallBack() == 1)? $this->translate('Yes') : $this->translate('No');?></td>
- 						</tr>
- 					<?php endforeach; ?>
- 					</tbody>
- 				</table>
- 			</div>
- 			<?php endif; ?>
- 		</div>
+ 		<section id="openHostAlerts"><?php if($this->appConfig()->getConfigPanoramaKey()): ?><?php echo $this->GetAllIssues(); ?><?php endif;?></section>
+ 		
  	</div>
  </div>

@@ -183,10 +183,11 @@ return array(
     ),
     'view_helpers' => array(
         'factories' => array(
-            'EmployeeAsideMenu' => 'Employee\View\Helper\Factory\EmployeeAsideMenuFactory'
+            'EmployeeAsideMenu' => 'Employee\View\Helper\Factory\EmployeeAsideMenuFactory',
+            'GetEmployeeDetails' => 'Employee\View\Helper\Factory\GetEmployeeDetailsFactory'
         ),
         'invokables' => array(
-            //'EmployeeAsideMenu' => 'Employee\\View\\Helper\\EmployeeAsideMenu',
+            
         ),
     ),
     'view_manager' => array(

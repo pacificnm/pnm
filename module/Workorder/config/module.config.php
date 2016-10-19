@@ -172,7 +172,7 @@ return array(
             'WorkorderSignature' => 'Workorder\View\Helper\WorkorderSignature'
         ),
         'factories' => array(
-            
+            'GetEmployeeWorkorders' => 'Workorder\View\Helper\Factory\GetEmployeeWorkordersFactory',
         )
     ),
     'view_manager' => array(

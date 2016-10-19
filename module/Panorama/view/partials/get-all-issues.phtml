@@ -1,0 +1,47 @@
+<a id="hostAlerts"></a>
+<div class="box box-danger">
+	<div class="box-header with-border">
+		<h3 class="box-title"><i class="fa fa-bell"></i> <?php echo $this->translate('Issues'); ?></h3>
+		<div class="box-tools pull-right"></div>
+	</div>
+	<div class="box-body table-responsive no-padding">
+		<?php if(count($this->paginator) == 0): ?>
+				<div class="alert alert-info">
+					<i class="fa fa-info-circle"></i> <?php echo $this->translate('No clients'); ?>
+				</div>
+				<?php else: ?>
+				<table class="table table-bordered table-hover table-striped table-condensed">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Client'); ?></th>
+							<th></th>
+							<th></th>
+							<th><?php echo $this->translate('Vulnerabilities'); ?></th>
+							<th><?php echo $this->translate('Availability'); ?></th>
+							<th><?php echo $this->translate('Compliance'); ?></th>
+							<th><?php echo $this->translate('Server Issue'); ?></th>
+							<th></th>
+							<th><?php echo $this->translate('Patch Issues'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($this->paginator as $mspEntity): ?>
+						<tr>
+							<td><a href="<?php echo $this->url('panorama-view', array('cid' => $mspEntity->getCid()));?>" title="<?php echo $this->translate('View Client'); ?>"><?php echo $mspEntity->getName();?></a></td>
+							<td class="text-right"><?php echo $mspEntity->getAgents(); ?></td>
+							<td class="text-right"><?php echo $mspEntity->getBlindspotted();?></td>
+							<td class="text-right"><?php echo $mspEntity->getVulnerabilities(); ?></td>
+							<td class="text-right"><?php echo $mspEntity->getAvailability(); ?></td>
+							<td class="text-right"><?php echo $mspEntity->getCompliance(); ?></td>
+							<td class="text-right"><?php echo $mspEntity->getServerIssues(); ?></td>
+							<td class="text-right"><?php echo $mspEntity->getUnreachable(); ?></td>
+							<td class="text-right"><?php echo $mspEntity->getPatchIssues(); ?></td>
+							
+						</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+				<?php endif;?>
+		
+	</div>
+</div>

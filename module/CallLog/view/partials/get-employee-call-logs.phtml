@@ -1,0 +1,45 @@
+<!-- Call Logs -->
+ 		<div class="box box-primary">
+ 			<div class="box-header with-border">
+ 				<h3 class="box-title"><i class="fa fa-phone"></i> <?php echo $this->translate('Call Logs'); ?></h3>
+ 				<div class="box-tools pull-right"></div>
+ 			</div>
+ 			<?php if($this->logEntitys->count() == 0): ?>
+ 			<div class="box-body">
+ 				<div class="alert alert-info">
+ 					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no call logs.')?></p>
+ 				</div>
+ 			</div>
+ 			<?php else: ?>
+ 			<div class="box-body table-responsive no-padding">
+ 				<table class="table table-hover">
+ 					<thead>
+ 						<tr>
+ 							<th><?php echo $this->translate('Date'); ?></th>
+ 							<th><?php echo $this->translate('Client'); ?></th>
+ 							<th><?php echo $this->translate('Require Call Back');?></th>
+ 							<th><?php echo $this->translate('Will Call Back')?></th>
+ 						</tr>
+ 					</thead>
+ 					<tbody>
+ 					<?php foreach($this->logEntitys as $logEntity): ?>
+ 						<tr>
+ 							<td>
+ 								<a href="<?php echo $this->url('call-log-view', array('clientId' => $logEntity->getClientId(), 'callLogId' => $logEntity->getCallLogId())); ?>" title="<?php echo $this->translate('View this call log'); ?>">
+ 									<?php echo date($this->appConfig()->getConfigdateLong(), $logEntity->getCallLogTime()); ?>
+ 								</a>
+ 							</td>
+ 							<td>
+ 								<a href="<?php echo $this->url('client-view', array('clientId' => $logEntity->getClientId())); ?>" title="<?php echo $this->translate('View this client'); ?>">
+ 									<?php echo $logEntity->getClientEntity()->getClientName(); ?>
+ 								</a>
+ 							</td>
+ 							<td><?php echo ($logEntity->getCallLogRequireCallBack() == 1)? $this->translate('Yes') : $this->translate('No');?></td>
+ 							<td><?php echo ($logEntity->getCallLogWillCallBack() == 1)? $this->translate('Yes') : $this->translate('No');?></td>
+ 						</tr>
+ 					<?php endforeach; ?>
+ 					</tbody>
+ 				</table>
+ 			</div>
+ 			<?php endif; ?>
+ 		</div>

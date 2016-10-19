@@ -120,6 +120,7 @@ return array(
     'view_helpers' => array(
         'factories' => array(
             'NavBarTask' => 'Task\\View\\Helper\\Factory\\NavBarTaskFactory',
+            'GetEmployeeTasks' => 'Task\View\Helper\Factory\GetEmployeeTasksFactory',
         ),
         'invokables' => array(),
     ),

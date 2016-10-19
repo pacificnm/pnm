@@ -1,0 +1,35 @@
+<div class="box box-primary">
+ 			<div class="box-header with-border">
+ 				<h3 class="box-title">
+ 					<i class="fa fa-user"></i>
+ 					<?php echo $this->translate('Employee Info'); ?>
+				</h3>
+ 				<div class="box-tools">
+ 					<a href="<?php echo $this->url('employee-profile-update'); ?>" title="<?php echo $this->translate('Edit my information'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+ 				</div>
+ 				<div class="box-body box-profile">
+ 					<h3 class="profile-username"><?php echo $this->employeeEntity->getEmployeeName(); ?></h3>
+ 					<p class="text-muted"><?php echo $this->employeeEntity->getEmployeeTitle(); ?></p>
+ 					<ul class="list-group list-group-unbordered">
+     					<li class="list-group-item">
+     						<b><?php echo $this->translate('E-Mail'); ?></b> <a class="pull-right"><?php echo $this->employeeEntity->getEmployeeEmail(); ?></a>
+     					</li>
+     					<li class="list-group-item">
+     						<b><?php echo $this->translate('Phone'); ?></b> 
+     							<a href="tel:<?php echo $this->employeeEntity->getEmployeePhone();?>" title="<?php echo $this->translate('Call this phone number'); ?>" class="pull-right"><?php echo $this->employeeEntity->getEmployeePhone();?></a>
+     					</li>
+     					<li class="list-group-item">
+     						<b><?php echo $this->translate('Adddress'); ?></b> <a class="pull-right">
+     							<?php echo $this->employeeEntity->getEmployeeStreet();?>
+     							<?php echo $this->employeeEntity->getEmployeeCity();?>,
+     							<?php echo $this->employeeEntity->getEmployeeState();?>
+     							<?php echo $this->employeeEntity->getEmployeePostal();?>
+     						</a>
+     					</li>
+     					<li class="list-group-item">
+     						<b><?php echo $this->translate('Status'); ?></b> <a class="pull-right"><?php echo $this->employeeEntity->getEmployeeStatus(); ?></a>
+     					</li>
+     				</ul>
+ 				</div>
+ 			</div>
+ 		</div>

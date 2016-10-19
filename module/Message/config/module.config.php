@@ -52,6 +52,9 @@ return array(
     'view_helpers' => array(
         'invokables' => array(
             'NavBarMessage' => 'Message\View\Helper\NavBarMessage'
+        ),
+        'factories' => array(
+            'GetEmployeeMessages' => 'Message\View\Helper\Factory\GetEmployeeMessagesFactory',
         )
     ),
     

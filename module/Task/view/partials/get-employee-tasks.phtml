@@ -1,0 +1,44 @@
+<!-- Open Tasks -->
+<a id="openTasks"></a>
+<div class="box box-warning">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<i class="fa fa-flag f-fw"></i> <?php echo $this->translate('Active Tasks'); ?></h3>
+		<div class="box-tools pull-right"></div>
+	</div>
+	<?php if($this->taskEntitys->getTotalItemCount() == 0): ?>
+	<div class="box-body">
+		<div class="alert alert-info">
+			<p>
+				<i class="fa fa-info-circle"></i> <?php echo $this->translate('You do not have any active tasks'); ?></p>
+		</div>
+	</div>
+	<?php else: ?>
+ 	<div class="box-body table-responsive no-padding">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th><?php echo $this->translate('Task Title'); ?></th>
+					<th><?php echo $this->translate('Start'); ?></th>
+					<th><?php echo $this->translate('End'); ?></th>
+					<th><?php echo $this->translate('Priority'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+ 					<?php foreach($this->taskEntitys as $taskEntity): ?>
+ 						<tr>
+					<td><a
+						href="<?php echo $this->url('task-view', array('clientId' => $this->clientId, 'taskId' => $taskEntity->getTaskId())); ?>"
+						title="<?php echo $this->translate('View this task'); ?>">
+ 									<?php echo $taskEntity->getTaskTitle(); ?>
+ 								</a></td>
+					<td><?php echo date($this->appConfig()->getConfigDateLong(), $taskEntity->getTaskDateStart()); ?></td>
+					<td><?php echo date($this->appConfig()->getConfigDateLong(), $taskEntity->getTaskDateEnd()); ?></td>
+					<td><?php echo $taskEntity->getPriorityEntity()->getTaskPriorityValue(); ?></td>
+				</tr>
+ 					<?php endforeach; ?>
+ 					</tbody>
+		</table>
+	</div>
+	<?php endif;?>
+ </div>

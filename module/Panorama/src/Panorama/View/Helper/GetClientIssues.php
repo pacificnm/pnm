@@ -12,6 +12,8 @@ class GetClientIssues extends AbstractHelper
      */
     protected $issueService;
 
+    
+    
     /**
      * 
      * @param IssueServiceInterface $issueService

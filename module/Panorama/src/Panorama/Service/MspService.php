@@ -122,22 +122,32 @@ class MspService extends PanoramaService implements MspServiceInterface
      */
     public function getClients()
     {
-        $this->request->setUri('https://dashboard.panorama9.com/api/msp/clients');
+        $key = 'panorama-getClients';
         
-        $this->request->setMethod('GET');
+        $data = $this->memcached->getItem($key);
         
-        $response = $this->send();
-        
-        // if we have a success
-        if ($response->isSuccess()) {
-            $data = json_decode($response->getBody(), true);
+        if (! $data) {
+            $this->request->setUri('https://dashboard.panorama9.com/api/msp/clients');
             
-            $result = $this->hydratingResultSet($data);
+            $this->request->setMethod('GET');
             
-            return $result;
-        } else {
-            $this->getError($response);
+            $response = $this->send();
+            
+            // if we have a success
+            if ($response->isSuccess()) {
+                $data = json_decode($response->getBody(), true);
+                
+                $this->memcached->setItem($key, $data);
+                
+                echo 'cached ' . $key . ' ';
+            } else {
+                $this->getError($response);
+            }
         }
+        
+        $result = $this->hydratingResultSet($data);
+        
+        return $result;
     }
 
     /**

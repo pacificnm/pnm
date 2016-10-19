@@ -1,0 +1,46 @@
+<a id="openWorkorders"></a>
+<!-- Work Orders -->
+<div class="box box-primary">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<i class="fa fa-wrench"></i> <?php echo $this->translate('Active Work Orders'); ?></h3>
+		<div class="box-tools pull-right"></div>
+	</div>
+ 			<?php if($this->workorderEntitys->getTotalItemCount() == 0): ?>
+ 			<div class="box-body">
+		<div class="alert alert-info">
+			<p>
+				<i class="fa fa-info-circle"></i> <?php echo $this->translate('You do not have any active work orders.'); ?></p>
+		</div>
+	</div>
+ 			<?php else: ?>
+ 			<div class="box-body table-responsive no-padding">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th><?php echo $this->translate('Work Order #'); ?></th>
+					<th><?php echo $this->translate('Client'); ?></th>
+					<th><?php echo $this->translate('Title'); ?></th>
+					<th class="text-right"><?php echo $this->translate('Scheduled'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+					<?php foreach($this->workorderEntitys as $workorderEntity): ?>
+						<tr>
+					<td nowrap><a
+						href="<?php echo $this->url('workorder-view', array('clientId' => $workorderEntity->getWorkorderEntity()->getClientId(), 'workorderId' => $workorderEntity->getWorkorderId()));?>"
+						title="<?php echo $this->translate('View this work order'); ?>"><?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?></a></td>
+					<td nowrap><a
+						href="<?php echo $this->url('client-view', array('clientId' => $workorderEntity->getWorkorderEntity()->getClientId())); ?>"
+						title="<?php echo $this->translate('View this client'); ?>">
+									<?php echo $workorderEntity->getWorkorderEntity()->getClientEntity()->getClientName(); ?>
+								</a></td>
+					<td><?php echo $workorderEntity->getWorkorderEntity()->getWorkorderTitle(); ?></td>
+					<td nowrap class="text-right"><?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderEntity()->getWorkorderDateScheduled()); ?></td>
+				</tr>
+ 					<?php endforeach;?>	
+ 					</tbody>
+		</table>
+	</div>
+ 			<?php endif; ?>
+ 		</div>

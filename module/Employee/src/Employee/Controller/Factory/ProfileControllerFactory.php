@@ -30,13 +30,9 @@ class ProfileControllerFactory
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
         $employeeService = $realServiceLocator->get('Employee\Service\EmployeeServiceInterface');
-        
-        $workorderService = $realServiceLocator->get('WorkorderEmployee\Service\WorkorderEmployeeServiceInterface');
-        
-        $taskService = $realServiceLocator->get('Task\Service\TaskServiceInterface');
-        
+                
         $logService = $realServiceLocator->get('CallLog\Service\LogServiceInterface');
         
-        return new ProfileController($employeeService, $workorderService, $taskService, $logService);
+        return new ProfileController($employeeService, $logService);
     }
 }

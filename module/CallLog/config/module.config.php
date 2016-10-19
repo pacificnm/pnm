@@ -121,6 +121,11 @@ return array(
             0 => __DIR__ . '/../view',
         ),
     ),
+    'view_helpers' =>array(
+        'factories' => array(
+            'GetEmployeeCallLogs' => 'CallLog\View\Helper\Factory\GetEmployeeCallLogsFactory'
+        )
+    ),
     'zf-versioning' => array(
         'uri' => array(
             0 => 'call-log.rest.call-log',

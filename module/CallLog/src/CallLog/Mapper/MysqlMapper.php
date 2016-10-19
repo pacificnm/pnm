@@ -132,7 +132,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
         $this->delete = new Delete('call_log');
         
         $this->delete->where(array(
-            'call_log.call_log_id = ?' => $entity->getCallLogEmailId()
+            'call_log.call_log_id = ?' => $entity->getCallLogId()
         ));
         
         return $this->deleteRow();

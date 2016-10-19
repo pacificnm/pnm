@@ -35,8 +35,10 @@ class DeleteController extends ClientBaseController
         
         $ticketId = $this->params()->fromRoute('ticketId');
         
+        $clientId = $this->params('clientId');
+        
         // get ticket
-        $ticketEntity = $this->GetTicket($this->clientId, $ticketId);
+        $ticketEntity = $this->GetTicket($clientId, $ticketId);
         
         if ($request->isPost()) {
             $del = $request->getPost('delete_confirmation', 'no');
@@ -47,14 +49,15 @@ class DeleteController extends ClientBaseController
                 
                 $this->flashMessenger()->addSuccessMessage('The ticket was deleted');
                 
+                
                 return $this->redirect()->toRoute('ticket-index', array(
-                    'clientId' => $this->clientId
+                    'clientId' => $clientId
                 ));
             }
             
             // no redirect to view the ticket
             return $this->redirect()->toRoute('ticket-view', array(
-                'clientId' => $this->clientId,
+                'clientId' => $clientId,
                 'ticketId' => $ticketId
             ));
         }
@@ -63,7 +66,7 @@ class DeleteController extends ClientBaseController
         return new ViewModel(array(
             'ticketEntity' => $ticketEntity,
             'clientEntity' => $this->clientEntity,
-            'clientId' => $this->clientId
+            'clientId' => $clientId
         ));
     }
 }

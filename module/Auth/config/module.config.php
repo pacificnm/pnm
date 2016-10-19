@@ -149,6 +149,9 @@ return array(
         'invokables' => array(
             'AuthNavBar' => 'Auth\View\Helper\AuthNavBar',
             'AuthAside' => 'Auth\View\Helper\AuthAside'
+        ),
+        'factories' => array(
+            'GetEmployeeAuthDetails' => 'Auth\View\Helper\Factory\GetEmployeeAuthDetailsFactory'
         )
     ),
     

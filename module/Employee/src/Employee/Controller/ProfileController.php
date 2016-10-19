@@ -11,15 +11,12 @@ namespace Employee\Controller;
 use Application\Controller\BaseController;
 use Employee\Service\EmployeeServiceInterface;
 use Zend\View\Model\ViewModel;
-use WorkorderEmployee\Service\WorkorderEmployeeServiceInterface;
-use Task\Service\TaskServiceInterface;
-use CallLog\Service\LogServiceInterface;
 
 /**
  *
  * @author jaimie <pacificnm@gmail.com>
  * @version 2.5.0
- *
+ *         
  */
 class ProfileController extends BaseController
 {
@@ -30,30 +27,9 @@ class ProfileController extends BaseController
      */
     protected $employeeService;
 
-    /**
-     * 
-     * @var WorkorderEmployeeServiceInterface
-     */
-    protected $workorderService;
-    
-    /**
-     * 
-     * @var TaskServiceInterface
-     */
-    protected $taskService;
-    
-    protected $logService;
-    
-    
-    public function __construct(EmployeeServiceInterface $employeeService, WorkorderEmployeeServiceInterface $workorderService, TaskServiceInterface $taskService, LogServiceInterface $logService)
+    public function __construct(EmployeeServiceInterface $employeeService)
     {
         $this->employeeService = $employeeService;
-        
-        $this->workorderService = $workorderService;
-        
-        $this->taskService = $taskService;
-        
-        $this->logService = $logService;
     }
 
     /**
@@ -64,14 +40,7 @@ class ProfileController extends BaseController
      */
     public function indexAction()
     {
-        $employeeEntity = $this->employeeService->get($this->identity()
-            ->getEmployeeId());
         
-        $workorderEntitys = $this->workorderService->getEmployeeWorkorders($employeeEntity->getEmployeeId(), 'Active');
-        
-        $taskEntitys = $this->taskService->getEmployeeActiveTasks($employeeEntity->getEmployeeId());
-        
-        $logEntitys = $this->logService->getEmployeeCallLogs($employeeEntity->getEmployeeId());
         
         // set layout up
         $this->layout()->setVariable('pageTitle', 'My Profile');
@@ -84,10 +53,8 @@ class ProfileController extends BaseController
         $this->layout()->setVariable('activeSubMenuItem', 'employee-profile');
         
         return new ViewModel(array(
-            'employeeEntity' => $employeeEntity,
-            'workorderEntitys' => $workorderEntitys,
-            'taskEntitys' => $taskEntitys,
-            'logEntitys' => $logEntitys
+            'employeeId' => $this->identity()->getEmployeeId(),
+            'authId' => $this->identity()->getAuthId()
         ));
     }
 }
