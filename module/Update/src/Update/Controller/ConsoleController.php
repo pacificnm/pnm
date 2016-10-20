@@ -139,7 +139,9 @@ class ConsoleController extends AbstractActionController
                     
                     // roles
                     $console->write("Updating role {$role}\n");
+                    
                     $roleEntity = $this->roleService->getRole($role);
+                    
                     if (! $roleEntity) {
                         $entity = new RoleEntity();
                         $entity->setAclRole($role);

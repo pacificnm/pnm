@@ -56,7 +56,7 @@ class BaseController extends AbstractActionController
         }
         
         // if we are a user validate we own the client id we are requesting
-        if ($this->identity()->getUser() != 0) {
+        if ($this->identity()->getUserId() != 0) {
             $id = $this->params()->fromRoute('clientId', null);
             
             if ($id) {
