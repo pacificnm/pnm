@@ -46,6 +46,10 @@ return array(
         'routes' => array(
             'panorama-index' => array(
                 'title' => 'Panorama9',
+                'pageTitle' => 'Panorama9',
+                'pageSubTitle' => 'Home',
+                'activeMenuItem' => 'panorama-index',
+                'activeSubMenuItem' => 'panorama-index',
                 'type' => 'literal',
                 'options' => array(
                     'route' => '/admin/panorama',

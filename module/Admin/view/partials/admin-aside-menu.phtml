@@ -82,6 +82,13 @@
 				<i class="fa fa-wrench"></i> <?php echo $this->translate('Work Order Options'); ?>
 			</a>
 		</li>
+		
+		<!-- Cron -->
+		<li class="<?php if($this->activeSubMenuItem == 'cron-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('cron-index'); ?>" title="<?php echo $this->translate('Cron'); ?>">
+				<i class="fa fa-gears"></i> <?php echo $this->translate('Cron'); ?>
+			</a>
+		</li>
 	</ul>
 </li>
 <?php endif; ?>

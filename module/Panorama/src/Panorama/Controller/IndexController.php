@@ -32,15 +32,8 @@ class IndexController extends BaseController
     public function indexAction()
     {
         $paginator = $this->mspService->getClientsSummary();
-        
-        // set layout vars
-        $this->layout()->setVariable('pageTitle', 'Panorama9');
-        
-        $this->layout()->setVariable('pageSubTitle', 'Home');
-        
-        $this->layout()->setVariable('activeMenuItem', 'panorama-index');
-        
-        $this->layout()->setVariable('activeSubMenuItem', 'panorama-index');
+
+        $this->layout()->setVariable('pageSubTitle', 'nigger');
         
         return new ViewModel(array(
             'paginator' => $paginator

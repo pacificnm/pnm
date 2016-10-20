@@ -47,11 +47,6 @@ class IndexController extends BaseController
             ->getUri(), 'READ', $this->identity()
             ->getAuthId(), 'Admin Config Options');
         
-        $this->layout()->setVariable('pageTitle', 'Config');
-        
-        $this->layout()->setVariable('pageSubTitle', '');
-        
-        $this->layout()->setVariable('activeMenuItem', 'admin');
         
         $configEntity = $this->configService->get(1);
         

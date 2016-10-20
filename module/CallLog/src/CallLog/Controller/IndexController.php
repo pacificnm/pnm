@@ -44,7 +44,8 @@ class IndexController extends ClientBaseController
         parent::indexAction();
         
         $filter = array(
-            'clientId' => $this->clientId
+            'clientId' => $this->clientId,
+            
         );
         
         // get paginator

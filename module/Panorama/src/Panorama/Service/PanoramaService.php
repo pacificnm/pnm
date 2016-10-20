@@ -71,8 +71,6 @@ abstract class PanoramaService
 
     public function send()
     {
-        
-        
         $response = $this->client->dispatch($this->request);
         
         return $response;

@@ -9,7 +9,9 @@ return array(
                 'user' => array(),
                 'user-accountant' => array(),
                 'user-manager' => array(),
-                'employee' => array(),
+                'employee' => array(
+                    'notification-clear'
+                ),
                 'accountant' => array(),
                 'administrator' => array()
             )

@@ -81,8 +81,17 @@ class BaseController extends AbstractActionController
         // set page title
         $this->setPageTitle($router->getMatchedRouteName(), $this->layout());
         
+        // set page Sub Title
+        $this->SetPageSubTitle($router->getMatchedRouteName(), $this->layout());
+        
         // set admin acl
         $this->layout()->setVariable('adminAcl', $adminAcl);
+        
+        // set active menu
+        $this->SetActiveMenu($router->getMatchedRouteName(), $this->layout());
+        
+        // set activeSubMenu
+        $this->SetActiveSubMenu($router->getMatchedRouteName(), $this->layout());
         
         // assign acl to layout
         $this->layout()->setVariable('acl', $this->acl()

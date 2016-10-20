@@ -5,7 +5,7 @@ use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\View\Renderer\PhpRenderer;
 use Zend\View\Model\ViewModel;
 
-class SetActiveMenu extends AbstractPlugin
+class SetActiveSubMenu extends AbstractPlugin
 {
 
     /**
@@ -33,17 +33,17 @@ class SetActiveMenu extends AbstractPlugin
     }
 
     /**
-     *
-     * @param string $matchedRouteName            
-     * @param ViewModel $layout            
+     * 
+     * @param unknown $matchedRouteName
+     * @param ViewModel $layout
      */
     public function __invoke($matchedRouteName, ViewModel $layout)
     {
-        // main menu
-        if (array_key_exists('activeMenuItem', $this->config['router']['routes'][$matchedRouteName])) {
-            $activeMenuItem = $this->config['router']['routes'][$matchedRouteName]['activeMenuItem'];
+        // submenu
+        if (array_key_exists('activeSubMenuItem', $this->config['router']['routes'][$matchedRouteName])) {
+            $activeSubMenuItem = $this->config['router']['routes'][$matchedRouteName]['activeSubMenuItem'];
             
-            $layout->setVariable('activeMenuItem', $activeMenuItem);
+            $layout->setVariable('activeSubMenuItem', $activeSubMenuItem);
         }
     }
 }

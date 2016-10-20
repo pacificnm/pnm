@@ -113,6 +113,8 @@ return array(
             'SetPageTitle' => 'Application\\Controller\\Plugin\\Factory\\SetPageTitleFactory',
             'SetHeadTitle' => 'Application\\Controller\\Plugin\\Factory\\SetHeadTitleFactory',
             'SetActiveMenu' => 'Application\Controller\Plugin\Factory\SetActiveMenuFactory',
+            'SetActiveSubMenu' => 'Application\Controller\Plugin\Factory\SetActiveSubMenuFactory',
+            'SetPageSubTitle' => 'Application\Controller\Plugin\Factory\SetPageTitleFactory',
             'Acl' => 'Application\\Controller\\Plugin\\Factory\\ApplicationAclFactory',
         ),
         'invokables' => array(),

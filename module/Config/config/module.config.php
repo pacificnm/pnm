@@ -48,6 +48,7 @@ return array(
             'config-index' => array(
                 'title' => 'Config',
                 'type' => 'literal',
+                'pageTitle' => 'Config',
                 'options' => array(
                     'route' => '/admin/config',
                     'defaults' => array(

@@ -43,8 +43,7 @@ class CreateController extends ClientBaseController
     {
         $request = $this->getRequest();
         
-        // @todo refactor user from identity to userId
-        $userId = $this->identity()->getUser();
+        $userId = $this->identity()->getUserId();
         
         // if we have a post
         if ($request->isPost()) {
