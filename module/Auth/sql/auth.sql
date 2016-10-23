@@ -27,8 +27,9 @@ CREATE TABLE IF NOT EXISTS `auth` (
 -- needed to change user_id to user for oauth2 to be able to use auth table
 -- it uses user_id as its identification field.
 --
-ALTER TABLE `auth` CHANGE `user_id` `user` INT(20) NOT NULL DEFAULT '0';
 
+
+ALTER TABLE `auth` CHANGE `user` `user_id` INT(20) UNSIGNED NOT NULL DEFAULT '0';
 --
 -- RELATIONS FOR TABLE `auth`:
 --

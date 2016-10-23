@@ -68,12 +68,7 @@ class ViewController extends BaseController
      * @var WorkorderFileService
      */
     protected $workorderFileService;
-    
-    /**
-     * 
-     * @var WorkorderHistoryServiceInterface
-     */
-    protected $workorderHistoryService;
+ 
     
     /**
      *
@@ -119,7 +114,6 @@ class ViewController extends BaseController
      * @param CreditServiceInterface $creditService
      * @param OptionService $optionService
      * @param WorkorderFileService $workorderFileService
-     * @param WorkorderHistoryServiceInterface $workorderHistoryService
      * @param NoteForm $noteForm
      * @param TimeForm $timeForm
      * @param PartForm $partForm
@@ -127,7 +121,7 @@ class ViewController extends BaseController
      * @param CreditForm $creditForm
      * @param EmployeeForm $employeeForm
      */
-    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, CreditServiceInterface $creditService, OptionService $optionService, WorkorderFileService $workorderFileService, WorkorderHistoryServiceInterface $workorderHistoryService, NoteForm $noteForm, TimeForm $timeForm, PartForm $partForm, CompleteForm $completeForm, CreditForm $creditForm, EmployeeForm $employeeForm)
+    public function __construct(ClientServiceInterface $clientService, WorkorderServiceInterface $workorderService, WorkorderEmployeeServiceInterface $workorderEmployeeService, CreditServiceInterface $creditService, OptionService $optionService, WorkorderFileService $workorderFileService, NoteForm $noteForm, TimeForm $timeForm, PartForm $partForm, CompleteForm $completeForm, CreditForm $creditForm, EmployeeForm $employeeForm)
     {
         $this->clientService = $clientService;
         
@@ -140,8 +134,6 @@ class ViewController extends BaseController
         $this->optionService = $optionService;
         
         $this->workorderFileService = $workorderFileService;
-        
-        $this->workorderHistoryService = $workorderHistoryService;
         
         $this->noteForm = $noteForm;
         
@@ -195,20 +187,14 @@ class ViewController extends BaseController
             'workorderId' => $workorderId
         ));
         
-        // set history
-        $this->setHistory($this->getRequest()
-            ->getUri(), 'READ', $this->identity()
-            ->getAuthId(), 'View Client ' . $clientEntity->getClientName() . ' work order #' . $workorderId);
+        
         
         // get work order options
         $optionEntity = $this->optionService->get(1);
         
         // get workorder files
         $fileEntitys = $this->workorderFileService->getWorkorderFiles($workorderId);
-        
-        // get hiistory
-        $workorderHistoryEntitys = $this->workorderHistoryService->getWorkorderHistory($workorderId);
-        
+             
         // note form
         $this->setUpNoteForm($id, $workorderId);
         
@@ -262,7 +248,8 @@ class ViewController extends BaseController
             'partForm' => $this->partForm,
             'completeForm' => $this->completeForm,
             'creditForm' => $this->creditForm,
-            'employeeForm' => $this->employeeForm
+            'employeeForm' => $this->employeeForm,
+            'workorderId' => $workorderId
         ));
     }
 

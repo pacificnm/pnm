@@ -2,7 +2,7 @@
 namespace Auth\Service;
 
 use Auth\Entity\AuthEntity;
-use Auth\Mapper\AuthMapperInterface;
+use Auth\Mapper\MysqlMapperInterface;
 
 class AuthService implements AuthServiceInterface
 {
@@ -17,7 +17,7 @@ class AuthService implements AuthServiceInterface
      * 
      * @param AuthMapperInterface $mapper
      */
-    public function __construct(AuthMapperInterface $mapper)
+    public function __construct(MysqlMapperInterface $mapper)
     {
         $this->mapper = $mapper;
     }

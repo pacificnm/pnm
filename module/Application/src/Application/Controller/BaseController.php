@@ -7,6 +7,7 @@ use Auth\Entity\AuthEntity;
 
 class BaseController extends AbstractActionController
 {
+    protected $clientId;
 
     /**
      *
@@ -99,6 +100,8 @@ class BaseController extends AbstractActionController
         
         // assign client id to layout
         $this->layout()->setVariable('clientId', $clientId);
+        
+        $this->clientId = $clientId;
         
         // set session timeout
         $maxlifetime = ini_get("session.gc_maxlifetime") - 120;

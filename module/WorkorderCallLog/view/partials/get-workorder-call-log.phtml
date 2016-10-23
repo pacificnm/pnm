@@ -1,0 +1,33 @@
+
+		<?php if($this->workorderCallLogEntitys->count() == 0 ): ?>
+		<div class="alert alert-info">
+			<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No calls'); ?></p>
+		</div>
+		<?php else: ?>
+		<ul class="list-group list-group-unbordered">
+			<?php foreach($this->workorderCallLogEntitys as $entity): ?>
+			<?php $logEntity = $entity->getCallLogEntity(); ?>
+			<li class="list-group-item">
+				<div class="row">
+					<div class="col-xs-12 col-sm-3">
+    					<b><?php echo $this->translate('Call Date');?>: </b> 
+    						<a href="<?php echo $this->url('call-log-view', array('clientId' => $logEntity->getClientId(), 'callLogId' => $logEntity->getCallLogId()));?>" title="<?php echo $this->translate('View this call log'); ?>">
+    							<?php echo date($this->appConfig()->getConfigDateLong(), $logEntity->getCallLogTime());?>
+    						</a>
+    				</div>
+    				<div class="col-xs-12 col-sm-2">
+    					<b><?php echo $this->translate('To')?>:</b> <?php echo $logEntity->getEmployeeEntity()->getEmployeeName();?>
+    				</div>
+    				<div class="col-xs-12 col-sm-5">
+    					<?php echo $logEntity->getCallLogDetail();?>
+    				</div>
+    				<div class="col-xs-12 col-sm-2">
+    					<b><?php echo $this->translate('Call Back'); ?>:</b> <?php echo ($logEntity->getCallLogRequireCallBack() == 1) ? $this->translate('Yes') : $this->translate('No');?>
+    				
+    					
+    				</div>
+				</div>
+			</li>
+			<?php endforeach;?>
+		</ul>
+		<?php endif;?>

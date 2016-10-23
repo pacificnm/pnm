@@ -85,7 +85,7 @@ class WorkorderHistoryMapper implements WorkorderHistoryMapperInterface
             'auth_email',
             'auth_name',
             'auth_type',
-            'user',
+            'user_id',
             'employee_id'
         ), 'inner');
         
@@ -119,11 +119,13 @@ class WorkorderHistoryMapper implements WorkorderHistoryMapperInterface
             'auth_email',
             'auth_name',
             'auth_type',
-            'user',
+            'user_id',
             'employee_id'
         ), 'inner');
         
         $select->where(array('workorder_history.workorder_id = ?' => $workorderId));
+        
+        $select->order('history.history_id');
         
         $stmt = $sql->prepareStatementForSqlObject($select);
         

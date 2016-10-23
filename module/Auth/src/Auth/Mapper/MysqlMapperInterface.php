@@ -3,7 +3,7 @@ namespace Auth\Mapper;
 
 use Auth\Entity\AuthEntity;
 
-interface AuthMapperInterface
+interface MysqlMapperInterface
 {
 
     /**

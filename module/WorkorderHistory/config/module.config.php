@@ -41,6 +41,16 @@ return array(
             ),
         ),
     ),
+    'view_helpers' => array(
+        'factories' => array(
+            'GetWorkorderHistory' => 'WorkorderHistory\View\Helper\Factory\GetWorkorderHistoryFactory',
+        )
+    ),
+    'view_manager' => array(
+        'template_path_stack' => array(
+            0 => __DIR__ . '/../view',
+        ),
+    ),
     'zf-versioning' => array(
         'uri' => array(
             0 => 'workorder-history.rest.workorder-history',

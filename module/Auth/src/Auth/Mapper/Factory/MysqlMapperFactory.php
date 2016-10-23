@@ -4,11 +4,11 @@ namespace Auth\Mapper\Factory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator;
-use Auth\Mapper\AuthMapper;
 use Auth\Hydrator\AuthHydrator;
 use Auth\Entity\AuthEntity;
+use Auth\Mapper\MysqlMapper;
 
-class AuthMapperFactory implements FactoryInterface
+class MysqlMapperFactory implements FactoryInterface
 {
 
     /**
@@ -29,6 +29,6 @@ class AuthMapperFactory implements FactoryInterface
         
         $writeAdapter = $serviceLocator->get('db2');
         
-        return new AuthMapper($readAdapter, $writeAdapter, $hydrator, $prototype);
+        return new MysqlMapper($readAdapter, $writeAdapter, $hydrator, $prototype);
     }
 }

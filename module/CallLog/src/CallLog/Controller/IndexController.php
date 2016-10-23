@@ -9,8 +9,6 @@
 namespace CallLog\Controller;
 
 use Zend\View\Model\ViewModel;
-use Application\Controller\BaseController;
-use Client\Service\ClientServiceInterface;
 use CallLog\Service\LogServiceInterface;
 use Client\Controller\ClientBaseController;
 

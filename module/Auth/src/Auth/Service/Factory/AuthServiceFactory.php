@@ -16,7 +16,7 @@ class AuthServiceFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $mapper = $serviceLocator->get('Auth\Mapper\AuthMapperInterface');
+        $mapper = $serviceLocator->get('Auth\Mapper\MysqlMapperInterface');
         
         return new AuthService($mapper);
     }

@@ -72,7 +72,7 @@
 					<div class="col-md-8">
 						<p class="text-center"><strong>
 							
-							<?php if($this->identity()->getUser() != 0): ?>
+							<?php if($this->identity()->getUserId() != 0): ?>
 								<?php echo $this->translate('Cost'); ?>:
 							<?php else: ?>
 								<?php echo $this->translate('Sales'); ?>: 
@@ -107,7 +107,7 @@
 					<div class="col-sm-3 col-xs-6">
 						<div class="description-block border-right">
 							<h5 class="description-header"><?php echo $this->currencyFormat($this->workorderRevenuTotal, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></h5>
-							<?php if($this->identity()->getUser() != 0): ?>
+							<?php if($this->identity()->getUserId() != 0): ?>
 								<span class="description-text"><?php echo $this->translate('TOTAL COST'); ?></span>
 							<?php else: ?>
 								<span class="description-text"><?php echo $this->translate('TOTAL REVENUE'); ?></span>

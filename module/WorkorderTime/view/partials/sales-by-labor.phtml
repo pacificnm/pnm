@@ -1,6 +1,6 @@
 <p class="text-center">
 	<strong>
-	<?php if($this->identity()->getUser() != 0): ?>
+	<?php if($this->identity()->getUserId() != 0): ?>
 		<?php echo $this->translate('Cost By Labor Rate'); ?>
 	<?php else: ?>
 		<?php echo $this->translate('Sales By Labor Rate'); ?>

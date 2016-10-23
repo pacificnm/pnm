@@ -16,6 +16,12 @@
 					<?php echo $this->translate('Call Log'); ?>
 				</h3>
 				<div class="box-tools">
+				
+					<?php if($this->acl()->isAllowed($this->identity()->getAuthRole(), 'workorder-call-log-create') ): ?>
+					<a href="<?php echo $this->url('workorder-call-log-create', array('clientId' => $this->clientId, 'callLogId' => $this->logEntity->getCallLogId()));?>" title="<?php echo $this->translate('Add to work order'); ?>" class="btn btn-box-tool"><i class="fa fa-wrench"></i> <?php echo $this->translate('Add'); ?></a>
+					<?php endif;?>
+				
+				
 					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'call-log-note-create') ):?>
 					<a href="<?php echo $this->url('call-log-note-create', array('clientId' => $this->clientId, 'callLogId' => $this->logEntity->getCallLogId()));?>" title="<?php echo $this->translate('Create new call log note'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New Note'); ?></a>	
 					<?php endif; ?>
@@ -155,3 +161,5 @@
 		</div>
 	</div>
 </div>
+
+<?php echo $this->GetCallLogWorkorder($this->logEntity->getCallLogId());?>

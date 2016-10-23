@@ -8,21 +8,22 @@ use WorkorderHistory\Service\WorkorderHistoryServiceInterface;
 
 class WorkorderHistoryListener implements ListenerAggregateInterface
 {
+
     /**
      *
      * @var array
      */
     protected $listeners = array();
-    
+
     /**
-     * 
+     *
      * @var WorkorderHistoryServiceInterface
      */
     protected $workorderHistoryService;
-    
+
     /**
-     * 
-     * @param WorkorderHistoryServiceInterface $workorderHistoryService
+     *
+     * @param WorkorderHistoryServiceInterface $workorderHistoryService            
      */
     public function __construct(WorkorderHistoryServiceInterface $workorderHistoryService)
     {
@@ -30,8 +31,8 @@ class WorkorderHistoryListener implements ListenerAggregateInterface
     }
 
     /**
-     * 
-     * @param EventInterface $event
+     *
+     * @param EventInterface $event            
      */
     public function workorderCreate(EventInterface $event)
     {
@@ -41,16 +42,16 @@ class WorkorderHistoryListener implements ListenerAggregateInterface
         
         $workorderEntity = $event->getParam('workorderEntity');
         
-        $historyAction = "READ";
+        $historyAction = "CREATE";
         
         $historyNote = "Work Order #{$workorderEntity->getWorkorderId()} was created.";
         
         $this->workorderHistoryService->create($workorderEntity->getWorkorderId(), $authId, $historyUrl, $historyAction, $historyNote);
     }
-    
+
     /**
-     * 
-     * @param EventInterface $event
+     *
+     * @param EventInterface $event            
      */
     public function workorderView(EventInterface $event)
     {
@@ -66,6 +67,48 @@ class WorkorderHistoryListener implements ListenerAggregateInterface
         
         $this->workorderHistoryService->create($workorderEntity->getWorkorderId(), $authId, $historyUrl, $historyAction, $historyNote);
     }
+
+    /**
+     *
+     * @param EventInterface $event            
+     */
+    public function workorderCallLogCreate(EventInterface $event)
+    {
+        $authId = $event->getParam('authId');
+        
+        $historyUrl = $event->getParam('historyUrl');
+        
+        $workorderId = $event->getParam('workorderId');
+        
+        $logId = $event->getParam('logId');
+        
+        $historyAction = "CREATE";
+        
+        $historyNote = "Call Log #{$logId} added to work order";
+        
+        $this->workorderHistoryService->create($workorderId, $authId, $historyUrl, $historyAction, $historyNote);
+    }
+
+    /**
+     * 
+     * @param EventInterface $event
+     */
+    public function workorderCallLogDelete(EventInterface $event)
+    {
+        $authId = $event->getParam('authId');
+        
+        $historyUrl = $event->getParam('historyUrl');
+        
+        $workorderId = $event->getParam('workorderId');
+        
+        $logId = $event->getParam('logId');
+        
+        $historyAction = "DELETE";
+        
+        $historyNote = "Call Log #{$logId} removed from work order";
+        
+        $this->workorderHistoryService->create($workorderId, $authId, $historyUrl, $historyAction, $historyNote);
+    }
     
     /**
      *
@@ -79,16 +122,30 @@ class WorkorderHistoryListener implements ListenerAggregateInterface
             $events->attach('workorderCreate', array(
                 $this,
                 'workorderCreate'
-            )),
+            ))
         );
         
         $this->listeners = array(
             $events->attach('workorderView', array(
                 $this,
                 'workorderView'
-            )),
+            ))
         );
-    
+        
+        $this->listeners = array(
+            $events->attach('workorderCallLogCreate', array(
+                $this,
+                'workorderCallLogCreate'
+            ))
+        );
+        
+        $this->listeners = array(
+            $events->attach('workorderCallLogDelete', array(
+                $this,
+                'workorderCallLogDelete'
+            ))
+        );
+        
         return $this;
     }
 

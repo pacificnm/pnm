@@ -44,7 +44,7 @@ return array(
         'factories' => array(
             'Auth\Adapter\AuthAdapter' => 'Auth\Adapter\Factory\AuthAdapterFactory',
             'Auth\Service\AuthServiceInterface' => 'Auth\Service\Factory\AuthServiceFactory',
-            'Auth\Mapper\AuthMapperInterface' => 'Auth\Mapper\Factory\AuthMapperFactory',
+            'Auth\Mapper\MysqlMapperInterface' => 'Auth\Mapper\Factory\MysqlMapperFactory',
             'Auth\Adapter\OAuth2Adapter' => 'Auth\Adapter\Factory\OAuth2AdapterFactory',
         )
     ),

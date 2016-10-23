@@ -107,7 +107,7 @@ class WorkorderFileMapper implements WorkorderFileMapperInterface
             'auth_password',
             'auth_name',
             'auth_type',
-            'user',
+            'user_id',
             'employee_id'
         ), 'inner');
         
