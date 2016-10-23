@@ -5,8 +5,10 @@ Introduction
 ------------
 This is the core Pacificnm Open Source project. This code will always be free to any one who wants to use it, try it, build from it
 what ever works. I use several other peoples Open Source Projects please pay them attention. With out them I could of never done this.
-Theres a list of all projects on the about page. 
+Theres a list of all projects on the about page.
+ 
 The front end: https://github.com/almasaeed2010/AdminLTE
+
 The Application: https://github.com/zendframework/ZendSkeletonApplication
 
 Ok I guess its time to start documenting how to install. The end goal would be a docker container that can just be spwaned in Elastic Bean Stalk 
@@ -82,7 +84,8 @@ The sytem needs to run one cron job that will runevery min through cron.
 This script then checks for what ever application cron jobs need to be ran. 
 This is configured through the admin in the cron section.
 
-To set it up run crontab -e as root and cpast the following code.
+To set it up run crontab -e as root and past the following code.
+
 */1   *    *    *    *     /var/www/bin/console.php cron --run
 
 On the system /var/www/bin/console.php should be a symlink to your install ie: /var/www/html/pnm/bin/console.php
