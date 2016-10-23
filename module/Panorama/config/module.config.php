@@ -103,6 +103,7 @@ return array(
             'GetClientIssues' => 'Panorama\View\Helper\Factory\GetClientIssuesFactory',
             'GetDeviceDetails' => 'Panorama\View\Helper\Factory\GetDeviceDetailsFactory',
             'GetAllIssues' => 'Panorama\View\Helper\Factory\GetAllIssuesFactory',
+            'GetDeviceIssues' => 'Panorama\View\Helper\Factory\GetDeviceIssuesFactory',
         )
     ),
     

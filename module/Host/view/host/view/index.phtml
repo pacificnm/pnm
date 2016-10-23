@@ -97,20 +97,20 @@
 	</div>
 </div>
 
+<?php if($this->appConfig()->getConfigPanoramaKey()): ?>
+<?php if($this->panormaHostEntity): ?>
 <div class="row">
 	<div class="col-xs-12 col-sm-6">
-		<?php if($this->appConfig()->getConfigPanoramaKey()): ?>
-		
-			<?php if($this->panormaHostEntity): ?>
-			
-				<?php echo $this->getDeviceDetails($this->panoramaClientEntity->getPanoramaClientCid(), $this->panormaHostEntity->getPanoramaDeviceId()); ?>
-			<?php endif;?>
-		<?php endif;?>
+		<?php echo $this->getDeviceDetails($this->panoramaClientEntity->getPanoramaClientCid(), $this->panormaHostEntity->getPanoramaDeviceId()); ?>
 	</div>
 	<div class="col-xs-12 col-sm-6">
-	
+		<?php echo $this->getDeviceIssues($this->panoramaClientEntity->getPanoramaClientCid(), $this->panormaHostEntity->getPanoramaDeviceId());?>
 	</div>
 </div>
+<?php endif;?>
+<?php endif;?>
+
+<!-- work orders -->
 
 
 <!-- password Modal -->

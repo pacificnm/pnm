@@ -7,7 +7,7 @@ interface IssueServiceInterface
     
     public function getAllIssues($cid);
     
-    public function getDeviceIssues($id);
+    public function getDeviceIssues($cid, $id);
     
     public function getLatestIssues($hours);
     

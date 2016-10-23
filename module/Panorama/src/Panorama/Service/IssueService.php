@@ -80,11 +80,9 @@ class IssueService extends PanoramaService implements IssueServiceInterface
      */
     public function getAllIssues($cid)
     {
-        
         $key = 'panorama-getAllIssues-' . $cid;
         
         $data = $this->memcached->getItem($key);
-        
         
         if (! $data) {
             $this->request->setUri('https://dashboard.panorama9.com/api/' . $cid . '/issues');
@@ -96,9 +94,8 @@ class IssueService extends PanoramaService implements IssueServiceInterface
             // if we have a success
             if ($response->isSuccess()) {
                 $data = json_decode($response->getBody(), true);
-                                
-                $this->memcached->setItem($key, $data);
                 
+                $this->memcached->setItem($key, $data);
             } else {
                 $this->getError($response);
             }
@@ -115,24 +112,32 @@ class IssueService extends PanoramaService implements IssueServiceInterface
      *
      * @see \Panorama\Service\IssueServiceInterface::getDeviceIssues()
      */
-    public function getDeviceIssues($id)
+    public function getDeviceIssues($cid, $id)
     {
-        $this->request->setUri('https://dashboard.panorama9.com/api/devices/' . $id . '/issues');
+        $key = 'panorama-getDeviceIssues-' . $cid . '-' . $id;
         
-        $this->request->setMethod('GET');
+        $data = $this->memcached->getItem($key);
         
-        $response = $this->send();
-        
-        // if we have a success
-        if ($response->isSuccess()) {
-            $data = json_decode($response->getBody(), true);
+        if (! $data) {
+            $this->request->setUri('https://dashboard.panorama9.com/api/' . $cid . '/devices/' . $id . '/issues');
             
-            $result = $this->hydrator->hydrate($data, clone $this->prototype);
+            $this->request->setMethod('GET');
             
-            return $result;
-        } else {
-            $this->getError($response);
+            $response = $this->send();
+            
+            // if we have a success
+            if ($response->isSuccess()) {
+                $data = json_decode($response->getBody(), true);
+                
+                $this->memcached->setItem($key, $data);
+            } else {
+                $this->getError($response);
+            }
         }
+        
+        $result = $this->hydratingResultSet($data);
+        
+        return $result;
     }
 
     /**
