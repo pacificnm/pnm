@@ -49,7 +49,7 @@ class CronForm extends Form implements InputFilterProviderInterface
             'name' => 'cronHour',
             'options' => array(
                 'label' => 'Hour:',
-                'value_options' => array()
+                'value_options' => $this->getHour()
             ),
             'attributes' => array(
                 'class' => 'form-control',
@@ -63,7 +63,7 @@ class CronForm extends Form implements InputFilterProviderInterface
             'name' => 'cronDom',
             'options' => array(
                 'label' => 'Day Of Month:',
-                'value_options' => array()
+                'value_options' => $this->getDom()
             ),
             'attributes' => array(
                 'class' => 'form-control',
@@ -77,7 +77,7 @@ class CronForm extends Form implements InputFilterProviderInterface
             'name' => 'cronMonth',
             'options' => array(
                 'label' => 'Month:',
-                'value_options' => array()
+                'value_options' => $this->getMonth()
             ),
             'attributes' => array(
                 'class' => 'form-control',
@@ -172,7 +172,40 @@ class CronForm extends Form implements InputFilterProviderInterface
         $array = array();
         
         for ($i = 0; $i < 60; $i++) {
-            $array[] = array($i => $i);
+            $array[$i] = $i;
+        }
+        
+        return $array;
+    }
+    
+    protected function getHour()
+    {
+        $array = array();
+        
+        for ($i = 0; $i < 24; $i++) {
+            $array[$i] = $i;
+        }
+        
+        return $array;
+    }
+    
+    protected function getDom()
+    {
+        $array = array();
+        
+        for ($i = 0; $i < 31; $i++) {
+            $array[$i] = $i;
+        }
+        
+        return $array;
+    }
+    
+    protected function getMonth()
+    {
+        $array = array();
+        
+        for ($i = 0; $i < 13; $i++) {
+            $array[$i] = $i;
         }
         
         return $array;

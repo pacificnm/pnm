@@ -1,43 +1,36 @@
-ZendSkeletonApplication
+PacificNM
 =======================
 
 Introduction
 ------------
-This is a simple, skeleton application using the ZF2 MVC layer and module
-systems. This application is meant to be used as a starting place for those
-looking to get their feet wet with ZF2.
+This is the core Pacificnm Open Source project. This code will always be free to any one who wants to use it, try it, build from it
+what ever works. I use several other peoples Open Source Projects please pay them attention. With out them I could of never done this.
+Theres a list of all projects on the about page. 
+The front end: https://github.com/almasaeed2010/AdminLTE
+The Application: https://github.com/zendframework/ZendSkeletonApplication
+
+Ok I guess its time to start documenting how to install. The end goal would be a docker container that can just be spwaned in Elastic Bean Stalk 
+or just create a EC2 image when a new user registers.
+
+This app is built from the Zend Framework Skeleton so follow that for the main framework and basic guts.
 
 Installation using Composer
 ---------------------------
 
-The easiest way to create a new ZF2 project is to use [Composer](https://getcomposer.org/). If you don't have it already installed, then please install as per the [documentation](https://getcomposer.org/doc/00-intro.md).
-
-
-Create your new ZF2 project:
-
-    composer create-project -n -sdev zendframework/skeleton-application path/to/install
-
-
-
-### Installation using a tarball with a local Composer
-
-If you don't have composer installed globally then another way to create a new ZF2 project is to download the tarball and install it:
-
-1. Download the [tarball](https://github.com/zendframework/ZendSkeletonApplication/tarball/master), extract it and then install the dependencies with a locally installed Composer:
-
-        cd my/project/dir
-        curl -#L https://github.com/zendframework/ZendSkeletonApplication/tarball/master | tar xz --strip-components=1
-    
-
-2. Download composer into your project directory and install the dependencies:
-
-        curl -s https://getcomposer.org/installer | php
-        php composer.phar install
-
-If you don't have access to curl, then install Composer into your project as per the [documentation](https://getcomposer.org/doc/00-intro.md).
+Once the code is checked out you have run composer --install
+This will grab all the dependencies and set up linking.
 
 Web server setup
 ----------------
+### Folders ###
+Initiall set all folders to owner of web server such as www-data or apache. After the system is up the only folder 
+that needs write access is data. None of the other folders need to have write access nor do we want to. Do not store 
+anything in public keep it in data. 
+
+All Client File uploads are stored in data/files/client/clientId
+From there work order related files are stored in sub folder workorder
+Client files will be in their root.
+
 
 ### PHP CLI server
 
@@ -82,37 +75,16 @@ project and you should be ready to go! It should look something like below:
         </Directory>
     </VirtualHost>
 
-### Nginx setup
 
-To setup nginx, open your `/path/to/nginx/nginx.conf` and add an
-[include directive](http://nginx.org/en/docs/ngx_core_module.html#include) below
-into `http` block if it does not already exist:
+Cron setup
+----------------
+The sytem needs to run one cron job that will runevery min through cron.
+This script then checks for what ever application cron jobs need to be ran. 
+This is configured through the admin in the cron section.
 
-    http {
-        # ...
-        include sites-enabled/*.conf;
-    }
+To set it up run crontab -e as root and cpast the following code.
+*/1   *    *    *    *     /var/www/bin/console.php cron --run
 
+On the system /var/www/bin/console.php should be a symlink to your install ie: /var/www/html/pnm/bin/console.php
+We create the symlink in case it moves or something changes we dont have to update the cron tab.
 
-Create a virtual host configuration file for your project under `/path/to/nginx/sites-enabled/zf2-app.localhost.conf`
-it should look something like below:
-
-    server {
-        listen       80;
-        server_name  zf2-app.localhost;
-        root         /path/to/zf2-app/public;
-
-        location / {
-            index index.php;
-            try_files $uri $uri/ @php;
-        }
-
-        location @php {
-            # Pass the PHP requests to FastCGI server (php-fpm) on 127.0.0.1:9000
-            fastcgi_pass   127.0.0.1:9000;
-            fastcgi_param  SCRIPT_FILENAME /path/to/zf2-app/public/index.php;
-            include fastcgi_params;
-        }
-    }
-
-Restart the nginx, now you should be ready to go!

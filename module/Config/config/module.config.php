@@ -23,7 +23,7 @@ return array(
                     'config-update'
                 )
             )
-        ),
+        )
     ),
     
     'controllers' => array(
@@ -31,14 +31,13 @@ return array(
             'Config\Controller\Index' => 'Config\Controller\Factory\IndexControllerFactory',
             'Config\Controller\Update' => 'Config\Controller\Factory\UpdateControllerFactory'
         )
-    )
-    ,
+    ),
     
     // service manager
     'service_manager' => array(
         'factories' => array(
             'Config\Mapper\ConfigMapperInterface' => 'Config\Mapper\Factory\ConfigMapperFactory',
-            'Config\Service\ConfigServiceInterface' => 'Config\Service\Factory\ConfigServiceFactory',
+            'Config\Service\ConfigServiceInterface' => 'Config\Service\Factory\ConfigServiceFactory'
         )
     ),
     
@@ -76,9 +75,7 @@ return array(
         'factories' => array(
             'AppConfig' => 'Config\View\Helper\Factory\AppConfigFactory'
         ),
-        'invokables' => array(
-            
-        )
+        'invokables' => array()
     ),
     
     // view manager
@@ -86,5 +83,35 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
         )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array()
+    ),
+    
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Admin',
+                'route' => 'admin-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Config',
+                        'route' => 'config-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Edit Config',
+                                'route' => 'config-update',
+                                'useRouteMatch' => true
+                            )
+                        )
+                    )
+                )
+            )
+        )
     )
-);
+)
+;

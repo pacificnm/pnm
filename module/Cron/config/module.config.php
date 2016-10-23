@@ -69,6 +69,10 @@ return array(
             'cron-create' => array(
                 'title' => 'New Cron',
                 'type' => 'literal',
+                'pageTitle' => 'New Config',
+                'pageSubTitle' => '',
+                'activeMenuItem' => 'admin',
+                'activeSubMenuItem' => 'cron-index',
                 'options' => array(
                     'route' => '/admin/cron/create',
                     'defaults' => array(
@@ -114,7 +118,29 @@ return array(
     ),
     
     'console' => array(
-        'routes' => array()
+        'router' => array(
+            'routes' => array(
+                // cron run see Module.php
+                'cron-run' => array(
+                    'options' => array(
+                        'route' => 'cron --run',
+                        'defaults' => array(
+                            'controller' => 'Cron\Controller\ConsoleController',
+                            'action' => 'index'
+                        )
+                    )
+                ),
+                'cron-list' => array(
+                    'options' => array(
+                        'route' => 'cron --list',
+                        'defaults' => array(
+                            'controller' => 'Cron\Controller\ConsoleController',
+                            'action' => 'list'
+                        )
+                    )
+                )
+            )
+        )
     ),
     
     // view helpers
@@ -131,8 +157,63 @@ return array(
     ),
     
     // menu
-    'menu' => array(),
+    'menu' => array(
+        'default' => array(
+            'admin' => array(
+                'title' => 'Admin',
+                'icon' => 'fa fa-gears',
+                'route' => 'admin-index',
+                'subMenu' => array(
+                    array(
+                        'title' => 'Cron',
+                        'icon' => 'fa fa-gears',
+                        'route' => 'cron-index'
+                    )
+                )
+            )
+            
+        )
+    ),
     
     // navigation
-    'navigation' => array(),
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Admin',
+                'route' => 'admin-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Cron',
+                        'route' => 'cron-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'New',
+                                'route' => 'cron-create',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'View',
+                                'route' => 'cron-view',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Delete',
+                                        'route' => 'cron-delete',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'Edit',
+                                        'route' => 'cron-update',
+                                        'useRouteMatch' => true
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
 );
