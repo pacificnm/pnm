@@ -45,6 +45,26 @@ class CronService implements CronServiceInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \Cron\Service\CronServiceInterface::getRunOnce()
+     */
+    public function getRunOnce()
+    {
+        return $this->mapper->getRunOnce();
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Cron\Service\CronServiceInterface::getByTime()
+     */
+    public function getByTime($minute, $hour, $day, $mon, $dow)
+    {
+        return $this->mapper->getByTime($minute, $hour, $day, $mon, $dow);    
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *

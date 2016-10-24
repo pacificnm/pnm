@@ -83,6 +83,11 @@ return array(
             ),
             'cron-update' => array(
                 'title' => 'Edit Cron',
+                'title' => 'Edit Cron',
+                'pageTitle' => 'Cron',
+                'pageSubTitle' => '',
+                'activeMenuItem' => 'admin',
+                'activeSubMenuItem' => 'cron-index',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/admin/cron/[:cronId]/update',
@@ -136,6 +141,24 @@ return array(
                         'defaults' => array(
                             'controller' => 'Cron\Controller\ConsoleController',
                             'action' => 'list'
+                        )
+                    )
+                ),
+                'cron-running' => array(
+                    'options' => array(
+                        'route' => 'cron --running',
+                        'defaults' => array(
+                            'controller' => 'Cron\Controller\ConsoleController',
+                            'action' => 'running'
+                        )
+                    )
+                ),
+                'cron-running' => array(
+                    'options' => array(
+                        'route' => 'cron --kill --pid=',
+                        'defaults' => array(
+                            'controller' => 'Cron\Controller\ConsoleController',
+                            'action' => 'kill'
                         )
                     )
                 )

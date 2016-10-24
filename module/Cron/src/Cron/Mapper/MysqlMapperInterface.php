@@ -21,6 +21,23 @@ interface MysqlMapperInterface
     public function get($id);
 
     /**
+     * @return CronEntity
+     */
+    public function getRunOnce();
+    
+    /**
+     * 
+     * @param number $minute <minute>
+     * @param number $hour <hour>
+     * @param number $day <day>
+     * @param number $mon  <month>
+     * @param number $dow <day of week>
+     * 
+     * @return CronEntity
+     */
+    public function getByTime($minute, $hour, $day, $mon, $dow);
+    
+    /**
      * 
      * @param CronEntity $entity
      * @return CronEntity

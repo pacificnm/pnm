@@ -147,7 +147,7 @@ class SignInController extends AbstractActionController
                             
                             return $this->redirect()->toRoute('employee-profile');
                         } else {
-                            $userEntity = $this->userService->get($authEntity->getUser());
+                            $userEntity = $this->userService->get($authEntity->getUserId());
                             
                             $authEntity->setUserEntity($userEntity);
                             

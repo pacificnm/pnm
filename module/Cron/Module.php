@@ -17,7 +17,7 @@ class Module
         return array(
             'cron --run' => 'Checks for cron jobs and runs them. See Module.php for more information',
             'cron --list' => 'Lists active crons',
-            'cron --runing' => 'List running cron jobs',
+            'cron --running' => 'List running cron jobs',
             'cron --kill --pid=[pid]' => 'Kills a running cron and sets it to disabled'
         );
     }

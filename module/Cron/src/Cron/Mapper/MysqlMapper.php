@@ -59,7 +59,50 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
         
         return $this->getRow();
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Cron\Mapper\MysqlMapperInterface::getRunOnce()
+     */
+    public function getRunOnce()
+    {
+        $this->select = $this->readSql->select('cron');
+        
+        $this->select->where(array('cron.cron_run_once = ?' => 1));
+        
+        $this->select->where(array('cron.cron_enabled = ?' => 1));
+        
+        return $this->getRows();
+        
+    }
 
+    public function getByTime($minute, $hour, $day, $mon, $dow)
+    {
+        $this->select = $this->readSql->select('cron');
+        
+        
+        if($minute) {
+            $this->select->where(array('cron.cron_minute = ?' => $minute));
+        }
+        
+        if($hour) {
+            $this->select->where(array('cron.cron_hour = ?' => $hour));
+        }
+        
+        if($day) {
+            $this->select->where(array('cron.cron_dom = ?' => $day));
+        }
+        
+        if($mon) {
+            $this->select->where(array('cron.cron_month = ?' => $mon));
+        }
+        
+        $this->select->where(array('cron.cron_enabled = ?' => 1));
+        
+        return $this->getRows();
+    }
+    
     /**
      *
      * {@inheritDoc}

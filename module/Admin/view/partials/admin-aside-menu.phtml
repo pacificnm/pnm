@@ -89,6 +89,13 @@
 				<i class="fa fa-gears"></i> <?php echo $this->translate('Cron'); ?>
 			</a>
 		</li>
+		
+		<!-- log -->
+		<li class="<?php if($this->activeSubMenuItem == 'log-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('log-index'); ?>" title="<?php echo $this->translate('Logs'); ?>">
+				<i class="fa fa-file"></i> <?php echo $this->translate('Logs'); ?>
+			</a>
+		</li>
 	</ul>
 </li>
 <?php endif; ?>

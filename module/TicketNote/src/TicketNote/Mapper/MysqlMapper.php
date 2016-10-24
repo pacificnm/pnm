@@ -75,7 +75,6 @@ class MysqlMapper implements MysqlMapperInterface
             'auth_email',
             'auth_name',
             'auth_type',
-            'user',
             'employee_id'
         ), 'inner');
         
@@ -121,7 +120,7 @@ class MysqlMapper implements MysqlMapperInterface
             'auth_email',
             'auth_name',
             'auth_type',
-            'user',
+            'user_id',
             'employee_id'
         ), 'inner');
         

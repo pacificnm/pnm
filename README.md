@@ -86,7 +86,7 @@ This is configured through the admin in the cron section.
 
 To set it up run crontab -e as root and past the following code.
 
-*/1   *    *    *    *     /var/www/bin/console.php cron --run
+	*/1   *    *    *    *     /var/www/bin/console.php cron --run
 
 On the system /var/www/bin/console.php should be a symlink to your install ie: /var/www/html/pnm/bin/console.php
 We create the symlink in case it moves or something changes we dont have to update the cron tab.

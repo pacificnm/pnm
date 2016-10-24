@@ -1,0 +1,28 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
+?>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-file"></i>
+					<?php echo $this->translate('View Log File'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="" class="">Download</a>
+				</div>
+			</div>
+			
+			<div class="box-body">
+				<pre class="pre-scrollable"><?php echo $this->escapehtml($this->fileContent); ?></pre>
+			</div>
+		</div>
+	</div>
+</div>

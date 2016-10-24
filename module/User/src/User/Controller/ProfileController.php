@@ -16,7 +16,7 @@ class ProfileController extends BaseController
     
     public function indexAction()
     {
-        $userEntity = $this->userService->get($this->identity()->getUser());
+        $userEntity = $this->userService->get($this->identity()->getUserId());
 
        
         

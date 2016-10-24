@@ -12,32 +12,11 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\DbSelect;
 use Ticket\Entity\TicketEntity;
+use Application\Mapper\CoreMysqlMapper;
 
-class MysqlMapper implements MysqlMapperInterface
+class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
 {
-    /**
-     *
-     * @var AdapterInterface
-     */
-    protected $readAdapter;
     
-    /**
-     *
-     * @var AdapterInterface
-     */
-    protected $writeAdapter;
-    
-    /**
-     *
-     * @var HydratorInterface
-     */
-    protected $hydrator;
-    
-    /**
-     *
-     * @var TicketEntity
-     */
-    protected $prototype;
     
     /**
      *
@@ -48,13 +27,11 @@ class MysqlMapper implements MysqlMapperInterface
      */
     public function __construct(AdapterInterface $readAdapter, AdapterInterface $writeAdapter, HydratorInterface $hydrator, TicketEntity $prototype)
     {
-        $this->readAdapter = $readAdapter;
-    
-        $this->writeAdapter = $writeAdapter;
-    
         $this->hydrator = $hydrator;
     
         $this->prototype = $prototype;
+        
+        parent::__construct($readAdapter, $writeAdapter);
     }
     
     /**
@@ -64,41 +41,15 @@ class MysqlMapper implements MysqlMapperInterface
      */
     public function getAll($filter)
     {
-        $sql = new Sql($this->readAdapter);
+        $this->select = $this->readSql->select('ticket');
         
-        $select = $sql->select('ticket');
+        $this->joinUser();
         
-        $select->join('user', 'ticket.user_id = user.user_id', array(
-            'location_id',
-            'user_status',
-            'user_name_first',
-            'user_name_last',
-            'user_job_title',
-            'user_email',
-            'user_type'
-        ), 'inner');
+        $this->filter($filter);
         
-        if(array_key_exists('clientId', $filter)) {
-            $select->where(array('ticket.client_id = ?' => $filter['clientId']));
-        }
+        $this->select->order('ticket.ticket_date_open DESC');
         
-        if(array_key_exists('ticketStatus', $filter) && ! empty($filter['ticketStatus'])) {
-            if($filter['ticketStatus'] == 'Open') {
-                $select->where(array('ticket.ticket_status != ?' => 'Closed'));
-            } else {
-                $select->where(array('ticket.ticket_status = ?' => $filter['ticketStatus']));
-            }
-        }
-        
-        $select->order('ticket.ticket_date_open DESC');
-        
-        $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
-        
-        $paginatorAdapter = new DbSelect($select, $this->readAdapter, $resultSetPrototype);
-        
-        $paginator = new Paginator($paginatorAdapter);
-        
-        return $paginator;
+        return $this->getPaginator();
     }
 
     /**
@@ -108,38 +59,16 @@ class MysqlMapper implements MysqlMapperInterface
      */
     public function get($id)
     {
-        $sql = new Sql($this->readAdapter);
+        $this->select = $this->readSql->select('ticket');
         
-        $select = $sql->select('ticket');
+        $this->joinUser();
         
-        $select->where(array(
+        $this->select->where(array(
             'ticket.ticket_id = ?' => $id
         ));
         
-        $select->join('user', 'ticket.user_id = user.user_id', array(
-            'location_id',
-            'user_status',
-            'user_name_first',
-            'user_name_last',
-            'user_job_title',
-            'user_email',
-            'user_type'
-        ), 'inner');
         
-        $stmt = $sql->prepareStatementForSqlObject($select);
-        
-        $result = $stmt->execute();
-        
-        if ($result instanceof ResultInterface && $result->isQueryResult()) {
-        
-            $resultSet = new HydratingResultSet($this->hydrator, $this->prototype);
-        
-            $resultSet->buffer();
-        
-            return $resultSet->initialize($result)->current();
-        }
-        
-        return array();
+        return $this->getRow();
     }
 
     /**
@@ -210,6 +139,38 @@ class MysqlMapper implements MysqlMapperInterface
         $result = $stmt->execute();
         
         return (bool) $result->getAffectedRows();
+    }
+    
+    protected function joinUser()
+    {
+        $this->select->join('user', 'ticket.user_id = user.user_id', array(
+            'location_id',
+            'user_status',
+            'user_name_first',
+            'user_name_last',
+            'user_job_title',
+            'user_email',
+            'user_type'
+        ), 'inner');
+        
+        return $this;
+    }
+    
+    protected function filter($filter)
+    {
+        if(array_key_exists('clientId', $filter)) {
+            $this->select->where(array('ticket.client_id = ?' => $filter['clientId']));
+        }
+        
+        if(array_key_exists('ticketStatus', $filter) && ! empty($filter['ticketStatus'])) {
+            if($filter['ticketStatus'] == 'Open') {
+                $this->select->where(array('ticket.ticket_status != ?' => 'Closed'));
+            } else {
+                $this->select->where(array('ticket.ticket_status = ?' => $filter['ticketStatus']));
+            }
+        }
+        
+        return $this;
     }
 }
 

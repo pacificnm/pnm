@@ -105,6 +105,7 @@ return array(
         'CronHistory',
         'Menu',
         'WorkorderCallLog',
+        'Log',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

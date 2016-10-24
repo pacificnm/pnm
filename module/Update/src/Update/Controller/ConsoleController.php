@@ -13,6 +13,8 @@ use AclRole\Service\RoleServiceInterface;
 use AclRole\Entity\RoleEntity;
 use Acl\Service\AclServiceInterface;
 use Acl\Entity\AclEntity;
+use Zend\Log\Logger;
+use Zend\Log\Writer\Stream;
 
 class ConsoleController extends AbstractActionController
 {
@@ -47,6 +49,9 @@ class ConsoleController extends AbstractActionController
      */
     protected $memcached;
 
+    protected $logService;
+    
+    protected $writerService;
     /**
      *
      * @var array
@@ -66,6 +71,12 @@ class ConsoleController extends AbstractActionController
         $this->memcached = $memcached;
         
         $this->config = $config;
+        
+        $this->logService = new Logger();
+        
+        $this->writerService = new Stream('./data/log/' . date('Y-m-d') . '-update.log');
+        
+        $this->logService->addWriter($this->writerService);
     }
 
     /**
@@ -88,8 +99,10 @@ class ConsoleController extends AbstractActionController
         $console = $this->getServiceLocator()->get('console');
         
         $start = date('m/d/Y h:i a', time());
-        
+
         $console->write("Start Update at {$start}\n", 3);
+        
+        $this->logService->info("Start Update at {$start}");
         
         // update all database files
         $it = new \RecursiveDirectoryIterator("module");
@@ -114,6 +127,8 @@ class ConsoleController extends AbstractActionController
                 
                 if ($result) {
                     $console->write("Updating sql file {$file}\n");
+                    
+                    $this->logService->info("Updating sql file {$file}");
                 }
             }
         }
@@ -121,12 +136,16 @@ class ConsoleController extends AbstractActionController
         // done with database files
         $console->write("Done with database updates\n", 3);
         
+        $this->logService->info("Done with database updates");
+        
         foreach ($this->config['module'] as $module) {
             $allResources = array();
             
             $name = $module['name'];
             
             $console->write("Updating module {$name}\n");
+            
+            $this->logService->info("Updating module {$name}");
             
             if (array_key_exists('acl', $module)) {
                 $roles = $module['acl'];
@@ -139,6 +158,8 @@ class ConsoleController extends AbstractActionController
                     
                     // roles
                     $console->write("Updating role {$role}\n");
+                    
+                    $this->logService->info("Updating role {$role}");
                     
                     $roleEntity = $this->roleService->getRole($role);
                     
@@ -153,12 +174,15 @@ class ConsoleController extends AbstractActionController
                     if ($resources) {
                         foreach ($resources as $resource) {
                             $console->write("Updating resource {$resource}\n");
+                            
+                            $this->logService->info("Updating resource {$resource}");
+                            
                             $resourceEntity = $this->resourceService->getReource($resource);
                             
                             // if no reource create it
                             if (! $resourceEntity) {
                                 $entity = new ResourceEntity();
-                                // $entity->setAclResourceId(0);
+                                
                                 $entity->setAclResource($resource);
                                 
                                 $this->resourceService->save($entity);
@@ -188,9 +212,13 @@ class ConsoleController extends AbstractActionController
         
         $console->write("Done with module updates\n", 3);
         
+        $this->logService->info("Done with module updates");
+        
         // done
         $end = date('m/d/Y h:i a', time());
         
         $console->write("Comleted Update at {$end}\n", 3);
+        
+        $this->logService->info("Comleted Update at {$end}");
     }
 }

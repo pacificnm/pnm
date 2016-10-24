@@ -53,6 +53,12 @@ class ConsoleController extends AbstractActionController
     protected $hostTypeService;
     
     protected $locationService;
+    
+    protected $logService;
+    
+    protected $writerService;
+    
+    
     /**
      * 
      * @param MspServiceInterface $mspService
@@ -77,6 +83,12 @@ class ConsoleController extends AbstractActionController
         $this->hostTypeService = $hostTypeService;
         
         $this->locationService = $locationService;
+        
+        $this->logService = new Logger();
+        
+        $this->writerService = new Stream('./data/log/' . date('Y-m-d') . '-panorama-host-sync.log');
+        
+        $this->logService->addWriter($this->writerService);
     }
 
     /**
@@ -100,6 +112,8 @@ class ConsoleController extends AbstractActionController
         
         $console->write("Start Panorama Client Sync at {$start}\n", 3);
         
+        $this->logService->info("Start Panorama Client Sync at {$start}");
+        
         $mspEntitys = $this->mspService->getClients();
         
         foreach ($mspEntitys as $mspEntity) {
@@ -109,6 +123,8 @@ class ConsoleController extends AbstractActionController
             if ($panoramaClientEntity->getPanoramaClientId()) {
                 
                 $console->write("Client found {$panoramaClientEntity->getClientId()}, {$panoramaClientEntity->getClientEntity()->getClientName()}\n", 3);
+                
+                $this->logService->info("Client found {$panoramaClientEntity->getClientId()}, {$panoramaClientEntity->getClientEntity()->getClientName()}");
                 
                 // check we have location information
                 if(! $this->getLocationId($panoramaClientEntity->getClientId())) {
@@ -152,19 +168,27 @@ class ConsoleController extends AbstractActionController
                         
                         $console->write("New host created\n", 3);
                         
+                        $this->logService->info("New host created");
+                        
                     } else {
                         // do update
                         $console->write("Skipping host already sync\n");
+                        
+                        $this->logService->info("Skipping host already sync");
                     }
                 }
             } else {
                 $console->write("No client found for {$mspEntity->getName()}\n", 2);
+                
+                $this->logService->info("No client found for {$mspEntity->getName()}");
             }
         }
         
         $end = date('m/d/Y h:i a', time());
         
         $console->write("Completed Panorama Client Sync at {$end}\n", 3);
+        
+        $this->logService->info("Completed Panorama Client Sync at {$end}");
     }
     
     /**

@@ -53,13 +53,17 @@ class CronEntity
     protected $cronLastRun;
 
     /**
+     * 
+     * @var number
+     */
+    protected $cronStatus;
+    
+    /**
      *
      * @var bool
      */
     protected $cronEnabled;
-
     /**
-     *
      * @return the $cronId
      */
     public function getCronId()
@@ -68,7 +72,6 @@ class CronEntity
     }
 
     /**
-     *
      * @return the $cronMinute
      */
     public function getCronMinute()
@@ -77,7 +80,6 @@ class CronEntity
     }
 
     /**
-     *
      * @return the $cronHour
      */
     public function getCronHour()
@@ -86,7 +88,6 @@ class CronEntity
     }
 
     /**
-     *
      * @return the $cronDom
      */
     public function getCronDom()
@@ -95,7 +96,6 @@ class CronEntity
     }
 
     /**
-     *
      * @return the $cronMonth
      */
     public function getCronMonth()
@@ -104,7 +104,6 @@ class CronEntity
     }
 
     /**
-     *
      * @return the $cronCommand
      */
     public function getCronCommand()
@@ -113,7 +112,6 @@ class CronEntity
     }
 
     /**
-     *
      * @return the $cronRunOnce
      */
     public function getCronRunOnce()
@@ -122,7 +120,6 @@ class CronEntity
     }
 
     /**
-     *
      * @return the $cronLastRun
      */
     public function getCronLastRun()
@@ -131,7 +128,14 @@ class CronEntity
     }
 
     /**
-     *
+     * @return the $cronStatus
+     */
+    public function getCronStatus()
+    {
+        return $this->cronStatus;
+    }
+
+    /**
      * @return the $cronEnabled
      */
     public function getCronEnabled()
@@ -140,8 +144,7 @@ class CronEntity
     }
 
     /**
-     *
-     * @param number $cronId            
+     * @param number $cronId
      */
     public function setCronId($cronId)
     {
@@ -149,8 +152,7 @@ class CronEntity
     }
 
     /**
-     *
-     * @param number $cronMinute            
+     * @param number $cronMinute
      */
     public function setCronMinute($cronMinute)
     {
@@ -158,8 +160,7 @@ class CronEntity
     }
 
     /**
-     *
-     * @param number $cronHour            
+     * @param number $cronHour
      */
     public function setCronHour($cronHour)
     {
@@ -167,8 +168,7 @@ class CronEntity
     }
 
     /**
-     *
-     * @param number $cronDom            
+     * @param number $cronDom
      */
     public function setCronDom($cronDom)
     {
@@ -176,8 +176,7 @@ class CronEntity
     }
 
     /**
-     *
-     * @param number $cronMonth            
+     * @param number $cronMonth
      */
     public function setCronMonth($cronMonth)
     {
@@ -185,8 +184,7 @@ class CronEntity
     }
 
     /**
-     *
-     * @param string $cronCommand            
+     * @param string $cronCommand
      */
     public function setCronCommand($cronCommand)
     {
@@ -194,8 +192,7 @@ class CronEntity
     }
 
     /**
-     *
-     * @param boolean $cronRunOnce            
+     * @param boolean $cronRunOnce
      */
     public function setCronRunOnce($cronRunOnce)
     {
@@ -203,8 +200,7 @@ class CronEntity
     }
 
     /**
-     *
-     * @param number $cronLastRun            
+     * @param number $cronLastRun
      */
     public function setCronLastRun($cronLastRun)
     {
@@ -212,11 +208,21 @@ class CronEntity
     }
 
     /**
-     *
-     * @param boolean $cronEnabled            
+     * @param number $cronStatus
+     */
+    public function setCronStatus($cronStatus)
+    {
+        $this->cronStatus = $cronStatus;
+    }
+
+    /**
+     * @param boolean $cronEnabled
      */
     public function setCronEnabled($cronEnabled)
     {
         $this->cronEnabled = $cronEnabled;
     }
+
+
+   
 }

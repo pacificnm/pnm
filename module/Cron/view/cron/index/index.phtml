@@ -50,9 +50,17 @@
 							<td><?php echo $entity->getCronHour(); ?></td>
 							<td><?php echo $entity->getCronDom(); ?></td>
 							<td><?php echo $entity->getCronMonth(); ?></td>
-							<td><?php echo $entity->getCronLastRun(); ?></td>
+							<td>
+								<?php if($entity->getCronLastRun() > 0): ?>
+									<?php echo date($this->appConfig()->getCOnfigDateLong(), $entity->getCronLastRun()); ?>
+								<?php else: ?>
+									<?php echo $this->translate('N/A'); ?>
+								<?php endif; ?>		
+							</td>
 							<td><?php echo $entity->getCronEnabled();?></td>
-							
+							<td class="text-right">
+								<a href="<?php echo $this->url('cron-update', array('cronId' => $entity->getCronId()));?>" title="<?php echo $this->translate('Edit this cron'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+							</td>
 						</tr>
 					<?php endforeach; ?>
 					</tbody>
