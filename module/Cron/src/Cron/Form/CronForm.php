@@ -29,6 +29,12 @@ class CronForm extends Form implements InputFilterProviderInterface
             'type' => 'hidden'
         ));
         
+        // cronStatus
+        $this->add(array(
+            'name' => 'cronStatus',
+            'type' => 'hidden'
+        ));
+        
         // cronMinute
         $this->add(array(
             'type' => 'Select',

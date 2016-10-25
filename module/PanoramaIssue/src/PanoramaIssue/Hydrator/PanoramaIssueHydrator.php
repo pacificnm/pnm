@@ -1,10 +1,10 @@
 <?php
-namespace PanoramaHost\Hydrator;
+namespace PanoramaIssue\Hydrator;
 
-use PanoramaHost\Entity\PanoramaHostEntity;
 use Zend\Stdlib\Hydrator\ClassMethods;
+use PanoramaIssue\Entity\PanoramaIssueEntity;
 
-class PanoramaHostHydrator extends ClassMethods
+class PanoramaIssueHydrator extends ClassMethods
 {
 
     /**
@@ -24,7 +24,7 @@ class PanoramaHostHydrator extends ClassMethods
      */
     public function hydrate(array $data, $object)
     {
-        if (! $object instanceof PanoramaHostEntity) {
+        if (! $object instanceof PanoramaIssueEntity) {
             return $object;
         }
         
@@ -41,13 +41,11 @@ class PanoramaHostHydrator extends ClassMethods
      */
     public function extract($object)
     {
-        if (! $object instanceof PanoramaHostEntity) {
+        if (! $object instanceof PanoramaIssueEntity) {
             return $object;
         }
         
         $data = parent::extract($object);
-        
-        unset($data['host_entity']);
         
         return $data;
     }

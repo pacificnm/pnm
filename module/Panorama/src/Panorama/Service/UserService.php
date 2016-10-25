@@ -93,7 +93,6 @@ class UserService extends PanoramaService implements UserServiceInterface
         
         $data = $this->memcached->getItem($key);
         
-        
         if (! $data) {
             
             $this->request->setUri('https://dashboard.panorama9.com/api/' . $cid . '/users');

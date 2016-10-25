@@ -13,7 +13,8 @@ return array(
                     'panorama-index',
                     'panorama-view',
                     'panorama-view-device',
-                    'panorama-user'
+                    'panorama-user',
+                    'panorama-issue'
                 ),
                 'accountant' => array(),
                 'administrator' => array()
@@ -28,6 +29,7 @@ return array(
             'Panorama\Controller\ViewController' => 'Panorama\Controller\Factory\ViewControllerFactory',
             'Panorama\Controller\DeviceController' => 'Panorama\Controller\Factory\DeviceControllerFactory',
             'Panorama\Controller\UserController' => 'Panorama\Controller\Factory\UserControllerFactory',
+            'Panorama\Controller\IssueController' => 'Panorama\Controller\Factory\IssueControllerFactory',
         )
     ),
     
@@ -91,6 +93,21 @@ return array(
                         'action' => 'index'
                     )
                 )
+            ),
+            'panorama-issue' => array(
+                'title' => 'Panorama9',
+                'type' => 'segment',
+                'pageTitle' => 'Panorama9',
+                'pageSubTitle' => 'Issues',
+                'activeMenuItem' => 'panorama-index',
+                'activeSubMenuItem' => 'panorama-index',
+                'options' => array(
+                    'route' => '/admin/panorama/client/[:cid]/issues',
+                    'defaults' => array(
+                        'controller' => 'Panorama\Controller\IssueController',
+                        'action' => 'index'
+                    )
+                )
             )
         )
     ),
@@ -134,6 +151,11 @@ return array(
                                     array(
                                         'label' => 'View Device',
                                         'route' => 'panorama-view-device',
+                                        'useRouteMatch' => true,
+                                    ),
+                                    array(
+                                        'label' => 'Issues',
+                                        'route' => 'panorama-issue',
                                         'useRouteMatch' => true,
                                     )
                                 )

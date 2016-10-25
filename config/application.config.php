@@ -106,6 +106,7 @@ return array(
         'Menu',
         'WorkorderCallLog',
         'Log',
+        'PanoramaIssue',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

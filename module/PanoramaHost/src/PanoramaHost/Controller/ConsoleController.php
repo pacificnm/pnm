@@ -12,6 +12,8 @@ use PanoramaClient\Service\PanoramaClientServiceInterface;
 use Panorama\Service\DeviceServiceInterface;
 use HostType\Service\TypeServiceInterface;
 use Location\Service\LocationServiceInterface;
+use Zend\Log\Logger;
+use Zend\Log\Writer\Stream;
 
 class ConsoleController extends AbstractActionController
 {

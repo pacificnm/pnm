@@ -27,35 +27,35 @@ class ConsoleController extends AbstractActionController
     protected $request;
 
     /**
-     * 
+     *
      * @var number
      */
     protected $minute;
-    
+
     /**
-     * 
+     *
      * @var number
      */
     protected $hour;
-    
+
     /**
-     * 
+     *
      * @var number
      */
     protected $day;
-    
+
     /**
-     * 
+     *
      * @var number
      */
     protected $mon;
-    
+
     /**
-     * 
+     *
      * @var number
      */
     protected $dow;
-    
+
     /**
      *
      * @param CronServiceInterface $cronService            
@@ -111,14 +111,12 @@ class ConsoleController extends AbstractActionController
         
         $this->runCronJobs($cronEnititys);
         
-        
         // grab for this current min
         $cronEnititys = $this->cronService->getByTime($this->minute, 0, 0, 0, 0);
         
         $this->runCronJobs($cronEnititys);
         
-        
-        //grab for top of the hour
+        // grab for top of the hour
         $cronEnititys = $this->cronService->getByTime(0, $this->hour, 0, 0, 0);
         
         $this->runCronJobs($cronEnititys);
@@ -183,8 +181,6 @@ class ConsoleController extends AbstractActionController
         
         // start
         
-        
-        
         // end
         
         $end = date('m/d/Y h:i a', time());
@@ -193,7 +189,7 @@ class ConsoleController extends AbstractActionController
         
         $this->logService->info("Cron Running Completed {$end}");
     }
-    
+
     public function killAction()
     {
         // validate we are in a console
@@ -203,7 +199,7 @@ class ConsoleController extends AbstractActionController
         
         $pid = $this->params('pid');
         
-        if(! $pid) {
+        if (! $pid) {
             throw new RuntimeException('Missing required param');
         }
         
@@ -215,8 +211,7 @@ class ConsoleController extends AbstractActionController
         
         // start
         // look up PID in database otherwise do nothing. we only kill existing pid thats match to our service.
-        // If the pid is not in the table then we need a human to look at and kill it. 
-        
+        // If the pid is not in the table then we need a human to look at and kill it.
         
         // end
         
@@ -226,44 +221,47 @@ class ConsoleController extends AbstractActionController
         
         $this->logService->info("Cron Kill Completed {$end} PID {$pid}");
     }
-    
+
     protected function runCronJobs($cronEnititys)
     {
-        foreach($cronEnititys as $cronEnitity) {
+        foreach ($cronEnititys as $cronEnitity) {
             $this->console->write("Start {$cronEnitity->getCronCommand()}\n", 3);
-        
+            
             $this->logService->info("Start {$cronEnitity->getCronCommand()}");
-        
+            
             $cronEnitity->setCronLastRun(time());
-        
+            
             $cronEnitity->setCronStatus(1);
-        
+            
             $cronEnitity = $this->cronService->save($cronEnitity);
-        
-            $cmd =  getcwd() . '/bin/' . $cronEnitity->getCronCommand();
-        
+            
+            $cmd = getcwd() . '/bin/' . $cronEnitity->getCronCommand();
+            
             try {
                 exec($cmd);
             } catch (\Exception $e) {
                 $this->console->write("Failed to run {$cronEnitity->getCronCommand()} Error: {$e->getMessage()}\n", 2);
-        
+                
                 $this->logService->err("Failed to run {$cronEnitity->getCronCommand()} Error: {$e->getMessage()}");
-        
+                
                 $cronEnitity->setCronEnabled(0);
-        
+                
                 $cronEnitity = $this->cronService->save($cronEnitity);
-        
+                
                 continue;
             }
-        
-            // set runOce to off and enabled to off
-            $cronEnitity->setCronEnabled(0);
-        
+            
+            // if we are set to run once then disable it
+            if ($cronEnitity->getCronRunOnce()) {
+                $cronEnitity->setCronEnabled(0);
+            }
+            
+            $cronEnitity->setCronStatus(0);
+            
             $cronEnitity = $this->cronService->save($cronEnitity);
-        
+            
             // trigger event
             $this->logService->info("End {$cronEnitity->getCronCommand()}");
-        
         }
     }
 }

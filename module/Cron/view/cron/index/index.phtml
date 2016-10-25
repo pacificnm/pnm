@@ -43,9 +43,9 @@
 					</thead>
 					<tbody>
 					<?php foreach($this->paginator as $entity):?>
-						<tr>
+						<tr <?php if($entity->getCronStatus() == 1):?>class="success"<?php endif;?>>
 							<td><?php echo $entity->getCronCommand(); ?></td>
-							<td><?php echo $entity->getCronRunOnce();?></td>
+							<td><?php echo ($entity->getCronRunOnce() == 1  ? $this->translate('Yes') : $this->translate('No')); ?></td>
 							<td><?php echo $entity->getCronMinute(); ?></td>
 							<td><?php echo $entity->getCronHour(); ?></td>
 							<td><?php echo $entity->getCronDom(); ?></td>
@@ -57,7 +57,7 @@
 									<?php echo $this->translate('N/A'); ?>
 								<?php endif; ?>		
 							</td>
-							<td><?php echo $entity->getCronEnabled();?></td>
+							<td><?php echo ($entity->getCronEnabled() == 1  ? $this->translate('Yes') : $this->translate('No')); ?></td>
 							<td class="text-right">
 								<a href="<?php echo $this->url('cron-update', array('cronId' => $entity->getCronId()));?>" title="<?php echo $this->translate('Edit this cron'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 							</td>

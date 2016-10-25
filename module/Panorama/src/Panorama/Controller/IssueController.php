@@ -2,35 +2,27 @@
 namespace Panorama\Controller;
 
 use Application\Controller\BaseController;
+use Panorama\Service\IssueServiceInterface;
 use Panorama\Service\MspServiceInterface;
 use Zend\View\Model\ViewModel;
-use Panorama\Service\IssueServiceInterface;
-use Panorama\Service\DeviceServiceInterface;
 use PanoramaClient\Service\PanoramaClientServiceInterface;
 
-class ViewController extends BaseController
+class IssueController extends BaseController
 {
-
     /**
      *
      * @var MspServiceInterface
      */
     protected $mspService;
-
+    
     /**
-     *
+     * 
      * @var IssueServiceInterface
      */
     protected $issueService;
-
+    
     /**
      *
-     * @var DeviceServiceInterface
-     */
-    protected $deviceService;
-
-    /**
-     * 
      * @var PanoramaClientServiceInterface
      */
     protected $panoramaClientService;
@@ -38,22 +30,21 @@ class ViewController extends BaseController
     /**
      * 
      * @param MspServiceInterface $mspService
-     * @param DeviceServiceInterface $deviceService
+     * @param IssueServiceInterface $issueService
      * @param PanoramaClientServiceInterface $panoramaClientService
      */
-    public function __construct(MspServiceInterface $mspService,  DeviceServiceInterface $deviceService, PanoramaClientServiceInterface $panoramaClientService)
+    public function __construct(MspServiceInterface $mspService, IssueServiceInterface $issueService, PanoramaClientServiceInterface $panoramaClientService)
     {
         $this->mspService = $mspService;
         
-        $this->deviceService = $deviceService;
+        $this->issueService = $issueService;
         
         $this->panoramaClientService = $panoramaClientService;
     }
-
+    
     /**
-     *
+     * 
      * {@inheritDoc}
-     *
      * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
      */
     public function indexAction()
@@ -62,13 +53,13 @@ class ViewController extends BaseController
         
         $mspEntity = $this->mspService->getClient($cid);
         
-        $panoramaClientEntity = $this->panoramaClientService->getByCid($mspEntity->getCid());
+        $issueEntitys = $this->issueService->getAllIssues($cid);
         
-        $paginator = $this->deviceService->getDevices($cid);
+        $panoramaClientEntity = $this->panoramaClientService->getByCid($cid);
         
         return new ViewModel(array(
+            'issueEntitys' => $issueEntitys,
             'mspEntity' => $mspEntity,
-            'paginator' => $paginator,
             'panoramaClientEntity' => $panoramaClientEntity
         ));
     }

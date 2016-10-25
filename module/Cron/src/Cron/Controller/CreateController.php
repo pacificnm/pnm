@@ -62,6 +62,8 @@ class CreateController extends BaseController
             }
         }
         
+        $this->form->get('cronStatus')->setValue(0);
+        
         return new ViewModel(array(
             'form' => $this->form
         ));
