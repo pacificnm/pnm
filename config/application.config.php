@@ -107,6 +107,9 @@ return array(
         'WorkorderCallLog',
         'Log',
         'PanoramaIssue',
+        'Product',
+        'Subscription',
+        'SubscriptionHost',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

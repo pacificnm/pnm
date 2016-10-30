@@ -1,25 +1,25 @@
 <?php
-namespace Cron\Controller;
+namespace Product\Controller;
 
 use Application\Controller\BaseController;
-use Cron\Service\CronServiceInterface;
+use Product\Service\ProductServiceInterface;
 use Zend\View\Model\ViewModel;
 
 class IndexController extends BaseController
 {
     /**
      * 
-     * @var CronServiceInterface
+     * @var ProductServiceInterface
      */
-    protected $cronService;
+    protected $productService;
     
     /**
      * 
-     * @param CronServiceInterface $cronService
+     * @param ProductServiceInterface $productService
      */
-    public function __construct(CronServiceInterface $cronService)
+    public function __construct(ProductServiceInterface $productService)
     {
-        $this->cronService = $cronService;
+        $this->productService = $productService;
     }
     
     /**
@@ -30,7 +30,7 @@ class IndexController extends BaseController
     public function indexAction()
     {
         // trigger event view cron
-        $this->getEventManager()->trigger('CronIndex', $this, array(
+        $this->getEventManager()->trigger('ProductIndex', $this, array(
             'authId' => '',
             'historyUrl' => $this->getRequest()->getUri()
         ));
@@ -41,8 +41,8 @@ class IndexController extends BaseController
             'count-per-page' => $this->countPerPage,
         );
         
-        // get 
-        $paginator = $this->cronService->getAll($filter);
+        // get
+        $paginator = $this->productService->getAll($filter);
         
         $paginator->setCurrentPageNumber($filter['page']);
         

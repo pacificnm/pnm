@@ -22,20 +22,10 @@ CREATE TABLE IF NOT EXISTS `email` (
   KEY `user_id` (`auth_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- RELATIONS FOR TABLE `email`:
---   `auth_id`
---       `auth` -> `auth_id`
---
 
 --
 -- Constraints for dumped tables
 --
 
---
--- Constraints for table `email`
---
-ALTER TABLE `email`
-  ADD CONSTRAINT `fk_email_auth_id` FOREIGN KEY (`auth_id`) REFERENCES `auth` (`auth_id`);
-SET FOREIGN_KEY_CHECKS=1;
+
 

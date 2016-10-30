@@ -1,0 +1,58 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
+?>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+					<?php echo $this->translate('View Product'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('product-update', array('productId' => $this->productEntity->getProductId())); ?>" title="<?php echo $this->translate('Edit this product'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+					<a href="<?php echo $this->url('product-delete', array('productId' => $this->productEntity->getProductId())); ?>" title="<?php echo $this->translate('Delete this product'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+				</div>
+			</div>
+			<div class="box-body box-profile">
+				<h3 class="profile-username">
+					<i class="<?php echo $this->productEntity->getProductImage()?>"></i>
+					<?php echo $this->productEntity->getProductName(); ?></h3>
+				<p class="text-muted"><?php echo $this->productEntity->getProductDescriptionShort(); ?></p>
+				<p class="text-muted"><?php echo $this->productEntity->getProductDescriptionLong(); ?></p>
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Product ID'); ?>:</b>
+						<span class="pull-right"><?php echo $this->productEntity->getPRoductId(); ?></span>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('One Time Fee'); ?>:</b>
+						<span class="pull-right"><?php echo $this->currencyFormat($this->productEntity->getProductFee(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></span>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Set Up Fee'); ?>:</b>
+						<span class="pull-right"><?php echo $this->currencyFormat($this->productEntity->getProductFeeSetup(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></span>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Monthly Fee'); ?>:</b>
+						<span class="pull-right"><?php echo $this->currencyFormat($this->productEntity->getProductFeeMonthly(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></span>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Anual Fee'); ?>:</b>
+						<span class="pull-right"><?php echo $this->currencyFormat($this->productEntity->getProductFeeAnual(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></span>
+					</li>
+					<li class="list-group-item">
+						<b><?php echo $this->translate('Status'); ?>:</b>
+						<span class="pull-right"><?php echo ($this->productEntity->getProductStatus() == 1 ?  $this->translate('Enabled') :  $this->translate('Disabled') );?></span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

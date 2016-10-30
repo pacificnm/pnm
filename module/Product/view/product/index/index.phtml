@@ -1,0 +1,81 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
+?>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+					<?php echo $this->translate('Products'); ?>
+				</h3>
+				<div class="box-tools">
+					<a href="<?php echo $this->url('product-create');?>" title="<?php echo $this->translate('New'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+				</div>
+			</div>
+			
+			<?php if($this->paginator->count() == 0):?>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<i class="fa fa-info-circle"></i> <?php echo $this->translate('No products'); ?>
+				</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-bordered table-hover table-striped table-condensed">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Product ID'); ?></th>
+							<th><?php echo $this->translate('Name'); ?></th>
+							<th><?php echo $this->translate('One Time Fee'); ?></th>
+							<th><?php echo $this->translate('Set Up Fee'); ?></th>
+							<th><?php echo $this->translate('Monthly Fee'); ?></th>
+							<th><?php echo $this->translate('Anual Fee'); ?></th>
+							<th><?php echo $this->translate('Status'); ?></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->paginator as $entity): ?>
+						<tr>
+							<td><?php echo $entity->getProductId(); ?></td>
+							<td>
+								<a href="<?php echo $this->url('product-view', array('productId' => $entity->getProductId()))?>" title="<?php echo $this->translate('View this product'); ?>"><?php echo $entity->getProductName(); ?></a>
+							</td>
+							<td class="text-right"><?php echo $this->currencyFormat($entity->getProductFee(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+							<td class="text-right"><?php echo $this->currencyFormat($entity->getProductFeeSetup(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+							<td class="text-right"><?php echo $this->currencyFormat($entity->getProductFeeMonthly(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+							<td class="text-right"><?php echo $this->currencyFormat($entity->getProductFeeAnual(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+							<td><?php echo ($entity->getProductStatus() == 1 ?  $this->translate('Enabled') :  $this->translate('Disabled') );?></td>
+							<td class="text-right">
+								<a href="<?php echo $this->url('product-update', array('productId' => $entity->getProductId())); ?>" title="<?php echo $this->translate('Edit this product'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
+								<a href="<?php echo $this->url('product-delete', array('productId' => $entity->getProductId())); ?>" title="<?php echo $this->translate('Delete this product'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+			</div>
+			<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12 text-right">
+    				<?php echo $this->Paginator(
+    	                        $this->itemCountPerPage,
+    	                        $this->itemCount,
+    	                        $this->pageCount,
+    	                        $this->page,
+    	                        $this->routeParams,
+    	                        $this->queryParams); ?>
+    	        	</div>
+    			</div>
+			</div>
+			<?php endif;?>
+			</div>
+		</div>
+	</div>
+</div>
