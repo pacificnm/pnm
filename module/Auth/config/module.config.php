@@ -21,7 +21,7 @@ return array(
                     'auth-password'
                 )
             )
-        ),
+        )
     ),
     
     // controllers
@@ -34,8 +34,7 @@ return array(
             'Auth\Controller\Delete' => 'Auth\Controller\Factory\DeleteControllerFactory',
             'Auth\Controller\Update' => 'Auth\Controller\Factory\UpdateControllerFactory',
             'Auth\Controller\View' => 'Auth\Controller\Factory\ViewControllerFactory',
-            'Auth\Controller\Password' => 'Auth\Controller\Factory\PasswordControllerFactory' 
-            
+            'Auth\Controller\Password' => 'Auth\Controller\Factory\PasswordControllerFactory'
         )
     ),
     
@@ -45,7 +44,7 @@ return array(
             'Auth\Adapter\AuthAdapter' => 'Auth\Adapter\Factory\AuthAdapterFactory',
             'Auth\Service\AuthServiceInterface' => 'Auth\Service\Factory\AuthServiceFactory',
             'Auth\Mapper\MysqlMapperInterface' => 'Auth\Mapper\Factory\MysqlMapperFactory',
-            'Auth\Adapter\OAuth2Adapter' => 'Auth\Adapter\Factory\OAuth2AdapterFactory',
+            'Auth\Adapter\OAuth2Adapter' => 'Auth\Adapter\Factory\OAuth2AdapterFactory'
         )
     ),
     
@@ -140,7 +139,7 @@ return array(
                         'action' => 'index'
                     )
                 )
-            ),
+            )
         )
     ),
     
@@ -159,6 +158,87 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Admin',
+                'route' => 'admin-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Auth',
+                        'route' => 'auth-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'New',
+                                'route' => 'auth-create',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'View',
+                                'route' => 'auth-view',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Update',
+                                        'route' => 'auth-update',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'Delete',
+                                        'route' => 'auth-delete',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'Reset Password',
+                                        'route' => 'auth-password',
+                                        'useRouteMatch' => true
+                                    )
+                                )
+                                
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'admin' => array(
+            array(
+                array(
+                    'label' => 'Admin',
+                    'icon' => 'fa fa-gears',
+                    'route' => 'admin-index',
+                    'submenu' => array(
+                        array(
+                            'label' => 'Payment Options',
+                            'icon' => 'fa fa-dollar',
+                            'route' => 'payment-option-index'
+                        )
+                    )
+                )
+            )
+        )
+        
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

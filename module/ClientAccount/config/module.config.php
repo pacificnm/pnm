@@ -27,5 +27,6 @@ return array(
             'ClientAccount\Service\AccountServiceInterface' => 'ClientAccount\Service\Factory\AccountServiceFactory',
             'ClientAccount\Mapper\AccountMapperInterface' => 'ClientAccount\Mapper\Factory\AccountMapperFactory'
         )
-    )
+    ),
+    
 );

@@ -36,8 +36,8 @@ return array(
     // service manager
     'service_manager' => array(
         'factories' => array(
-          'VendorBill\Service\BillServiceInterface' => 'VendorBill\Service\Factory\BillServiceFactory',
-            'VendorBill\Mapper\BillMapperInterface' => 'VendorBill\Mapper\Factory\BillMapperFactory',
+            'VendorBill\Service\BillServiceInterface' => 'VendorBill\Service\Factory\BillServiceFactory',
+            'VendorBill\Mapper\BillMapperInterface' => 'VendorBill\Mapper\Factory\BillMapperFactory'
         )
     ),
     
@@ -107,6 +107,68 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Accounting',
+                'route' => 'account-home',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Bills',
+                        'route' => 'vendor-bill-index',
+                        'useRouteMatch' => true,
+                    ),
+                    array(
+                        'label' => 'Vendors',
+                        'route' => 'vendor-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'View',
+                                'route' => 'vendor-view',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'New Bill',
+                                        'route' => 'vendor-bill-create',
+                                        'useRouteMatch' => true,
+                                    ),
+                                    array(
+                                        'label' => 'Bill',
+                                        'route' => 'vendor-bill-view',
+                                        'useRouteMatch' => true,
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    'menu' => array(
+        'accounting' => array(
+            array()
+
+            
+        )
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

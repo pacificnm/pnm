@@ -16,7 +16,7 @@ return array(
                 'accountant' => array(),
                 'administrator' => array()
             )
-        ),
+        )
     ),
     
     // controllers
@@ -26,17 +26,15 @@ return array(
             'WorkorderEmployee\\Controller\\DeleteController' => 'WorkorderEmployee\Controller\Factory\DeleteControllerFactory'
         )
     ),
-    
     // service manager
     'service_manager' => array(
         'factories' => array(
             'WorkorderEmployee\Mapper\WorkorderEmployeeMapperInterface' => 'WorkorderEmployee\Mapper\Factory\WorkorderEmployeeMapperFactory',
             'WorkorderEmployee\Service\WorkorderEmployeeServiceInterface' => 'WorkorderEmployee\Service\Factory\WorkorderEmployeeServiceFactory',
             'WorkorderEmployee\Form\WorkorderEmployeeForm' => 'WorkorderEmployee\Form\Factory\WorkorderEmployeeFormFactory',
-            'WorkorderEmployee\Listener\WorkorderEmployeeListener' => 'WorkorderEmployee\Listener\Factory\WorkorderEmployeeListenerFactory',
+            'WorkorderEmployee\Listener\WorkorderEmployeeListener' => 'WorkorderEmployee\Listener\Factory\WorkorderEmployeeListenerFactory'
         )
     ),
-    
     // router
     'router' => array(
         'routes' => array(
@@ -47,9 +45,9 @@ return array(
                     'route' => '/client/[:clientId]/work-order/[:workorderId]/employee/create',
                     'defaults' => array(
                         'controller' => 'WorkorderEmployee\\Controller\\CreateController',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
             ),
             'workorder-employee-delete' => array(
                 'title' => 'Remove Employee from Work Order',
@@ -58,17 +56,74 @@ return array(
                     'route' => '/client/[:clientId]/work-order/[:workorderId]/employee/[:employeeId]/delete',
                     'defaults' => array(
                         'controller' => 'WorkorderEmployee\\Controller\\DeleteController',
-                        'action' => 'index',
-                    ),
-                ),
-            ),
+                        'action' => 'index'
+                    )
+                )
+            )
         )
     ),
-    
     // view manager
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'View Client',
+                        'route' => 'client-view',
+                        'resource' => 'client-view',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Work Orders',
+                                'route' => 'workorder-list',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'View Work Order',
+                                        'route' => 'workorder-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Remove Employee',
+                                                'route' => 'workorder-employee-delete',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array()
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

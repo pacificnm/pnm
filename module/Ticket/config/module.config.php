@@ -10,8 +10,7 @@ return array(
                     'ticket-index',
                     'ticket-create',
                     'ticket-view',
-                    'ticket-update',
-                    
+                    'ticket-update'
                 ),
                 'user-accountant' => array(),
                 'user-manager' => array(),
@@ -31,23 +30,23 @@ return array(
             'Ticket\Controller\ViewController' => 'Ticket\Controller\Factory\ViewControllerFactory',
             'Ticket\Controller\EmployeeController' => 'Ticket\Controller\Factory\EmployeeControllerFactory',
             'Ticket\Controller\DeleteController' => 'Ticket\Controller\Factory\DeleteControllerFactory',
-            'Ticket\Controller\CloseController' => 'Ticket\Controller\Factory\CloseControllerFactory',
+            'Ticket\Controller\CloseController' => 'Ticket\Controller\Factory\CloseControllerFactory'
         )
     ),
     'controller_plugins' => array(
         'factories' => array(
             'SetTicketHistory' => 'Ticket\Controller\Plugin\Factory\TicketHistoryPluginFactory',
             'GetTicket' => 'Ticket\Controller\Plugin\Factory\TicketControllerPluginFactory'
-        ),
+        )
     ),
     'service_manager' => array(
         'factories' => array(
             'Ticket\Service\TicketServiceInterface' => 'Ticket\Service\Factory\TicketServiceFactory',
             'Ticket\Mapper\MysqlMapperInterface' => 'Ticket\Mapper\Factory\MysqlMapperFactory',
             'Ticket\Listener\TicketListener' => 'Ticket\Listener\Factory\TicketListenerFactory'
-            
         )
-    ),
+    )
+    ,
     'router' => array(
         'routes' => array(
             'ticket-index' => array(
@@ -59,9 +58,9 @@ return array(
                     'route' => '/client/[:clientId]/ticket',
                     'defaults' => array(
                         'controller' => 'Ticket\Controller\IndexController',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
             ),
             'ticket-create' => array(
                 'title' => 'New Support Ticket',
@@ -72,9 +71,9 @@ return array(
                     'route' => '/client/[:clientId]/ticket/create',
                     'defaults' => array(
                         'controller' => 'Ticket\Controller\CreateController',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
             ),
             
             'ticket-view' => array(
@@ -86,9 +85,9 @@ return array(
                     'route' => '/client/[:clientId]/ticket/[:ticketId]/view',
                     'defaults' => array(
                         'controller' => 'Ticket\Controller\ViewController',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
             ),
             'ticket-update' => array(
                 'title' => 'Edit Support Ticket',
@@ -99,9 +98,9 @@ return array(
                     'route' => '/client/[:clientId]/ticket/[:ticketId]/update',
                     'defaults' => array(
                         'controller' => 'Ticket\Controller\EmployeeController',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
             ),
             'ticket-close' => array(
                 'title' => 'Close Support Ticket',
@@ -112,9 +111,9 @@ return array(
                     'route' => '/client/[:clientId]/ticket/[:ticketId]/close',
                     'defaults' => array(
                         'controller' => 'Ticket\Controller\CloseController',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
             ),
             'ticket-delete' => array(
                 'title' => 'Delete Support Ticket',
@@ -125,10 +124,10 @@ return array(
                     'route' => '/client/[:clientId]/ticket/[:ticketId]/delete',
                     'defaults' => array(
                         'controller' => 'Ticket\Controller\DeleteController',
-                        'action' => 'index',
-                    ),
-                ),
-            ),
+                        'action' => 'index'
+                    )
+                )
+            )
         )
     ),
     // view helpers
@@ -137,13 +136,82 @@ return array(
             'Ticket' => 'Ticket\View\Helper\Factory\TicketViewHelperFactory'
         )
     ),
-    
+    // view manager
     'view_manager' => array(
         'template_path_stack' => array(
             0 => __DIR__ . '/../view'
         ),
         'strategies' => array(
             0 => 'ViewJsonStrategy'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'View Client',
+                        'route' => 'client-view',
+                        'resource' => 'client-view',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Support Tickets',
+                                'route' => 'ticket-index',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'View',
+                                        'route' => 'ticket-view',
+                                        'useRouteMatch' => true
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array(
+            array(
+                'Client' => array(
+                    'title' => 'Client',
+                    'icon' => '',
+                    'route' => 'client-index',
+                    'submenu' => array(
+                        array(
+                            'ticket' => array(
+                                'title' => 'Support Tickets',
+                                'icon' => 'fa fa-lock',
+                                'route' => 'ticket-index'
+                            )
+                        )
+                    )
+                    
+                )
+            )
+        )
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

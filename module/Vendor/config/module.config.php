@@ -19,7 +19,7 @@ return array(
                 ),
                 'administrator' => array()
             )
-        ),
+        )
     ),
     
     // controllers
@@ -37,14 +37,14 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'Vendor\Service\VendorServiceInterface' => 'Vendor\Service\Factory\VendorServiceFactory',
-            'Vendor\Mapper\VendorMapperInterface' => 'Vendor\Mapper\Factory\VendorMapperFactory',
+            'Vendor\Mapper\VendorMapperInterface' => 'Vendor\Mapper\Factory\VendorMapperFactory'
         )
     ),
     
     // router
     'router' => array(
         'routes' => array(
-    
+            
             'vendor-index' => array(
                 'title' => 'Vendors',
                 'type' => 'segment',
@@ -57,7 +57,7 @@ return array(
                 )
             ),
             'vendor-create' => array(
-                'title' => 'Create Vendor',
+                'title' => 'New Vendor',
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/vendor/create',
@@ -107,6 +107,68 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Accounting',
+                'route' => 'account-home',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Vendors',
+                        'route' => 'vendor-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'New',
+                                'route' => 'vendor-create',
+                                'useRouteMatch' => true,
+                            ),
+                            array(
+                                'label' => 'View',
+                                'route' => 'vendor-view',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Edit',
+                                        'route' => 'vendor-update',
+                                        'useRouteMatch' => true,
+                                    ),
+                                    array(
+                                        'label' => 'Delete',
+                                        'route' => 'vendor-delete',
+                                        'useRouteMatch' => true,
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    'menu' => array(
+        'accounting' => array(
+            array()
+
+            
+        )
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

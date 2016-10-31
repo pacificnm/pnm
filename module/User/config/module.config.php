@@ -16,14 +16,14 @@ return array(
                 'employee' => array(
                     'user-create',
                     'user-delete',
-                    'user-update',
+                    'user-update'
                 ),
                 'accountant' => array(),
                 'administrator' => array()
             )
-        ),
+        )
     ),
-    
+    // controllers
     'controllers' => array(
         'factories' => array(
             'User\Controller\Profile' => 'User\Controller\Factory\ProfileControllerFactory',
@@ -33,9 +33,7 @@ return array(
             'User\Controller\Update' => 'User\Controller\Factory\UpdateControllerFactory',
             'User\Controller\View' => 'User\Controller\Factory\ViewControllerFactory'
         )
-        
     ),
-    
     // service manager
     'service_manager' => array(
         'factories' => array(
@@ -44,7 +42,6 @@ return array(
             'User\Form\UserForm' => 'User\Form\Factory\UserFormFactory'
         )
     ),
-    
     // router
     'router' => array(
         'routes' => array(
@@ -116,18 +113,102 @@ return array(
             )
         )
     ),
-    
     // view helpers
     'view_helpers' => array(
         'invokables' => array(
             'UserAsideMenu' => 'User\View\Helper\UserAsideMenu'
         )
     ),
-    
     // view manager
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'View Client',
+                        'route' => 'client-view',
+                        'resource' => 'client-view',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Users',
+                                'route' => 'user-list',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Create User',
+                                        'route' => 'user-create',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'View User',
+                                        'route' => 'user-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Edit User',
+                                                'route' => 'user-update',
+                                                'useRouteMatch' => true
+                                            ),
+                                            array(
+                                                'label' => 'Delete User',
+                                                'route' => 'user-delete',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array(
+            array(
+                'client' => array(
+                    'title' => 'Client',
+                    'icon' => '',
+                    'route' => 'client-index',
+                    'submenu' => array(
+                        array(
+                            'user' => array(
+                                'title' => 'Users',
+                                'icon' => 'fa fa-user',
+                                'route' => 'user-index'
+                            )
+                        )
+                    )
+                )
+                
+            )
+        )
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

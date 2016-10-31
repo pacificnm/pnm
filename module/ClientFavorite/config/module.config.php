@@ -24,7 +24,7 @@ return array(
                 'accountant' => array(),
                 'administrator' => array()
             )
-        ),
+        )
     ),
     
     // controllers
@@ -89,16 +89,84 @@ return array(
     'view_helpers' => array(
         'factories' => array(
             'favorites' => 'ClientFavorite\View\Helper\Factory\FavoriteViewHelperFactory',
-            'hasFavorite' => 'ClientFavorite\View\Helper\Factory\HasFavoriteFactory',
+            'hasFavorite' => 'ClientFavorite\View\Helper\Factory\HasFavoriteFactory'
         ),
         'invokables' => array()
-    )
-    ,
+    ),
     
     // view manager
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'My Profile',
+                'route' => 'employee-profile',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Favorite Clients',
+                        'route' => 'client-favorite-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Delete',
+                                'route' => 'client-favorite-delete',
+                                'useRouteMatch' => true
+                            )
+                        )
+                    )
+                )
+            )
+            
+        )
+    ),
+    // menu
+    'menu' => array(
+        // admin
+        'admin' => array(
+            array()
+        ),
+        // employee
+        'employee' => array(
+            array(
+                'label' => 'My Profile',
+                'icon' => 'fa fa-gears',
+                'route' => 'employee-profile',
+                'submenu' => array(
+                    array(
+                        'label' => 'Favorite Clients',
+                        'icon' => 'fa fa-star',
+                        'route' => 'client-favorite-index'
+                    )
+                )
+            )
+        ),
+        // client
+        'client' => array(
+            array()
+        ),
+        // user
+        'user' => array(
+            array()
+        )
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

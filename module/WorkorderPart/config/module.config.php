@@ -16,14 +16,14 @@ return array(
                 'accountant' => array(),
                 'administrator' => array()
             )
-        ),
+        )
     ),
     
     // controllers
     'controllers' => array(
         'factories' => array(
             'WorkorderPart\Controller\Create' => 'WorkorderPart\Controller\Factory\CreateControllerFactory',
-            'WorkorderPart\Controller\Delete' => 'WorkorderPart\Controller\Factory\DeleteControllerFactory',
+            'WorkorderPart\Controller\Delete' => 'WorkorderPart\Controller\Factory\DeleteControllerFactory'
         )
     ),
     
@@ -75,6 +75,66 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'View Client',
+                        'route' => 'client-view',
+                        'resource' => 'client-view',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Work Orders',
+                                'route' => 'workorder-list',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'View Work Order',
+                                        'route' => 'workorder-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Delete Part',
+                                                'route' => 'workorder-part-delete',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array(
+            array()
+        ),
+        // acl
+        'acl' => array(
+            'default' => array(
+                array(
+                    'guest' => array(),
+                    'user' => array(),
+                    'user-accountant' => array(),
+                    'user-manager' => array(),
+                    'employee' => array(),
+                    'accountant' => array(),
+                    'administrator' => array()
+                )
+            )
         )
     )
 );

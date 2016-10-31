@@ -19,7 +19,7 @@ return array(
                     'account-type-view'
                 )
             )
-        ),
+        )
     ),
     
     // controllers
@@ -29,7 +29,7 @@ return array(
             'AccountType\Controller\Create' => 'AccountType\Controller\Factory\CreateControllerFactory',
             'AccountType\Controller\Delete' => 'AccountType\Controller\Factory\DeleteControllerFactory',
             'AccountType\Controller\Update' => 'AccountType\Controller\Factory\UpdateControllerFactory',
-            'AccountType\Controller\View' => 'AccountType\Controller\Factory\ViewControllerFactory',
+            'AccountType\Controller\View' => 'AccountType\Controller\Factory\ViewControllerFactory'
         )
     ),
     
@@ -38,7 +38,7 @@ return array(
         'factories' => array(
             'AccountType\Service\TypeServiceInterface' => 'AccountType\Service\Factory\TypeServiceFactory',
             'AccountType\Mapper\TypeMapperInterface' => 'AccountType\Mapper\Factory\TypeMapperFactory',
-            'AccountType\Form\TypeForm' => 'AccountType\Form\Factory\TypeFormFactory',
+            'AccountType\Form\TypeForm' => 'AccountType\Form\Factory\TypeFormFactory'
         )
     ),
     
@@ -99,7 +99,7 @@ return array(
                         'action' => 'index'
                     )
                 )
-            ),
+            )
         )
     ),
     
@@ -107,6 +107,68 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Accounting',
+                'route' => 'account-home',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Account Types',
+                        'route' => 'account-type-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'New',
+                                'route' => 'account-type-create',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'View',
+                                'route' => 'account-type-view',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Update',
+                                        'route' => 'account-type-update',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'Delete',
+                                        'route' => 'account-type-delete',
+                                        'useRouteMatch' => true
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    'menu' => array(
+        'accounting' => array(
+            array()
+
+            
+        )
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

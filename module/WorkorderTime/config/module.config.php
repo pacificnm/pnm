@@ -11,26 +11,26 @@ return array(
                 'user-manager' => array(),
                 'employee' => array(
                     0 => 'workorder-time-create',
-                    1 => 'workorder-time-delete',
+                    1 => 'workorder-time-delete'
                 ),
                 'accountant' => array(),
-                'administrator' => array(),
-            ),
-        ),
+                'administrator' => array()
+            )
+        )
     ),
     'controllers' => array(
         'factories' => array(
             'WorkorderTime\\Controller\\Create' => 'WorkorderTime\\Controller\\Factory\\CreateControllerFactory',
-            'WorkorderTime\\Controller\\Delete' => 'WorkorderTime\\Controller\\Factory\\DeleteControllerFactory',
-        ),
+            'WorkorderTime\\Controller\\Delete' => 'WorkorderTime\\Controller\\Factory\\DeleteControllerFactory'
+        )
     ),
     'service_manager' => array(
         'factories' => array(
             'WorkorderTime\\Service\\TimeServiceInterface' => 'WorkorderTime\\Service\\Factory\\TimeServiceFactory',
             'WorkorderTime\\Mapper\\TimeMapperInterface' => 'WorkorderTime\\Mapper\\Factory\\TimeMapperFactory',
             'WorkorderTime\\Form\\TimeForm' => 'WorkorderTime\\Form\\Factory\\TimeFormFactory',
-            'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\TotalsByDateRangeResource' => 'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\TotalsByDateRangeResourceFactory',
-        ),
+            'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\TotalsByDateRangeResource' => 'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\TotalsByDateRangeResourceFactory'
+        )
     ),
     'router' => array(
         'routes' => array(
@@ -41,9 +41,9 @@ return array(
                     'route' => '/client/[:clientId]/work-order/[:workorderId]/work-order-time/create',
                     'defaults' => array(
                         'controller' => 'WorkorderTime\\Controller\\Create',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
             ),
             'workorder-time-delete' => array(
                 'title' => 'Delete Work Order Time',
@@ -52,37 +52,97 @@ return array(
                     'route' => '/client/[:clientId]/work-order/[:workorderId]/work-order-time/delete/[:workorderTimeId]',
                     'defaults' => array(
                         'controller' => 'WorkorderTime\\Controller\\Delete',
-                        'action' => 'index',
-                    ),
-                ),
+                        'action' => 'index'
+                    )
+                )
             ),
             'workorder-time.rest.totals-by-date-range' => array(
                 'type' => 'Segment',
                 'options' => array(
                     'route' => '/api/time/totals-by-date-range[/:totals_by_date_range_id]',
                     'defaults' => array(
-                        'controller' => 'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\Controller',
-                    ),
-                ),
-            ),
-        ),
+                        'controller' => 'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\Controller'
+                    )
+                )
+            )
+        )
     ),
     'view_helpers' => array(
         'factories' => array(
             'GetWorkorderTimes' => 'WorkorderTime\\View\\Helper\\Factory\\GetWorkorderTimesFactory',
-            'SalesByLabor' => 'WorkorderTime\\View\\Helper\\Factory\\SalesByLaborFactory',
+            'SalesByLabor' => 'WorkorderTime\\View\\Helper\\Factory\\SalesByLaborFactory'
         ),
-        'invokables' => array(),
+        'invokables' => array()
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-            0 => __DIR__ . '/../view',
-        ),
+            0 => __DIR__ . '/../view'
+        )
     ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'View Client',
+                        'route' => 'client-view',
+                        'resource' => 'client-view',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Work Orders',
+                                'route' => 'workorder-list',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'View Work Order',
+                                        'route' => 'workorder-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Delete Time',
+                                                'route' => 'workorder-time-delete',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array()
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        )
+    ),
+    
+    // api
     'zf-versioning' => array(
         'uri' => array(
-            0 => 'workorder-time.rest.totals-by-date-range',
-        ),
+            0 => 'workorder-time.rest.totals-by-date-range'
+        )
     ),
     'zf-rest' => array(
         'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\Controller' => array(
@@ -92,39 +152,39 @@ return array(
             'collection_name' => 'totals_by_date_range',
             'entity_http_methods' => array(
                 0 => 'GET',
-                1 => 'DELETE',
+                1 => 'DELETE'
             ),
             'collection_http_methods' => array(
-                0 => 'GET',
+                0 => 'GET'
             ),
             'collection_query_whitelist' => array(
                 0 => 'start',
-                1 => 'end',
+                1 => 'end'
             ),
             'page_size' => 25,
             'page_size_param' => null,
             'entity_class' => 'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\TotalsByDateRangeEntity',
             'collection_class' => 'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\TotalsByDateRangeCollection',
-            'service_name' => 'TotalsByDateRange',
-        ),
+            'service_name' => 'TotalsByDateRange'
+        )
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
-            'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\Controller' => 'HalJson',
+            'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\Controller' => 'HalJson'
         ),
         'accept_whitelist' => array(
             'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\Controller' => array(
                 0 => 'application/vnd.workorder-time.v1+json',
                 1 => 'application/hal+json',
-                2 => 'application/json',
-            ),
+                2 => 'application/json'
+            )
         ),
         'content_type_whitelist' => array(
             'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\Controller' => array(
                 0 => 'application/vnd.workorder-time.v1+json',
-                1 => 'application/json',
-            ),
-        ),
+                1 => 'application/json'
+            )
+        )
     ),
     'zf-hal' => array(
         'metadata_map' => array(
@@ -132,14 +192,14 @@ return array(
                 'entity_identifier_name' => 'id',
                 'route_name' => 'workorder-time.rest.totals-by-date-range',
                 'route_identifier_name' => 'totals_by_date_range_id',
-                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable'
             ),
             'WorkorderTime\\V1\\Rest\\TotalsByDateRange\\TotalsByDateRangeCollection' => array(
                 'entity_identifier_name' => 'id',
                 'route_name' => 'workorder-time.rest.totals-by-date-range',
                 'route_identifier_name' => 'totals_by_date_range_id',
-                'is_collection' => true,
-            ),
-        ),
-    ),
+                'is_collection' => true
+            )
+        )
+    )
 );

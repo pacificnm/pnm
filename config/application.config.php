@@ -110,6 +110,8 @@ return array(
         'Product',
         'Subscription',
         'SubscriptionHost',
+        'SubscriptionStatus',
+        'SubscriptionSchedule',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

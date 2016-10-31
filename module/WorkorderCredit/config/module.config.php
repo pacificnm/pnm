@@ -23,14 +23,14 @@ return array(
                 'accountant' => array(),
                 'administrator' => array()
             )
-        ),
+        )
     ),
     
     // controllers
     'controllers' => array(
         'factories' => array(
             'WorkorderCredit\Controller\Create' => 'WorkorderCredit\Controller\Factory\CreateControllerFactory',
-            'WorkorderCredit\Controller\View' => 'WorkorderCredit\Controller\Factory\ViewControllerFactory',
+            'WorkorderCredit\Controller\View' => 'WorkorderCredit\Controller\Factory\ViewControllerFactory'
         )
     ),
     
@@ -67,7 +67,7 @@ return array(
                         'action' => 'index'
                     )
                 )
-            ),
+            )
         )
     ),
     
@@ -83,6 +83,64 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'View Client',
+                        'route' => 'client-view',
+                        'resource' => 'client-view',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Work Orders',
+                                'route' => 'workorder-list',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'View Work Order',
+                                        'route' => 'workorder-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Credit',
+                                                'route' => 'workorder-credit-view',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array()
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

@@ -26,7 +26,7 @@ return array(
                     'payment-option-delete'
                 )
             )
-        ),
+        )
     ),
     
     // controllers
@@ -123,6 +123,73 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Admin',
+                'route' => 'admin-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Payment Options',
+                        'route' => 'payment-option-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'New',
+                                'route' => 'payment-option-create',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'Edit',
+                                'route' => 'payment-option-update',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'Delete',
+                                'route' => 'payment-option-delete',
+                                'useRouteMatch' => true
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'admin' => array(
+            array(
+                array(
+                    'label' => 'Admin',
+                    'icon' => 'fa fa-gears',
+                    'route' => 'admin-index',
+                    'submenu' => array(
+                        array(
+                            'label' => 'Payment Options',
+                            'icon' => 'fa fa-dollar',
+                            'route' => 'payment-option-index'
+                        )
+                    )
+                )
+            )
+        ),
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

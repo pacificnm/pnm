@@ -50,5 +50,3 @@ class ProductHydrator extends ClassMethods
         return $data;
     }
 }
-
-?>

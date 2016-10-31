@@ -19,7 +19,7 @@ return array(
                     'host-type-view'
                 )
             )
-        ),
+        )
     ),
     
     // controllers
@@ -29,7 +29,7 @@ return array(
             'HostType\Controller\Create' => 'HostType\Controller\Factory\CreateControllerFactory',
             'HostType\Controller\Delete' => 'HostType\Controller\Factory\DeleteControllerFactory',
             'HostType\Controller\Update' => 'HostType\Controller\Factory\UpdateControllerFactory',
-            'HostType\Controller\View' => 'HostType\Controller\Factory\ViewControllerFactory',
+            'HostType\Controller\View' => 'HostType\Controller\Factory\ViewControllerFactory'
         )
     ),
     
@@ -37,7 +37,7 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'HostType\Service\TypeServiceInterface' => 'HostType\Service\Factory\TypeServiceFactory',
-            'HostType\Mapper\TypeMapperInterface' => 'HostType\Mapper\Factory\TypeMapperFactory',
+            'HostType\Mapper\TypeMapperInterface' => 'HostType\Mapper\Factory\TypeMapperFactory'
         )
     ),
     
@@ -98,7 +98,7 @@ return array(
                         'action' => 'index'
                     )
                 )
-            ),
+            )
         )
     ),
     
@@ -106,6 +106,83 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Admin',
+                'route' => 'admin-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Host Types',
+                        'route' => 'host-type-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'New Host Type',
+                                'route' => 'host-type-create',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'View',
+                                'route' => 'host-type-view',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Edit',
+                                        'route' => 'host-type-update',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'Delete',
+                                        'route' => 'host-type-delete',
+                                        'useRouteMatch' => true
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array(
+            array(
+                'admin' => array(
+                    'title' => 'Admin',
+                    'icon' => 'fa fa-gears',
+                    'route' => 'admin-index',
+                    'submenu' => array(
+                        array(
+                            'host-type-index' => array(
+                                'title' => 'Host Types',
+                                'icon' => 'fa fa-dollar',
+                                'route' => 'host-type-index'
+                            )
+                        )
+                    )
+                )
+            )
+        )
+        
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

@@ -9,7 +9,7 @@ return array(
                 'user' => array(
                     'invoice-list',
                     'invoice-print',
-                    'invoice-view',
+                    'invoice-view'
                 ),
                 'user-accountant' => array(),
                 'user-manager' => array(),
@@ -18,12 +18,12 @@ return array(
                     'invoice-delete',
                     'invoice-update',
                     'invoice-workorder',
-                    'invoice-workorder-delete',
+                    'invoice-workorder-delete'
                 ),
                 'accountant' => array(),
                 'administrator' => array()
             )
-        ),
+        )
     ),
     
     // controllers
@@ -44,7 +44,7 @@ return array(
         'factories' => array(
             'Invoice\Service\InvoiceServiceInterface' => 'Invoice\Service\Factory\InvoiceServiceFactory',
             'Invoice\Mapper\InvoiceMapperInterface' => 'Invoice\Mapper\Factory\InvoiceMapperFactory',
-            'Invoice\Form\WorkorderForm' => 'Invoice\Form\Factory\WorkorderFormFactory',
+            'Invoice\Form\WorkorderForm' => 'Invoice\Form\Factory\WorkorderFormFactory'
         )
     ),
     
@@ -138,7 +138,7 @@ return array(
                         'action' => 'index'
                     )
                 )
-            ),
+            )
         )
     ),
     
@@ -147,5 +147,76 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
         )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Invoices',
+                        'route' => 'invoice-list',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Create Invoice',
+                                'route' => 'invoice-create',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'View Invoice',
+                                'route' => 'invoice-view',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Edit Invoice',
+                                        'route' => 'invoice-update',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'Delete Invoice',
+                                        'route' => 'invoice-delete',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'Print Invoice',
+                                        'route' => 'invoice-print',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'Delete Payment',
+                                        'route' => 'invoice-payemnt-delete',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'Delete Invoice Item',
+                                        'route' => 'invoice-item-delete',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'Add Work Order',
+                                        'route' => 'invoice-workorder',
+                                        'useRouteMatch' => true
+                                    )
+                                )
+                                
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array()
+    ),
+    // acl
+    'acl' => array(
+        'default' => array()
     )
 );

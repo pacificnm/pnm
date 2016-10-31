@@ -24,7 +24,7 @@ return array(
                 'accountant' => array(),
                 'administrator' => array()
             )
-        ),
+        )
     ),
     
     // controllers
@@ -38,7 +38,7 @@ return array(
     'controller_plugins' => array(
         'factories' => array(
             'GetLocation' => 'Location\Controller\Plugin\Factory\LocationControllerPluginFactory'
-         ),
+        )
     ),
     // service manager
     'service_manager' => array(
@@ -86,7 +86,7 @@ return array(
                         'action' => 'index'
                     )
                 )
-            ),
+            )
         )
     ),
     
@@ -95,5 +95,47 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
         )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'View Client',
+                        'route' => 'client-view',
+                        'resource' => 'client-view',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Location',
+                                'route' => 'location-view',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Edit Location',
+                                        'route' => 'location-update',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'New Location',
+                                        'route' => 'location-create',
+                                        'useRouteMatch' => true
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array()
     )
 );

@@ -16,13 +16,12 @@ return array(
                     
                     'password-create',
                     'password-delete',
-                    'password-update',
-                    
+                    'password-update'
                 ),
                 'accountant' => array(),
                 'administrator' => array()
             )
-        ),
+        )
     ),
     
     // controllers
@@ -110,13 +109,99 @@ return array(
         'factories' => array(
             'Decrypt' => 'Password\View\Helper\Factory\DecryptFactory'
         ),
-        'invokables' => array() 
+        'invokables' => array()
     ),
     
     // view manager
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'View Client',
+                        'route' => 'client-view',
+                        'resource' => 'client-view',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Passwords',
+                                'route' => 'password-list',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'View Password',
+                                        'route' => 'password-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Edit Password',
+                                                'route' => 'password-update',
+                                                'useRouteMatch' => true
+                                            ),
+                                            array(
+                                                'label' => 'Delete Password',
+                                                'route' => 'password-delete',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
+                                    ),
+                                    array(
+                                        'label' => 'Create Password',
+                                        'route' => 'password-create',
+                                        'useRouteMatch' => true
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array(
+            array(
+                'client' => array(
+                    'title' => 'Client',
+                    'icon' => '',
+                    'route' => 'client-index',
+                    'submenu' => array(
+                        array(
+                            'password' => array(
+                                'title' => 'Passwords',
+                                'icon' => 'fa fa-lock',
+                                'route' => 'password-index'
+                            )
+                        )
+                        
+                    )
+                )
+            )
+        )
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

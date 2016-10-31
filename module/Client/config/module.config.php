@@ -123,6 +123,83 @@ return array(
             0 => __DIR__ . '/../view'
         )
     ),
+    
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'New Client',
+                        'route' => 'client-create',
+                        'useRouteMatch' => true
+                    ),
+                    array(
+                        'label' => 'View Client',
+                        'route' => 'client-view',
+                        'resource' => 'client-view',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Edit Client',
+                                'route' => 'client-update',
+                                'useRouteMatch' => true
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array(
+            array(
+                'client' => array(
+                    'title' => 'Client',
+                    'icon' => '',
+                    'route' => 'client-index',
+                    'submenu' => array(
+                        array(
+                            'clients' => array(
+                                'title' => 'Clients',
+                                'icon' => 'fa fa-group',
+                                'route' => 'client-index'
+                            )
+                        ),
+                        array(
+                            'client-home' => array(
+                                'title' => 'Client Home',
+                                'icon' => 'fa fa-house',
+                                'route' => 'client-view'
+                            )
+                        )
+                    )
+                )
+                
+            )
+        )
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        )
+    ),
+    
+    // api
     'zf-versioning' => array(
         'uri' => array(
             0 => 'client.rest.client-service'

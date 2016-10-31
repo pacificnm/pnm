@@ -1,11 +1,11 @@
 <?php
 /**
  * Pacific NM (https://www.pacificnm.com)
-*
-* @link      https://github.com/pacificnm/pnm for the canonical source repository
-* @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
-* @license   https://www.pacificnm.com/license/new-bsd New BSD License
-*/
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license   https://www.pacificnm.com/license/new-bsd New BSD License
+ */
 return array(
     'module' => array(
         'Estimate' => array(
@@ -15,7 +15,7 @@ return array(
                 'guest' => array(),
                 'user' => array(
                     'estimate-view',
-                    'estimate-index',
+                    'estimate-index'
                 ),
                 'user-accountant' => array(),
                 'user-manager' => array(),
@@ -119,5 +119,69 @@ return array(
         'template_path_stack' => array(
             0 => __DIR__ . '/../view'
         )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'View',
+                        'route' => 'estimate-view',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Edit Estimate',
+                                'route' => 'estimate-update',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'Delete Estimate',
+                                'route' => 'estimate-delete',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'New Item',
+                                'route' => 'estimate-option-item-create',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'Edit Item',
+                                'route' => 'estimate-option-item-update',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'Delete Item',
+                                'route' => 'estimate-option-item-delete',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'New Option',
+                                'route' => 'estimate-option-create',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'Edit Option',
+                                'route' => 'estimate-option-update',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'Delete Option',
+                                'route' => 'estimate-option-update',
+                                'useRouteMatch' => true
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array()
     )
 );

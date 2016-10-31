@@ -8,7 +8,7 @@ return array(
                 'guest' => array(),
                 'user' => array(
                     'host-list',
-                    'host-view',
+                    'host-view'
                 ),
                 'user-accountant' => array(),
                 'user-manager' => array(),
@@ -20,7 +20,7 @@ return array(
                 'accountant' => array(),
                 'administrator' => array()
             )
-        ),
+        )
     ),
     
     // controllers
@@ -100,7 +100,7 @@ return array(
                         'action' => 'index'
                     )
                 )
-            ),
+            )
         )
     ),
     
@@ -109,5 +109,74 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
         )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'View Client',
+                        'route' => 'client-view',
+                        'resource' => 'client-view',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Hosts',
+                                'route' => 'host-list',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'New Host',
+                                        'route' => 'host-create',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'View Host',
+                                        'route' => 'host-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Edit Host',
+                                                'route' => 'host-update',
+                                                'useRouteMatch' => true
+                                            ),
+                                            array(
+                                                'label' => 'Delete Host',
+                                                'route' => 'host-delete',
+                                                'useRouteMatch' => true
+                                            ),
+                                            array(
+                                                'label' => 'Add Attributes',
+                                                'route' => 'host-attribute-map-create',
+                                                'useRouteMatch' => true
+                                            ),
+                                            array(
+                                                'label' => 'Edit Attributes',
+                                                'route' => 'host-attribute-map-update',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                    
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array()
+    ),
+    // acl
+    'acl' => array(
+        'default' => array()
     )
 );

@@ -7,7 +7,7 @@ return array(
             'acl' => array(
                 'guest' => array(
                     'network-list',
-                    'network-view',
+                    'network-view'
                 ),
                 'user' => array(),
                 'user-accountant' => array(),
@@ -15,12 +15,12 @@ return array(
                 'employee' => array(
                     'network-create',
                     'network-delete',
-                    'network-update',
+                    'network-update'
                 ),
                 'accountant' => array(),
                 'administrator' => array()
             )
-        ),
+        )
     ),
     
     // controllers
@@ -32,14 +32,14 @@ return array(
             'Network\Controller\Update' => 'Network\Controller\Factory\UpdateControllerFactory',
             'Network\Controller\View' => 'Network\Controller\Factory\ViewControllerFactory'
         )
-        
-    ),
+    )
+    ,
     
     // service manager
     'service_manager' => array(
         'factories' => array(
             'Network\Service\NetworkServiceInterface' => 'Network\Service\Factory\NetworkServiceFactory',
-            'Network\Mapper\NetworkMapperInterface' => 'Network\Mapper\Factory\NetworkMapperFactory',
+            'Network\Mapper\NetworkMapperInterface' => 'Network\Mapper\Factory\NetworkMapperFactory'
         )
     ),
     
@@ -108,6 +108,66 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Network Settings',
+                        'route' => 'network-list',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Create Network Setting',
+                                'route' => 'network-create',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'View Network Setting',
+                                'route' => 'network-view',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Edit Network Setting',
+                                        'route' => 'network-update',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'Delete Network Setting',
+                                        'route' => 'network-delete',
+                                        'useRouteMatch' => true
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array()
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

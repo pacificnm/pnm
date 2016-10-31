@@ -39,7 +39,7 @@ return array(
         'factories' => array(
             'AccountLedger\Service\LedgerServiceInterface' => 'AccountLedger\Service\Factory\LedgerServiceFactory',
             'AccountLedger\Mapper\LedgerMapperInterface' => 'AccountLedger\Mapper\Factory\LedgerMapperFactory',
-            'AccountLedger\Form\LedgerForm' => 'AccountLedger\Form\Factory\LedgerFormFactory',
+            'AccountLedger\Form\LedgerForm' => 'AccountLedger\Form\Factory\LedgerFormFactory'
         )
     ),
     
@@ -75,6 +75,63 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Accounting',
+                'route' => 'account-home',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Accounts',
+                        'route' => 'account-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'View Account',
+                                'route' => 'account-view',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'New Ledger Item',
+                                        'route' => 'account-ledger-create',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'Ledger Item',
+                                        'route' => 'account-ledger-view',
+                                        'useRouteMatch' => true
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    'menu' => array(
+        'accounting' => array(
+            array()
+
+            
+        )
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

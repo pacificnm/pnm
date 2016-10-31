@@ -1,5 +1,4 @@
 <?php
-
 return array(
     'module' => array(
         'WorkorderNote' => array(
@@ -18,7 +17,7 @@ return array(
                 'accountant' => array(),
                 'administrator' => array()
             )
-        ),
+        )
     ),
     
     // controllers
@@ -26,7 +25,7 @@ return array(
         'factories' => array(
             'WorkorderNote\Controller\Create' => 'WorkorderNote\Controller\Factory\CreateControllerFactory',
             'WorkorderNote\Controller\Update' => 'WorkorderNote\Controller\Factory\UpdateControllerFactory',
-            'WorkorderNote\Controller\Delete' => 'WorkorderNote\Controller\Factory\DeleteControllerFactory',
+            'WorkorderNote\Controller\Delete' => 'WorkorderNote\Controller\Factory\DeleteControllerFactory'
         )
     ),
     
@@ -35,9 +34,9 @@ return array(
         'factories' => array(
             'WorkorderNote\Mapper\NoteMapperInterface' => 'WorkorderNote\Mapper\Factory\NoteMapperFactory',
             'WorkorderNote\Service\NoteServiceInterface' => 'WorkorderNote\Service\Factory\NoteServiceFactory',
-            'WorkorderNote\Form\NoteForm' => 'WorkorderNote\Form\Factory\NoteFormFactory',
-            
+            'WorkorderNote\Form\NoteForm' => 'WorkorderNote\Form\Factory\NoteFormFactory'
         )
+        
     ),
     
     // router
@@ -75,7 +74,7 @@ return array(
                         'action' => 'index'
                     )
                 )
-            ),
+            )
         )
     ),
     
@@ -92,5 +91,69 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
         )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'View Client',
+                        'route' => 'client-view',
+                        'resource' => 'client-view',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Work Orders',
+                                'route' => 'workorder-list',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'View Work Order',
+                                        'route' => 'workorder-view',
+                                        'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Edit Note',
+                                                'route' => 'workorder-note-update',
+                                                'useRouteMatch' => true
+                                            ),
+                                            array(
+                                                'label' => 'Delete Note',
+                                                'route' => 'workorder-note-delete',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array()
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
+        )
     )
-);
+)
+;

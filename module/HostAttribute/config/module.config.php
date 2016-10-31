@@ -19,7 +19,7 @@ return array(
                     'host-attribute-view'
                 )
             )
-        ),
+        )
     ),
     
     // controllers
@@ -106,6 +106,83 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Admin',
+                'route' => 'admin-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Host Attributes',
+                        'route' => 'host-attribute-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'New',
+                                'route' => 'host-attribute-create',
+                                'useRouteMatch' => true
+                            ),
+                            array(
+                                'label' => 'View Attribute',
+                                'route' => 'host-attribute-view',
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'Edit',
+                                        'route' => 'host-attribute-update',
+                                        'useRouteMatch' => true
+                                    ),
+                                    array(
+                                        'label' => 'Delete',
+                                        'route' => 'host-attribute-delete',
+                                        'useRouteMatch' => true
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array(
+            array(
+                'admin' => array(
+                    'title' => 'Admin',
+                    'icon' => 'fa fa-gears',
+                    'route' => 'admin-index',
+                    'submenu' => array(
+                        array(
+                            'host-attribute-index' => array(
+                                'title' => 'Host Attributes',
+                                'icon' => 'fa fa-dollar',
+                                'route' => 'host-attribute-index'
+                            )
+                        )
+                    )
+                )
+            )
+        )
+        
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );

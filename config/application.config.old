@@ -109,6 +109,8 @@ return array(
         'PanoramaIssue',
         'Product',
         'Subscription',
+        'SubscriptionHost',
+        'SubscriptionStatus',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

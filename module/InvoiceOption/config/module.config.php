@@ -13,10 +13,10 @@ return array(
                 'accountant' => array(),
                 'administrator' => array(
                     'invoice-option-index',
-                    'invoice-option-update' 
+                    'invoice-option-update'
                 )
             )
-        ),
+        )
     ),
     
     // controllers
@@ -67,6 +67,66 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
+        )
+    ),
+    // navigation
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'Admin',
+                'route' => 'admin-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Invoice Options',
+                        'route' => 'invoice-option-index',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Edit',
+                                'route' => 'invoice-option-update',
+                                'useRouteMatch' => true
+                            ),
+                        )
+                    )
+                )
+            )
+        )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array(
+            array(
+                'admin' => array(
+                    'title' => 'Admin',
+                    'icon' => 'fa fa-gears',
+                    'route' => 'admin-index',
+                    'submenu' => array(
+                        array(
+                            'invoice-option-index' => array(
+                                'title' => 'Invoice Options',
+                                'icon' => 'fa fa-dollar',
+                                'route' => 'invoice-option-index'
+                            )
+                        )
+                    )
+                )
+            )
+        )
+        
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     )
 );
