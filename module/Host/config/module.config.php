@@ -173,7 +173,18 @@ return array(
     ),
     // menu
     'menu' => array(
-        'default' => array()
+        'default' => array(
+            'client' => array(
+                array(
+                    'label' => 'Hosts',
+                    'icon' => 'fa fa-desktop',
+                    'route' => 'host-list',
+                    'resource' => 'host-list',
+                    'order' => 6,
+                    'useRouteMatch' => true
+                )
+            )
+        )
     ),
     // acl
     'acl' => array(

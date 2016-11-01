@@ -1,21 +1,17 @@
 <?php
-namespace Employee\View\Helper;
+namespace Client\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 
-class EmployeeAsideMenu extends AbstractHelper
+class ClientAsideMenu extends AbstractHelper
 {
-
-    /**
-     * 
-     */
     public function __invoke()
     {
         $view = $this->getView();
-        
+    
         $partialHelper = $view->plugin('partial');
-        
+    
         // set partial script
-        return $partialHelper('partials/employee-aside-menu.phtml');
+        return $partialHelper('partials/client-aside-menu.phtml');
     }
 }

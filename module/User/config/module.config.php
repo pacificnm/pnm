@@ -183,7 +183,16 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-           
+            'client' => array(
+                array(
+                    'label' => 'Users',
+                    'icon' => 'fa fa-user',
+                    'route' => 'user-list',
+                    'resource' => 'user-list',
+                    'order' => 12,
+                    'useRouteMatch' => true
+                )
+            )
         )
     ),
     // acl

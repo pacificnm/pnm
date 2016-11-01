@@ -154,7 +154,18 @@ return array(
     ),
     // menu
     'menu' => array(
-        'default' => array()
+        'default' => array(
+            'client' => array(
+                array(
+                    'label' => 'Network',
+                    'icon' => 'fa fa-sitemap',
+                    'route' => 'network-list',
+                    'resource' => 'network-list',
+                    'order' => 8,
+                    'useRouteMatch' => true
+                )
+            )
+        )
     ),
     // acl
     'acl' => array(

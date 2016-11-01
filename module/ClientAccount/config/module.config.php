@@ -29,4 +29,11 @@ return array(
         )
     ),
     
+    // menu
+    'menu' => array(
+        'default' => array(
+            
+        )
+    ),
+    
 );

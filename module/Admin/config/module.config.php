@@ -57,9 +57,10 @@ return array(
     
     // view helpers
     'view_helpers' => array(
-        'factories' => array()
+        'factories' => array(
+            'AdminAsideMenu' => 'Admin\View\Helper\Factory\AdminAsideMenuFactory'
+        )
     ),
-    // 'AdminAsideMenu' => 'Admin\View\Helper\Factory\AdminAsideMenuFactory' replaced with config and zf navigation
     
     // view manager
     'view_manager' => array(

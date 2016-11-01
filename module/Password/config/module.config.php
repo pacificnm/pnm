@@ -171,21 +171,23 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            array(
-                'client' => array(
-                    'title' => 'Client',
-                    'icon' => '',
-                    'route' => 'client-index',
-                    'submenu' => array(
-                        array(
-                            'password' => array(
-                                'title' => 'Passwords',
-                                'icon' => 'fa fa-lock',
-                                'route' => 'password-index'
-                            )
-                        )
-                        
-                    )
+            'client' => array(
+                array(
+                    'label' => 'Passwords',
+                    'icon' => 'fa fa-lock',
+                    'route' => 'password-list',
+                    'resource' => 'password-list',
+                    'order' => 9,
+                    'useRouteMatch' => true
+                )
+            ),
+            'employee' => array(
+                array(
+                    'label' => 'Change Password',
+                    'icon' => 'fa fa-lock',
+                    'route' => 'employee-password',
+                    'resource' => 'employee-password',
+                    'order' => 3
                 )
             )
         )

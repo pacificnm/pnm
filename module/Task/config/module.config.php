@@ -197,20 +197,14 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            array(
-                'Client' => array(
-                    'title' => 'Client',
-                    'icon' => '',
-                    'route' => 'client-index',
-                    'submenu' => array(
-                        array(
-                            'password' => array(
-                                'title' => 'Tasks',
-                                'icon' => 'fa fa-list',
-                                'route' => 'task-index'
-                            )
-                        )
-                    )
+            'client' => array(
+                array(
+                    'label' => 'Tasks',
+                    'icon' => 'fa fa-tasks',
+                    'route' => 'task-list',
+                    'resource' => 'task-list',
+                    'order' => 10,
+                    'useRouteMatch' => true
                 )
             )
         )

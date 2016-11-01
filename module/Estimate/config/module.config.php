@@ -182,6 +182,18 @@ return array(
     ),
     // menu
     'menu' => array(
-       
+        'default' => array(
+            'client' => array(
+                array(
+                    'label' => 'Estimates',
+                    'icon' => 'fa fa-newspaper-o',
+                    'route' => 'estimate-index',
+                    'resource' => 'estimate-index',
+                    'order' => 4,
+                    'useRouteMatch' => true
+                )
+            )
+        )
+        
     )
 );

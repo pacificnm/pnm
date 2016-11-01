@@ -121,7 +121,18 @@ return array(
     ),
     // menu
     'menu' => array(
-        'default' => array()
+        'default' => array(
+            'employee' => array(
+                array(
+                    'label' => 'Time Clock',
+                    'icon' => 'fa fa-clock-o',
+                    'route' => 'employee-time',
+                    'resource' => 'employee-time',
+                    'order' => 6
+                )
+                
+            )
+        )
     ),
     // acl
     'acl' => array(

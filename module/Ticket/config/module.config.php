@@ -45,8 +45,7 @@ return array(
             'Ticket\Mapper\MysqlMapperInterface' => 'Ticket\Mapper\Factory\MysqlMapperFactory',
             'Ticket\Listener\TicketListener' => 'Ticket\Listener\Factory\TicketListenerFactory'
         )
-    )
-    ,
+    ),
     'router' => array(
         'routes' => array(
             'ticket-index' => array(
@@ -181,21 +180,14 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            array(
-                'Client' => array(
-                    'title' => 'Client',
-                    'icon' => '',
-                    'route' => 'client-index',
-                    'submenu' => array(
-                        array(
-                            'ticket' => array(
-                                'title' => 'Support Tickets',
-                                'icon' => 'fa fa-lock',
-                                'route' => 'ticket-index'
-                            )
-                        )
-                    )
-                    
+            'client' => array(
+                array(
+                    'label' => 'Support Tickets',
+                    'icon' => 'fa fa-life-ring',
+                    'route' => 'ticket-index',
+                    'resource' => 'ticket-index',
+                    'order' => 11,
+                    'useRouteMatch' => true
                 )
             )
         )

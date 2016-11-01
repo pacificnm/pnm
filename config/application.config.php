@@ -112,6 +112,7 @@ return array(
         'SubscriptionHost',
         'SubscriptionStatus',
         'SubscriptionSchedule',
+        'Calendar'
     ),
     'module_listener_options' => array(
         'module_paths' => array(

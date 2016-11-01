@@ -213,7 +213,18 @@ return array(
     ),
     // menu
     'menu' => array(
-        'default' => array()
+        'default' => array(
+            'client' => array(
+                array(
+                    'label' => 'Invoices',
+                    'icon' => 'fa fa-credit-card',
+                    'route' => 'invoice-list',
+                    'resource' => 'invoice-list',
+                    'order' => 7,
+                    'useRouteMatch' => true
+                )
+            )
+        )
     ),
     // acl
     'acl' => array(

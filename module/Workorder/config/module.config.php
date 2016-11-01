@@ -238,7 +238,16 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            
+            'client' => array(
+                array(
+                    'label' => 'Work Orders',
+                    'icon' => 'fa fa-wrench',
+                    'route' => 'workorder-list',
+                    'resource' => 'workorder-list',
+                    'order' => 13,
+                    'useRouteMatch' => true
+                )
+            )
         )
     ),
     // acl

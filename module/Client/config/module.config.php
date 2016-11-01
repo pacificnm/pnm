@@ -42,7 +42,8 @@ return array(
             'Client\Mapper\MysqlMapperInterface' => 'Client\Mapper\Factory\MysqlMapperFactory',
             'Client\\Service\\ClientServiceInterface' => 'Client\\Service\\Factory\\ClientServiceFactory',
             'Client\\V1\\Rest\\Client\\ClientResource' => 'Client\\V1\\Rest\\Client\\ClientResourceFactory',
-            'Client\\V1\\Rest\\ClientService\\ClientServiceResource' => 'Client\\V1\\Rest\\ClientService\\ClientServiceResourceFactory'
+            'Client\\V1\\Rest\\ClientService\\ClientServiceResource' => 'Client\\V1\\Rest\\ClientService\\ClientServiceResourceFactory',
+            'ClientMenu' => 'Client\Service\Factory\MenuServiceFactory'
         )
     ),
     'router' => array(
@@ -116,7 +117,9 @@ return array(
         )
     ),
     'view_helpers' => array(
-        'invokables' => array()
+        'factories' => array(
+            'ClientAsideMenu' => 'Client\View\Helper\Factory\ClientAsideMenuFactory'
+        )
     ),
     'view_manager' => array(
         'template_path_stack' => array(
@@ -158,7 +161,24 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            
+            'client' => array(
+                array(
+                    'label' => 'Clients',
+                    'icon' => 'fa fa-group',
+                    'route' => 'client-index',
+                    'resource' => 'client-index',
+                    'order' => 0,
+                    'useRouteMatch' => true
+                ),
+                array(
+                    'label' => 'Client Home',
+                    'icon' => 'fa fa-home',
+                    'route' => 'client-view',
+                    'resource' => 'client-view',
+                    'order' => 1,
+                    'useRouteMatch' => true
+                )
+            )
         )
     ),
     // acl

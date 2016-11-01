@@ -268,21 +268,16 @@
   					<!-- sidebar menu: : style can be found in sidebar.less -->
   					<ul class="sidebar-menu">
   					<?php if($this->identity()): ?>
+  					
   					<?php if($this->identity()->getEmployeeId() > 0): ?>
-  						  						
-  						<?php echo $this->EmployeeAsideMenu(1); ?>
+  						  	
+  						<?php echo $this->employeeAsideMenu(); ?>
   						
-  						<?php echo $this->AccountAsideMenu(); ?>
+  						<?php echo $this->clientAsideMenu(); ?>
+  						  	
+  						<?php echo $this->adminAsideMenu(); ?>
   						
-  						<li class="treeview <?php if($this->activeMenuItem == 'admin'):?>active<?php endif;?>">
-                        	<a href="#">
-                        		<i class="fa fa-cogs"></i> <span><?php echo $this->translate('Admin'); ?></span>
-                        		<i class="fa fa-angle-left pull-right"></i>
-                        	</a>
-  							<?php echo $this->navigation('adminMenu')->setAcl($this->acl)->setRole($this->identity()->getAuthRole())->menu()->setPartial('partials/admin-menu'); ?>
-  						</li>
-  						
-  						<?php echo $this->IntegrationAsideMenu(); ?>
+  						<?php echo $this->integrationAsideMenu(); ?>
   						
   					<?php else:?>
   						<?php $this->clientId = $this->identity()->getUserEntity()->getClientId();?>

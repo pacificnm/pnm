@@ -146,21 +146,14 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            array(
-                'Client' => array(
-                    'title' => 'Client',
-                    'icon' => '',
-                    'route' => 'client-index',
-                    'submenu' => array(
-                        array(
-                            'file' => array(
-                                'title' => 'Files',
-                                'icon' => 'fa fa-file-o',
-                                'route' => 'file-index'
-                            )
-                        )
-                    )
-                    
+            'client' => array(
+                array(
+                    'label' => 'Files',
+                    'icon' => 'fa fa-file',
+                    'route' => 'client-file-index',
+                    'resource' => 'client-file-index',
+                    'order' => 5,
+                    'useRouteMatch' => true
                 )
             )
         )

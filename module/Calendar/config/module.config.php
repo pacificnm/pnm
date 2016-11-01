@@ -24,32 +24,17 @@ return array(
         )
     ),
     // menu
-    'menu' => array(
-        
-        // employee
-        'employee' => array(
-            array(
+    'menu' => array(    
+        'default' => array(
+            'employee' => array(
                 array(
-                    'label' => 'My Profile',
-                    'icon' => 'fa fa-gears',
-                    'route' => 'employee-profile',
-                    'submenu' => array(
-                        array(
-                            'label' => 'Calendar',
-                            'icon' => 'fa fa-calendar',
-                            'route' => 'employee-calendar'
-                        )
-                    )
+                    'label' => 'View calendar',
+                    'icon' => 'fa fa-calendar',
+                    'route' => 'employee-calendar',
+                    'resource' => 'employee-calendar',
+                    'order' => 4
                 )
             )
-        ),
-        // client
-        'client' => array(
-            array()
-        ),
-        // user
-        'user' => array(
-            array()
         )
     ),
     // acl

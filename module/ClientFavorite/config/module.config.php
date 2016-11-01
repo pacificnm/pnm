@@ -122,36 +122,43 @@ return array(
                     )
                 )
             )
-            
         )
+        
     ),
     // menu
     'menu' => array(
-        
-        // employee
-        'employee' => array(
-            array(
-                'label' => 'My Profile',
-                'icon' => 'fa fa-gears',
-                'route' => 'employee-profile',
-                'submenu' => array(
-                    array(
-                        'label' => 'Favorite Clients',
-                        'icon' => 'fa fa-star',
-                        'route' => 'client-favorite-index'
-                    )
+        'default' => array(
+            'client' => array(
+                array(
+                    'label' => 'Add To Favorite',
+                    'icon' => 'fa fa-star',
+                    'route' => 'client-favorite-create',
+                    'resource' => 'client-favorite-create',
+                    'order' => 2,
+                    'useRouteMatch' => true
+                ),
+                array(
+                    'label' => 'Remove From Favorite',
+                    'icon' => 'fa fa-star',
+                    'route' => 'client-favorite-delete',
+                    'resource' => 'client-favorite-delete',
+                    'order' => 2,
+                    'useRouteMatch' => true
+                )
+            ),
+            'employee' => array(
+                array(
+                    'label' => 'Client Favorites',
+                    'icon' => 'fa fa-star',
+                    'route' => 'client-favorite-index',
+                    'resource' => 'client-favorite-index',
+                    'order' => 2
                 )
             )
-        ),
-        // client
-        'client' => array(
-            array()
-        ),
-        // user
-        'user' => array(
-            array()
+            
         )
-    ),
+    )
+    ,
     // acl
     'acl' => array(
         'default' => array(

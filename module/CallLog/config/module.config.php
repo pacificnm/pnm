@@ -129,12 +129,6 @@ return array(
     ),
     // navigation
     'navigation' => array(
-        'default' => array()
-
-        
-    ),
-    // menu
-    'menu' => array(
         'default' => array(
             array(
                 'label' => 'Clients',
@@ -196,6 +190,23 @@ return array(
                     )
                 )
             )
+        )
+
+        
+    ),
+    // menu
+    'menu' => array(
+        'default' => array(
+           'client' => array(
+               array(
+                   'label' => 'Call Log',
+                   'icon' => 'fa fa-phone',
+                   'route' => 'call-log-index',
+                   'resource' => 'call-log-index',
+                   'order' => 3,
+                   'useRouteMatch' => true
+               )
+           )
         )
     ),
     // api

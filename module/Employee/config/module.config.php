@@ -46,7 +46,8 @@ return array(
             'Employee\\Mapper\\EmployeeMapperInterface' => 'Employee\\Mapper\\Factory\\EmployeeMapperFactory',
             'Employee\\Service\\EmployeeServiceInterface' => 'Employee\\Service\\Factory\\EmployeeServiceFactory',
             'Employee\\Form\\PasswordForm' => 'Employee\\Form\\Factory\\PasswordFormFactory',
-            'Employee\\V1\\Rest\\EmployeeTime\\EmployeeTimeResource' => 'Employee\\V1\\Rest\\EmployeeTime\\EmployeeTimeResourceFactory'
+            'Employee\\V1\\Rest\\EmployeeTime\\EmployeeTimeResource' => 'Employee\\V1\\Rest\\EmployeeTime\\EmployeeTimeResourceFactory',
+            'employeeMenu' => 'Employee\Service\Factory\MenuServiceFactory',
         )
     ),
     'router' => array(
@@ -271,6 +272,15 @@ return array(
                     'route' => 'employee-index',
                     'resource' => 'employee-index',
                     'order' => 5
+                )
+            ),
+            'employee' => array(
+                array(
+                    'label' => 'Home',
+                    'icon' => 'fa fa-home',
+                    'route' => 'employee-profile',
+                    'resource' => 'employee-profile',
+                    'order' => 1
                 )
             )
         )

@@ -1,0 +1,9 @@
+<!-- Client Menu -->					
+<li class="treeview <?php if($this->activeMenuItem == 'client'):?>active<?php endif;?>">
+	<a href="#">
+		<i class="fa fa-table"></i> <span><?php echo $this->translate('Client'); ?></span>
+		<i class="fa fa-angle-left pull-right"></i>
+	</a>
+	<?php echo $this->navigation('clientMenu')->menu()->setPartial('partials/client-menu'); ?>
+</li>
+  						
