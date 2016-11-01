@@ -23,13 +23,16 @@ return array(
         'factories' => array(
             'Admin\Controller\Index' => 'Admin\Controller\Factory\IndexControllerFactory'
         )
-    )
-    ,
+    ),
     
     // service manager
     'service_manager' => array(
-        'factories' => array()
+        'factories' => array(
+            'adminMenu' => 'Admin\Service\Factory\MenuServiceFactory'
+            //'adminMenu' => 'Zend\Navigation\Service\DefaultNavigationFactory'
+        )
     ),
+    //
     
     // router
     'router' => array(
@@ -37,6 +40,10 @@ return array(
             'admin-index' => array(
                 'type' => 'literal',
                 'title' => 'Admin Home',
+                'pageTitle' => 'Admin',
+                'pageSubTitle' => 'Home',
+                'activeMenuItem' => 'admin',
+                'activeSubMenuItem' => 'admin-index',
                 'options' => array(
                     'route' => '/admin',
                     'defaults' => array(
@@ -50,10 +57,9 @@ return array(
     
     // view helpers
     'view_helpers' => array(
-        'invokables' => array(
-            'AdminAsideMenu' => 'Admin\View\Helper\AdminAsideMenu'
-        )
+        'factories' => array()
     ),
+    // 'AdminAsideMenu' => 'Admin\View\Helper\Factory\AdminAsideMenuFactory' replaced with config and zf navigation
     
     // view manager
     'view_manager' => array(
@@ -67,28 +73,20 @@ return array(
             array(
                 'label' => 'Admin',
                 'route' => 'admin-index',
-                'useRouteMatch' => true,
+                'useRouteMatch' => true
             )
         )
     ),
     // menu
     'menu' => array(
         'default' => array(
-            array(
-                'admin' => array(
-                    'title' => 'Admin',
-                    'icon' => 'fa fa-gears',
+            'admin' => array(
+                array(
+                    'label' => 'Home',
+                    'icon' => 'fa fa-home',
                     'route' => 'admin-index',
-                    'submenu' => array(
-                        array(
-                            'admin-index' => array(
-                                'title' => 'Home',
-                                'icon' => 'fa fa-house',
-                                'route' => 'admin-index'
-                            )
-                        )
-                    )
-                    
+                    'resource' => 'admin-index',
+                    'order' => 0,
                 )
             )
         )

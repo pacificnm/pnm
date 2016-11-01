@@ -40,18 +40,6 @@ class ProfileController extends BaseController
      */
     public function indexAction()
     {
-        
-        
-        // set layout up
-        $this->layout()->setVariable('pageTitle', 'My Profile');
-        
-        $this->layout()->setVariable('pageSubTitle', $this->identity()
-            ->getAuthName());
-        
-        $this->layout()->setVariable('activeMenuItem', 'employee');
-        
-        $this->layout()->setVariable('activeSubMenuItem', 'employee-profile');
-        
         return new ViewModel(array(
             'employeeId' => $this->identity()->getEmployeeId(),
             'authId' => $this->identity()->getAuthId()

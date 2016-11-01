@@ -25,10 +25,7 @@ return array(
     ),
     // menu
     'menu' => array(
-        // admin
-        'admin' => array(
-            array( )
-        ),
+        
         // employee
         'employee' => array(
             array(

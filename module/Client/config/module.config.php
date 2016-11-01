@@ -158,30 +158,7 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            array(
-                'client' => array(
-                    'title' => 'Client',
-                    'icon' => '',
-                    'route' => 'client-index',
-                    'submenu' => array(
-                        array(
-                            'clients' => array(
-                                'title' => 'Clients',
-                                'icon' => 'fa fa-group',
-                                'route' => 'client-index'
-                            )
-                        ),
-                        array(
-                            'client-home' => array(
-                                'title' => 'Client Home',
-                                'icon' => 'fa fa-house',
-                                'route' => 'client-view'
-                            )
-                        )
-                    )
-                )
-                
-            )
+            
         )
     ),
     // acl

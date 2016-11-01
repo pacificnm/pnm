@@ -86,7 +86,17 @@ return array(
     ),
     // menu
     'menu' => array(
-        'default' => array()
+        'default' => array(
+            'admin' => array(
+                array(
+                    'label' => 'Config',
+                    'icon' => 'fa fa-cog',
+                    'route' => 'config-index',
+                    'resource' => 'config-index',
+                    'order' => 2
+                )
+            )
+        )
     ),
     
     // navigation

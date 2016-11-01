@@ -33,9 +33,9 @@ class SetPageTitle extends AbstractPlugin
     }
 
     /**
-     * 
-     * @param string $matchedRouteName
-     * @param ViewModel $layout
+     *
+     * @param string $matchedRouteName            
+     * @param ViewModel $layout            
      * @return mixed
      */
     public function __invoke($matchedRouteName, $layout)
@@ -44,12 +44,14 @@ class SetPageTitle extends AbstractPlugin
             $this->phpRenderer->headTitle($this->config['router']['routes'][$matchedRouteName]['title']);
         }
         
+        if (! isset($this->config['router']['routes'][$matchedRouteName]['title'])) {
+            throw new \Exception(sprintf('Missing route with title route "%s"', $matchedRouteName));
+        }
+        
         $pageTitle = $this->config['router']['routes'][$matchedRouteName]['title'];
         
         $layout->setVariable('pageTitle', $pageTitle);
         
         return $pageTitle;
     }
-    
-    
 }

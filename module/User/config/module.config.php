@@ -47,6 +47,11 @@ return array(
         'routes' => array(
             'user-profile' => array(
                 'type' => 'literal',
+                'title' => 'My Profile',
+                'pageTitle' => 'My Profile',
+                'pageSubTitle' => 'Home',
+                'activeMenuItem' => 'user',
+                'activeSubMenuItem' => 'user-profile',
                 'options' => array(
                     'route' => '/user/profile',
                     'defaults' => array(
@@ -178,23 +183,7 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            array(
-                'client' => array(
-                    'title' => 'Client',
-                    'icon' => '',
-                    'route' => 'client-index',
-                    'submenu' => array(
-                        array(
-                            'user' => array(
-                                'title' => 'Users',
-                                'icon' => 'fa fa-user',
-                                'route' => 'user-index'
-                            )
-                        )
-                    )
-                )
-                
-            )
+           
         )
     ),
     // acl

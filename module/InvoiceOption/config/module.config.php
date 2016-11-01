@@ -96,24 +96,16 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            array(
-                'admin' => array(
-                    'title' => 'Admin',
-                    'icon' => 'fa fa-gears',
-                    'route' => 'admin-index',
-                    'submenu' => array(
-                        array(
-                            'invoice-option-index' => array(
-                                'title' => 'Invoice Options',
-                                'icon' => 'fa fa-dollar',
-                                'route' => 'invoice-option-index'
-                            )
-                        )
-                    )
+            'admin' => array(
+                array(
+                    'label' => 'Invoice Options',
+                    'icon' => 'fa fa-dollar',
+                    'route' => 'invoice-option-index',
+                    'resource' => 'invoice-option-index',
+                    'order' => 8
                 )
             )
         )
-        
     ),
     // acl
     'acl' => array(

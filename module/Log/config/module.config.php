@@ -102,18 +102,14 @@ return array(
     'menu' => array(
         'default' => array(
             'admin' => array(
-                'title' => 'Admin',
-                'icon' => 'fa fa-gears',
-                'route' => 'admin-index',
-                'subMenu' => array(
-                    array(
-                        'title' => 'Log',
-                        'icon' => 'fa fa-file',
-                        'route' => 'log-index'
-                    )
+                array(
+                    'label' => 'Logs',
+                    'icon' => 'fa fa-file',
+                    'route' => 'log-index',
+                    'resource' => 'log-index',
+                    'order' => 10
                 )
             )
-    
         )
     ),
     

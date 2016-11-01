@@ -65,6 +65,19 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view'
         )
+    ),
+    // menu
+    'menu' => array(
+        'default' => array(
+            'admin' => array(
+                array(
+                    'label' => 'Work Order Options',
+                    'icon' => 'fa fa-wrench',
+                    'route' => 'workorder-option-index',
+                    'resource' => 'workorder-option-index',
+                    'order' => 14
+                )
+            )
+        )
     )
-)
-;
+);

@@ -274,7 +274,13 @@
   						
   						<?php echo $this->AccountAsideMenu(); ?>
   						
-  						<?php echo $this->AdminAsideMenu(); ?>
+  						<li class="treeview <?php if($this->activeMenuItem == 'admin'):?>active<?php endif;?>">
+                        	<a href="#">
+                        		<i class="fa fa-cogs"></i> <span><?php echo $this->translate('Admin'); ?></span>
+                        		<i class="fa fa-angle-left pull-right"></i>
+                        	</a>
+  							<?php echo $this->navigation('adminMenu')->setAcl($this->acl)->setRole($this->identity()->getAuthRole())->menu()->setPartial('partials/admin-menu'); ?>
+  						</li>
   						
   						<?php echo $this->IntegrationAsideMenu(); ?>
   						
@@ -293,6 +299,8 @@
   					<h1><?php echo $this->pageTitle; ?> <small><?php echo $this->pageSubTitle;?></small></h1>
   					<?php if($this->identity()):?>
   					<?php echo $this->navigation('navigation')->setAcl($this->acl)->setRole($this->identity()->getAuthRole())->breadcrumbs()->setMinDepth(0)->setPartial('partials/breadcrumbs'); ?>
+  					
+  					
   					<?php else: ?>
   					
   					<?php endif;?>

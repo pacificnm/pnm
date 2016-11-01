@@ -161,22 +161,17 @@ return array(
     ),
     // menu
     'menu' => array(
-        'admin' => array(
-            array(
+        'default' => array(
+            'admin' => array(
                 array(
-                    'label' => 'Admin',
-                    'icon' => 'fa fa-gears',
-                    'route' => 'admin-index',
-                    'submenu' => array(
-                        array(
-                            'label' => 'Payment Options',
-                            'icon' => 'fa fa-dollar',
-                            'route' => 'payment-option-index'
-                        )
-                    )
+                    'label' => 'Payment Options',
+                    'icon' => 'fa fa-dollar',
+                    'route' => 'payment-option-index',
+                    'resource' => 'payment-option-index',
+                    'order' => 11
                 )
             )
-        ),
+        )
     ),
     // acl
     'acl' => array(

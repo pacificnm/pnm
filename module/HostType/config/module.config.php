@@ -152,20 +152,13 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            array(
-                'admin' => array(
-                    'title' => 'Admin',
-                    'icon' => 'fa fa-gears',
-                    'route' => 'admin-index',
-                    'submenu' => array(
-                        array(
-                            'host-type-index' => array(
-                                'title' => 'Host Types',
-                                'icon' => 'fa fa-dollar',
-                                'route' => 'host-type-index'
-                            )
-                        )
-                    )
+            'admin' => array(
+                array(
+                    'label' => 'Host Types',
+                    'icon' => 'fa fa-desktop',
+                    'route' => 'host-type-index',
+                    'resource' => 'host-type-index',
+                    'order' => 7
                 )
             )
         )

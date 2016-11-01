@@ -152,23 +152,15 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            array(
-                'admin' => array(
-                    'title' => 'Admin',
-                    'icon' => 'fa fa-gears',
-                    'route' => 'admin-index',
-                    'submenu' => array(
-                        array(
-                            'labor-index' => array(
-                                'title' => 'Labor Rates',
-                                'icon' => 'fa fa-dollar',
-                                'route' => 'labor-index'
-                            )
-                        )
-                    )
+            'admin' => array(
+                array(
+                    'label' => 'Labor Rates',
+                    'icon' => 'fa fa-dollar',
+                    'route' => 'labor-index',
+                    'resource' => 'labor-index',
+                    'order' => 9
                 )
             )
-            
         )
     ),
     // acl

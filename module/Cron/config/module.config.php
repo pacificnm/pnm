@@ -183,20 +183,18 @@ return array(
     'menu' => array(
         'default' => array(
             'admin' => array(
-                'title' => 'Admin',
-                'icon' => 'fa fa-gears',
-                'route' => 'admin-index',
-                'subMenu' => array(
-                    array(
-                        'title' => 'Cron',
-                        'icon' => 'fa fa-gears',
-                        'route' => 'cron-index'
-                    )
+                array(
+                    'label' => 'Cron',
+                    'icon' => 'fa fa-gears',
+                    'route' => 'cron-index',
+                    'resource' => 'cron-index',
+                    
+                    'order' => 3
                 )
             )
-            
         )
     ),
+    
     
     // navigation
     'navigation' => array(

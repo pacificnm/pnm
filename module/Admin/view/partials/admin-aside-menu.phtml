@@ -1,4 +1,14 @@
-<?php if($this->adminAcl): ?>
+<li class="treeview <?php if($this->activeMenuItem == 'admin'):?>active<?php endif;?>">
+	<a href="#">
+		<i class="fa fa-cogs"></i> <span><?php echo $this->translate('Admin'); ?></span>
+		<i class="fa fa-angle-left pull-right"></i>
+	</a>
+
+	<?php echo $this->navigation('adminMenu')->menu()->setPartial('partials/admin-menu'); ?>
+
+</li>
+
+
 
 <li class="treeview <?php if($this->activeMenuItem == 'admin'):?>active<?php endif;?>">
 	<a href="#">
@@ -94,10 +104,17 @@
 			</a>
 		</li>
 		
-		<!-- Access Control Lists -->
+		<!-- Permisions -->
 		<li class="<?php if($this->activeSubMenuItem == 'host-attribute-index'):?>active<?php endif;?>">
 			<a href="<?php echo $this->url('host-attribute-index'); ?>" title="<?php echo $this->translate('Access Control Lists'); ?>">
 				<i class="fa fa-lock"></i> <?php echo $this->translate('Permisions'); ?>
+			</a>
+		</li>
+		
+		<!-- Subscriptions -->
+		<li class="<?php if($this->activeSubMenuItem == 'subscription-admin-index'):?>active<?php endif;?>">
+			<a href="<?php echo $this->url('subscription-admin-index'); ?>" title="<?php echo $this->translate('Subscriptions'); ?>">
+				<i class="fa fa-line-chart"></i> <?php echo $this->translate('Subscriptions'); ?>
 			</a>
 		</li>
 		
@@ -113,4 +130,3 @@
 		
 	</ul>
 </li>
-<?php endif; ?>

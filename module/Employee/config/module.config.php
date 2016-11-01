@@ -53,6 +53,11 @@ return array(
         'routes' => array(
             'employee-profile' => array(
                 'type' => 'literal',
+                'title' => 'My Profile',
+                'pageTitle' => 'My Profile',
+                'pageSubTitle' => 'Home',
+                'activeMenuItem' => 'employee',
+                'activeSubMenuItem' => 'employee-profile',
                 'options' => array(
                     'route' => '/employee/profile',
                     'defaults' => array(
@@ -187,8 +192,7 @@ return array(
             'GetEmployeeDetails' => 'Employee\View\Helper\Factory\GetEmployeeDetailsFactory'
         ),
         'invokables' => array()
-    )
-    ,
+    ),
     'view_manager' => array(
         'template_path_stack' => array(
             0 => __DIR__ . '/../view'
@@ -259,54 +263,16 @@ return array(
     ),
     // menu
     'menu' => array(
-        // admin
-        'admin' => array(
-            array(
+        'default' => array(
+            'admin' => array(
                 array(
-                    'label' => 'Admin',
-                    'icon' => 'fa fa-gears',
-                    'route' => 'admin-index',
-                    'submenu' => array(
-                        array(
-                            array(
-                                'label' => 'Employee',
-                                'icon' => 'fa fa-dollar',
-                                'route' => 'employee-index'
-                            )
-                        )
-                    )
-                )
-            )         
-        ),
-        // employee
-        'employee' => array(
-            array(
-                array(
-                    'label' => 'My Profile',
-                    'icon' => 'fa fa-gears',
-                    'route' => 'employee-profile',
-                    'submenu' => array(
-                        array(
-                            'label' => 'Home',
-                            'icon' => 'fa fa-home',
-                            'route' => 'employee-profile'
-                        ),
-                        array(
-                            'label' => 'Time Clock',
-                            'icon' => 'fa fa-clock',
-                            'route' => 'employee-time'
-                        )
-                    )
+                    'label' => 'Employees',
+                    'icon' => 'fa fa-user',
+                    'route' => 'employee-index',
+                    'resource' => 'employee-index',
+                    'order' => 5
                 )
             )
-        ),
-        // client
-        'client' => array(
-            array()
-        ),
-        // user
-        'user' => array(
-            array()
         )
     ),
     // acl

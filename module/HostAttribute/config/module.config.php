@@ -152,25 +152,18 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            array(
-                'admin' => array(
-                    'title' => 'Admin',
-                    'icon' => 'fa fa-gears',
-                    'route' => 'admin-index',
-                    'submenu' => array(
-                        array(
-                            'host-attribute-index' => array(
-                                'title' => 'Host Attributes',
-                                'icon' => 'fa fa-dollar',
-                                'route' => 'host-attribute-index'
-                            )
-                        )
-                    )
+            'admin' => array(
+                array(
+                    'label' => 'Host Attributes',
+                    'icon' => 'fa fa-desktop',
+                    'route' => 'host-attribute-index',
+                    'resource' => 'host-attribute-index',
+                    'order' => 6
                 )
             )
         )
-        
-    ),
+    )
+    ,
     // acl
     'acl' => array(
         'default' => array(

@@ -199,33 +199,27 @@ return array(
                                         'useRouteMatch' => true
                                     )
                                 )
-                                
                             )
                         )
                     )
                 )
+                
             )
         )
     ),
     // menu
     'menu' => array(
-        'admin' => array(
-            array(
+        'default' => array(
+            'admin' => array(
                 array(
-                    'label' => 'Admin',
-                    'icon' => 'fa fa-gears',
-                    'route' => 'admin-index',
-                    'submenu' => array(
-                        array(
-                            'label' => 'Payment Options',
-                            'icon' => 'fa fa-dollar',
-                            'route' => 'payment-option-index'
-                        )
-                    )
+                    'label' => 'Auth',
+                    'icon' => 'fa fa-lock',
+                    'route' => 'auth-index',
+                    'resource' => 'auth-index',
+                    'order' => 1
                 )
             )
         )
-        
     ),
     // acl
     'acl' => array(

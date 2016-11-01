@@ -34,14 +34,11 @@ return array(
             'Acl\Mapper\AclMapperInterface' => 'Acl\Mapper\Factory\AclMapperFactory'
         )
     ),
-    
+    // view helpers
     'view_helpers' => array(
-        
-        'invokables' => array()
-
-        ,
         'factories' => array(
             'Acl' => 'Acl\View\Helper\Factory\AclViewHelperFactory'
         )
     )
+    
 );

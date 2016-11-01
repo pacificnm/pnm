@@ -238,23 +238,7 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            array(
-                'client' => array(
-                    'title' => 'Client',
-                    'icon' => '',
-                    'route' => 'client-index',
-                    'submenu' => array(
-                        array(
-                            'workorder' => array(
-                                'title' => 'Work Orders',
-                                'icon' => 'fa fa-wrench',
-                                'route' => 'workorder-index'
-                            )
-                        )
-                    )
-                    
-                )
-            )
+            
         )
     ),
     // acl

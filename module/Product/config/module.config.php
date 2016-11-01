@@ -168,7 +168,15 @@ return array(
     // menu
     'menu' => array(
         'default' => array(
-            
+            'admin' => array(
+                array(
+                    'label' => 'Products',
+                    'icon' => 'fa fa-shopping-cart',
+                    'route' => 'product-index',
+                    'resource' => 'product-index',
+                    'order' => 12
+                )
+            )
         )
     )
 );

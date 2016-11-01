@@ -94,11 +94,11 @@ class CoreMysqlMapper
     
         $this->writeSql = new Sql($this->writeAdapter);
     
-        $this->delete = new Delete($this->tableName);
+        $this->delete = new Delete();
     
-        $this->insert = new Insert($this->tableName);
+        $this->insert = new Insert();
     
-        $this->update = new Update($this->tableName);
+        $this->update = new Update();
     
     }
     

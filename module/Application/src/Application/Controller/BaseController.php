@@ -76,9 +76,6 @@ class BaseController extends AbstractActionController
             ->getRouteMatch()
             ->getParam('clientId', null);
         
-        // set active Menu
-        $this->SetActiveMenu($router->getMatchedRouteName(), $this->layout());
-        
         // set page title
         $this->setPageTitle($router->getMatchedRouteName(), $this->layout());
         

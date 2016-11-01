@@ -26,13 +26,15 @@ return array(
     ),
     // controller
     'controllers' => array(
-        'factories' => array()
+        'factories' => array(
+            'Subscription\Controller\AdminController' => 'Subscription\Controller\Factory\AdminControllerFactory'
+        )
     ),
     // service manager
     'service_manager' => array(
         'factories' => array(
             'Subscription\Mapper\MysqlMapperInterface' => 'Subscription\Mapper\Factory\MysqlMapperFactory',
-            'Subscription\Service\SubscriptionServiceInterface' => 'Subscription\Service\Factory\SubscriptionServiceFactory',
+            'Subscription\Service\SubscriptionServiceInterface' => 'Subscription\Service\Factory\SubscriptionServiceFactory'
         )
     ),
     // routes
@@ -48,7 +50,7 @@ return array(
                 'options' => array(
                     'route' => '/admin/subscription',
                     'defaults' => array(
-                        'controller' => 'Product\Controller\IndexController',
+                        'controller' => 'Subscription\Controller\AdminController',
                         'action' => 'index'
                     )
                 )
@@ -127,7 +129,7 @@ return array(
                         'action' => 'index'
                     )
                 )
-            ),
+            )
         )
     ),
     // view manager
@@ -139,13 +141,78 @@ return array(
     // navigation
     'navigation' => array(
         'default' => array(
-            
+            array(
+                'label' => 'Admin',
+                'route' => 'admin-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Subscriptions',
+                        'route' => 'subscription-admin-index',
+                        'resource' => 'subscription-admin-index',
+                        'useRouteMatch' => true
+                    )
+                )
+            ),
+            array(
+                'label' => 'Clients',
+                'route' => 'client-index',
+                'resource' => 'client-index',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'View',
+                        'route' => 'client-view',
+                        'resource' => 'client-view',
+                        'useRouteMatch' => true,
+                        'pages' => array(
+                            array(
+                                'label' => 'Subscriptions',
+                                'route' => 'subscription-index',
+                                'resource' => 'subscription-index',
+                                'useRouteMatch' => true
+                            )
+                        )
+                    )
+                )
+            )
         )
     ),
     // menu
     'menu' => array(
         'default' => array(
-    
+            'admin' => array(
+                array(
+                    'label' => 'Subscriptions',
+                    'icon' => 'fa fa-line-chart',
+                    'route' => 'subscription-admin-index',
+                    'resource' => 'subscription-admin-index',
+                    'order' => 13
+                )
+            )
+        )
+    ),
+    // acl
+    'acl' => array(
+        'default' => array(
+            array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(
+                    'subscription-index',
+                    'subscription-view'
+                ),
+                'employee' => array(
+                    'subscription-create',
+                    'subscription-update',
+                    'subscription-delete'
+                ),
+                'accountant' => array(),
+                'administrator' => array(
+                    'subscription-admin-index'
+                )
+            )
         )
     )
 );
