@@ -47,7 +47,8 @@ return array(
         'factories' => array(
             'Account\Service\AccountServiceInterface' => 'Account\Service\Factory\AccountServiceFactory',
             'Account\Mapper\AccountMapperInterface' => 'Account\Mapper\Factory\AccountMapperFactory',
-            'Account\Form\AccountForm' => 'Account\Form\Factory\AccountFormFactory'
+            'Account\Form\AccountForm' => 'Account\Form\Factory\AccountFormFactory',
+            'accountingMenu' => 'Account\Service\Factory\MenuServiceFactory'
         )
     ),
     
@@ -181,11 +182,25 @@ return array(
         )
     ),
     'menu' => array(
-        'accounting' => array(
-            array(
-                
+        'default' => array(
+            'accounting' => array(
+                array(
+                    'label' => 'Account Home',
+                    'icon' => 'fa fa-home',
+                    'route' => 'account-home',
+                    'resource' => 'account-home',
+                    'order' => 1
+                ),
+                array(
+                    'label' => 'Accounts',
+                    'icon' => 'fa fa-bank',
+                    'route' => 'account-index',
+                    'resource' => 'account-index',
+                    'order' => 1
+                )
             )
         )
+        
     ),
     // acl
     'acl' => array(

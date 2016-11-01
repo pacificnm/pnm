@@ -151,10 +151,16 @@ return array(
         )
     ),
     'menu' => array(
-        'accounting' => array(
-            array()
-
-            
+        'default' => array(
+            'accounting' => array(
+                array(
+                    'label' => 'Account Types',
+                    'icon' => 'fa fa-cogs',
+                    'route' => 'account-type-index',
+                    'resource' => 'account-type-index',
+                    'order' => 5
+                )
+            )
         )
     ),
     // acl

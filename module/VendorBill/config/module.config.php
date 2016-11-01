@@ -120,7 +120,7 @@ return array(
                     array(
                         'label' => 'Bills',
                         'route' => 'vendor-bill-index',
-                        'useRouteMatch' => true,
+                        'useRouteMatch' => true
                     ),
                     array(
                         'label' => 'Vendors',
@@ -135,12 +135,12 @@ return array(
                                     array(
                                         'label' => 'New Bill',
                                         'route' => 'vendor-bill-create',
-                                        'useRouteMatch' => true,
+                                        'useRouteMatch' => true
                                     ),
                                     array(
                                         'label' => 'Bill',
                                         'route' => 'vendor-bill-view',
-                                        'useRouteMatch' => true,
+                                        'useRouteMatch' => true
                                     )
                                 )
                             )
@@ -151,10 +151,16 @@ return array(
         )
     ),
     'menu' => array(
-        'accounting' => array(
-            array()
-
-            
+        'default' => array(
+            'accounting' => array(
+                array(
+                    'label' => 'Bills',
+                    'icon' => 'fa fa-dollar',
+                    'route' => 'vendor-bill-index',
+                    'resource' => 'vendor-bill-index',
+                    'order' => 4
+                )
+            )
         )
     ),
     // acl

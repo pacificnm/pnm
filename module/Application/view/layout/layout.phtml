@@ -263,8 +263,6 @@
   					<!-- Sidebar auth panel -->
   					<?php echo $this->AuthAside(); ?>
   					
-  					
-  					
   					<!-- sidebar menu: : style can be found in sidebar.less -->
   					<ul class="sidebar-menu">
   					<?php if($this->identity()): ?>
@@ -275,9 +273,11 @@
   						
   						<?php echo $this->clientAsideMenu(); ?>
   						  	
-  						<?php echo $this->adminAsideMenu(); ?>
+  						<?php echo $this->accountAsideMenu(); ?>
   						
   						<?php echo $this->integrationAsideMenu(); ?>
+  						
+  						<?php echo $this->adminAsideMenu(); ?>
   						
   					<?php else:?>
   						<?php $this->clientId = $this->identity()->getUserEntity()->getClientId();?>

@@ -7,52 +7,10 @@
  * @license
  */
 ?>
-<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'account-index') ):?>
-
 <li class="treeview <?php if($this->activeMenuItem == 'account'):?>active<?php endif;?>">
 	<a href="#">
 		<i class="fa fa-table"></i> <span><?php echo $this->translate('Accounting'); ?></span>
 		<i class="fa fa-angle-left pull-right"></i>
 	</a>
-	<ul class="treeview-menu">
-	
-		<li class="<?php if($this->activeSubMenuItem == 'account-home'):?>active<?php endif;?>">
-			<a href="<?php echo $this->url('account-home'); ?>" title="Account Home">
-				<i class="fa fa-home"></i> <span><?php echo $this->translate('Account Home')?></span>
-			</a>
-		</li>
-		
-	
-		<!-- accounts -->
-		<li class="<?php if($this->activeSubMenuItem == 'account-index'):?>active<?php endif;?>">
-			<a href="<?php echo $this->url('account-index'); ?>" title="Accounts">
-				<i class="fa fa-bank"></i> <span><?php echo $this->translate('Accounts')?></span>
-			</a>
-		</li>
-		
-		
-		<!-- Vendors -->
-		<li class="<?php if($this->activeSubMenuItem == 'vendor-index'):?>active<?php endif;?>">
-			<a href="<?php echo $this->url('vendor-index'); ?>" title="<?php echo $this->translate('Vendors'); ?>">
-				<i class="fa fa-truck"></i> <?php echo $this->translate('Vendors'); ?>
-			</a>
-		</li>
-		
-		<!-- Bills -->
-		<li class="<?php if($this->activeSubMenuItem == 'vendor-bill-index'):?>active<?php endif;?>">
-			<a href="<?php echo $this->url('vendor-bill-index'); ?>" title="<?php echo $this->translate('Bills'); ?>">
-				<i class="fa fa-dollar"></i> <?php echo $this->translate('Bills'); ?>
-			</a>
-		</li>
-		
-		<!-- Account Types -->
-		<li class="<?php if($this->activeSubMenuItem == 'account-type-index'):?>active<?php endif;?>">
-			<a href="<?php echo $this->url('account-type-index'); ?>" title="<?php echo $this->translate('Account Types'); ?>">
-				<i class="fa fa-cogs"></i> <?php echo $this->translate('Account Types'); ?>
-			</a>
-		</li>
-		
-		
-	</ul>
+	<?php echo $this->navigation('accountingMenu')->menu()->setPartial('partials/accounting-menu'); ?>
 </li>
-<?php endif;?>

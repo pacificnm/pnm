@@ -151,11 +151,18 @@ return array(
         )
     ),
     'menu' => array(
-        'accounting' => array(
-            array()
-
-            
+        'default' => array(
+            'accounting' => array(
+                array(
+                    'label' => 'Vendors',
+                    'icon' => 'fa fa-truck',
+                    'route' => 'vendor-index',
+                    'resource' => 'vendor-index',
+                    'order' => 3
+                )
+            )
         )
+        
     ),
     // acl
     'acl' => array(
