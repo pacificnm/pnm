@@ -1,6 +1,5 @@
 <ul class="treeview-menu">
 <?php foreach($this->container as $key => $page): ?>
-
 	<?php if (!$this->navigation()->accept($page)) continue; ?>
 	
 	<li <?php if ($page->isActive()):?> class="active"<?php endif;?>>

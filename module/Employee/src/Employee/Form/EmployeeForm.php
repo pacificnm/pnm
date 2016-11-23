@@ -216,6 +216,61 @@ class EmployeeForm extends Form implements InputFilterProviderInterface
             )
         ));
         
+        // employeeSsn
+        $this->add(array(
+            'name' => 'employeeSsn',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'SSI Number:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'employeeSsn'
+            )
+        ));
+        
+        // employeBirthday
+        $this->add(array(
+            'name' => 'employeBirthday',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Birth Day:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'employeBirthday'
+            )
+        ));
+        
+        // employeeMaritalStatus
+        $this->add(array(
+            'type' => 'Select',
+            'name' => 'employeeMaritalStatus',
+            'options' => array(
+                'label' => 'Marital Status:',
+                'value_options' => array(
+                    'Active' => 'Single',
+                    'Closed' => 'Married',
+                    'Deleted' => 'Divorced'
+                )
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'employeeStatus'
+            )
+        ));
+        
+        $this->add(array(
+            'name' => 'employeeWage',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Wage:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'employeeWage'
+            )
+        ));
         // button
         $this->add(array(
             'name' => 'submit',

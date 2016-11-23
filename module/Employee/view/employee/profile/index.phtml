@@ -82,7 +82,11 @@
  		
  		<section id="openMessages"><?php echo $this->getEmployeeMessages($this->employeeId); ?></section>
  		
- 		<section id="openHostAlerts"><?php if($this->appConfig()->getConfigPanoramaKey()): ?><?php echo $this->GetAllIssues(); ?><?php endif;?></section>
+ 		<section id="openHostAlerts">
+ 		<?php if($this->appConfig()->getConfigPanoramaKey()): ?>
+ 			<?php echo $this->GetAllIssues(); ?>
+ 		<?php endif;?>
+ 		</section>
  		
  	</div>
  </div>

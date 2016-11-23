@@ -24,6 +24,10 @@ CREATE TABLE IF NOT EXISTS `employee` (
   PRIMARY KEY (`employee_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+ALTER TABLE `employee` ADD `employee_ssn` VARCHAR(255) NOT NULL AFTER `employee_image`;
+ALTER TABLE `employee` ADD `employe_birthday` INT(11) NOT NULL AFTER `employee_ssn`;
+ALTER TABLE `employee` ADD `employee_marital_status` VARCHAR(60) NOT NULL AFTER `employe_birthday`;
+ALTER TABLE `employee` ADD `employee_wage` FLOAT(11) NOT NULL AFTER `employee_marital_status`;
 --
 -- RELATIONS FOR TABLE `employee`:
 --

@@ -62,14 +62,7 @@ class UpdateController extends BaseController
      */
     public function indexAction()
     {
-        $this->layout()->setVariable('pageTitle', 'Edit Config');
-    
-        $this->layout()->setVariable('pageSubTitle', '');
-    
-        $this->layout()->setVariable('activeMenuItem', 'admin');
-    
-        $this->layout()->setVariable('activeSubMenuItem', 'config-index');
-        
+               
         $configEntity = $this->configService->get(1);
         
         $this->configForm->bind($configEntity);

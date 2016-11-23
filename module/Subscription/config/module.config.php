@@ -27,14 +27,20 @@ return array(
     // controller
     'controllers' => array(
         'factories' => array(
-            'Subscription\Controller\AdminController' => 'Subscription\Controller\Factory\AdminControllerFactory'
+            'Subscription\Controller\AdminController' => 'Subscription\Controller\Factory\AdminControllerFactory',
+            'Subscription\Controller\IndexController' => 'Subscription\Controller\Factory\IndexControllerFactory',
+            'Subscription\Controller\CreateController' => 'Subscription\Controller\Factory\CreateControllerFactory',
+            'Subscription\Controller\ViewController' => 'Subscription\Controller\Factory\ViewControllerFactory',
+            'Subscription\Controller\DeleteController' => 'Subscription\Controller\Factory\DeleteControllerFactory',
+            'Subscription\Controller\UpdateController' => 'Subscription\Controller\Factory\UpdateControllerFactory',
         )
     ),
     // service manager
     'service_manager' => array(
         'factories' => array(
             'Subscription\Mapper\MysqlMapperInterface' => 'Subscription\Mapper\Factory\MysqlMapperFactory',
-            'Subscription\Service\SubscriptionServiceInterface' => 'Subscription\Service\Factory\SubscriptionServiceFactory'
+            'Subscription\Service\SubscriptionServiceInterface' => 'Subscription\Service\Factory\SubscriptionServiceFactory',
+            'Subscription\Form\SubscriptionForm' => 'Subscription\Form\Factory\SubscriptionFormFactory'
         )
     ),
     // routes
@@ -65,7 +71,7 @@ return array(
                 'options' => array(
                     'route' => '/client/[:clientId]/subscription',
                     'defaults' => array(
-                        'controller' => 'Product\Controller\IndexController',
+                        'controller' => 'Subscription\Controller\IndexController',
                         'action' => 'index'
                     )
                 )
@@ -80,7 +86,7 @@ return array(
                 'options' => array(
                     'route' => '/client/[:clientId]/subscription/create',
                     'defaults' => array(
-                        'controller' => 'Product\Controller\IndexController',
+                        'controller' => 'Subscription\Controller\CreateController',
                         'action' => 'index'
                     )
                 )
@@ -95,7 +101,7 @@ return array(
                 'options' => array(
                     'route' => '/client/[:clientId]/subscription/update/[:subscriptionId]',
                     'defaults' => array(
-                        'controller' => 'Product\Controller\IndexController',
+                        'controller' => 'Subscription\Controller\UpdateController',
                         'action' => 'index'
                     )
                 )
@@ -110,7 +116,7 @@ return array(
                 'options' => array(
                     'route' => '/client/[:clientId]/subscription/delete/[:subscriptionId]',
                     'defaults' => array(
-                        'controller' => 'Product\Controller\IndexController',
+                        'controller' => 'Subscription\Controller\DeleteController',
                         'action' => 'index'
                     )
                 )
@@ -125,7 +131,7 @@ return array(
                 'options' => array(
                     'route' => '/client/[:clientId]/subscription/view/[:subscriptionId]',
                     'defaults' => array(
-                        'controller' => 'Product\Controller\IndexController',
+                        'controller' => 'Subscription\Controller\ViewController',
                         'action' => 'index'
                     )
                 )
@@ -170,7 +176,15 @@ return array(
                                 'label' => 'Subscriptions',
                                 'route' => 'subscription-index',
                                 'resource' => 'subscription-index',
-                                'useRouteMatch' => true
+                                'useRouteMatch' => true,
+                                'pages' => array(
+                                    array(
+                                        'label' => 'View',
+                                        'route' => 'subscription-view',
+                                        'resource' => 'subscription-view',
+                                        'useRouteMatch' => true,
+                                    )
+                                )
                             )
                         )
                     )
@@ -188,6 +202,16 @@ return array(
                     'route' => 'subscription-admin-index',
                     'resource' => 'subscription-admin-index',
                     'order' => 13
+                )
+            ),
+            'client' => array(
+                array(
+                    'label' => 'Subscriptions',
+                    'icon' => 'fa fa-line-chart',
+                    'route' => 'subscription-index',
+                    'resource' => 'subscription-index',
+                    'order' => 9,
+                    'useRouteMatch' => true
                 )
             )
         )

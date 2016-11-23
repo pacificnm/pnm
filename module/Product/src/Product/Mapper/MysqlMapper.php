@@ -61,6 +61,22 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \Product\Mapper\MysqlMapperInterface::getActiveProducts()
+     */
+    public function getActiveProducts()
+    {
+        $this->select = $this->readSql->select('product');
+        
+        $this->select->where(array(
+            'product.product_status = ?' => 1
+        ));
+        
+        return $this->getRows();
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *

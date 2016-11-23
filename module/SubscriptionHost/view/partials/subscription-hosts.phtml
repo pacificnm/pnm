@@ -1,0 +1,25 @@
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th><?php echo $this->translate('Host'); ?></th>
+			<th><?php echo $this->translate('Host Type'); ?></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach($this->subscriptionHostEntitys as $entity): ?>
+		<tr>
+			<td>
+				<a href="<?php echo $this->url('host-view', array('clientId' => $entity->getHostEntity()->getClientId(), 'hostId' => $entity->getHostId())); ?>" title="<?php echo $this->translate('View this host'); ?>"><?php echo $entity->getHostEntity()->getHostName(); ?></a> 
+			</td>
+			<td><?php echo $entity->getHostEntity()->getTypeEntity()->getHostTypeName(); ?></td>
+			<td class="text-right">
+				<a href="<?php echo $this->url('subscription-host-delete', array('clientId' => $entity->getHostEntity()->getClientId(), 'subscriptionHostId' => $entity->getSubscriptionHostId())); ?>" 
+					title="<?php echo $this->translate('Remove from subscription'); ?>" class="btn btn-box-tool">
+						<i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?>
+				</a>
+			</td>
+		</tr>
+		<?php endforeach;?>
+	</tbody>
+</table>

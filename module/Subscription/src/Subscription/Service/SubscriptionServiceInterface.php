@@ -22,6 +22,12 @@ interface SubscriptionServiceInterface
 
     /**
      *
+     * @return SubscriptionEntity
+     */
+    public function getActive();
+    
+    /**
+     *
      * @param SubscriptionEntity $entity            
      * @return SubscriptionEntity
      */

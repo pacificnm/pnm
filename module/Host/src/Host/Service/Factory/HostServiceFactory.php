@@ -16,7 +16,7 @@ class HostServiceFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $mapper = $serviceLocator->get('Host\Mapper\HostMapperInterface');
+        $mapper = $serviceLocator->get('Host\Mapper\MysqlMapperInterface');
         
         return new HostService($mapper);
     }

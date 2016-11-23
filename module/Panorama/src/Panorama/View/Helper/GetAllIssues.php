@@ -7,10 +7,23 @@ use Panorama\Service\MspServiceInterface;
 
 class GetAllIssues extends AbstractHelper
 {
+    /**
+     * 
+     * @var IssueServiceInterface
+     */
     protected $issueService;
     
+    /**
+     * 
+     * @var MspServiceInterface
+     */
     protected $mspService;
     
+    /**
+     * 
+     * @param IssueServiceInterface $issueService
+     * @param MspServiceInterface $mspService
+     */
     public function __construct(IssueServiceInterface $issueService, MspServiceInterface $mspService)
     {
         $this->issueService = $issueService;
@@ -18,6 +31,9 @@ class GetAllIssues extends AbstractHelper
         $this->mspService = $mspService;
     }
     
+    /**
+     * 
+     */
     public function __invoke()
     {
         $view = $this->getView();
@@ -26,9 +42,13 @@ class GetAllIssues extends AbstractHelper
         
         $data = new \stdClass();
         
-        $mspEntitys = $this->mspService->getClientsSummary();
-
-        $data->paginator = $mspEntitys;
+        try {
+            $mspEntitys = $this->mspService->getClientsSummary();
+            $data->paginator = $mspEntitys;
+        } catch (\Exception $e) {
+            $data->paginator = array();
+        }
+       
         
         return $partialHelper('partials/get-all-issues.phtml', $data);
     }

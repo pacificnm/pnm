@@ -48,6 +48,17 @@ class ProductService implements ProductServiceInterface
      *
      * {@inheritDoc}
      *
+     * @see \Product\Service\ProductServiceInterface::getActiveProducts()
+     */
+    public function getActiveProducts()
+    {
+        return $this->mapper->getActiveProducts();
+    }
+
+    /**
+     *
+     * {@inheritDoc}
+     *
      * @see \Product\Service\ProductServiceInterface::save()
      */
     public function save(ProductEntity $entity)

@@ -38,7 +38,7 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'Host\Service\HostServiceInterface' => 'Host\Service\Factory\HostServiceFactory',
-            'Host\Mapper\HostMapperInterface' => 'Host\Mapper\Factory\HostMapperFactory',
+            'Host\Mapper\MysqlMapperInterface' => 'Host\Mapper\Factory\MysqlMapperFactory',
             'Host\Form\HostForm' => 'Host\Form\Factory\HostFormFactory'
         )
     ),

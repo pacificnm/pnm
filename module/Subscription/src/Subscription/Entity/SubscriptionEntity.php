@@ -73,8 +73,20 @@ class SubscriptionEntity
      *
      * @var number
      */
-    protected $nextProductd;
+    protected $nextProductId;
 
+    /**
+     * 
+     * @var bool
+     */
+    protected $subscriptionHost;
+    
+    /**
+     * 
+     * @var bool
+     */
+    protected $subscriptionUser;
+    
     /**
      *
      * @var ProductEntity
@@ -104,9 +116,7 @@ class SubscriptionEntity
      * @var OptionEntity
      */
     protected $paymentOptionEntity;
-
     /**
-     *
      * @return the $subscriptionId
      */
     public function getSubscriptionId()
@@ -115,7 +125,6 @@ class SubscriptionEntity
     }
 
     /**
-     *
      * @return the $clientId
      */
     public function getClientId()
@@ -124,7 +133,6 @@ class SubscriptionEntity
     }
 
     /**
-     *
      * @return the $subscriptionDateCreate
      */
     public function getSubscriptionDateCreate()
@@ -133,7 +141,6 @@ class SubscriptionEntity
     }
 
     /**
-     *
      * @return the $subscriptionDateDue
      */
     public function getSubscriptionDateDue()
@@ -142,7 +149,6 @@ class SubscriptionEntity
     }
 
     /**
-     *
      * @return the $subscriptionDateUpdate
      */
     public function getSubscriptionDateUpdate()
@@ -151,7 +157,6 @@ class SubscriptionEntity
     }
 
     /**
-     *
      * @return the $subscriptionDateEnd
      */
     public function getSubscriptionDateEnd()
@@ -160,7 +165,6 @@ class SubscriptionEntity
     }
 
     /**
-     *
      * @return the $paymentOptionId
      */
     public function getPaymentOptionId()
@@ -169,7 +173,6 @@ class SubscriptionEntity
     }
 
     /**
-     *
      * @return the $subscriptionScheduleId
      */
     public function getSubscriptionScheduleId()
@@ -178,7 +181,6 @@ class SubscriptionEntity
     }
 
     /**
-     *
      * @return the $subscriptionStatusId
      */
     public function getSubscriptionStatusId()
@@ -187,7 +189,6 @@ class SubscriptionEntity
     }
 
     /**
-     *
      * @return the $productId
      */
     public function getProductId()
@@ -196,16 +197,30 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @return the $nextProductd
+     * @return the $nextProductId
      */
-    public function getNextProductd()
+    public function getNextProductId()
     {
-        return $this->nextProductd;
+        return $this->nextProductId;
     }
 
     /**
-     *
+     * @return the $subscriptionHost
+     */
+    public function getSubscriptionHost()
+    {
+        return $this->subscriptionHost;
+    }
+
+    /**
+     * @return the $subscriptionUser
+     */
+    public function getSubscriptionUser()
+    {
+        return $this->subscriptionUser;
+    }
+
+    /**
      * @return the $productEntity
      */
     public function getProductEntity()
@@ -214,7 +229,6 @@ class SubscriptionEntity
     }
 
     /**
-     *
      * @return the $nextProductEntity
      */
     public function getNextProductEntity()
@@ -223,7 +237,6 @@ class SubscriptionEntity
     }
 
     /**
-     *
      * @return the $subscriptionStatusEntity
      */
     public function getSubscriptionStatusEntity()
@@ -232,7 +245,6 @@ class SubscriptionEntity
     }
 
     /**
-     *
      * @return the $subscriptionScheduleEntity
      */
     public function getSubscriptionScheduleEntity()
@@ -241,7 +253,6 @@ class SubscriptionEntity
     }
 
     /**
-     *
      * @return the $paymentOptionEntity
      */
     public function getPaymentOptionEntity()
@@ -250,8 +261,7 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param number $subscriptionId            
+     * @param number $subscriptionId
      */
     public function setSubscriptionId($subscriptionId)
     {
@@ -259,8 +269,7 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param number $clientId            
+     * @param number $clientId
      */
     public function setClientId($clientId)
     {
@@ -268,8 +277,7 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param number $subscriptionDateCreate            
+     * @param number $subscriptionDateCreate
      */
     public function setSubscriptionDateCreate($subscriptionDateCreate)
     {
@@ -277,8 +285,7 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param number $subscriptionDateDue            
+     * @param number $subscriptionDateDue
      */
     public function setSubscriptionDateDue($subscriptionDateDue)
     {
@@ -286,8 +293,7 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param number $subscriptionDateUpdate            
+     * @param number $subscriptionDateUpdate
      */
     public function setSubscriptionDateUpdate($subscriptionDateUpdate)
     {
@@ -295,8 +301,7 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param number $subscriptionDateEnd            
+     * @param number $subscriptionDateEnd
      */
     public function setSubscriptionDateEnd($subscriptionDateEnd)
     {
@@ -304,8 +309,7 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param number $paymentOptionId            
+     * @param number $paymentOptionId
      */
     public function setPaymentOptionId($paymentOptionId)
     {
@@ -313,8 +317,7 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param number $subscriptionScheduleId            
+     * @param number $subscriptionScheduleId
      */
     public function setSubscriptionScheduleId($subscriptionScheduleId)
     {
@@ -322,8 +325,7 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param number $subscriptionStatusId            
+     * @param number $subscriptionStatusId
      */
     public function setSubscriptionStatusId($subscriptionStatusId)
     {
@@ -331,8 +333,7 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param number $productId            
+     * @param number $productId
      */
     public function setProductId($productId)
     {
@@ -340,17 +341,31 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param number $nextProductd            
+     * @param number $nextProductId
      */
-    public function setNextProductd($nextProductd)
+    public function setNextProductId($nextProductId)
     {
-        $this->nextProductd = $nextProductd;
+        $this->nextProductId = $nextProductId;
     }
 
     /**
-     *
-     * @param \Product\Entity\ProductEntity $productEntity            
+     * @param boolean $subscriptionHost
+     */
+    public function setSubscriptionHost($subscriptionHost)
+    {
+        $this->subscriptionHost = $subscriptionHost;
+    }
+
+    /**
+     * @param boolean $subscriptionUser
+     */
+    public function setSubscriptionUser($subscriptionUser)
+    {
+        $this->subscriptionUser = $subscriptionUser;
+    }
+
+    /**
+     * @param \Product\Entity\ProductEntity $productEntity
      */
     public function setProductEntity($productEntity)
     {
@@ -358,8 +373,7 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param \Product\Entity\ProductEntity $nextProductEntity            
+     * @param \Product\Entity\ProductEntity $nextProductEntity
      */
     public function setNextProductEntity($nextProductEntity)
     {
@@ -367,8 +381,7 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param \SubscriptionStatus\Entity\SubscriptionStatusEntity $subscriptionStatusEntity            
+     * @param \SubscriptionStatus\Entity\SubscriptionStatusEntity $subscriptionStatusEntity
      */
     public function setSubscriptionStatusEntity($subscriptionStatusEntity)
     {
@@ -376,8 +389,7 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param \SubscriptionSchedule\Entity\SubscriptionScheduleEntity $subscriptionScheduleEntity            
+     * @param \SubscriptionSchedule\Entity\SubscriptionScheduleEntity $subscriptionScheduleEntity
      */
     public function setSubscriptionScheduleEntity($subscriptionScheduleEntity)
     {
@@ -385,11 +397,13 @@ class SubscriptionEntity
     }
 
     /**
-     *
-     * @param \PaymentOption\Entity\OptionEntity $paymentOptionEntity            
+     * @param \PaymentOption\Entity\OptionEntity $paymentOptionEntity
      */
     public function setPaymentOptionEntity($paymentOptionEntity)
     {
         $this->paymentOptionEntity = $paymentOptionEntity;
     }
+
+
+    
 }

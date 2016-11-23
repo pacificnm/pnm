@@ -44,7 +44,8 @@ return array(
         'factories' => array(
             'Invoice\Service\InvoiceServiceInterface' => 'Invoice\Service\Factory\InvoiceServiceFactory',
             'Invoice\Mapper\InvoiceMapperInterface' => 'Invoice\Mapper\Factory\InvoiceMapperFactory',
-            'Invoice\Form\WorkorderForm' => 'Invoice\Form\Factory\WorkorderFormFactory'
+            'Invoice\Form\WorkorderForm' => 'Invoice\Form\Factory\WorkorderFormFactory',
+            'Invoice\Listener\InvoiceListener' => 'Invoice\Listener\Factory\InvoiceListenerFactory',
         )
     ),
     

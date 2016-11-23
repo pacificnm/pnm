@@ -53,3 +53,5 @@ INSERT INTO `config` (`config_id`, `config_version`, `config_copy_year`, `config
 SET FOREIGN_KEY_CHECKS=1;
 
 
+ALTER TABLE `config` ADD `config_ein` VARCHAR(255) NOT NULL AFTER `config_currency`;
+

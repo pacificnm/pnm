@@ -22,6 +22,12 @@ interface MysqlMapperInterface
 
     /**
      *
+     * @return ProductEntity
+     */
+    public function getActiveProducts();
+
+    /**
+     *
      * @param ProductEntity $entity            
      * @return ProductEntity
      */

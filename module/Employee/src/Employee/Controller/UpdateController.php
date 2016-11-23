@@ -16,12 +16,13 @@ use Employee\Form\EmployeeForm;
 use Employee\Form\ProfileForm;
 use Employee\Form\PasswordForm;
 use Zend\Crypt\Password\Bcrypt;
+use Zend\Crypt\BlockCipher;
 
 /**
  *
  * @author jaimie <pacificnm@gmail.com>
  * @version 2.5.0
- *
+ *         
  */
 class UpdateController extends BaseController
 {
@@ -33,38 +34,51 @@ class UpdateController extends BaseController
     protected $employeeService;
 
     /**
-     * 
+     *
      * @var AuthServiceInterface
      */
     protected $authService;
-    
+
     /**
      *
      * @var EmployeeForm
      */
     protected $employeeForm;
-    
+
     /**
-     * 
+     *
      * @var ProfileForm
      */
     protected $profileForm;
 
     /**
-     * 
+     *
      * @var PasswordForm
      */
     protected $passwordForm;
+
+    /**
+     * 
+     * @var array
+     */
+    protected $config;
     
     /**
      * 
-     * @param EmployeeServiceInterface $employeeService
-     * @param AuthServiceInterface $authService
-     * @param EmployeeForm $employeeForm
-     * @param ProfileForm $profileForm
-     * @param PasswordForm $passwordForm
+     * @var BlockCipher
      */
-    public function __construct(EmployeeServiceInterface $employeeService, AuthServiceInterface $authService, EmployeeForm $employeeForm, ProfileForm $profileForm, PasswordForm $passwordForm)
+    protected $blockCipher;
+    
+
+    /**
+     *
+     * @param EmployeeServiceInterface $employeeService            
+     * @param AuthServiceInterface $authService            
+     * @param EmployeeForm $employeeForm            
+     * @param ProfileForm $profileForm            
+     * @param PasswordForm $passwordForm            
+     */
+    public function __construct(EmployeeServiceInterface $employeeService, AuthServiceInterface $authService, EmployeeForm $employeeForm, ProfileForm $profileForm, PasswordForm $passwordForm, array $config)
     {
         $this->employeeService = $employeeService;
         
@@ -75,9 +89,19 @@ class UpdateController extends BaseController
         $this->profileForm = $profileForm;
         
         $this->passwordForm = $passwordForm;
+        
+        $this->config = $config;
+        
+        // encrypt ssi number
+        $this->blockCipher = BlockCipher::factory('mcrypt', array(
+            'algo' => 'aes'
+        ));
+        
+        $this->blockCipher->setKey($this->config['encryption-key']);
     }
 
     /**
+     * Admin Update
      *
      * {@inheritDoc}
      *
@@ -85,14 +109,6 @@ class UpdateController extends BaseController
      */
     public function indexAction()
     {
-        $this->layout()->setVariable('pageTitle', 'Employee');
-        
-        $this->layout()->setVariable('pageSubTitle', 'Edit');
-        
-        $this->layout()->setVariable('activeMenuItem', 'admin');
-        
-        $this->layout()->setVariable('activeSubMenuItem', 'employee-index');
-        
         $id = $this->params()->fromRoute('employeeId');
         
         $employeeEntity = $this->employeeService->get($id);
@@ -104,41 +120,45 @@ class UpdateController extends BaseController
         }
         
         // update auth
-        $authEntity = $this->authService->get($employeeEntity->getAuthEntity()->getAuthId());
+        $authEntity = $this->authService->get($employeeEntity->getAuthEntity()
+            ->getAuthId());
         
-        if(! $authEntity) {
+        if (! $authEntity) {
             $this->flashmessenger()->addErrorMessage('Unable to find the authEntity');
             
             return $this->redirect()->toRoute('employee-index');
         }
         
-        
-        $this->employeeForm->bind($employeeEntity);
-        
-        $request = $this->getRequest();
-        
-        
-        
         // if we have a post
-        if ($request->isPost()) {
-            // get post
-            $postData = $request->getPost();
+        if ($this->getRequest()->isPost()) {
             
-            $this->employeeForm->setData($postData);
+            // set form data
+            $this->employeeForm->setData($this->getRequest()
+                ->getPost());
             
             // if we are valid
             if ($this->employeeForm->isValid()) {
                 
-                $employeeEntity = $this->employeeForm->getData();
+                // save employee entity
+                $entity = $this->employeeForm->getData();
                 
-                $employeeEntity = $this->employeeService->save($employeeEntity);
+                // set birthday
+                $entity->setEmployeBirthday(strtotime($entity->getEmployeBirthday()));
                 
+                // encrypt ssi
+                $entity->setEmployeeSsn($this->blockCipher->encrypt($entity->getEmployeeSsn()));
+                
+                $employeeEntity = $this->employeeService->save($entity);
+                
+                // update auth
+                // @todo move to trigger
                 $authEntity->setAuthEmail($employeeEntity->getEmployeeEmail());
                 
                 $authEntity->setAuthName($employeeEntity->getEmployeeName());
                 
                 $this->authService->save($authEntity);
                 
+                // set flash messenger
                 $this->flashmessenger()->addSuccessMessage('The employee was saved');
                 
                 return $this->redirect()->toRoute('employee-view', array(
@@ -146,17 +166,33 @@ class UpdateController extends BaseController
                 ));
             }
         }
+        
+        // bind form
+        $employeeEntity->setEmployeBirthday(date("m/d/Y", $employeeEntity->getEmployeBirthday()));
+        
+        $employeeEntity->setEmployeeSsn($this->blockCipher->decrypt($employeeEntity->getEmployeeSsn()));
+        
+        $this->employeeForm->bind($employeeEntity);
+        
+        // return view
         return new ViewModel(array(
             'employeeEntity' => $employeeEntity,
             'form' => $this->employeeForm
         ));
     }
-    
+
+    /**
+     * Employee Edit
+     * 
+     * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
+     */
     public function employeeAction()
     {
-        $authEntity = $this->authService->get($this->identity()->getAuthId()); 
+        $authEntity = $this->authService->get($this->identity()
+            ->getAuthId());
         
-        $employeeEntity = $this->employeeService->get($this->identity()->getEmployeeId());
+        $employeeEntity = $this->employeeService->get($this->identity()
+            ->getEmployeeId());
         
         $request = $this->getRequest();
         
@@ -164,29 +200,27 @@ class UpdateController extends BaseController
         if ($request->isPost()) {
             // get post
             $postData = $request->getPost();
-        
+            
             $this->profileForm->setData($postData);
-        
+            
             // if we are valid
             if ($this->profileForm->isValid()) {
-        
+                
                 $employeeEntity = $this->profileForm->getData();
-        
+                
                 $employeeEntity = $this->employeeService->save($employeeEntity);
-        
+                
                 $authEntity->setAuthEmail($employeeEntity->getEmployeeEmail());
-        
+                
                 $authEntity->setAuthName($employeeEntity->getEmployeeName());
-        
+                
                 $this->authService->save($authEntity);
-        
+                
                 $this->flashmessenger()->addSuccessMessage('Your information was saved');
-        
+                
                 return $this->redirect()->toRoute('employee-profile');
             }
         }
-        
-        
         
         $this->profileForm->bind($employeeEntity);
         
@@ -203,7 +237,12 @@ class UpdateController extends BaseController
             'form' => $this->profileForm
         ));
     }
-    
+
+    /**
+     * Updates password
+     * 
+     * @return \Zend\Http\Response|\Zend\View\Model\ViewModel
+     */
     public function passwordAction()
     {
         $request = $this->getRequest();
@@ -212,9 +251,9 @@ class UpdateController extends BaseController
         if ($request->isPost()) {
             // get post
             $postData = $request->getPost();
-        
+            
             $this->passwordForm->setData($postData);
-        
+            
             // if we are valid
             if ($this->passwordForm->isValid()) {
                 
@@ -222,7 +261,8 @@ class UpdateController extends BaseController
                 
                 $bcrypt = new Bcrypt();
                 
-                $authEntity = $this->authService->get($this->identity()->getAuthId());
+                $authEntity = $this->authService->get($this->identity()
+                    ->getAuthId());
                 
                 $password = $bcrypt->create($entity['newPassword']);
                 
@@ -236,8 +276,8 @@ class UpdateController extends BaseController
             }
         }
         
-        
-        $this->passwordForm->get('employeeId')->setValue($this->identity()->getEmployeeId());
+        $this->passwordForm->get('employeeId')->setValue($this->identity()
+            ->getEmployeeId());
         
         $this->layout()->setVariable('pageTitle', 'My Profile');
         

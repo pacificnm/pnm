@@ -34,9 +34,13 @@ class GetDeviceIssues extends AbstractHelper
         
         $data = new \stdClass();
         
-        $issueEntitys = $this->issueService->getDeviceIssues($cid, $deviceId);
-        
-        $data->issueEntitys = $issueEntitys;
+        try {
+            $issueEntitys = $this->issueService->getDeviceIssues($cid, $deviceId);
+            
+            $data->issueEntitys = $issueEntitys;
+        } catch (\Exception $e) {
+            $data->issueEntitys = array();
+        }
         
         return $partialHelper('partials/get-device-issues.phtml', $data);
     }

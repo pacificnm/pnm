@@ -1,4 +1,11 @@
-<?php //\Zend\Debug\Debug::dump($this->deviceEntity); ?>
+<?php if(! $this->deviceEntity): ?>
+
+<div class="box-body">
+	<div class="alert alert-info">
+		<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No host details.'); ?></p>
+	</div>
+</div>
+<?php else: ?>
 <div class="box box-widget widget-user-2">
 	<div class="widget-user-header">
 		<div class="widget-user-image">
@@ -62,3 +69,4 @@
 		<?php endif;?>
 	</div>
 </div>
+<?php endif; ?>

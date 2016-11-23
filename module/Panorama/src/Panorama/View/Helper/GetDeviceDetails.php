@@ -27,11 +27,16 @@ class GetDeviceDetails extends AbstractHelper
         
         $partialHelper = $view->plugin('partial');
         
-        $deviceEntity = $this->deviceService->getDevice($cid, $deviceId);
-        
         $data = new \stdClass();
         
-        $data->deviceEntity = $deviceEntity;
+        try {
+            $deviceEntity = $this->deviceService->getDevice($cid, $deviceId);
+            $data->deviceEntity = $deviceEntity;
+        } catch (\Exception $e) {
+            $data->deviceEntity = null;
+        }
+        
+        
         
         return $partialHelper('partials/get-device-details.phtml', $data);
     }

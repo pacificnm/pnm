@@ -26,9 +26,16 @@ class MenuService extends DefaultNavigationFactory
     
             $pages = $this->getPagesFromConfig($configuration['menu'][$this->getName()]['client']);
     
+            //\Zend\Debug\Debug::dump($pages);
+            
             $this->pages = $this->preparePages($container, $pages);
         }
     
+        
+        
+        
         return $this->pages;
     }
+    
+   
 }

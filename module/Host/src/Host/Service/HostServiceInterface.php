@@ -30,6 +30,13 @@ interface HostServiceInterface
 
     /**
      *
+     * @param number $clientId
+     * @return HostEntity
+     */
+    public function getClientHosts($clientId);
+    
+    /**
+     *
      * @param HostEntity $entity            
      * @return HostEntity
      */

@@ -63,6 +63,8 @@ return array(
             ),
             'client-index' => array(
                 'title' => 'List Clients',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'call-index',
                 'type' => 'literal',
                 'options' => array(
                     'route' => '/client',
@@ -176,7 +178,7 @@ return array(
                     'route' => 'client-view',
                     'resource' => 'client-view',
                     'order' => 1,
-                    'useRouteMatch' => true
+                    'useRouteMatch' => true,
                 )
             )
         )

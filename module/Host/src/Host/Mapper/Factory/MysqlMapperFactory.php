@@ -1,34 +1,32 @@
 <?php
 namespace Host\Mapper\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Host\Mapper\MysqlMapper;
 use Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator;
-use Host\Mapper\HostMapper;
 use Host\Hydrator\HostHydrator;
 use Host\Entity\HostEntity;
 
-class HostMapperFactory implements FactoryInterface
+class MysqlMapperFactory
 {
 
     /**
      *
-     * {@inheritDoc}
-     *
-     * @see \Zend\ServiceManager\FactoryInterface::createService()
+     * @param ServiceLocatorInterface $serviceLocator            
+     * @return \Host\Mapper\MysqlMapper
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $hydrator = new AggregateHydrator();
         
         $hydrator->add(new HostHydrator());
         
-        $prototype = new HostEntity();
-        
         $readAdapter = $serviceLocator->get('db1');
         
         $writeAdapter = $serviceLocator->get('db2');
         
-        return new HostMapper($readAdapter, $writeAdapter, $hydrator, $prototype);
+        $prototype = new HostEntity();
+        
+        return new MysqlMapper($readAdapter, $writeAdapter, $hydrator, $prototype);
     }
 }

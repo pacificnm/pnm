@@ -2,14 +2,14 @@
 namespace Host\Service;
 
 use Host\Entity\HostEntity;
-use Host\Mapper\HostMapperInterface;
+use Host\Mapper\MysqlMapperInterface;
 
 class HostService implements HostServiceInterface
 {
 
     /**
      *
-     * @var HostMapperInterface
+     * @var MysqlMapperInterface
      */
     protected $mapper;
 
@@ -17,7 +17,7 @@ class HostService implements HostServiceInterface
      *
      * @param HostMapperInterface $mapper            
      */
-    public function __construct(HostMapperInterface $mapper)
+    public function __construct(MysqlMapperInterface $mapper)
     {
         $this->mapper = $mapper;
     }
@@ -45,15 +45,27 @@ class HostService implements HostServiceInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Host\Service\HostServiceInterface::getClientHostNotInWorkorder()
      */
     public function getClientHostNotInWorkorder($clientId, $workorderId)
     {
-        return $this->mapper->getClientHostNotInWorkorder($clientId, $workorderId);    
+        return $this->mapper->getClientHostNotInWorkorder($clientId, $workorderId);
     }
-    
+
+    /**
+     *
+     * {@inheritDoc}
+     *
+     * @see \Host\Service\HostServiceInterface::getClientHosts()
+     */
+    public function getClientHosts($clientId)
+    {
+        return $this->mapper->getClientHosts($clientId);
+    }
+
     /**
      *
      * {@inheritDoc}
@@ -66,8 +78,9 @@ class HostService implements HostServiceInterface
     }
 
     /**
-     * 
+     *
      * {@inheritDoc}
+     *
      * @see \Host\Service\HostServiceInterface::create()
      */
     public function create($clientId, $hostDescription, $hostHealth, $hostIp, $hostName, $hostStatus, $hostTypeId, $locationId)
@@ -94,10 +107,9 @@ class HostService implements HostServiceInterface
         
         $entity->setHostTypeId($hostTypeId);
         
-        
         return $this->save($entity);
     }
-    
+
     /**
      *
      * {@inheritDoc}

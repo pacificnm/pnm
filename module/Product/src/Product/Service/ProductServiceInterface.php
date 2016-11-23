@@ -22,6 +22,12 @@ interface ProductServiceInterface
 
     /**
      *
+     * @return ProductEntity
+     */
+    public function getActiveProducts();
+    
+    /**
+     *
      * @param ProductEntity $entity            
      * @return ProductEntity
      */

@@ -4,12 +4,14 @@
 	<h3 class="box-title"><i class="fa fa-bell"></i> <?php echo $this->translate('Host Issues'); ?></h3>
 	<div class="box-tools pull-right"></div>
 	</div>
-	<div class="box-body table-responsive no-padding">
-		<?php if(count($this->issueEntitys) == 0):?>
+	
+	<?php if(count($this->issueEntitys) == 0):?>
+	<div class="box-body">
 		<div class="alert alert-info">
 			<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('There are no host issues'); ?></p>
 		</div>
-		<?php else: ?>
+	<?php else: ?>
+	<div class="box-body table-responsive no-padding">
 		<table class="table table-bordered table-hover table-striped table-condensed">
 			<thead>
 				<tr>

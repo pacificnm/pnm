@@ -112,7 +112,11 @@ return array(
         'SubscriptionHost',
         'SubscriptionStatus',
         'SubscriptionSchedule',
-        'Calendar'
+        'Calendar',
+        'SubscriptionInvoice',
+        'Payroll',
+        'PayrollDeduction',
+        'PayrollDeductionType',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

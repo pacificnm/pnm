@@ -129,6 +129,12 @@ class ConfigEntity
      *
      * @var string
      */
+    protected $configEin;
+
+    /**
+     *
+     * @var string
+     */
     protected $configGoogleApiKey;
 
     /**
@@ -333,6 +339,15 @@ class ConfigEntity
     public function getConfigCurrency()
     {
         return $this->configCurrency;
+    }
+
+    /**
+     *
+     * @return the $configEin
+     */
+    public function getConfigEin()
+    {
+        return $this->configEin;
     }
 
     /**
@@ -567,6 +582,15 @@ class ConfigEntity
     public function setConfigCurrency($configCurrency)
     {
         $this->configCurrency = $configCurrency;
+    }
+
+    /**
+     *
+     * @param string $configEin            
+     */
+    public function setConfigEin($configEin)
+    {
+        $this->configEin = $configEin;
     }
 
     /**

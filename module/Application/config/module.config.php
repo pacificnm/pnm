@@ -152,6 +152,34 @@ return array(
            
         )
     ),
+    
+    'acl' => array(
+        'default' => array(
+            'guest' => array(),
+            'user' => array(
+                0 => 'home',
+                1 => 'keep-alive'
+            ),
+            'user-accountant' => array(),
+            'user-manager' => array(),
+            'employee' => array(),
+            'accountant' => array(),
+            'administrator' => array()
+        ),
+        'my_default' => array(
+            'guest' => array(),
+            'user' => array(
+                0 => 'home',
+                1 => 'keep-alive'
+            ),
+            'user-accountant' => array(),
+            'user-manager' => array(),
+            'employee' => array(),
+            'accountant' => array(),
+            'administrator' => array()
+        )
+    ),
+    
     'zf-versioning' => array(
         'uri' => array(
             0 => 'application.rpc.ping'

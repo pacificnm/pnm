@@ -141,6 +141,19 @@ class ConsoleController extends AbstractActionController
         foreach ($this->config['module'] as $module) {
             $allResources = array();
             
+            /**
+             * @todo Move acl configuration to root of config array
+             *
+            if (! isset($configuration['acl'])) {
+                throw new \Exception('Could not find acl default configuration key');
+            }
+            
+            if (! isset($configuration['acl'][$this->getName()]['default'])) {
+                throw new \Exception(sprintf('Failed to find a menu container by the name "%s"', $this->getName()));
+            }
+            \Zend\Debug\Debug::dump($configuration);
+            die;
+            */
             $name = $module['name'];
             
             $console->write("Updating module {$name}\n");

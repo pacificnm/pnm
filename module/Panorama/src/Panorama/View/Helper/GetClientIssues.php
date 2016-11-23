@@ -31,9 +31,13 @@ class GetClientIssues extends AbstractHelper
         
         $data = new \stdClass();
         
-        $issueEntitys = $this->issueService->getAllIssues($cid);
+        try {
+            $issueEntitys = $this->issueService->getAllIssues($cid);
+            $data->issueEntitys = $issueEntitys;
+        } catch (\Exception $e) {
+            $data->issueEntitys = array();
+        }
         
-        $data->issueEntitys = $issueEntitys;
         
         return $partialHelper('partials/get-client-issues.phtml', $data);
     }

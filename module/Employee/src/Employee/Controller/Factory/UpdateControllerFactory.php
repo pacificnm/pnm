@@ -42,6 +42,8 @@ class UpdateControllerFactory
         
         $passwordForm = $realServiceLocator->get('Employee\Form\PasswordForm');
         
-        return new UpdateController($employeeService, $authService, $employeeForm, $profileForm, $passwordForm);
+        $config = $realServiceLocator->get('config');
+        
+        return new UpdateController($employeeService, $authService, $employeeForm, $profileForm, $passwordForm, $config);
     }
 }

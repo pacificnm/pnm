@@ -203,8 +203,8 @@ return array(
                         )
                     )
                 )
-                
             )
+            
         )
     ),
     // menu
@@ -231,7 +231,14 @@ return array(
                 'user-manager' => array(),
                 'employee' => array(),
                 'accountant' => array(),
-                'administrator' => array()
+                'administrator' => array(
+                    'auth-index',
+                    'auth-create',
+                    'auth-delete',
+                    'auth-update',
+                    'auth-view',
+                    'auth-password'
+                )
             )
         )
     )

@@ -268,6 +268,18 @@ class ConfigForm extends Form implements InputFilterProviderInterface
             )
         ));
         
+        $this->add(array(
+            'name' => 'configEin',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Tax EIN:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'configEin'
+            )
+        ));
+        
         // configGoogleApiKey
         $this->add(array(
             'name' => 'configGoogleApiKey',

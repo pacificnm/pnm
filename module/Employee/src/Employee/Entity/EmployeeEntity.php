@@ -14,9 +14,9 @@ use Auth\Entity\AuthEntity;
  *
  * @author jaimie <pacificnm@gmail.com>
  * @version 2.5.0
- *
+ *         
  */
-class EmployeeEntity implements EmployeeEntityInterface
+class EmployeeEntity
 {
 
     /**
@@ -102,6 +102,30 @@ class EmployeeEntity implements EmployeeEntityInterface
      * @var string
      */
     protected $employeeStatus;
+
+    /**
+     *
+     * @var string
+     */
+    protected $employeeSsn;
+
+    /**
+     *
+     * @var string
+     */
+    protected $employeBirthday;
+
+    /**
+     *
+     * @var string
+     */
+    protected $employeeMaritalStatus;
+
+    /**
+     *
+     * @var float
+     */
+    protected $employeeWage;
 
     /**
      *
@@ -237,6 +261,42 @@ class EmployeeEntity implements EmployeeEntityInterface
 
     /**
      *
+     * @return the $employeeSsn
+     */
+    public function getEmployeeSsn()
+    {
+        return $this->employeeSsn;
+    }
+
+    /**
+     *
+     * @return the $employeBirthday
+     */
+    public function getEmployeBirthday()
+    {
+        return $this->employeBirthday;
+    }
+
+    /**
+     *
+     * @return the $employeeMaritalStatus
+     */
+    public function getEmployeeMaritalStatus()
+    {
+        return $this->employeeMaritalStatus;
+    }
+
+    /**
+     *
+     * @return the $employeeWage
+     */
+    public function getEmployeeWage()
+    {
+        return $this->employeeWage;
+    }
+
+    /**
+     *
      * @return the $authEntity
      */
     public function getAuthEntity()
@@ -368,6 +428,42 @@ class EmployeeEntity implements EmployeeEntityInterface
     public function setEmployeeStatus($employeeStatus)
     {
         $this->employeeStatus = $employeeStatus;
+    }
+
+    /**
+     *
+     * @param string $employeeSsn            
+     */
+    public function setEmployeeSsn($employeeSsn)
+    {
+        $this->employeeSsn = $employeeSsn;
+    }
+
+    /**
+     *
+     * @param string $employeBirthday            
+     */
+    public function setEmployeBirthday($employeBirthday)
+    {
+        $this->employeBirthday = $employeBirthday;
+    }
+
+    /**
+     *
+     * @param string $employeeMaritalStatus            
+     */
+    public function setEmployeeMaritalStatus($employeeMaritalStatus)
+    {
+        $this->employeeMaritalStatus = $employeeMaritalStatus;
+    }
+
+    /**
+     *
+     * @param number $employeeWage            
+     */
+    public function setEmployeeWage($employeeWage)
+    {
+        $this->employeeWage = $employeeWage;
     }
 
     /**

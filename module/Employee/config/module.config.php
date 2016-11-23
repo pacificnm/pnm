@@ -69,6 +69,7 @@ return array(
             ),
             'employee-profile-update' => array(
                 'type' => 'literal',
+                'title' => 'Edit My Profile',
                 'options' => array(
                     'route' => '/employee/profile/update',
                     'defaults' => array(
