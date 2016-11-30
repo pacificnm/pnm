@@ -1,0 +1,66 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
+?>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-dollar" aria-hidden="true"></i>
+					<?php echo $this->translate('Payroll Deductions'); ?>
+				</h3>
+				<div class="box-tools">
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'payroll-deduction-delete') ):?>
+					<a href="<?php echo $this->url('payroll-deduction-delete', array('payrollDeductionId' => $this->entity->getPayrollDeductionId()));?>" 
+						title="<?php echo $this->translate('Delete this payroll deduction'); ?>" class="btn btn-box-tool">
+							<i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?>
+					</a>
+					<?php endif;?>
+					
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'payroll-deduction-update') ):?>
+					<a href="<?php echo $this->url('payroll-deduction-update', array('payrollDeductionId' => $this->entity->getPayrollDeductionId()));?>" 
+              			title="<?php echo $this->translate('Edit this payroll deduction'); ?>" class="btn btn-box-tool">
+              				<i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?>
+              		</a>
+					<?php endif;?>
+				</div>
+			</div>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-bordered table-hover table-striped table-condensed">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Id'); ?></th>
+							<th><?php echo $this->translate('Payroll Id'); ?></th>
+							<th><?php echo $this->translate('Deduction Amount'); ?></th>
+							<th><?php echo $this->translate('Deduction Type'); ?></th>
+							<th><?php echo $this->translate('Deduction Year'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?php echo $this->entity->getPayrollDeductionId(); ?></td>
+							<td>
+								<a href="<?php echo $this->url('payroll-view', array('payrollId' => $this->entity->getPayrollId())); ?>" title="<?php echo $this->translate('View payroll'); ?>">
+									<?php echo $this->entity->getPayrollId(); ?>
+								</a>
+							</td>
+							<td><?php echo $this->currencyFormat($this->entity->getPayrollDeductionAmount(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+							<td><a href="<?php echo $this->url('payroll-deduction-type-view', array('payrollDeductionTypeId' => $this->entity->getPayrollDeductionTypeId())); ?>" title="<?php echo $this->translate('View this deduction type'); ?>">
+									<?php echo $this->entity->getPayrollDeductionTypeEntity()->getPayrollDeductionTypeName();?>
+								</a>		
+							</td>
+							<td><?php echo $this->entity->getPayrollDeductionYear(); ?></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+		

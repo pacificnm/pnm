@@ -79,7 +79,7 @@
                       	
                       	
                       	<div class="row">
-                      		<div class="col-xs-12 col-sm-6">
+                      		<div class="col-xs-12 col-sm-4">
         						<?php $element = $this->form->get('employeeSsn'); ?>
         						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
         							<label class="control-label"><?php echo $element->getLabel() ?></label>
@@ -89,6 +89,18 @@
         							<?php endif; ?>
         						</div>
                       		</div>
+                      		
+                      		<div class="col-xs-12 col-sm-2">
+        						<?php $element = $this->form->get('employeeTaxAllowance'); ?>
+        						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+        							<label class="control-label"><?php echo $element->getLabel() ?></label>
+        							<?php echo $this->formElement($element); ?>
+        							<?php if($this->formElementErrors($element)): ?>
+        								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+        							<?php endif; ?>
+        						</div>
+                      		</div>
+                      		
                       		<div class="col-xs-12 col-sm-6">
         						<?php $element = $this->form->get('employeBirthday'); ?>
         						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">

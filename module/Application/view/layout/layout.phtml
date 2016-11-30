@@ -137,8 +137,8 @@
 		var taskReminder = function() {
 			$.ajax({
 			    type: "get",
-			    data: {'access_token': '<?php echo $this->identity()->getAccessToken(); ?>'},
 			    url: "<?php echo $this->basePath('/api/task/get-reminder'); ?>",
+			    beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'Bearer <?php echo $this->identity()->getAccessToken(); ?>');},
 			    success: function(resp) {
 
 				    taskEntitys = resp._embedded;

@@ -129,6 +129,12 @@ class EmployeeEntity
 
     /**
      *
+     * @var number
+     */
+    protected $employeeTaxAllowance;
+
+    /**
+     *
      * @var AuthEntity
      */
     protected $authEntity;
@@ -293,6 +299,15 @@ class EmployeeEntity
     public function getEmployeeWage()
     {
         return $this->employeeWage;
+    }
+
+    /**
+     *
+     * @return the $employeeTaxAllowance
+     */
+    public function getEmployeeTaxAllowance()
+    {
+        return $this->employeeTaxAllowance;
     }
 
     /**
@@ -464,6 +479,15 @@ class EmployeeEntity
     public function setEmployeeWage($employeeWage)
     {
         $this->employeeWage = $employeeWage;
+    }
+
+    /**
+     *
+     * @param number $employeeTaxAllowance            
+     */
+    public function setEmployeeTaxAllowance($employeeTaxAllowance)
+    {
+        $this->employeeTaxAllowance = $employeeTaxAllowance;
     }
 
     /**

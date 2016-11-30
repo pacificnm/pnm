@@ -168,6 +168,6 @@ class ProductForm extends Form implements InputFilterProviderInterface
      */
     public function getInputFilterSpecification()
     {
-        // TODO Auto-generated method stub
+        return array();
     }
 }

@@ -1,0 +1,41 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
+?>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-dollar" aria-hidden="true"></i>
+					<?php echo $this->translate('View Payroll Deduction Type'); ?>
+				</h3>
+				<div class="box-tools">
+					<?php if($this->acl()->isAllowed($this->identity()->getAuthRole(), 'payroll-deduction-type-delete')): ?>
+					<a href="<?php echo $this->url('payroll-deduction-type-delete', array('payrollDeductionTypeId' => $this->entity->getPayrollDeductionTypeId())); ?>" 
+						title="<?php echo $this->translate('Delete this product'); ?>" class="btn btn-box-tool">
+							<i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?>
+					</a>
+					<?php endif;?>
+					
+					<?php if($this->acl()->isAllowed($this->identity()->getAuthRole(), 'payroll-deduction-type-update')): ?>
+					<a href="<?php echo $this->url('payroll-deduction-type-update', array('payrollDeductionTypeId' => $this->entity->getPayrollDeductionTypeId())); ?>" 
+						title="<?php echo $this->translate('Edit this product'); ?>" class="btn btn-box-tool">
+							<i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?>
+					</a>
+					<?php endif;?>
+				</div>
+			</div>
+			<div class="box-body box-profile">
+				<h3 class="profile-username">
+					<?php echo $this->entity->getPayrollDeductionTypeName();?>
+				</h3>
+			</div>
+		</div>
+	</div>
+</div>

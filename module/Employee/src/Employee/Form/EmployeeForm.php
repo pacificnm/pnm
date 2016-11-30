@@ -249,9 +249,9 @@ class EmployeeForm extends Form implements InputFilterProviderInterface
             'options' => array(
                 'label' => 'Marital Status:',
                 'value_options' => array(
-                    'Active' => 'Single',
-                    'Closed' => 'Married',
-                    'Deleted' => 'Divorced'
+                    'Single' => 'Single',
+                    'Married' => 'Married',
+                    'Divorced' => 'Divorced'
                 )
             ),
             'attributes' => array(
@@ -260,6 +260,7 @@ class EmployeeForm extends Form implements InputFilterProviderInterface
             )
         ));
         
+        // employeeWage
         $this->add(array(
             'name' => 'employeeWage',
             'type' => 'Text',
@@ -271,6 +272,20 @@ class EmployeeForm extends Form implements InputFilterProviderInterface
                 'id' => 'employeeWage'
             )
         ));
+        
+        // employeeTaxAllowance
+        $this->add(array(
+            'name' => 'employeeTaxAllowance',
+            'type' => 'Text',
+            'options' => array(
+                'label' => 'Tax Allowance:'
+            ),
+            'attributes' => array(
+                'class' => 'form-control',
+                'id' => 'employeeTaxAllowance'
+            )
+        ));
+        
         // button
         $this->add(array(
             'name' => 'submit',

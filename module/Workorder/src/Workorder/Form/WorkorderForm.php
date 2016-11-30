@@ -16,6 +16,10 @@ class WorkorderForm extends Form implements InputFilterProviderInterface
      */
     protected $locationService;
 
+    /**
+     * 
+     * @var number
+     */
     protected $clientId;
     
     /**

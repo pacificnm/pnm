@@ -29,9 +29,9 @@ class IndexController extends BaseController
      */
     public function indexAction()
     {
-        // trigger event view cron
+        // trigger event
         $this->getEventManager()->trigger('ProductIndex', $this, array(
-            'authId' => '',
+            'authId' => $this->identity()->getAuthId(),
             'historyUrl' => $this->getRequest()->getUri()
         ));
         

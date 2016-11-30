@@ -42,11 +42,9 @@ class SetPageSubTitle extends AbstractPlugin
         // main menu
         if (array_key_exists('activeMenuItem', $this->config['router']['routes'][$matchedRouteName])) {
             
-            $activeMenuItem = $this->config['router']['routes'][$matchedRouteName]['activeMenuItem'];
-        
-            $layout->setVariable('activeMenuItem', $activeMenuItem);
+            $pageSubTitle = $this->config['router']['routes'][$matchedRouteName]['pageSubTitle'];
+                    
+            $layout->setVariable('pageSubTitle', $pageSubTitle);
         }
     }
 }
-
-?>

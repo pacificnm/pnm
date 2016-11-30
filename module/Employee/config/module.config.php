@@ -15,7 +15,7 @@ return array(
                     2 => 'employee-password',
                     3 => 'employee-time',
                     4 => 'employee-time-print',
-                    5 => 'employee-calendar'
+                    5 => 'employee-calendar',
                 ),
                 'accountant' => array(),
                 'administrator' => array(
@@ -23,10 +23,10 @@ return array(
                     1 => 'employee-create',
                     2 => 'employee-delete',
                     3 => 'employee-update',
-                    4 => 'employee-view'
-                )
-            )
-        )
+                    4 => 'employee-view',
+                ),
+            ),
+        ),
     ),
     'controllers' => array(
         'factories' => array(
@@ -38,8 +38,8 @@ return array(
             'Employee\\Controller\\Delete' => 'Employee\\Controller\\Factory\\DeleteControllerFactory',
             'Employee\\Controller\\Time' => 'Employee\\Controller\\Factory\\TimeControllerFactory',
             'Employee\\Controller\\TimePrint' => 'Employee\\Controller\\Factory\\TimePrintControllerFactory',
-            'Employee\\Controller\\Calendar' => 'Employee\\Controller\\Factory\\CalendarControllerFactory'
-        )
+            'Employee\\Controller\\Calendar' => 'Employee\\Controller\\Factory\\CalendarControllerFactory',
+        ),
     ),
     'service_manager' => array(
         'factories' => array(
@@ -47,8 +47,9 @@ return array(
             'Employee\\Service\\EmployeeServiceInterface' => 'Employee\\Service\\Factory\\EmployeeServiceFactory',
             'Employee\\Form\\PasswordForm' => 'Employee\\Form\\Factory\\PasswordFormFactory',
             'Employee\\V1\\Rest\\EmployeeTime\\EmployeeTimeResource' => 'Employee\\V1\\Rest\\EmployeeTime\\EmployeeTimeResourceFactory',
-            'employeeMenu' => 'Employee\Service\Factory\MenuServiceFactory',
-        )
+            'employeeMenu' => 'Employee\\Service\\Factory\\MenuServiceFactory',
+            'Employee\\V1\\Rest\\Employee\\EmployeeResource' => 'Employee\\V1\\Rest\\Employee\\EmployeeResourceFactory',
+        ),
     ),
     'router' => array(
         'routes' => array(
@@ -63,9 +64,9 @@ return array(
                     'route' => '/employee/profile',
                     'defaults' => array(
                         'controller' => 'Employee\\Controller\\Profile',
-                        'action' => 'index'
-                    )
-                )
+                        'action' => 'index',
+                    ),
+                ),
             ),
             'employee-profile-update' => array(
                 'type' => 'literal',
@@ -74,9 +75,9 @@ return array(
                     'route' => '/employee/profile/update',
                     'defaults' => array(
                         'controller' => 'Employee\\Controller\\Update',
-                        'action' => 'employee'
-                    )
-                )
+                        'action' => 'employee',
+                    ),
+                ),
             ),
             'employee-index' => array(
                 'title' => 'Employees',
@@ -85,9 +86,9 @@ return array(
                     'route' => '/admin/employee',
                     'defaults' => array(
                         'controller' => 'Employee\\Controller\\Index',
-                        'action' => 'index'
-                    )
-                )
+                        'action' => 'index',
+                    ),
+                ),
             ),
             'employee-create' => array(
                 'title' => 'Create Employee',
@@ -96,9 +97,9 @@ return array(
                     'route' => '/admin/employee/create',
                     'defaults' => array(
                         'controller' => 'Employee\\Controller\\Create',
-                        'action' => 'index'
-                    )
-                )
+                        'action' => 'index',
+                    ),
+                ),
             ),
             'employee-delete' => array(
                 'title' => 'Delete Employee',
@@ -107,9 +108,9 @@ return array(
                     'route' => '/admin/employee/[:employeeId]/delete',
                     'defaults' => array(
                         'controller' => 'Employee\\Controller\\Delete',
-                        'action' => 'index'
-                    )
-                )
+                        'action' => 'index',
+                    ),
+                ),
             ),
             'employee-update' => array(
                 'title' => 'Edit Employee',
@@ -118,9 +119,9 @@ return array(
                     'route' => '/admin/employee/[:employeeId]/update',
                     'defaults' => array(
                         'controller' => 'Employee\\Controller\\Update',
-                        'action' => 'index'
-                    )
-                )
+                        'action' => 'index',
+                    ),
+                ),
             ),
             'employee-password' => array(
                 'title' => 'Change Password',
@@ -129,9 +130,9 @@ return array(
                     'route' => '/employee/profile/change-password',
                     'defaults' => array(
                         'controller' => 'Employee\\Controller\\Update',
-                        'action' => 'password'
-                    )
-                )
+                        'action' => 'password',
+                    ),
+                ),
             ),
             'employee-view' => array(
                 'title' => 'View Employee',
@@ -140,9 +141,9 @@ return array(
                     'route' => '/admin/employee/[:employeeId]/view',
                     'defaults' => array(
                         'controller' => 'Employee\\Controller\\View',
-                        'action' => 'index'
-                    )
-                )
+                        'action' => 'index',
+                    ),
+                ),
             ),
             'employee-time' => array(
                 'title' => 'Time Clock',
@@ -151,9 +152,9 @@ return array(
                     'route' => '/employee/profile/time',
                     'defaults' => array(
                         'controller' => 'Employee\\Controller\\Time',
-                        'action' => 'index'
-                    )
-                )
+                        'action' => 'index',
+                    ),
+                ),
             ),
             'employee-time-print' => array(
                 'title' => 'Time Clock',
@@ -162,9 +163,9 @@ return array(
                     'route' => '/employee/profile/time/print',
                     'defaults' => array(
                         'controller' => 'Employee\\Controller\\TimePrint',
-                        'action' => 'index'
-                    )
-                )
+                        'action' => 'index',
+                    ),
+                ),
             ),
             'employee-calendar' => array(
                 'title' => 'Time Clock',
@@ -173,138 +174,144 @@ return array(
                     'route' => '/employee/profile/calendar',
                     'defaults' => array(
                         'controller' => 'Employee\\Controller\\Calendar',
-                        'action' => 'index'
-                    )
-                )
+                        'action' => 'index',
+                    ),
+                ),
             ),
             'employee.rest.employee-time' => array(
                 'type' => 'Segment',
                 'options' => array(
                     'route' => '/api/employee/employee-time[/:employee_id]',
                     'defaults' => array(
-                        'controller' => 'Employee\\V1\\Rest\\EmployeeTime\\Controller'
-                    )
-                )
-            )
-        )
+                        'controller' => 'Employee\\V1\\Rest\\EmployeeTime\\Controller',
+                    ),
+                ),
+            ),
+            'employee.rest.employee' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/api/employee[/:employeeId]',
+                    'defaults' => array(
+                        'controller' => 'Employee\\V1\\Rest\\Employee\\Controller',
+                    ),
+                ),
+            ),
+        ),
     ),
     'view_helpers' => array(
         'factories' => array(
-            'EmployeeAsideMenu' => 'Employee\View\Helper\Factory\EmployeeAsideMenuFactory',
-            'GetEmployeeDetails' => 'Employee\View\Helper\Factory\GetEmployeeDetailsFactory'
+            'EmployeeAsideMenu' => 'Employee\\View\\Helper\\Factory\\EmployeeAsideMenuFactory',
+            'GetEmployeeDetails' => 'Employee\\View\\Helper\\Factory\\GetEmployeeDetailsFactory',
         ),
-        'invokables' => array()
+        'invokables' => array(),
     ),
     'view_manager' => array(
         'template_path_stack' => array(
-            0 => __DIR__ . '/../view'
-        )
+            0 => __DIR__ . '/../view',
+        ),
     ),
-    // navigation
     'navigation' => array(
         'default' => array(
-            array(
+            0 => array(
                 'label' => 'Admin',
                 'route' => 'admin-index',
                 'useRouteMatch' => true,
                 'pages' => array(
-                    array(
+                    0 => array(
                         'label' => 'Employee',
                         'route' => 'employee-index',
                         'useRouteMatch' => true,
                         'pages' => array(
-                            array(
+                            0 => array(
                                 'label' => 'New Employee',
                                 'route' => 'employee-create',
-                                'useRouteMatch' => true
+                                'useRouteMatch' => true,
                             ),
-                            array(
+                            1 => array(
                                 'label' => 'View Employee',
                                 'route' => 'employee-view',
                                 'useRouteMatch' => true,
                                 'pages' => array(
-                                    array(
+                                    0 => array(
                                         'label' => 'Edit Employee',
                                         'route' => 'employee-update',
-                                        'useRouteMatch' => true
+                                        'useRouteMatch' => true,
                                     ),
-                                    array(
+                                    1 => array(
                                         'label' => 'Delete Employee',
                                         'route' => 'employee-delete',
-                                        'useRouteMatch' => true
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
+                                        'useRouteMatch' => true,
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
             ),
-            array(
+            1 => array(
                 'label' => 'My Profile',
                 'route' => 'employee-profile',
                 'useRouteMatch' => true,
                 'pages' => array(
-                    array(
+                    0 => array(
                         'label' => 'Edit',
                         'route' => 'employee-profile-update',
-                        'useRouteMatch' => true
+                        'useRouteMatch' => true,
                     ),
-                    array(
+                    1 => array(
                         'label' => 'Change Password',
                         'route' => 'employee-password',
-                        'useRouteMatch' => true
+                        'useRouteMatch' => true,
                     ),
-                    array(
+                    2 => array(
                         'label' => 'Time Clock',
                         'route' => 'employee-time',
-                        'useRouteMatch' => true
-                    )
-                )
-            )
-        )
+                        'useRouteMatch' => true,
+                    ),
+                ),
+            ),
+        ),
     ),
-    // menu
     'menu' => array(
         'default' => array(
             'admin' => array(
-                array(
+                0 => array(
                     'label' => 'Employees',
                     'icon' => 'fa fa-user',
                     'route' => 'employee-index',
                     'resource' => 'employee-index',
-                    'order' => 5
-                )
+                    'order' => 5,
+                ),
             ),
             'employee' => array(
-                array(
+                0 => array(
                     'label' => 'Home',
                     'icon' => 'fa fa-home',
                     'route' => 'employee-profile',
                     'resource' => 'employee-profile',
-                    'order' => 1
-                )
-            )
-        )
+                    'order' => 1,
+                ),
+            ),
+        ),
     ),
-    // acl
     'acl' => array(
         'default' => array(
-            array(
+            0 => array(
                 'guest' => array(),
                 'user' => array(),
                 'user-accountant' => array(),
                 'user-manager' => array(),
                 'employee' => array(),
                 'accountant' => array(),
-                'administrator' => array()
-            )
-        )
+                'administrator' => array(),
+            ),
+        ),
     ),
-    // api
     'zf-versioning' => array(
         'uri' => array(
-            0 => 'employee.rest.employee-time'
-        )
+            0 => 'employee.rest.employee-time',
+            1 => 'employee.rest.employee',
+        ),
     ),
     'zf-rest' => array(
         'Employee\\V1\\Rest\\EmployeeTime\\Controller' => array(
@@ -313,40 +320,70 @@ return array(
             'route_identifier_name' => 'employee_id',
             'collection_name' => 'employee_time',
             'entity_http_methods' => array(
-                0 => 'GET'
+                0 => 'GET',
             ),
             'collection_http_methods' => array(
-                0 => 'GET'
+                0 => 'GET',
             ),
             'collection_query_whitelist' => array(
                 0 => 'start',
                 1 => 'end',
-                2 => 'employee'
+                2 => 'employee',
             ),
             'page_size' => 25,
             'page_size_param' => null,
             'entity_class' => 'Employee\\V1\\Rest\\EmployeeTime\\EmployeeTimeEntity',
             'collection_class' => 'Employee\\V1\\Rest\\EmployeeTime\\EmployeeTimeCollection',
-            'service_name' => 'EmployeeTime'
-        )
+            'service_name' => 'EmployeeTime',
+        ),
+        'Employee\\V1\\Rest\\Employee\\Controller' => array(
+            'listener' => 'Employee\\V1\\Rest\\Employee\\EmployeeResource',
+            'route_name' => 'employee.rest.employee',
+            'route_identifier_name' => 'employeeId',
+            'collection_name' => 'employee',
+            'entity_http_methods' => array(
+                0 => 'GET',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+            ),
+            'collection_query_whitelist' => array(
+                0 => 'status',
+            ),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'Employee\\Entity\\EmployeeEntity',
+            'collection_class' => 'Employee\\V1\\Rest\\Employee\\EmployeeCollection',
+            'service_name' => 'Employee',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
-            'Employee\\V1\\Rest\\EmployeeTime\\Controller' => 'HalJson'
+            'Employee\\V1\\Rest\\EmployeeTime\\Controller' => 'HalJson',
+            'Employee\\V1\\Rest\\Employee\\Controller' => 'HalJson',
         ),
         'accept_whitelist' => array(
             'Employee\\V1\\Rest\\EmployeeTime\\Controller' => array(
                 0 => 'application/vnd.employee.v1+json',
                 1 => 'application/hal+json',
-                2 => 'application/json'
-            )
+                2 => 'application/json',
+            ),
+            'Employee\\V1\\Rest\\Employee\\Controller' => array(
+                0 => 'application/vnd.employee.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
         ),
         'content_type_whitelist' => array(
             'Employee\\V1\\Rest\\EmployeeTime\\Controller' => array(
                 0 => 'application/vnd.employee.v1+json',
-                1 => 'application/json'
-            )
-        )
+                1 => 'application/json',
+            ),
+            'Employee\\V1\\Rest\\Employee\\Controller' => array(
+                0 => 'application/vnd.employee.v1+json',
+                1 => 'application/json',
+            ),
+        ),
     ),
     'zf-hal' => array(
         'metadata_map' => array(
@@ -354,14 +391,32 @@ return array(
                 'entity_identifier_name' => 'employee_id',
                 'route_name' => 'employee.rest.employee-time',
                 'route_identifier_name' => 'employee_id',
-                'hydrator' => 'Zend\\Hydrator\\ArraySerializable'
+                'hydrator' => 'Zend\\Hydrator\\ArraySerializable',
             ),
             'Employee\\V1\\Rest\\EmployeeTime\\EmployeeTimeCollection' => array(
                 'entity_identifier_name' => 'employee_id',
                 'route_name' => 'employee.rest.employee-time',
                 'route_identifier_name' => 'employee_id',
-                'is_collection' => true
-            )
-        )
-    )
+                'is_collection' => true,
+            ),
+            'Employee\\V1\\Rest\\Employee\\EmployeeEntity' => array(
+                'entity_identifier_name' => 'employeeId',
+                'route_name' => 'employee.rest.employee',
+                'route_identifier_name' => 'employee_id',
+                'hydrator' => 'Employee\\Hydrator\\EmployeeHydrator',
+            ),
+            'Employee\\V1\\Rest\\Employee\\EmployeeCollection' => array(
+                'entity_identifier_name' => 'employeeId',
+                'route_name' => 'employee.rest.employee',
+                'route_identifier_name' => 'employeeId',
+                'is_collection' => true,
+            ),
+            'Employee\\Entity\\EmployeeEntity' => array(
+                'entity_identifier_name' => 'employeeId',
+                'route_name' => 'employee.rest.employee',
+                'route_identifier_name' => 'employeeId',
+                'hydrator' => 'Employee\\Hydrator\\EmployeeHydrator',
+            ),
+        ),
+    ),
 );

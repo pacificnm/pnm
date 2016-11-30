@@ -54,6 +54,11 @@ return array(
         'routes' => array(
             'estimate-index' => array(
                 'type' => 'segment',
+                'title' => 'Estimate',
+                'pageTitle' => 'Estimate',
+                'pageSubTitle' => '',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'esitmate-index',
                 'options' => array(
                     'route' => '/client/[:clientId]/estimate',
                     'defaults' => array(
@@ -64,6 +69,11 @@ return array(
             ),
             'estimate-create' => array(
                 'type' => 'segment',
+                'title' => 'Estimate',
+                'pageTitle' => 'Estimate',
+                'pageSubTitle' => 'New',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'esitmate-index',
                 'options' => array(
                     'route' => '/client/[:clientId]/estimate/create',
                     'defaults' => array(
@@ -74,6 +84,11 @@ return array(
             ),
             'estimate-update' => array(
                 'type' => 'segment',
+                'title' => 'Estimate',
+                'pageTitle' => 'Estimate',
+                'pageSubTitle' => 'Edit',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'esitmate-index',
                 'options' => array(
                     'route' => '/client/[:clientId]/estimate/update/[:estimateId]',
                     'defaults' => array(
@@ -84,6 +99,11 @@ return array(
             ),
             'estimate-delete' => array(
                 'type' => 'segment',
+                'title' => 'Estimate',
+                'pageTitle' => 'Estimate',
+                'pageSubTitle' => 'Delete',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'esitmate-index',
                 'options' => array(
                     'route' => '/client/[:clientId]/estimate/delete/[:estimateId]',
                     'defaults' => array(

@@ -13,10 +13,15 @@
 			<div class="box-header">
 				<h3 class="box-title">
 					<i class="fa fa-shopping-cart" aria-hidden="true"></i>
-					<?php echo $this->translate('Products'); ?>
+					<?php echo $this->pageTitle; ?> <small><?php echo $this->pageSubTitle; ?></small>
 				</h3>
 				<div class="box-tools">
-					<a href="<?php echo $this->url('product-create');?>" title="<?php echo $this->translate('New'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
+					<?php if($this->acl()->isAllowed($this->identity()->getAuthRole(), 'product-create')): ?>
+					<a href="<?php echo $this->url('product-create');?>" 
+						title="<?php echo $this->translate('New'); ?>" class="btn btn-box-tool">
+							<i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?>
+					</a>
+					<?php endif;?>
 				</div>
 			</div>
 			

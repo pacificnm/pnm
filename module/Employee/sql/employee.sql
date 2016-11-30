@@ -28,6 +28,8 @@ ALTER TABLE `employee` ADD `employee_ssn` VARCHAR(255) NOT NULL AFTER `employee_
 ALTER TABLE `employee` ADD `employe_birthday` INT(11) NOT NULL AFTER `employee_ssn`;
 ALTER TABLE `employee` ADD `employee_marital_status` VARCHAR(60) NOT NULL AFTER `employe_birthday`;
 ALTER TABLE `employee` ADD `employee_wage` FLOAT(11) NOT NULL AFTER `employee_marital_status`;
+ALTER TABLE `employee` ADD `employee_tax_allowance` INT(3) UNSIGNED NOT NULL AFTER `employee_wage`;
+
 --
 -- RELATIONS FOR TABLE `employee`:
 --

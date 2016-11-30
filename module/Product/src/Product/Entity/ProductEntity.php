@@ -12,6 +12,12 @@ class ProductEntity
 
     /**
      *
+     * @var number
+     */
+    protected $productTypeId;
+
+    /**
+     *
      * @var string
      */
     protected $productName;
@@ -71,6 +77,15 @@ class ProductEntity
     public function getProductId()
     {
         return $this->productId;
+    }
+
+    /**
+     *
+     * @return the $productTypeId
+     */
+    public function getProductTypeId()
+    {
+        return $this->productTypeId;
     }
 
     /**
@@ -161,6 +176,15 @@ class ProductEntity
     public function setProductId($productId)
     {
         $this->productId = $productId;
+    }
+
+    /**
+     *
+     * @param number $productTypeId            
+     */
+    public function setProductTypeId($productTypeId)
+    {
+        $this->productTypeId = $productTypeId;
     }
 
     /**

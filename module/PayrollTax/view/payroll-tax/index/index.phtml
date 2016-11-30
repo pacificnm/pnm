@@ -1,0 +1,64 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
+?>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-dollar" aria-hidden="true"></i>
+					<?php echo $this->translate('Payroll Tax'); ?>
+				</h3>
+				<div class="box-tools">
+					<?php if($this->acl()->isAllowed($this->identity()->getAuthRole(), 'payroll-tax-update')): ?>
+					<a href="<?php echo $this->url('payroll-tax-update');?>" 
+						title="<?php echo $this->translate('Edit'); ?>" class="btn btn-box-tool">
+							<i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?>
+					</a>
+					<?php endif; ?>
+				</div>
+			</div>
+			<div class="box-body">
+				<h3 class="profile-username"><?php echo $this->translate('Payroll Tax Percentages'); ?></h3>
+				<?php if(! $this->entity):?>
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('You have not set up the tax percentages yet.'); ?></p>
+				</div>
+				<?php else: ?>
+				<ul class="list-group list-group-unbordered">
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-6"><p><b><?php echo $this->translate('Federal Tax'); ?>:</b></p></div>
+							<div class="col-xs-6"><p><?php echo $this->entity->getPayrollTaxFederal();?>%</p></div>
+						</div>
+					</li>
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-6"><p><b><?php echo $this->translate('Social Security Tax'); ?>:</b></p></div>
+							<div class="col-xs-6"><p><?php echo $this->entity->getPayrollTaxSocialSecurity();?>%</p></div>
+						</div>
+					</li>
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-6"><p><b><?php echo $this->translate('Medicare Tax'); ?>:</b></p></div>
+							<div class="col-xs-6"><p><?php echo $this->entity->getPayrollTaxMedicare();?>%</p></div>
+						</div>
+					</li>
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-xs-6"><p><b><?php echo $this->translate('State Tax'); ?>:</b></p></div>
+							<div class="col-xs-6"><p><?php echo $this->entity->getPayrollTaxState();?>%</p></div>
+						</div>
+					</li>
+				</ul>
+				<?php endif;?>
+			</div>
+		</div>
+	</div>
+</div>

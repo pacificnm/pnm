@@ -1,0 +1,55 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
+?>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+					<?php echo $this->pageTitle; ?> <small><?php echo $this->pageSubTitle; ?></small>
+				</h3>
+				<div class="box-tools">
+					<?php if($this->acl()->isAllowed($this->identity()->getAuthRole(), 'product-type-delete')): ?>
+					<a href="<?php echo $this->url('product-type-delete', array('productTypeId' => $this->entity->getProductTypeId()));?>" 
+						title="<?php echo $this->translate('Delete'); ?>" class="btn btn-box-tool">
+							<i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?>
+					</a>
+					<?php endif; ?>
+					
+					<?php if($this->acl()->isAllowed($this->identity()->getAuthRole(), 'product-type-update')): ?>
+					<a href="<?php echo $this->url('product-type-update', array('productTypeId' => $this->entity->getProductTypeId()));?>" 
+						title="<?php echo $this->translate('Edit'); ?>" class="btn btn-box-tool">
+							<i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?>
+					</a>
+					<?php endif; ?>
+					
+				</div>
+			</div>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-bordered table-hover table-striped table-condensed">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Product Type Id'); ?></th>
+							<th><?php echo $this->translate('Product Type Name');?></th>
+							<th><?php echo $this->translate('Status'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?php echo $this->entity->getProductTypeId()?></td>
+							<td><?php echo $this->entity->getProductTypeName(); ?></td>
+							<td><?php echo $this->entity->getProductTypeStatus(); ?></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

@@ -7,22 +7,22 @@
 					<?php echo $this->translate('View Invoice'); ?>
 				</h3>
 				<div class="box-tools">
-					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-print') ):?>
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'invoice-print') ):?>
 					<a href="<?php echo $this->url('invoice-print', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" target="_blank" title="<?php echo $this->translate('Print this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
 					<?php endif; ?>
 					
 					<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
 					
-					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-payment-create') ):?>
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'invoice-payment-create') ):?>
 					<a href="javascript:void(0);" data-toggle="modal" data-target="#paymentModal" title="<?php echo $this->translate('Pay this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-dollar"></i> <?php echo $this->translate('Payment'); ?></a>
 					<?php endif; ?>
 					
-					<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-delete') ):?>
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'invoice-delete') ):?>
 					<a href="<?php echo $this->url('invoice-delete', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('Delete this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?></a>
               		<?php endif; ?>
               		<?php endif; ?>
               		
-              		<?php if( $this->layout()->acl->isAllowed($this->identity()->getAuthRole(), 'invoice-update') ):?>
+              		<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'invoice-update') ):?>
               		<a href="<?php echo $this->url('invoice-update', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('Edit this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-pencil"></i> <?php echo $this->translate('Edit'); ?></a>
 					<?php endif; ?>
 				</div>

@@ -1,0 +1,434 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
+?>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">
+					<i class="fa fa-dollar" aria-hidden="true"></i>
+					<?php echo $this->translate('Payroll'); ?>
+				</h3>
+				<div class="box-tools"></div>
+			</div>
+			<div class="box-body">
+				<?php echo $this->form()->openTag($this->form); ?>
+				<?php echo $this->partial('partials/form-errors.phtml', array('errorMsg' => $this->form->getMessages())); ?>
+				
+				<div class="row">
+              		<div class="col-xs-8">
+						<?php $element = $this->form->get('employeeId'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		<div class="col-xs-2">
+              			<?php $element = $this->form->get('payrollRate'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		<div class="col-xs-2">
+              			<?php $element = $this->form->get('payrollRateOt'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-2">
+						<?php $element = $this->form->get('payrollDateCreate'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	
+              		<div class="col-xs-12 col-sm-2">
+						<?php $element = $this->form->get('payrollDateStart'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		
+              		<div class="col-xs-12 col-sm-2">
+						<?php $element = $this->form->get('payrollDateEnd'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		
+              		<div class="col-xs-12 col-sm-2">
+						<?php $element = $this->form->get('payrollCheck'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		
+              		
+              		<div class="col-xs-12 col-sm-2">
+              			<p><b><?php echo $this->translate('Marital Status')?>:</b><br /> 
+              				<span id="employeeMaritalStatus" class="text-center"><?php echo $this->payrollEntity->getEmployeeEntity()->getEmployeeMaritalStatus();?></span></p>
+              		</div>
+              		<div class="col-xs-12 col-sm-2">
+              			<p><b><?php echo $this->translate('Tax Allowance')?>:</b><br />
+              				<span id="employeeTaxAllowance" class="text-center"><?php echo $this->payrollEntity->getEmployeeEntity()->getEmployeeTaxAllowance();?></span>
+              			</p>
+              		</div>
+              	</div>
+              	
+              	<h4><?php echo $this->translate('Wages'); ?></h4>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-4">
+						<?php $element = $this->form->get('payrollHours'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		<div class="col-xs-12 col-sm-4">
+						<?php $element = $this->form->get('payrollHoursOt'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		<div class="col-xs-12 col-sm-2">
+              			<?php $element = $this->form->get('payrollWages'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		<div class="col-xs-12 col-sm-2">
+              			<?php $element = $this->form->get('payrollWagesOt'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-4">
+						<?php $element = $this->form->get('payrollHoursVacation'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		<div class="col-xs-12 col-sm-4">
+						<?php $element = $this->form->get('payrollHoursSick'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		<div class="col-xs-12 col-sm-2">
+              			<?php $element = $this->form->get('payrollWagesVacation'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		<div class="col-xs-12 col-sm-2">
+              			<?php $element = $this->form->get('payrollWagesSick'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<h4><?php echo $this->translate('Tax'); ?></h4>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-4">
+						<?php $element = $this->form->get('payrollTaxFederalIncome'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		<div class="col-xs-12 col-sm-4">
+						<?php $element = $this->form->get('payrollTaxSocialSecurity'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		<div class="col-xs-12 col-sm-2">
+              			<?php $element = $this->form->get('payrollWagesGross'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		<div class="col-xs-12 col-sm-2">
+              			<?php $element = $this->form->get('payrollWagesNet'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+              	
+              	<div class="row">
+              		<div class="col-xs-12 col-sm-4">
+						<?php $element = $this->form->get('payrollTaxState'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              		<div class="col-xs-12 col-sm-4">
+						<?php $element = $this->form->get('payrollTaxMedicare'); ?>
+						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
+							<label class="control-label"><?php echo $element->getLabel() ?></label>
+							<?php echo $this->formElement($element); ?>
+							<?php if($this->formElementErrors($element)): ?>
+								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
+							<?php endif; ?>
+						</div>
+              		</div>
+              	</div>
+				
+				<?php echo $this->formElement($this->form->get('payrollId')); ?>
+				<?php echo $this->formElement($this->form->get('payrollWagesState')); ?>
+				<?php echo $this->formElement($this->form->get('payrollWagesSocialSecurity')); ?>
+				<?php echo $this->formElement($this->form->get('payrollWagesMedicare')); ?>
+				<?php echo $this->formSubmit($this->form->get('submit')); ?>
+				<?php echo $this->form()->closeTag(); ?>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+  $(function () {
+	  $('#payrollDateStart').daterangepicker({singleDatePicker: true, format: 'MM/DD/YYYY'});
+	  $('#payrollDateEnd').daterangepicker({singleDatePicker: true, format: 'MM/DD/YYYY'});
+	  $('#payrollDateCreate').daterangepicker({singleDatePicker: true, format: 'MM/DD/YYYY'});
+	  	
+	  var wage = $('#payrollRate').val();
+	  var regularPay = 0;
+	  var overtimePay = 0;
+	  var vacationPay = 0;
+	  var sickPay = 0;
+
+	  var grossPay = 0;
+	  var netPay = 0;
+
+	  var payrollTaxFederal = <?php echo $this->payrollTaxEntity->getPayrollTaxFederal(); ?>;
+	  var payrollTaxSocialSecurity = <?php echo $this->payrollTaxEntity->getPayrollTaxSocialSecurity(); ?>;
+	  var payrollTaxMedicare = <?php echo $this->payrollTaxEntity->getPayrollTaxMedicare(); ?>;
+	  var payrollTaxState = <?php echo $this->payrollTaxEntity->getPayrollTaxState(); ?>;
+
+	  var federalTax = 0;
+	  var socialSecurityTax = 0;
+	  var medicareTax = 0;
+	  var stateTax = 0;
+	  var totalTax = 0;
+	  
+	  // fecth employee data
+	  $('#employeeId').change(function (e) {
+		  if(this.value > 0) {
+			  console.log(this.value);
+			  $.ajax({
+				  type: "get",
+				  url: '/api/employee/' + this.value,
+				  dataType: 'json',
+				  contentType: "application/json",
+				  success: function(resp) {
+					  	console.log(resp);
+						$('#payrollRate').val(resp.employeeWage);
+						$('#payrollRateOt').val(resp.employeeWage * 1.5);
+						$('#employeeMaritalStatus').html(resp.employeeMaritalStatus);
+						$('#employeeTaxAllowance').html(resp.employeeTaxAllowance);
+						wage = resp.employeeWage;
+						updateRegularPay();
+						updateOvertimePay();
+						updateVactionPay();
+						updateSickPay();
+				  },
+				  error: function(resp) {
+
+				  }
+			  });
+		  }
+		
+	  });
+
+	  $('#payrollRate').change(function (e) {
+		  wage = $('#payrollRate').val();
+		  $('#payrollRateOt').val(parseFloat(toFixed(wage * 1.5, 2)));
+		  updateRegularPay();
+		  updateOvertimePay();
+		  updateVactionPay();
+		  updateSickPay();
+	  });
+
+	  // regular pay
+	  $('#payrollHours').change(function (e) {
+		  updateRegularPay();
+	  });
+
+	  // overtime pay
+	  $('#payrollHoursOt').change(function (e) {
+		  updateOvertimePay();
+	  });
+
+	  // vacation pay
+	  $('#payrollHoursVacation').change(function (e) {
+		  updateVactionPay();
+	  });
+	  
+	  // sick pay
+	  $('#payrollHoursSick').change(function (e) {
+		  updateSickPay();
+	  });
+
+	  function updateRegularPay() {
+		  regularPay = parseFloat(toFixed(wage * $('#payrollHours').val(), 2));
+		  $('#payrollWages').val(regularPay);
+		  updateGross();
+	  }
+
+	  function updateOvertimePay() {
+		  overtimePay = parseFloat(toFixed((wage * 1.5) * $('#payrollHoursOt').val(), 2));
+		  $('#payrollWagesOt').val(overtimePay);
+		  updateGross();
+	  }
+
+
+	  function updateVactionPay() {
+		  vacationPay = parseFloat(toFixed(wage *  $('#payrollHoursVacation').val(), 2));
+		  $('#payrollWagesVacation').val(vacationPay);
+		  updateGross();
+	  }
+
+	  function updateSickPay() {
+		  sickPay = parseFloat(toFixed(wage * $('#payrollHoursSick').val(), 2));
+		  $('#payrollWagesSick').val(sickPay);
+		  updateGross();
+	  }
+	  
+	  
+	  function updateGross() {
+		  grossPay = parseFloat(toFixed(regularPay + overtimePay + vacationPay + sickPay, 2));
+		  $('#payrollWagesGross').val(grossPay);
+		  $('#payrollWagesState').val(grossPay);
+		  $('#payrollWagesSocialSecurity').val(grossPay);
+		  $('#payrollWagesMedicare').val(grossPay);
+		  updateFederalTax();
+		  updateSocialSecurityTax();
+		  updateMedicareTax();
+		  updateStateTax();
+		  updateNet();
+	  }
+
+	  function updateNet() {
+		  totalTax = parseFloat(toFixed(federalTax + socialSecurityTax + medicareTax + stateTax, 2));
+		  netPay = parseFloat(toFixed(grossPay - totalTax, 2));
+		  $('#payrollWagesNet').val(netPay);
+	  }
+
+	  function updateFederalTax() {
+		  federalTax = parseFloat(toFixed((grossPay * payrollTaxFederal) * .01, 2 ));
+		  $('#payrollTaxFederalIncome').val(federalTax);
+	  }
+
+	  function updateSocialSecurityTax() {
+		  socialSecurityTax = parseFloat(toFixed((grossPay * payrollTaxSocialSecurity) * .01, 2));
+		  $('#payrollTaxSocialSecurity').val(socialSecurityTax);
+	  }
+
+	  function updateMedicareTax() {
+		  medicareTax = parseFloat(toFixed((grossPay * payrollTaxMedicare) * .01, 2));
+		  $('#payrollTaxMedicare').val(medicareTax);
+	  }
+
+	  function updateStateTax() {
+		  stateTax = parseFloat(toFixed((grossPay * payrollTaxState) * .01, 2));
+		  $('#payrollTaxState').val(stateTax);
+	  }
+
+	  function toFixed(value, precision) {
+		    var power = Math.pow(10, precision || 0);
+		    return String(Math.round(value * power) / power);
+	  }
+  });
+ </script>

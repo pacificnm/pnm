@@ -3,12 +3,17 @@ namespace Application\Controller\Plugin\Factory;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Application\Controller\Plugin\SetPageSubTitle;
+
 class SetPageSubTitleFactory
 {
+
+    /**
+     *
+     * @param ServiceLocatorInterface $serviceLocator            
+     * @return \Application\Controller\Plugin\SetPageSubTitle
+     */
     public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
-        die('nigger');
-        
         $realServiceLocator = $serviceLocator->getServiceLocator();
         
         $config = $realServiceLocator->get('Config');
@@ -18,5 +23,3 @@ class SetPageSubTitleFactory
         return new SetPageSubTitle($config, $phpRenderer);
     }
 }
-
-?>

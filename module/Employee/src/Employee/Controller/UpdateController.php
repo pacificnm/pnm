@@ -170,7 +170,9 @@ class UpdateController extends BaseController
         // bind form
         $employeeEntity->setEmployeBirthday(date("m/d/Y", $employeeEntity->getEmployeBirthday()));
         
-        $employeeEntity->setEmployeeSsn($this->blockCipher->decrypt($employeeEntity->getEmployeeSsn()));
+        if($employeeEntity->getEmployeeSsn()) {
+            $employeeEntity->setEmployeeSsn($this->blockCipher->decrypt($employeeEntity->getEmployeeSsn()));
+        }
         
         $this->employeeForm->bind($employeeEntity);
         

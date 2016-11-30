@@ -117,6 +117,11 @@ return array(
         'Payroll',
         'PayrollDeduction',
         'PayrollDeductionType',
+        'PayrollTax',
+        'ProductType',
+        'SubscriptionProduct',
+        'ProductAttribute',
+        'ProductAttributeValue',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
