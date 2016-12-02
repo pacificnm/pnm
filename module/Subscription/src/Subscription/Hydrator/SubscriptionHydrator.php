@@ -7,6 +7,7 @@ use SubscriptionSchedule\Entity\SubscriptionScheduleEntity;
 use Product\Entity\ProductEntity;
 use SubscriptionStatus\Entity\SubscriptionStatusEntity;
 use PaymentOption\Entity\OptionEntity;
+use Client\Entity\ClientEntity;
 
 class SubscriptionHydrator extends ClassMethods
 {
@@ -22,7 +23,7 @@ class SubscriptionHydrator extends ClassMethods
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \Zend\Stdlib\Hydrator\ClassMethods::hydrate()
      */
@@ -34,15 +35,9 @@ class SubscriptionHydrator extends ClassMethods
         
         parent::hydrate($data, $object);
         
-        
         $subscriptionScheduleEntity = parent::hydrate($data, new SubscriptionScheduleEntity());
         
         $object->setSubscriptionScheduleEntity($subscriptionScheduleEntity);
-        
-        // product Entity
-        $productEntity = parent::hydrate($data, new ProductEntity());
-        
-        $object->setProductEntity($productEntity);
         
         // status entity
         $subscriptionStatusEntity = parent::hydrate($data, new SubscriptionStatusEntity());
@@ -54,12 +49,17 @@ class SubscriptionHydrator extends ClassMethods
         
         $object->setPaymentOptionEntity($paymentOptionEntity);
         
+        // client
+        $clientEntity = parent::hydrate($data, new ClientEntity());
+        
+        $object->setClientEntity($clientEntity);
+        
         return $object;
     }
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \Zend\Stdlib\Hydrator\ClassMethods::extract()
      */
@@ -73,14 +73,11 @@ class SubscriptionHydrator extends ClassMethods
         
         unset($data['payment_option_entity']);
         
-        unset($data['product_entity']);
-        
-        unset($data['next_product_entity']);
-        
         unset($data['subscription_status_entity']);
         
         unset($data['subscription_schedule_entity']);
         
+        unset($data['client_entity']);
         return $data;
     }
 }

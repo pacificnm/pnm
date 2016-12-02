@@ -4,19 +4,54 @@
 			<div class="box-header">
 				<h3 class="box-title">
 					<i class="fa fa-line-chart"></i>
-					<?php echo $this->translate('Subscriptions'); ?>
+					<?php echo $this->pageTitle; ?> <small><?php echo $this->pageSubTitle; ?></small>
 				</h3>
 				<div class="box-tools"></div>
 			</div>
-			<div class="box-body">
+			
 			<?php if($this->paginator->count() == 0): ?>
-				<div class="alert alert-info">
-					<i class="fa fa-info-circle"></i> <?php echo $this->translate('No subscriptions.'); ?>
-				</div>
-				<?php else: ?>
-				
-				<?php endif;?>
+			<div class="box-body">
+    			<div class="alert alert-info">
+    				<i class="fa fa-info-circle"></i> <?php echo $this->translate('No subscriptions.'); ?>
+    			</div>
+    		</div>
+			<?php else: ?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-bordered table-hover table-striped table-condensed">
+    				<thead>
+    					<tr>
+    						<th><?php echo $this->translate('Subscription Id'); ?></th>
+    						<th><?php echo $this->translate('Client'); ?></th>
+    						<th><?php echo $this->translate('Due Date'); ?></th>
+    						<th><?php echo $this->translate('End Date'); ?></th>
+    						<th><?php echo $this->translate('Schedule'); ?></th>
+    						<th><?php echo $this->translate('Status'); ?></th>
+    					</tr>
+    				</thead>
+    				<tbody>
+    				<?php foreach($this->paginator as $entity): ?>
+    					<tr>
+    						<td>
+    							<a href="<?php echo $this->url('subscription-view', array('subscriptionId' => $entity->getSubscriptionId(), 'clientId' => $entity->getClientId())); ?>" 
+    								title="<?php echo $this->translate('View this subscription'); ?>">
+    								<?php echo $entity->getSubscriptionId(); ?>
+    							</a>
+    						</td>
+    						<td>
+    							<a href="<?php echo $this->url('client-view', array('clientId' => $entity->getClientId())); ?>" title="<?php echo $this->translate('View client'); ?>">
+    								<?php echo $entity->getClientEntity()->getClientName(); ?>
+    							</a>
+    						</td>
+    						<td><?php echo date($this->appConfig()->getConfigDateShort(), $entity->getSubscriptionDateDue()); ?></td>
+    						<td><?php echo date($this->appConfig()->getConfigDateShort(), $entity->getSubscriptionDateEnd()); ?></td>
+    						<td><?php echo $entity->getSubscriptionScheduleEntity()->getSubscriptionScheduleName(); ?></td>
+    						<td><?php echo $entity->getSubscriptionStatusEntity()->getSubscriptionStatusName(); ?></td>
+    					</tr>
+    				<?php endforeach; ?>
+    				</tbody>
+    			</table>
 			</div>
+			<?php endif;?>
 		</div>
 	</div>
 </div>

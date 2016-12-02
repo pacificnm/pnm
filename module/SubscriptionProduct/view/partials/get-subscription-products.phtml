@@ -1,0 +1,43 @@
+<?php if($this->entitys->count() == 0): ?>
+<div class="box-body">
+	<div class="alert alert-info">
+    	<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No products'); ?></p>
+    </div>
+</div>
+<?php else: ?>
+<div class="box-body table-responsive no-padding">
+	<table class="table table-bordered table-hover table-striped table-condensed">
+		<thead>
+			<tr>
+				<th><?php echo $this->translate('Quantity'); ?></th>
+				<th><?php echo $this->translate('Product'); ?></th>
+				<th><?php echo $this->translate('Amount'); ?></th>
+				<th class="text-right"><?php echo $this->translate('Total'); ?></th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach($this->entitys as $entity): ?>
+			<?php 
+			 $subscriptionFee = 0; 
+			 if($this->subscriptionEntity->getSubscriptionScheduleId() == 1) {
+			     $subscriptionFee = $entity->getProductEntity()->getProductFeeMonthly();
+			 } else {
+			     $subscriptionFee = $entity->getProductEntity()->getProductFeeAnual();
+			 }
+			?>
+			<tr>
+				<td><?php echo $entity->getSubscriptionProductQty(); ?></td>
+				<td>
+					<a href="<?php echo $this->url('subscription-product-view', array('subscriptionProductId' => $entity->getSubscriptionProductId(), 'clientId' => $this->subscriptionEntity->getClientId())); ?>" 
+						title="<?php echo $this->translate('View this subscription product'); ?>">
+						<?php echo $entity->getProductEntity()->getProductName(); ?>
+					</a>
+				</td>
+				<td><?php echo $this->currencyFormat($subscriptionFee, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+				<td class="text-right"><?php echo $this->currencyFormat( $entity->getSubscriptionProductQty() * $subscriptionFee, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+			</tr>
+		<?php endforeach; ?>
+		</tbody>
+	</table>
+</div>
+<?php endif; ?>

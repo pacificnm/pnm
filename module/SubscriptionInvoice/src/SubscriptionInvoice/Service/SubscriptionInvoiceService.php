@@ -45,6 +45,26 @@ class SubscriptionInvoiceService implements SubscriptionInvoiceServiceInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \SubscriptionInvoice\Service\SubscriptionInvoiceServiceInterface::getBySubcription()
+     */
+    public function getBySubcription($subscriptionId)
+    {
+        return $this->mapper->getBySubcription($subscriptionId);
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \SubscriptionInvoice\Service\SubscriptionInvoiceServiceInterface::getByInvoice()
+     */
+    public function getByInvoice($invoiceId)
+    {
+        return $this->mapper->getByInvoice($invoiceId);
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *

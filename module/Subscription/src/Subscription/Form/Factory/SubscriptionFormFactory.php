@@ -16,12 +16,10 @@ class SubscriptionFormFactory
     {
         $optionService = $serviceLocator->get('PaymentOption\Service\OptionServiceInterface');
         
-        $productService = $serviceLocator->get('Product\Service\ProductServiceInterface');
-        
         $subscriptionScheduleService = $serviceLocator->get('SubscriptionSchedule\Service\SubscriptionScheduleServiceInterface');
         
         $subscriptionStatusService = $serviceLocator->get('SubscriptionStatus\Service\SubscriptionStatusServiceInterface');
         
-        return new SubscriptionForm($optionService, $productService, $subscriptionScheduleService, $subscriptionStatusService);
+        return new SubscriptionForm($optionService, $subscriptionScheduleService, $subscriptionStatusService);
     }
 }

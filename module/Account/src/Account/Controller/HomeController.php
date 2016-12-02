@@ -114,6 +114,8 @@ class HomeController extends BaseController
         // get un-paid invoices
         $openInvoiceEntitys = $this->invoiceService->getByDateRange(null, $end, 'Un-Paid');
         
+        $openInvoiceEntitys->setItemCountPerPage(50);
+        
         // get closed invoices
         $closedInvoiceEntitys = $this->invoiceService->getByDateRange($start, $end, 'Paid');
         

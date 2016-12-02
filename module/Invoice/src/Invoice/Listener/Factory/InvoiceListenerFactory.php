@@ -18,12 +18,10 @@ class InvoiceListenerFactory
         
         $itemService = $serviceLocator->get('InvoiceItem\Service\ItemServiceInterface');
         
-        $subscriptionHostService = $serviceLocator->get('SubscriptionHost\Service\SubscriptionHostServiceInterface');
-        
         $subscriptionInvoiceService = $serviceLocator->get('SubscriptionInvoice\Service\SubscriptionInvoiceServiceInterface');
         
         $productService = $serviceLocator->get('Product\Service\ProductServiceInterface');
         
-        return new InvoiceListener($invoiceService, $itemService, $subscriptionHostService, $subscriptionInvoiceService, $productService);
+        return new InvoiceListener($invoiceService, $itemService, $subscriptionInvoiceService, $productService);
     }
 }

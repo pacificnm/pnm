@@ -31,11 +31,11 @@ class ViewController extends ClientBaseController
      */
     public function indexAction()
     {
-        $subsciptionId = $this->params('subscriptionId');
+        $id = $this->params('subscriptionId');
         
-        $subscriptionEntity = $this->subscriptionService->get($subsciptionId);
+        $entity = $this->subscriptionService->get($id);
         
-        if (! $subscriptionEntity) {
+        if (! $entity) {
             $this->flashMessenger()->addErrorMessage('Subscription not found');
             
             return $this->redirect()->toRoute('subscription-index', array(
@@ -45,16 +45,14 @@ class ViewController extends ClientBaseController
         
         // trigger even
         $this->getEventManager()->trigger('subscriptionView', $this, array(
-            'subscriptionEntity' => $subscriptionEntity,
-            'authId' => $this->identity()
-                ->getAuthId(),
-            'historyUrl' => $this->getRequest()
-                ->getUri()
+            'authId' => $this->identity()->getAuthId(),
+            'historyUrl' => $this->getRequest()->getUri(),
+            'subscriptionEntity' => $entity,
         ));
         
         // return view model
         return new ViewModel(array(
-            'subscriptionEntity' => $subscriptionEntity
+            'entity' => $entity
         ));
     }
 }

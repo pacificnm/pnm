@@ -3,7 +3,16 @@ return array(
     'module' => array(
         'SubscriptionInvoice' => array(
             'name' => 'SubscriptionInvoice',
-            'version' => '2.5'
+            'version' => '2.5',
+            'acl' => array(
+                'guest' => array(),
+                'user' => array(),
+                'user-accountant' => array(),
+                'user-manager' => array(),
+                'employee' => array(),
+                'accountant' => array(),
+                'administrator' => array()
+            )
         )
     ),
     // controller

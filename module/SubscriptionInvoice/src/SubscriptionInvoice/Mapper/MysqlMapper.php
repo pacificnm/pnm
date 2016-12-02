@@ -65,6 +65,42 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
     }
 
     /**
+     * 
+     * {@inheritDoc}
+     * @see \SubscriptionInvoice\Mapper\MysqlMapperInterface::getBySubcription()
+     */
+    public function getBySubcription($subscriptionId)
+    {
+        $this->select = $this->readSql->select('subscription_invoice');
+        
+        $this->select->where(array(
+            'subscription_invoice.subscription_id = ?' => $subscriptionId
+        ));
+        
+        $this->joinInvoice()->joinSubscription();
+        
+        return $this->getRow();
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \SubscriptionInvoice\Mapper\MysqlMapperInterface::getByInvoice()
+     */
+    public function getByInvoice($invoiceId)
+    {
+        $this->select = $this->readSql->select('subscription_invoice');
+        
+        $this->select->where(array(
+            'subscription_invoice.invoice_id = ?' => $invoiceId
+        ));
+        
+        $this->joinInvoice()->joinSubscription();
+        
+        return $this->getRow();
+    }
+    
+    /**
      *
      * {@inheritDoc}
      *
@@ -122,6 +158,20 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
      */
     protected function filter($filter)
     {
+        // subscriptionId
+        if(array_key_exists('subscriptionId', $filter)) {
+            $this->select->where(array(
+                'subscription_invoice.subscription_id = ?' => $filter['subscriptionId']
+            ));
+        }
+        
+        // invoiceId
+        if(array_key_exists('invoiceId', $filter)) {
+            $this->select->where(array(
+                'subscription_invoice.invoiceId = ?' => $filter['invoiceId']
+            ));
+        }
+        
         return $this;
     }
 
@@ -132,7 +182,6 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
     protected function joinInvoice()
     {
         $this->select->join('invoice', 'subscription_invoice.invoice_id = invoice.invoice_id', array(
-            'client_id',
             'invoice_date',
             'invoice_date_start',
             'invoice_date_end',
@@ -155,6 +204,17 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
      */
     protected function joinSubscription()
     {
+        $this->select->join('subscription', 'subscription_invoice.subscription_id = subscription.subscription_id', array(
+            'client_id',
+            'subscription_date_create',
+            'subscription_date_due',
+            'subscription_date_update',
+            'subscription_date_end',
+            'payment_option_id',
+            'subscription_schedule_id',
+            'subscription_status_id'
+        ), 'inner');
+        
         return $this;
     }
 }

@@ -1,3 +1,8 @@
+<?php if($this->subscriptionInvoiceEntitys->count() == 0): ?>
+<div class="alert alert-info">
+	<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No invoice'); ?>
+</div>
+<?php else: ?>
 <table class="table table-hover">
 	<thead>
 		<tr>
@@ -22,3 +27,4 @@
 	<?php endforeach;?>
 	</tbody>
 </table>
+<?php endif; ?>

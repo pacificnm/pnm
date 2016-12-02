@@ -4,7 +4,7 @@
 			<div class="box-header">
 				<h3 class="box-title">
 					<i class="fa fa-line-chart"></i>
-					<?php echo $this->translate('New Subscription'); ?>
+					<?php echo $this->pageTitle; ?> <small><?php echo $this->pageSubTitle; ?></small>
 				</h3>
 				<div class="box-tools"></div>
 				<div class="box-body">
@@ -74,36 +74,6 @@
 					</div>
 					
 					<div class="row">
-						<div class="col-xs-12 col-sm-6">
-							<div class="row">
-                          		<div class="col-xs-12">
-            						<?php $element = $this->form->get('productId'); ?>
-            						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
-            							<label class="control-label"><?php echo $element->getLabel() ?></label>
-            							<?php echo $this->formElement($element); ?>
-            							<?php if($this->formElementErrors($element)): ?>
-            								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
-            							<?php endif; ?>
-            						</div>
-                          		</div>
-                          	</div>
-						</div>
-						<div class="col-xs-12 col-sm-6">
-							<div class="row">
-                          		<div class="col-xs-12">
-            						<?php $element = $this->form->get('nextProductId'); ?>
-            						<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
-            							<label class="control-label"><?php echo $element->getLabel() ?></label>
-            							<?php echo $this->formElement($element); ?>
-            							<?php if($this->formElementErrors($element)): ?>
-            								<span class="text-danger"><?php echo $this->formElementErrors($element) ?> </span>
-            							<?php endif; ?>
-            						</div>
-                          		</div>
-                          	</div>
-						</div>
-					</div>
-					<div class="row">
 						<div class="col-xs-4">
 						<?php $element = $this->form->get('subscriptionStatusId'); ?>
             				<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
@@ -116,31 +86,7 @@
 						</div>
 					</div>
 					
-					<div class="row">
-						<div class="col-xs-12">
-							<?php $element = $this->form->get('subscriptionHost'); ?>
-							<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
-								<?php echo $this->formElement($element); ?>
-								<label class="control-label"><?php echo $element->getLabel() ?></label>
-								<?php if($this->formElementErrors($element)): ?>
-									<span class="text-danger"><?php echo $this->formElementErrors($element) ?></span>
-								<?php endif; ?>
-							</div>
-						</div>
-					</div>
 					
-					<div class="row">
-						<div class="col-xs-12">
-							<?php $element = $this->form->get('subscriptionUser'); ?>
-							<div class="form-group <?php if($this->formElementErrors($element)) echo "has-error has-feedback" ?>">
-								<?php echo $this->formElement($element); ?>
-								<label class="control-label"><?php echo $element->getLabel() ?></label>
-								<?php if($this->formElementErrors($element)): ?>
-									<span class="text-danger"><?php echo $this->formElementErrors($element) ?></span>
-								<?php endif; ?>
-							</div>
-						</div>
-					</div>
 					
 					<?php echo $this->formElement($this->form->get('subscriptionId')); ?>
 					<?php echo $this->formElement($this->form->get('clientId')); ?>

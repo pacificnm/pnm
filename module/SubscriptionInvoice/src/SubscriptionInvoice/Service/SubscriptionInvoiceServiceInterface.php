@@ -22,6 +22,21 @@ interface SubscriptionInvoiceServiceInterface
 
     /**
      *
+     * @param number $subscriptionId
+     * @return SubscriptionInvoiceEntity
+     */
+    public function getBySubcription($subscriptionId);
+    
+    /**
+     *
+     * @param number $invoiceId
+     * @return SubscriptionInvoiceEntity
+     */
+    public function getByInvoice($invoiceId);
+    
+    
+    /**
+     *
      * @param SubscriptionInvoiceEntity $entity            
      * @return SubscriptionInvoiceEntity
      */

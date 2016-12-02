@@ -30,7 +30,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \Subscription\Mapper\MysqlMapperInterface::getAll()
      */
@@ -41,16 +41,16 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
         $this->filter($filter);
         
         $this->joinPaymentOption()
-            ->joinProduct()
             ->joinSubscriptionSchedule()
-            ->joinSubscriptionStatus();
+            ->joinSubscriptionStatus()
+            ->joinClient();
         
         return $this->getPaginator();
     }
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \Subscription\Mapper\MysqlMapperInterface::get()
      */
@@ -59,9 +59,9 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
         $this->select = $this->readSql->select('subscription');
         
         $this->joinPaymentOption()
-            ->joinProduct()
             ->joinSubscriptionSchedule()
-            ->joinSubscriptionStatus();
+            ->joinSubscriptionStatus()
+            ->joinClient();
         
         $this->select->where(array(
             'subscription.subscription_id = ?' => $id
@@ -79,7 +79,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \Subscription\Mapper\MysqlMapperInterface::save()
      */
@@ -113,7 +113,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \Subscription\Mapper\MysqlMapperInterface::delete()
      */
@@ -176,26 +176,6 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
      *
      * @return \Subscription\Mapper\MysqlMapper
      */
-    protected function joinProduct()
-    {
-        $this->select->join('product', 'subscription.product_id = product.product_id', array(
-            'product_name',
-            'product_description_short',
-            'product_fee',
-            'product_fee_setup',
-            'product_fee_monthly',
-            'product_fee_anual',
-            'product_image',
-            'product_status'
-        ), 'inner');
-        
-        return $this;
-    }
-
-    /**
-     *
-     * @return \Subscription\Mapper\MysqlMapper
-     */
     protected function joinNextProduct()
     {
         $this->select->join('product', 'subscription.next_product_id = product.product_id', array(
@@ -221,6 +201,21 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
         $this->select->join('payment_option', 'payment_option.payment_option_id = subscription.payment_option_id', array(
             'payment_option_name',
             'payment_option_enabled'
+        ), 'inner');
+        
+        return $this;
+    }
+
+    /**
+     *
+     * @return \Subscription\Mapper\MysqlMapper
+     */
+    protected function joinClient()
+    {
+        $this->select->join('client', 'client.client_id = subscription.client_id', array(
+            'client_name',
+            'client_status',
+            'client_created'
         ), 'inner');
         
         return $this;

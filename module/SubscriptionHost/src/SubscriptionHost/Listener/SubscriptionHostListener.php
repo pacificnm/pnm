@@ -51,24 +51,7 @@ class SubscriptionHostListener implements ListenerAggregateInterface
         
         $clientId = $subscriptionEntity->getClientId();
         
-        if ($subscriptionEntity->getSubscriptionHost()) {
-            $hostEntitys = $this->hostService->getClientHosts($clientId);
-            
-            // loop through each host and map to subscription
-            foreach ($hostEntitys as $hostEntity) {
-                $entity = new SubscriptionHostEntity();
-                
-                $entity->setHostId($hostEntity->getHostId());
-                
-                $entity->setSubscriptionHostCreated(time());
-                
-                $entity->setSubscriptionId($subscriptionEntity->getSubscriptionId());
-                
-                $entity->setSubscriptionHostId(0);
-                
-                $this->subscriptionHostService->save($entity);
-            }
-        }
+        
     }
 
     /**

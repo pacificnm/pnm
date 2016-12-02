@@ -32,7 +32,7 @@ return array(
             'Subscription\Controller\CreateController' => 'Subscription\Controller\Factory\CreateControllerFactory',
             'Subscription\Controller\ViewController' => 'Subscription\Controller\Factory\ViewControllerFactory',
             'Subscription\Controller\DeleteController' => 'Subscription\Controller\Factory\DeleteControllerFactory',
-            'Subscription\Controller\UpdateController' => 'Subscription\Controller\Factory\UpdateControllerFactory',
+            'Subscription\Controller\UpdateController' => 'Subscription\Controller\Factory\UpdateControllerFactory'
         )
     ),
     // service manager
@@ -77,9 +77,9 @@ return array(
                 )
             ),
             'subscription-create' => array(
-                'title' => 'New Subscription',
-                'pageTitle' => 'New Subscription',
-                'pageSubTitle' => '',
+                'title' => 'Subscription',
+                'pageTitle' => 'Subscription',
+                'pageSubTitle' => 'New',
                 'activeMenuItem' => 'client',
                 'activeSubMenuItem' => 'subscription-index',
                 'type' => 'segment',
@@ -92,9 +92,9 @@ return array(
                 )
             ),
             'subscription-update' => array(
-                'title' => 'Edit Subscription',
-                'pageTitle' => 'Edit Subscription',
-                'pageSubTitle' => '',
+                'title' => 'Subscription',
+                'pageTitle' => 'Subscription',
+                'pageSubTitle' => 'Edit',
                 'activeMenuItem' => 'client',
                 'activeSubMenuItem' => 'subscription-index',
                 'type' => 'segment',
@@ -107,9 +107,9 @@ return array(
                 )
             ),
             'subscription-delete' => array(
-                'title' => 'Delete Subscription',
-                'pageTitle' => 'Delete Subscription',
-                'pageSubTitle' => '',
+                'title' => 'Subscription',
+                'pageTitle' => 'Subscription',
+                'pageSubTitle' => 'Delete',
                 'activeMenuItem' => 'client',
                 'activeSubMenuItem' => 'subscription-index',
                 'type' => 'segment',
@@ -122,9 +122,9 @@ return array(
                 )
             ),
             'subscription-view' => array(
-                'title' => 'View Subscription',
-                'pageTitle' => 'View Subscription',
-                'pageSubTitle' => '',
+                'title' => 'Subscription',
+                'pageTitle' => 'Subscription',
+                'pageSubTitle' => 'View',
                 'activeMenuItem' => 'client',
                 'activeSubMenuItem' => 'subscription-index',
                 'type' => 'segment',
@@ -183,6 +183,14 @@ return array(
                                         'route' => 'subscription-view',
                                         'resource' => 'subscription-view',
                                         'useRouteMatch' => true,
+                                        'pages' => array(
+                                            array(
+                                                'label' => 'Delete',
+                                                'route' => 'subscription-delete',
+                                                'resource' => 'subscription-delete',
+                                                'useRouteMatch' => true
+                                            )
+                                        )
                                     )
                                 )
                             )

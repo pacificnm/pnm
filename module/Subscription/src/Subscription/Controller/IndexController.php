@@ -43,6 +43,12 @@ class IndexController extends ClientBaseController
         
         $paginator->setItemCountPerPage($this->countPerPage);
         
+        // trigger event
+        $this->getEventManager()->trigger('subscriptionIndex', $this, array(
+            'authId' => $this->identity()->getAuthId(),
+            'historyUrl' => $this->getRequest()->getUri()
+        ));
+        
         // return view model
         return new ViewModel(array(
             'clientId' => $this->clientId,
