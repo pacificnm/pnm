@@ -1,14 +1,18 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div class="box box-primary">
-			<div class="box-header">
+			<div class="box-header with-border">
 				<h3 class="box-title">
 					<i class="fa fa-credit-card"></i>
-					<?php echo $this->translate('Invoices'); ?>
+					<?php echo $this->pageTitle; ?> <small><?php echo $this->pageSubTitle; ?></small>
 				</h3>
 				<div class="box-tools">
-					<a href="<?php echo $this->url('invoice-create', array('clientId' => $this->clientId));?>" title="<?php echo $this->translate('Create Invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?></a>
-					
+					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'invoice-create') ):?>
+					<a href="<?php echo $this->url('invoice-create', array('clientId' => $this->clientId));?>" 
+						title="<?php echo $this->translate('Create Invoice'); ?>" class="btn btn-box-tool">
+						<i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?>
+					</a>
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="box-body">
@@ -62,9 +66,14 @@
 						<div class="row">
 							<div class="col-xs-12">
 								<h3 class="profile-username">
+									<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'invoice-view') ):?>
 									<a href="<?php echo $this->url('invoice-view', array('clientId' => $this->clientId, 'invoiceId' => $invoiceEntity->getInvoiceId()));?>" title="<?php echo $this->translate('View this Invoice'); ?>">
 										<?php echo $this->translate('Invoice #');?> <?php echo $invoiceEntity->getInvoiceId(); ?>
 									</a>
+									<?php else: ?>
+										<?php echo $this->translate('Invoice #');?> <?php echo $invoiceEntity->getInvoiceId(); ?>
+									<?php endif; ?>
+									
 									<span class="pull-right badge"><?php echo $invoiceEntity->getInvoiceStatus(); ?></span>
 								</h3>
 							</div>

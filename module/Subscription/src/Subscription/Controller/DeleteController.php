@@ -1,11 +1,11 @@
 <?php
 namespace Subscription\Controller;
 
-use Application\Controller\BaseController;
 use Subscription\Service\SubscriptionServiceInterface;
 use Zend\View\Model\ViewModel;
+use Client\Controller\ClientBaseController;
 
-class DeleteController extends BaseController
+class DeleteController extends ClientBaseController
 {
 
     /**
@@ -31,12 +31,12 @@ class DeleteController extends BaseController
      */
     public function indexAction()
     {
+        parent::indexAction();
+        
         $request = $this->getRequest();
         
         $id = $this->params('subscriptionId');
-        
-        $clientId = $this->params('clientId');
-        
+                
         $entity = $this->service->get($id);
         
         if (! $entity) {
@@ -63,10 +63,10 @@ class DeleteController extends BaseController
         
                 $this->flashMessenger()->addSuccessMessage('Subscription was deleted');
         
-                return $this->redirect()->toRoute('subscription-index', array('clientId' => $clientId));
+                return $this->redirect()->toRoute('subscription-index', array('clientId' => $this->clientId));
             }
         
-            return $this->redirect()->toRoute('subscription-view', array('clientId' => $clientId, 'subscriptionId' => $id));
+            return $this->redirect()->toRoute('subscription-view', array('clientId' => $this->clientId, 'subscriptionId' => $id));
         }
         
         // return view model

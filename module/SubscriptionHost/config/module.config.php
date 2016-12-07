@@ -10,7 +10,8 @@ return array(
                 'user-accountant' => array(),
                 'user-manager' => array(),
                 'employee' => array(
-                    'subscription-host-delete'
+                    'subscription-host-delete',
+                    'subscription-host-create'
                 ),
                 'accountant' => array(),
                 'administrator' => array()
@@ -21,6 +22,7 @@ return array(
     'controllers' => array(
         'factories' => array(
             'SubscriptionHost\Controller\DeleteController' => 'SubscriptionHost\Controller\Factory\DeleteControllerFactory',
+            'SubscriptionHost\Controller\CreateController' => 'SubscriptionHost\Controller\Factory\CreateControllerFactory',
         )
     ),
     // service manager
@@ -29,26 +31,42 @@ return array(
             'SubscriptionHost\Service\SubscriptionHostServiceInterface' => 'SubscriptionHost\Service\Factory\SubscriptionHostServiceFactory',
             'SubscriptionHost\Mapper\MysqlMapperInterface' => 'SubscriptionHost\Mapper\Factory\MysqlMapperFactory',
             'SubscriptionHost\Listener\SubscriptionHostListener' => 'SubscriptionHost\Listener\Factory\SubscriptionHostListenerFactory',
+            'SubscriptionHost\Form\SubscriptionHostForm' => 'SubscriptionHost\Form\Factory\SubscriptionHostFormFactory',
         )
     ),
     // routes
     'router' => array(
         'routes' => array(
-            'subscription-host-delete' => array(
-                'title' => 'Delete Subscription Host',
-                'pageTitle' => 'Delete Subscription Host',
-                'pageSubTitle' => '',
+            'subscription-host-create' => array(
+                'title' => 'Subscription Host',
+                'pageTitle' => 'Subscription Host',
+                'pageSubTitle' => 'Create',
                 'activeMenuItem' => 'client',
                 'activeSubMenuItem' => 'subscription-index',
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/client/[:clientId]/subscription-host/delete/[:subscriptionHostId]',
+                    'route' => '/client/[:clientId]/subscription/[:subscriptionId]/host/create/[:subscriptionHostId]',
+                    'defaults' => array(
+                        'controller' => 'SubscriptionHost\Controller\CreateController',
+                        'action' => 'index'
+                    )
+                )
+            ),
+            'subscription-host-delete' => array(
+                'title' => 'Subscription Host',
+                'pageTitle' => 'Subscription Host',
+                'pageSubTitle' => 'Delete',
+                'activeMenuItem' => 'client',
+                'activeSubMenuItem' => 'subscription-index',
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/client/[:clientId]/subscription/[:subscriptionId]/host/delete/[:subscriptionHostId]',
                     'defaults' => array(
                         'controller' => 'SubscriptionHost\Controller\DeleteController',
                         'action' => 'index'
                     )
                 )
-            )
+            ),
         )
     ),
     // view manager
@@ -95,7 +113,13 @@ return array(
                                                 'route' => 'subscription-host-delete',
                                                 'resource' => 'subscription-host-delete',
                                                 'useRouteMatch' => true,
-                                            )
+                                            ),
+                                            array(
+                                                'label' => 'New',
+                                                'route' => 'subscription-host-create',
+                                                'resource' => 'subscription-host-create',
+                                                'useRouteMatch' => true,
+                                            ),
                                         )
                                     )
                                 )

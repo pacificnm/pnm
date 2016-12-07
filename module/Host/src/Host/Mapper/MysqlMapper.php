@@ -46,6 +46,11 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
             'host.host_status != ?' => 'Deleted'
         ));
         
+        // if pagination is disabled
+        if(array_key_exists('pagination', $filter && $filter['pagination'] == 'off')) {
+            return $this->getRows();
+        }
+        
         return $this->getPaginator();
     }
 

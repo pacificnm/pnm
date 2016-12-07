@@ -21,6 +21,14 @@ interface SubscriptionProductServiceInterface
     public function get($id);
 
     /**
+     * Gets subscription products
+     *
+     * @param number $subscriptionId            
+     * @return SubscriptionProductEntity
+     */
+    public function getSubscriptionProducts($subscriptionId);
+
+    /**
      *
      * @param SubscriptionProductEntity $entity            
      * @return SubscriptionProductEntity

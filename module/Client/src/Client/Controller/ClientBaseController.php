@@ -6,42 +6,31 @@ use Client\Entity\ClientEntity;
 
 class ClientBaseController extends BaseController
 {
+
     /**
-     * 
+     *
      * @var number
      */
     protected $clientId;
-    
+
     /**
-     * 
+     *
      * @var ClientEntity
      */
     protected $clientEntity;
+
     
     /**
-     * 
-     * @var number
-     */
-    protected $page;
-    
-    /**
-     * 
-     * @var number
-     */
-    protected $countPerPage;
-    
-    /**
-     * 
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
+     *
      * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
      */
     public function indexAction()
     {
+        parent::indexAction();
+        
         $clientId = $this->params()->fromRoute('clientId');
-        
-        $page = $this->params()->fromQuery('page', 1);
-        
-        $countPerPage = $this->params()->fromQuery('count-per-page', 25);
         
         // get client
         $clientEntity = $this->getClient($clientId);
@@ -52,9 +41,5 @@ class ClientBaseController extends BaseController
         $this->clientId = $clientId;
         
         $this->clientEntity = $clientEntity;
-        
-        $this->page = $page;
-        
-        $this->countPerPage = $countPerPage;
     }
 }

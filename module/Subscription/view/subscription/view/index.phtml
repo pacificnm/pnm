@@ -30,88 +30,126 @@
 					</a>
 					<?php endif; ?>
 				</div>
-				<div class="box-body">
-					<h3 class="profile-username">
-						<?php echo $this->translate('Subscription');?>
-						<span class="pull-right badge">
-							<?php echo $this->entity->getSubscriptionStatusEntity()->getSubscriptionStatusName();?>
-						</span>
-					</h3>
-					<ul class="list-group list-group-unbordered">
-						<li class="list-group-item">
-							<div class="row">
-								<div class="col-xs-12 col-sm-6">
-									<p>
-										<b><?php echo $this->translate('Due Date')?>:</b>
-            							<?php echo date($this->appConfig()->getConfigDateShort(), $this->entity->getSubscriptionDateDue()); ?>
-            						</p>
-								</div>
-
-								<div class="col-xs-12 col-sm-6">
-									<p>
-										<b><?php echo $this->translate('End Date')?>:</b> 
-            							<?php echo date($this->appConfig()->getConfigDateShort(), $this->entity->getSubscriptionDateEnd()); ?>
-            						</p>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-xs-12 col-sm-6">
-									<p>
-										<b><?php echo $this->translate('Create Date')?>:</b>
-            							<?php echo date($this->appConfig()->getConfigDateShort(), $this->entity->getSubscriptionDateCreate()); ?>
-            						</p>
-								</div>
-
-								<div class="col-xs-12 col-sm-6">
-									<p>
-										<b><?php echo $this->translate('Last Update')?>:</b>
-            							<?php echo date($this->appConfig()->getConfigDateShort(), $this->entity->getSubscriptionDateUpdate()); ?>
-            						</p>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-xs-12 col-sm-6">
-									<p>
-										<b><?php echo $this->translate('Payment')?>:</b>
-            							<?php echo $this->entity->getPaymentOptionEntity()->getPaymentOptionName(); ?>
-            						</p>
-								</div>
-
-								<div class="col-xs-12 col-sm-6">
-									<p>
-										<b><?php echo $this->translate('Billing Schedule')?>:</b>
-            							<?php echo $this->entity->getSubscriptionScheduleEntity()->getSubscriptionScheduleName(); ?>
-            						</p>
-								</div>
-							</div>
-						</li>
-					</ul>
+			</div>
+			<div class="box-body">
+				<h3 class="profile-username">
+					<?php echo $this->translate('Subscription');?>
+					<span class="pull-right badge">
+						<?php echo $this->entity->getSubscriptionStatusEntity()->getSubscriptionStatusName();?>
+					</span>
+				</h3>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6">
+						<p>
+							<b><?php echo $this->translate('Due Date')?>:</b>
+            				<?php echo date($this->appConfig()->getConfigDateShort(), $this->entity->getSubscriptionDateDue()); ?>
+            			</p>
+					</div>
+					<div class="col-xs-12 col-sm-6">
+						<p>
+							<b><?php echo $this->translate('End Date')?>:</b> 
+            				<?php echo date($this->appConfig()->getConfigDateShort(), $this->entity->getSubscriptionDateEnd()); ?>
+            			</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6">
+						<p>
+							<b><?php echo $this->translate('Create Date')?>:</b>
+            				<?php echo date($this->appConfig()->getConfigDateShort(), $this->entity->getSubscriptionDateCreate()); ?>
+           				</p>
+					</div>
+					<div class="col-xs-12 col-sm-6">
+						<p>
+							<b><?php echo $this->translate('Last Update')?>:</b>
+            				<?php echo date($this->appConfig()->getConfigDateShort(), $this->entity->getSubscriptionDateUpdate()); ?>
+           				</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6">
+						<p>
+							<b><?php echo $this->translate('Payment')?>:</b>
+            				<?php echo $this->entity->getPaymentOptionEntity()->getPaymentOptionName(); ?>
+           				</p>
+					</div>
+					<div class="col-xs-12 col-sm-6">
+						<p>
+							<b><?php echo $this->translate('Billing Schedule')?>:</b>
+          						<?php echo $this->entity->getSubscriptionScheduleEntity()->getSubscriptionScheduleName(); ?>
+           				</p>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>		
-</div>
+	</div>
+</div>		
 
 <div class="row">
 	<div class="col-xs-12 col-sm-8">
-		<div class="box box-primary">
-			<div class="box-header with-border">
-				<h3 class="box-title">
-					<i class="fa fa-shopping-cart"></i>
-					<?php echo $this->translate('Products'); ?>
-				</h3>
-				<div class="box-tools">
-					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'subscription-product-create')):?>
-					<a href="<?php echo $this->url('subscription-product-create', array('clientId' => $this->entity->getClientId(), 'subscriptionId' => $this->entity->getSubscriptionId()));?>" 
-						title="<?php echo $this->translate('Add product to subscription');?>" class="btn btn-box-tool">
-						<i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?>
-					</a>
-					<?php endif; ?>
-				</div>
+	
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box box-primary">
+        			<div class="box-header with-border">
+        				<h3 class="box-title">
+        					<i class="fa fa-shopping-cart"></i>
+        					<?php echo $this->translate('Products'); ?>
+        				</h3>
+        				<div class="box-tools">
+        					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'subscription-product-create')):?>
+        					<a href="<?php echo $this->url('subscription-product-create', array('clientId' => $this->entity->getClientId(), 'subscriptionId' => $this->entity->getSubscriptionId()));?>" 
+        						title="<?php echo $this->translate('Add product to subscription');?>" class="btn btn-box-tool">
+        						<i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?>
+        					</a>
+        					<?php endif; ?>
+        				</div>
+        			</div>
+        			<?php echo $this->getSubscriptionProducts($this->entity->getSubscriptionId()); ?>
+        		</div>
 			</div>
-			<?php echo $this->getSubscriptionProducts($this->entity->getSubscriptionId()); ?>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-12 col-sm-6">
+				<div class="box box-primary">
+        			<div class="box-header with-border">
+        				<h3 class="box-title">
+        					<i class="fa fa-desktop"></i>
+        					<?php echo $this->translate('Covered Hosts'); ?>
+        				</h3>
+        				<div class="box-tools">
+        					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'subscription-host-create') ):?>
+        					<a href="<?php echo $this->url('subscription-host-create', array('clientId' => $this->entity->getClientId(), 'subscriptionId' => $this->entity->getSubscriptionId())); ?>" 
+        						title="<?php echo $this->translate('Add new covered host'); ?>" class="btn btn-box-tool">
+        						<i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?>
+        					</a>
+        					<?php endif; ?>
+        				</div>
+        			</div>
+        			<?php echo $this->getSubscriptionHosts($this->entity->getSubscriptionId()); ?>
+        		</div>
+			</div>
+			
+			<div class="col-xs-12 col-sm-6">
+				<div class="box box-primary">
+        			<div class="box-header with-border">
+        				<h3 class="box-title">
+        					<i class="fa fa-user"></i>
+        					<?php echo $this->translate('Allowed Users'); ?>
+        				</h3>
+        				<div class="box-tools">
+        					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'subscription-user-create') ):?>
+        					<a href="<?php echo $this->url('subscription-user-create', array('clientId' => $this->entity->getClientId(), 'subscriptionId' => $this->entity->getSubscriptionId())); ?>" 
+        						title="<?php echo $this->translate('Add new allowed users'); ?>" class="btn btn-box-tool">
+        						<i class="fa fa-plus"></i> <?php echo $this->translate('New'); ?>
+        					</a>
+        					<?php endif; ?>
+        				</div>
+        			</div>
+        			<?php echo $this->getSubscriptionUsers($this->entity->getSubscriptionId()); ?>
+        		</div>
+			</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-sm-4">

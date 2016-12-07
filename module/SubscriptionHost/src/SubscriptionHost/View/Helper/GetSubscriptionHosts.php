@@ -10,15 +10,15 @@ class GetSubscriptionHosts extends AbstractHelper
      * 
      * @var SubscriptionHostServiceInterface
      */
-    protected $subscriptionHostService;
+    protected $service;
     
     /**
      * 
      * @param SubscriptionHostServiceInterface $subscriptionHostService
      */
-    public function __construct(SubscriptionHostServiceInterface $subscriptionHostService)
+    public function __construct(SubscriptionHostServiceInterface $service)
     {
-        $this->subscriptionHostService = $subscriptionHostService;
+        $this->service = $service;
     }
     
     /**
@@ -33,10 +33,10 @@ class GetSubscriptionHosts extends AbstractHelper
         
         $data = new \stdClass();
         
-        $subscriptionHostEntitys = $this->subscriptionHostService->getHostsSubscription($subscriptionId);
+        $entitys = $this->service->getHostsSubscription($subscriptionId);
         
-        $data->subscriptionHostEntitys = $subscriptionHostEntitys;
+        $data->entitys = $entitys;
         
-        return $partialHelper('partials/subscription-hosts.phtml', $data);
+        return $partialHelper('partials/get-subscription-hosts.phtml', $data);
     }
 }

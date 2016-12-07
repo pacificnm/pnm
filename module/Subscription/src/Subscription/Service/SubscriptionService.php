@@ -24,7 +24,7 @@ class SubscriptionService implements SubscriptionServiceInterface
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \Subscription\Service\SubscriptionServiceInterface::getAll()
      */
@@ -35,7 +35,7 @@ class SubscriptionService implements SubscriptionServiceInterface
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \Subscription\Service\SubscriptionServiceInterface::get()
      */
@@ -46,18 +46,29 @@ class SubscriptionService implements SubscriptionServiceInterface
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \Subscription\Service\SubscriptionServiceInterface::getActive()
      */
-    public function getActive()
+    public function getActive($clientId)
     {
-        return $this->mapper->getActive();
+        return $this->mapper->getActive($clientId);
     }
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
+     *
+     * @see \Subscription\Service\SubscriptionServiceInterface::getDue()
+     */
+    public function getDue($subscriptionDateDue)
+    {
+        return $this->mapper->getDue($subscriptionDateDue);
+    }
+
+    /**
+     *
+     * {@inheritdoc}
      *
      * @see \Subscription\Service\SubscriptionServiceInterface::save()
      */
@@ -68,7 +79,7 @@ class SubscriptionService implements SubscriptionServiceInterface
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \Subscription\Service\SubscriptionServiceInterface::delete()
      */

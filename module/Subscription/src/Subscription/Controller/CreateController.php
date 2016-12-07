@@ -13,7 +13,7 @@ class CreateController extends ClientBaseController
      *
      * @var SubscriptionServiceInterface
      */
-    protected $subscriptionService;
+    protected $service;
 
     /**
      *
@@ -22,13 +22,13 @@ class CreateController extends ClientBaseController
     protected $form;
 
     /**
-     *
-     * @param SubscriptionServiceInterface $subscriptionService            
-     * @param SubscriptionForm $form            
+     * 
+     * @param SubscriptionServiceInterface $service
+     * @param SubscriptionForm $form
      */
-    public function __construct(SubscriptionServiceInterface $subscriptionService, SubscriptionForm $form)
+    public function __construct(SubscriptionServiceInterface $service, SubscriptionForm $form)
     {
-        $this->subscriptionService = $subscriptionService;
+        $this->service = $service;
         
         $this->form = $form;
     }
@@ -61,13 +61,13 @@ class CreateController extends ClientBaseController
                 $entity->setSubscriptionDateEnd(strtotime($entity->getSubscriptionDateEnd()));
                 
                 // save
-                $subscriptionEntity = $this->subscriptionService->save($entity);
+                $subscriptionEntity = $this->service->save($entity);
                 
                 // trigger event
                 $this->getEventManager()->trigger('subscriptionCreate', $this, array(
-                    'subscriptionEntity' => $subscriptionEntity,
                     'authId' => $this->identity()->getAuthId(),
-                    'historyUrl' => $this->getRequest()->getUri()
+                    'historyUrl' => $this->getRequest()->getUri(),
+                    'subscriptionEntity' => $subscriptionEntity,
                 ));
                 
                 

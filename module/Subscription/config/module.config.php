@@ -32,7 +32,8 @@ return array(
             'Subscription\Controller\CreateController' => 'Subscription\Controller\Factory\CreateControllerFactory',
             'Subscription\Controller\ViewController' => 'Subscription\Controller\Factory\ViewControllerFactory',
             'Subscription\Controller\DeleteController' => 'Subscription\Controller\Factory\DeleteControllerFactory',
-            'Subscription\Controller\UpdateController' => 'Subscription\Controller\Factory\UpdateControllerFactory'
+            'Subscription\Controller\UpdateController' => 'Subscription\Controller\Factory\UpdateControllerFactory',
+            'Subscription\Controller\ConsoleController' => 'Subscription\Controller\Factory\ConsoleControllerFactory',
         )
     ),
     // service manager
@@ -138,6 +139,31 @@ return array(
             )
         )
     ),
+    // console
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'subscription-console-create' => array(
+                    'options' => array(
+                        'route' => 'subscription --create-invoices',
+                        'defaults' => array(
+                            'controller' => 'Subscription\Controller\ConsoleController',
+                            'action' => 'invoice'
+                        )
+                    )
+                ),
+                'subscription-console-suspend' => array(
+                    'options' => array(
+                        'route' => 'subscription --auto-suspend',
+                        'defaults' => array(
+                            'controller' => 'Subscription\Controller\ConsoleController',
+                            'action' => 'suspend'
+                        )
+                    )
+                )
+            )
+        )
+    ),
     // view manager
     'view_manager' => array(
         'template_path_stack' => array(
@@ -188,6 +214,12 @@ return array(
                                                 'label' => 'Delete',
                                                 'route' => 'subscription-delete',
                                                 'resource' => 'subscription-delete',
+                                                'useRouteMatch' => true
+                                            ),
+                                            array(
+                                                'label' => 'Edit',
+                                                'route' => 'subscription-update',
+                                                'resource' => 'subscription-update',
                                                 'useRouteMatch' => true
                                             )
                                         )

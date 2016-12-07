@@ -30,7 +30,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \SubscriptionHost\Mapper\MysqlMapperInterface::getHostsSubscription()
      */
@@ -38,7 +38,9 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
     {
         $this->select = $this->readSql->select('subscription_host');
         
-        $this->joinHost()->joinHostType()->joinSubscription();
+        $this->joinHost()
+            ->joinHostType()
+            ->joinSubscription();
         
         $this->select->where(array(
             'subscription_host.subscription_id = ?' => $subscriptionId
@@ -49,7 +51,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \SubscriptionHost\Mapper\MysqlMapperInterface::getAll()
      */
@@ -59,14 +61,21 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
         
         $this->filter($filter);
         
-        $this->joinHost()->joinHostType()->joinSubscription();
+        $this->joinHost()
+            ->joinHostType()
+            ->joinSubscription();
+        
+        // if pagination is disabled
+        if (array_key_exists('pagination', $filter && $filter['pagination'] == 'off')) {
+            return $this->getRows();
+        }
         
         return $this->getPaginator();
     }
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \SubscriptionHost\Mapper\MysqlMapperInterface::getHostSubscription()
      */
@@ -74,7 +83,9 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
     {
         $this->select = $this->readSql->select('subscription_host');
         
-        $this->joinHost()->joinHostType()->joinSubscription();
+        $this->joinHost()
+            ->joinHostType()
+            ->joinSubscription();
         
         $this->select->where(array(
             'subscription_host.host_id = ?' => $hostId
@@ -85,7 +96,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \SubscriptionHost\Mapper\MysqlMapperInterface::get()
      */
@@ -93,7 +104,9 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
     {
         $this->select = $this->readSql->select('subscription_host');
         
-        $this->joinHost()->joinHostType()->joinSubscription();
+        $this->joinHost()
+            ->joinHostType()
+            ->joinSubscription();
         
         $this->select->where(array(
             'subscription_host.subscription_host_id = ?' => $id
@@ -104,7 +117,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \SubscriptionHost\Mapper\MysqlMapperInterface::save()
      */
@@ -138,7 +151,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
 
     /**
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @see \SubscriptionHost\Mapper\MysqlMapperInterface::delete()
      */
@@ -149,6 +162,8 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
         $this->delete->where(array(
             'subscription_host.subscription_host_id = ?' => $entity->getSubscriptionHostId()
         ));
+        
+        return $this->deleteRow();
     }
 
     protected function filter($filter)
@@ -204,11 +219,7 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
             'subscription_date_end',
             'payment_option_id',
             'subscription_schedule_id',
-            'subscription_status_id',
-            'product_id',
-            'next_product_id',
-            'subscription_host',
-            'subscription_user'
+            'subscription_status_id'
         ), 'inner');
         
         return $this;

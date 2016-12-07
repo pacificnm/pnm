@@ -1,0 +1,97 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">
+					<i class="<?php echo $this->layout()->pageIcon; ?>"></i>
+					<?php echo $this->layout()->pageTitle; ?>
+				</h3>
+				<div class="box-tools">
+					<a href="javascript:void(0);" data-toggle="modal" data-target="#invoiceSearchModal" 
+						title="<?php echo $this->translate('Search invoices'); ?>" class="btn btn-box-tool">
+						<i class="fa fa-search"></i> <?php echo $this->translate('Search'); ?>
+					</a>
+				</div>
+			</div>
+			
+			<?php if($this->paginator->count() == 0): ?>
+			<div class="box-body">
+        		<div class="alert alert-info">
+        			<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No invoices found'); ?></p>
+        		</div>
+        	</div>
+        	<?php else: ?>
+        	<div class="box-body table-responsive no-padding">
+				<table class="table table-hover table-striped table-condensed">
+    				<thead>
+    					<tr>
+    						<th><?php echo $this->translate('Invoice Id'); ?></th>
+    						<th><?php echo $this->translate('Status'); ?></th>
+    						<th><?php echo $this->translate('Client'); ?></th>
+    						<th><?php echo $this->translate('Date Due'); ?></th>
+    						<th><?php echo $this->translate('Amount'); ?></th>
+    						<th><?php echo $this->translate('Payment'); ?></th>
+    						<th><?php echo $this->translate('Balance'); ?></th>
+    					</tr>
+    				</thead>
+    				<tbody>
+    				<?php foreach($this->paginator as $entity): ?>
+    					<tr>
+    						<td>
+    							<a href="<?php echo $this->url('invoice-view', array('clientId' => $entity->getClientId(), 'invoiceId' => $entity->getInvoiceId())); ?>" 
+    								title="<?php echo $this->translate('View this invoice'); ?>">
+    								<?php echo $entity->getInvoiceId(); ?>
+    							</a>
+    						</td>
+    						<td <?php if($entity->getInvoiceStatus() != 'Paid'):?>class="text-danger"<?php endif;?>><?php echo $this->translate($entity->getInvoiceStatus()); ?></td>
+    						<td>
+    							<a href="<?php echo $this->url('client-view', array('clientId' => $entity->getClientId())); ?>" title="<?php echo $this->translate("view this client"); ?>">
+    								<?php echo $entity->getClientEntity()->getClientName(); ?>
+    							</a>
+    						</td>
+    						<td><?php echo date($this->appConfig()->getConfigDateShort(), $entity->getInvoiceDate()); ?></td>
+    						<td><?php echo $this->currencyFormat($entity->getInvoiceTotal(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+    						<td><?php echo $this->currencyFormat($entity->getInvoicePayment(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+    						<td><?php echo $this->currencyFormat($entity->getInvoiceBalance(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+    					</tr>
+    				<?php endforeach; ?>
+    				</tbody>
+    			</table>
+    		</div>
+    		
+    		<div class="box-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<?php echo $this->Paginator(
+    	                        $this->itemCountPerPage,
+    	                        $this->itemCount,
+    	                        $this->pageCount,
+    	                        $this->page,
+    	                        $this->routeParams,
+    	                        $this->queryParams); ?>
+					</div>
+				</div>
+			</div> 
+			
+        	<?php endif; ?>
+		</div>
+	</div>
+</div>
+
+<!-- Search Modal -->
+<div class="modal fade" id="invoiceSearchModal" tabindex="-1" role="dialog" aria-labelledby="invoiceSearchModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="invoiceSearchModalLabel"><i class="fa fa-dollar"></i> <?php echo $this->translate('Search Invoices')?></h4>
+			</div>
+			<div class="modal-body">
+      
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button>
+			</div>
+		</div>
+	</div>
+</div>

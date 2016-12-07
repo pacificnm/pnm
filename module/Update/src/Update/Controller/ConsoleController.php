@@ -234,4 +234,6 @@ class ConsoleController extends AbstractActionController
         
         $this->logService->info("Comleted Update at {$end}");
     }
+    
+    
 }

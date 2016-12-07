@@ -6,7 +6,6 @@ use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\EventInterface;
 use Host\Service\HostServiceInterface;
 use SubscriptionHost\Service\SubscriptionHostServiceInterface;
-use SubscriptionHost\Entity\SubscriptionHostEntity;
 
 class SubscriptionHostListener implements ListenerAggregateInterface
 {

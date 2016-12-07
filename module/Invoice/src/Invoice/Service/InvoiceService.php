@@ -112,4 +112,39 @@ class InvoiceService implements InvoiceServiceInterface
     {
         return $this->mapper->getTotalsFormYear($start, $end, $invoiceStatus, $clientId);
     }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Invoice\Service\InvoiceServiceInterface::updateInvoiceTotals()
+     */
+    public function updateInvoiceTotals(InvoiceEntity $entity, $amount)
+    {
+    
+        $invoiceSubtotal = $amount;
+    
+        $invoiceDiscount = 0;
+    
+        $invoiceTax = 0;
+        
+        $invoicePayment = $entity->getInvoicePayment();
+    
+        $totalDeductions = $invoiceDiscount + $invoiceTax + $invoicePayment;
+        
+        $invoiceTotal = $amount;
+    
+        $entity->setInvoiceBalance($invoiceTotal);
+    
+        $entity->setInvoiceSubtotal($invoiceSubtotal);
+    
+        $entity->setInvoiceTax($invoiceTax);
+    
+        $entity->setInvoiceDiscount($invoiceDiscount);
+    
+        $entity->setInvoiceTotal($invoiceTotal);
+    
+        $invoiceEntity = $this->save($entity);
+    
+        return $invoiceEntity;
+    }
 }

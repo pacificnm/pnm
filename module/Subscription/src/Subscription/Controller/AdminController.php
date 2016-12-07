@@ -11,15 +11,15 @@ class AdminController extends BaseController
      * 
      * @var SubscriptionServiceInterface
      */
-    protected $subscriptionService;
+    protected $service;
     
     /**
      * 
      * @param SubscriptionServiceInterface $subscriptionService
      */
-    public function __construct(SubscriptionServiceInterface $subscriptionService)
+    public function __construct(SubscriptionServiceInterface $service)
     {
-        $this->subscriptionService = $subscriptionService;
+        $this->service = $service;
     }
     
     /**
@@ -32,7 +32,7 @@ class AdminController extends BaseController
         $filter = array();
         
         // get paginator
-        $paginator = $this->subscriptionService->getAll($filter);
+        $paginator = $this->service->getAll($filter);
         
         $paginator->setCurrentPageNumber($this->page);
         

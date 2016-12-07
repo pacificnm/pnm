@@ -115,6 +115,7 @@ return array(
             'SetActiveMenu' => 'Application\Controller\Plugin\Factory\SetActiveMenuFactory',
             'SetActiveSubMenu' => 'Application\Controller\Plugin\Factory\SetActiveSubMenuFactory',
             'SetPageSubTitle' => 'Application\Controller\Plugin\Factory\SetPageSubTitleFactory',
+            'SetPageIcon' => 'Application\Controller\Plugin\Factory\SetPageIconFactory',
             'Acl' => 'Application\\Controller\\Plugin\\Factory\\ApplicationAclFactory'
         ),
         'invokables' => array()

@@ -12,15 +12,15 @@ class ViewController extends ClientBaseController
      *
      * @var SubscriptionServiceInterface
      */
-    protected $subscriptionService;
+    protected $service;
 
     /**
      *
      * @param SubscriptionServiceInterface $subscriptionService            
      */
-    public function __construct(SubscriptionServiceInterface $subscriptionService)
+    public function __construct(SubscriptionServiceInterface $service)
     {
-        $this->subscriptionService = $subscriptionService;
+        $this->service = $service;
     }
 
     /**
@@ -31,10 +31,13 @@ class ViewController extends ClientBaseController
      */
     public function indexAction()
     {
+        parent::indexAction();
+        
         $id = $this->params('subscriptionId');
         
-        $entity = $this->subscriptionService->get($id);
+        $entity = $this->service->get($id);
         
+        // validate entity
         if (! $entity) {
             $this->flashMessenger()->addErrorMessage('Subscription not found');
             

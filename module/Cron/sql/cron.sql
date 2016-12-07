@@ -39,4 +39,8 @@ INSERT INTO `cron` (`cron_id`, `cron_minute`, `cron_hour`, `cron_dom`, `cron_mon
 (2, 25, 0, 0, 0, 'console.php panorama-client --sync', 0, 1477355101, 1, 1),
 (3, 45, 0, 0, 0, 'console.php panorama-host --sync', 0, 1477356303, 0, 1),
 (4, 1, 0, 0, 0, 'console.php panorama-issue --sync', 1, 1477354442, 1, 0);
+
+INSERT INTO `cron` (`cron_id`, `cron_minute`, `cron_hour`, `cron_dom`, `cron_month`, `cron_command`, `cron_run_once`, `cron_last_run`, `cron_status`, `cron_enabled`) VALUES
+(5, 0, 23, 0, 0, 'console.php subscription --create-invoices', 0, 0, 0, 1);
+
 SET FOREIGN_KEY_CHECKS=1;

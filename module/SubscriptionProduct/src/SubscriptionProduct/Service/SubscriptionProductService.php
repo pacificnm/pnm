@@ -48,6 +48,17 @@ class SubscriptionProductService implements SubscriptionProductServiceInterface
      *
      * {@inheritdoc}
      *
+     * @see \SubscriptionProduct\Service\SubscriptionProductServiceInterface::getSubscriptionProducts()
+     */
+    public function getSubscriptionProducts($subscriptionId)
+    {
+        return $this->mapper->getSubscriptionProducts($subscriptionId);
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
      * @see \SubscriptionProduct\Service\SubscriptionProductServiceInterface::save()
      */
     public function save(SubscriptionProductEntity $entity)

@@ -42,6 +42,13 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
         
         $this->joinInvoice()->joinSubscription();
         
+        // if pagination is disabled
+        if (array_key_exists('pagination', $filter) ) {
+            if($filter['pagination'] == 'off') {
+                return $this->getRows();
+            }
+        }
+        
         return $this->getPaginator();
     }
 

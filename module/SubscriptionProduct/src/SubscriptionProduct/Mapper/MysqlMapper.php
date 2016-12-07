@@ -11,25 +11,27 @@ use SubscriptionProduct\Entity\SubscriptionProductEntity;
 
 class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
 {
+
     /**
      *
-     * @param AdapterInterface $readAdapter
-     * @param AdapterInterface $writeAdapter
-     * @param HydratorInterface $hydrator
-     * @param SubscriptionProductEntity $prototype
+     * @param AdapterInterface $readAdapter            
+     * @param AdapterInterface $writeAdapter            
+     * @param HydratorInterface $hydrator            
+     * @param SubscriptionProductEntity $prototype            
      */
     public function __construct(AdapterInterface $readAdapter, AdapterInterface $writeAdapter, HydratorInterface $hydrator, SubscriptionProductEntity $prototype)
     {
         $this->hydrator = $hydrator;
-    
+        
         $this->prototype = $prototype;
-    
+        
         parent::__construct($readAdapter, $writeAdapter);
     }
-    
+
     /**
-     * 
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
+     *
      * @see \SubscriptionProduct\Mapper\MysqlMapperInterface::getAll()
      */
     public function getAll($filter)
@@ -40,12 +42,20 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
         
         $this->joinProduct();
         
+        // if pagination is disabled
+        if (array_key_exists('pagination', $filter) ) {
+            if($filter['pagination'] == 'off') {
+                return $this->getRows();
+            }
+        }
+        
         return $this->getPaginator();
     }
 
     /**
-     * 
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
+     *
      * @see \SubscriptionProduct\Mapper\MysqlMapperInterface::get()
      */
     public function get($id)
@@ -62,8 +72,28 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
     }
 
     /**
-     * 
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
+     *
+     * @see \SubscriptionProduct\Mapper\MysqlMapperInterface::getSubscriptionProducts()
+     */
+    public function getSubscriptionProducts($subscriptionId)
+    {
+        $this->select = $this->readSql->select('subscription_product');
+        
+        $this->joinProduct();
+        
+        $this->select->where(array(
+            'subscription_product.subscription_id = ?' => $subscriptionId
+        ));
+        
+        return $this->getRows();
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
      * @see \SubscriptionProduct\Mapper\MysqlMapperInterface::save()
      */
     public function save(SubscriptionProductEntity $entity)
@@ -73,21 +103,21 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
         // if we have id then its an update
         if ($entity->getSubscriptionProductId()) {
             $this->update = new Update('subscription_product');
-        
+            
             $this->update->set($postData);
-        
+            
             $this->update->where(array(
                 'subscription_product.subscription_product_id = ?' => $entity->getSubscriptionProductId()
             ));
-        
+            
             $this->updateRow();
         } else {
             $this->insert = new Insert('subscription_product');
-        
+            
             $this->insert->values($postData);
-        
+            
             $id = $this->createRow();
-        
+            
             $entity->setSubscriptionProductId($id);
         }
         
@@ -95,8 +125,9 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
     }
 
     /**
-     * 
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
+     *
      * @see \SubscriptionProduct\Mapper\MysqlMapperInterface::delete()
      */
     public function delete(SubscriptionProductEntity $entity)
@@ -109,25 +140,25 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
         
         return $this->deleteRow();
     }
-    
+
     /**
-     * 
-     * @param array $filter
+     *
+     * @param array $filter            
      * @return \SubscriptionProduct\Mapper\MysqlMapper
      */
     protected function filter($filter)
     {
         // subscriptionId
-        if(array_key_exists('subscriptionId', $filter)) {
+        if (array_key_exists('subscriptionId', $filter)) {
             $this->select->where(array(
                 'subscription_product.subscription_id = ?' => $filter['subscriptionId']
             ));
         }
         return $this;
     }
-    
+
     /**
-     * 
+     *
      * @return \SubscriptionProduct\Mapper\MysqlMapper
      */
     protected function joinProduct()

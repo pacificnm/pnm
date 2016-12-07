@@ -21,10 +21,20 @@ interface MysqlMapperInterface
     public function get($id);
 
     /**
+     * Gets a clients active subscription
      *
+     * @param unknown $clientId            
      * @return SubscriptionEntity
      */
-    public function getActive();
+    public function getActive($clientId);
+
+    /**
+     * Gets all due subscriptions un-paginated
+     *
+     * @param number $subscriptionDateDue            
+     * @return SubscriptionEntity
+     */
+    public function getDue($subscriptionDateDue);
 
     /**
      *

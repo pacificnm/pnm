@@ -85,6 +85,13 @@ class InvoiceMapper implements InvoiceMapperInterface
             ));
         }
         
+        // join client
+        $select->join('client', 'invoice.client_id = client.client_id', array(
+            'client_name',
+            'client_status'
+        ), 'inner');
+        
+        
         $resultSetPrototype = new HydratingResultSet($this->hydrator, $this->prototype);
         
         $paginatorAdapter = new DbSelect($select, $this->readAdapter, $resultSetPrototype);

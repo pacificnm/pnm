@@ -20,7 +20,9 @@ return array(
                     'invoice-workorder',
                     'invoice-workorder-delete'
                 ),
-                'accountant' => array(),
+                'accountant' => array(
+                    'invoice-admin-index'
+                ),
                 'administrator' => array()
             )
         )
@@ -35,7 +37,8 @@ return array(
             'Invoice\Controller\Print' => 'Invoice\Controller\Factory\PrintControllerFactory',
             'Invoice\Controller\Update' => 'Invoice\Controller\Factory\UpdateControllerFactory',
             'Invoice\Controller\View' => 'Invoice\Controller\Factory\ViewControllerFactory',
-            'Invoice\Controller\Workorder' => 'Invoice\Controller\Factory\WorkorderControllerFactory'
+            'Invoice\Controller\Workorder' => 'Invoice\Controller\Factory\WorkorderControllerFactory',
+            'Invoice\Controller\AdminController' => 'Invoice\Controller\Factory\AdminControllerFactory',
         )
     ),
     
@@ -52,6 +55,22 @@ return array(
     // router
     'router' => array(
         'routes' => array(
+            'invoice-admin-index' => array(
+                'title' => 'Invoices',
+                'pageTitle' => 'Invoices',
+                'pageSubTitle' => 'Home',
+                'activeMenuItem' => 'account',
+                'activeSubMenuItem' => 'invoice-admin-index',
+                'pageIcon' => 'fa fa-credit-card',
+                'type' => 'literal',
+                'options' => array(
+                    'route' => '/admin/invoice',
+                    'defaults' => array(
+                        'controller' => 'Invoice\Controller\AdminController',
+                        'action' => 'index'
+                    )
+                )
+            ),
             'invoice-list' => array(
                 'title' => 'Client Invoices',
                 'type' => 'segment',
@@ -153,6 +172,18 @@ return array(
     'navigation' => array(
         'default' => array(
             array(
+                'label' => 'Accounting',
+                'route' => 'account-home',
+                'useRouteMatch' => true,
+                'pages' => array(
+                    array(
+                        'label' => 'Invoices',
+                        'route' => 'invoice-admin-index',
+                        'useRouteMatch' => true,
+                    )
+                )
+            ),
+            array(
                 'label' => 'Clients',
                 'route' => 'client-index',
                 'resource' => 'client-index',
@@ -222,6 +253,16 @@ return array(
                     'route' => 'invoice-list',
                     'resource' => 'invoice-list',
                     'order' => 7,
+                    'useRouteMatch' => true
+                )
+            ),
+            'accounting' => array(
+                array(
+                    'label' => 'Invoices',
+                    'icon' => 'fa fa-credit-card',
+                    'route' => 'invoice-admin-index',
+                    'resource' => 'invoice-admin-index',
+                    'order' => 16,
                     'useRouteMatch' => true
                 )
             )

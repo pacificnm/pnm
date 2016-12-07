@@ -7,11 +7,28 @@ use Auth\Entity\AuthEntity;
 
 class BaseController extends AbstractActionController
 {
+
+    /**
+     * 
+     * @var number
+     */
     protected $clientId;
 
     /**
      *
-     * {@inheritDoc}
+     * @var number
+     */
+    protected $page;
+    
+    /**
+     *
+     * @var number
+     */
+    protected $countPerPage;
+    
+    /**
+     *
+     * {@inheritdoc}
      *
      * @see \Zend\Mvc\Controller\AbstractActionController::onDispatch()
      */
@@ -72,15 +89,14 @@ class BaseController extends AbstractActionController
             }
         }
         
-        $clientId = $this->getEvent()
-            ->getRouteMatch()
-            ->getParam('clientId', null);
-        
         // set page title
         $this->setPageTitle($router->getMatchedRouteName(), $this->layout());
         
         // set page Sub Title
         $this->SetPageSubTitle($router->getMatchedRouteName(), $this->layout());
+        
+        // set pageIcon
+        $this->setPageIcon($router->getMatchedRouteName(), $this->layout());
         
         // set admin acl
         $this->layout()->setVariable('adminAcl', $adminAcl);
@@ -92,13 +108,7 @@ class BaseController extends AbstractActionController
         $this->SetActiveSubMenu($router->getMatchedRouteName(), $this->layout());
         
         // assign acl to layout
-        $this->layout()->setVariable('acl', $this->acl()
-            ->getAcl());
-        
-        // assign client id to layout
-        $this->layout()->setVariable('clientId', $clientId);
-        
-        $this->clientId = $clientId;
+        $this->layout()->setVariable('acl', $this->acl()->getAcl());
         
         // set session timeout
         $maxlifetime = ini_get("session.gc_maxlifetime") - 120;
@@ -109,5 +119,21 @@ class BaseController extends AbstractActionController
         return parent::onDispatch($e);
     }
     
-    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
+     */
+    public function indexAction()
+    {
+        $page = $this->params()->fromQuery('page', 1);
+        
+        $countPerPage = $this->params()->fromQuery('count-per-page', 25);
+        
+        $this->page = $page;
+        
+        $this->countPerPage = $countPerPage;
+        
+        
+    }
 }

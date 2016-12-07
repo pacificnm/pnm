@@ -70,11 +70,60 @@ class MysqlMapper extends CoreMysqlMapper implements MysqlMapperInterface
         return $this->getRow();
     }
 
-    public function getActive()
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see \Subscription\Mapper\MysqlMapperInterface::getDue()
+     */
+    public function getDue($subscriptionDateDue)
+    {
+        $start = mktime(0, 0, 0, date("m", $subscriptionDateDue), date("d", $subscriptionDateDue), date("Y", $subscriptionDateDue));
+        
+        $end = mktime(23, 59, 59, date("m", $subscriptionDateDue), date("d", $subscriptionDateDue), date("Y", $subscriptionDateDue));
+        
+        $this->select = $this->readSql->select('subscription');
+        
+        $this->joinPaymentOption()
+            ->joinSubscriptionSchedule()
+            ->joinSubscriptionStatus()
+            ->joinClient();
+        
+        $this->select->where->greaterThanOrEqualTo('subscription_date_due', $start);
+        
+        $this->select->where->lessThanOrEqualTo('subscription_date_due', $end);
+        
+        $this->select->where(array(
+            'subscription.subscription_status_id = ?' => 1
+        ));
+        
+        return $this->getRows();
+    }
+
+    /**
+     *
+     * {@inheritdoc}
+     *
+     * @see \Subscription\Mapper\MysqlMapperInterface::getActive()
+     */
+    public function getActive($clientId)
     {
         $this->select = $this->readSql->select('subscription');
         
-        return $this->getRows();
+        $this->joinPaymentOption()
+            ->joinSubscriptionSchedule()
+            ->joinSubscriptionStatus()
+            ->joinClient();
+        
+        $this->select->where(array(
+            'subscription.client_id = ?' => $clientId
+        ));
+        
+        $this->select->where(array(
+            'subscription.subscription_status_id = ?' => 1
+        ));
+        
+        return $this->getRow();
     }
 
     /**

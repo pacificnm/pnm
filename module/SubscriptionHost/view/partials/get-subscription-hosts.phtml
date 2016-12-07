@@ -1,0 +1,44 @@
+<?php if($this->entitys->count() == 0): ?>
+<div class="box-body">
+	<div class="alert alert-info">
+		<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('No covered hosts'); ?></p>
+	</div>
+</div>
+<?php else: ?>
+<div class="box-body table-responsive no-padding">
+    <table class="table table-hover table-striped table-condensed">
+    	<thead>
+    		<tr>
+    			<th><?php echo $this->translate('Host'); ?></th>
+    			<th><?php echo $this->translate('Host Type'); ?></th>
+    			<th></th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    		<?php foreach($this->entitys as $entity): ?>
+    		<tr>
+    			<td>
+    				<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'host-view') ):?>
+    				<a href="<?php echo $this->url('host-view', array('clientId' => $entity->getHostEntity()->getClientId(), 'hostId' => $entity->getHostId())); ?>" 
+    					title="<?php echo $this->translate('View this host'); ?>">
+    					<?php echo $entity->getHostEntity()->getHostName(); ?>
+    				</a> 
+    				<?php else: ?>
+    					<?php echo $entity->getHostEntity()->getHostName(); ?>
+    				<?php endif; ?>
+    			</td>
+    			<td><?php echo $entity->getHostEntity()->getTypeEntity()->getHostTypeName(); ?></td>
+    			<td class="text-right">
+    				<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'subscription-host-delete') ):?>
+    				<a href="<?php echo $this->url('subscription-host-delete', array('clientId' => $entity->getHostEntity()->getClientId(), 'subscriptionHostId' => $entity->getSubscriptionHostId(), 'subscriptionId' => $entity->getSubscriptionId())); ?>" 
+    					title="<?php echo $this->translate('Remove host from subscription'); ?>" class="btn btn-box-tool">
+    						<i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?>
+    				</a>
+    				<?php endif; ?>
+    			</td>
+    		</tr>
+    		<?php endforeach;?>
+    	</tbody>
+    </table>
+</div>
+<?php endif; ?>

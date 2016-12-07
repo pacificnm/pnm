@@ -122,6 +122,7 @@ return array(
         'SubscriptionProduct',
         'ProductAttribute',
         'ProductAttributeValue',
+        'SubscriptionUser',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

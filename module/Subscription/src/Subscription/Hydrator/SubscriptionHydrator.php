@@ -4,7 +4,6 @@ namespace Subscription\Hydrator;
 use Zend\Stdlib\Hydrator\ClassMethods;
 use Subscription\Entity\SubscriptionEntity;
 use SubscriptionSchedule\Entity\SubscriptionScheduleEntity;
-use Product\Entity\ProductEntity;
 use SubscriptionStatus\Entity\SubscriptionStatusEntity;
 use PaymentOption\Entity\OptionEntity;
 use Client\Entity\ClientEntity;
