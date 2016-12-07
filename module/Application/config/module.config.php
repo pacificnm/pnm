@@ -21,6 +21,11 @@ return array(
     'router' => array(
         'routes' => array(
             'home' => array(
+                'title' => 'Home',
+                'pageTitle' => 'Home',
+                'pageSubTitle' => '',
+                'activeMenuItem' => '',
+                'activeSubMenuItem' => '',
                 'type' => 'Zend\\Mvc\\Router\\Http\\Literal',
                 'options' => array(
                     'route' => '/',
