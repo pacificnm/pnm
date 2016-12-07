@@ -8,7 +8,10 @@
 				</h3>
 				<div class="box-tools">
 					<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'invoice-print') ):?>
-					<a href="<?php echo $this->url('invoice-print', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" target="_blank" title="<?php echo $this->translate('Print this invoice'); ?>" class="btn btn-box-tool"><i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?></a>
+					<a href="<?php echo $this->url('invoice-print', array('clientId' => $this->clientId, 'invoiceId' => $this->invoiceEntity->getInvoiceId()));?>" target="_blank" 
+						title="<?php echo $this->translate('Print this invoice'); ?>" class="btn btn-box-tool">
+						<i class="fa fa-print"></i> <?php echo $this->translate('Print'); ?>
+					</a>
 					<?php endif; ?>
 					
 					<?php if($this->invoiceEntity->getInvoiceStatus() == 'Un-Paid'): ?>
@@ -328,6 +331,12 @@
 								<?php else: ?>
 									<?php echo $this->translate('Work Order #'); ?><?php echo $workorderEntity->getWorkorderId(); ?>
 								<?php endif; ?>
+							</td>
+							<td class="text-right">
+								<a href="<?php echo $this->url('invoice-workorder-delete', array('clientId' => $this->clientId, 'workorderId' => $workorderEntity->getWorkorderId(), 'invoiceId' => $this->invoiceEntity->getInvoiceId())); ?>" 
+									title="<?php echo $this->translate('Remove work order from this invoice'); ?>" class="btn btn-box-tool">
+									<i class="fa fa-times"></i> <?php echo $this->translate('Delete'); ?>
+								</a>
 							</td>
 						</tr>
 					<?php endforeach;?>
