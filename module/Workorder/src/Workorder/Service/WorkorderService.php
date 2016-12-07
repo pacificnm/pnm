@@ -3,21 +3,22 @@ namespace Workorder\Service;
 
 use Workorder\Entity\WorkorderEntity;
 use Workorder\Mapper\WorkorderMapperInterface;
+use Workorder\Mapper\MysqlMapperInterface;
 
 class WorkorderService implements WorkorderServiceInterface
 {
 
     /**
      *
-     * @var WorkorderMapperInterface
+     * @var MysqlMapperInterface
      */
     protected $mapper;
 
     /**
-     *
-     * @param WorkorderMapperInterface $mapper            
+     * 
+     * @param MysqlMapperInterface $mapper
      */
-    public function __construct(WorkorderMapperInterface $mapper)
+    public function __construct(MysqlMapperInterface $mapper)
     {
         $this->mapper = $mapper;
     }
@@ -72,9 +73,9 @@ class WorkorderService implements WorkorderServiceInterface
      *
      * @see \Workorder\Service\WorkorderServiceInterface::getByDateRange()
      */
-    public function getByDateRange($start, $end, $status)
+    public function getByDateRange($start, $end, $status,  $paginator = true)
     {
-        return $this->mapper->getByDateRange($start, $end, $status);
+        return $this->mapper->getByDateRange($start, $end, $status, $paginator);
     }
 
     /**

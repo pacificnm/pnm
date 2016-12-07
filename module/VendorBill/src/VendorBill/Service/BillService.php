@@ -2,22 +2,22 @@
 namespace VendorBill\Service;
 
 use VendorBill\Entity\BillEntity;
-use VendorBill\Mapper\BillMapperInterface;
+use VendorBill\Mapper\MysqlMapperInterface;
 
 class BillService implements BillServiceInterface
 {
 
     /**
      *
-     * @var BillMapperInterface
+     * @var MysqlMapperInterface
      */
     protected $mapper;
 
     /**
      *
-     * @param BillMapperInterface $mapper            
+     * @param MysqlMapperInterface $mapper            
      */
-    public function __construct(BillMapperInterface $mapper)
+    public function __construct(MysqlMapperInterface $mapper)
     {
         $this->mapper = $mapper;
     }
@@ -55,6 +55,16 @@ class BillService implements BillServiceInterface
         return $this->mapper->getDueBills();
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \VendorBill\Service\BillServiceInterface::getTotalForMonth()
+     */
+    public function getTotalForMonth($start, $end)
+    {
+        return $this->mapper->getTotalForMonth($start, $end);
+    }
+    
     /**
      *
      * {@inheritDoc}

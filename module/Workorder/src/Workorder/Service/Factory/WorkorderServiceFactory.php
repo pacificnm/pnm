@@ -1,22 +1,20 @@
 <?php
 namespace Workorder\Service\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Workorder\Service\WorkorderService;
 
-class WorkorderServiceFactory implements FactoryInterface
+class WorkorderServiceFactory
 {
 
     /**
      *
-     * {@inheritDoc}
-     *
-     * @see \Zend\ServiceManager\FactoryInterface::createService()
+     * @param ServiceLocatorInterface $serviceLocator            
+     * @return \Workorder\Service\WorkorderService
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
-        $mapper = $serviceLocator->get('Workorder\Mapper\WorkorderMapperInterface');
+        $mapper = $serviceLocator->get('Workorder\Mapper\MysqlMapperInterface');
         
         return new WorkorderService($mapper);
     }

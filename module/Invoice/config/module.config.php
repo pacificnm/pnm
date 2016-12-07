@@ -262,7 +262,7 @@ return array(
                     'icon' => 'fa fa-credit-card',
                     'route' => 'invoice-admin-index',
                     'resource' => 'invoice-admin-index',
-                    'order' => 16,
+                    'order' => 5,
                     'useRouteMatch' => true
                 )
             )

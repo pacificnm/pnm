@@ -1,22 +1,20 @@
 <?php
 namespace VendorBill\Service\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use VendorBill\Service\BillService;
 
-class BillServiceFactory implements FactoryInterface
+class BillServiceFactory
 {
 
     /**
-     *
-     * {@inheritDoc}
-     *
-     * @see \Zend\ServiceManager\FactoryInterface::createService()
+     * 
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return \VendorBill\Service\BillService
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
-        $mapper = $serviceLocator->get('VendorBill\Mapper\BillMapperInterface');
+        $mapper = $serviceLocator->get('VendorBill\Mapper\MysqlMapperInterface');
         
         return new BillService($mapper);
     }

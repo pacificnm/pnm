@@ -39,7 +39,7 @@ class IndexController extends BaseController
         
         // trigger event view cron
         $this->getEventManager()->trigger('PayrollIndex', $this, array(
-            'authId' => '',
+            'authId' => $this->identity()->getAuthId(),
             'historyUrl' => $this->getRequest()->getUri()
         ));
         

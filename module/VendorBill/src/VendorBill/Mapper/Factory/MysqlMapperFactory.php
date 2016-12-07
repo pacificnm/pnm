@@ -1,33 +1,33 @@
 <?php
 namespace VendorBill\Mapper\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator;
-use VendorBill\Mapper\BillMapper;
+use VendorBill\Mapper\MysqlMapper;
 use VendorBill\Hydrator\BillHydrator;
 use VendorBill\Entity\BillEntity;
 
-class BillMapperFactory implements FactoryInterface
+class MysqlMapperFactory
 {
 
     /**
-     * 
-     * {@inheritDoc}
-     * @see \Zend\ServiceManager\FactoryInterface::createService()
+     *
+     * @param ServiceLocatorInterface $serviceLocator            
+     * @return \VendorBill\Mapper\MysqlMapper
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ServiceLocatorInterface $serviceLocator)
     {
         $hydrator = new AggregateHydrator();
         
         $hydrator->add(new BillHydrator());
         
-        $prototype = new BillEntity();
-        
         $readAdapter = $serviceLocator->get('db1');
         
         $writeAdapter = $serviceLocator->get('db2');
         
-        return new BillMapper($readAdapter, $writeAdapter, $hydrator, $prototype);
+        $prototype = new BillEntity();
+        
+        return new MysqlMapper($readAdapter, $writeAdapter, $hydrator, $prototype);
     }
 }
+

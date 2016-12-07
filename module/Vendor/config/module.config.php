@@ -158,7 +158,7 @@ return array(
                     'icon' => 'fa fa-truck',
                     'route' => 'vendor-index',
                     'resource' => 'vendor-index',
-                    'order' => 3
+                    'order' => 10
                 )
             )
         )

@@ -123,6 +123,7 @@ return array(
         'ProductAttribute',
         'ProductAttributeValue',
         'SubscriptionUser',
+        'ReportProfit',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

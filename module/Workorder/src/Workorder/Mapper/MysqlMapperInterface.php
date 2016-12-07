@@ -3,7 +3,7 @@ namespace Workorder\Mapper;
 
 use Workorder\Entity\WorkorderEntity;
 
-interface WorkorderMapperInterface
+interface MysqlMapperInterface
 {
 
     /**
@@ -26,7 +26,7 @@ interface WorkorderMapperInterface
      * @param number $end            
      * @param status $status            
      */
-    public function getByDateRange($start, $end, $status);
+    public function getByDateRange($start, $end, $status, $paginator = true);
 
     /**
      *
@@ -86,3 +86,4 @@ interface WorkorderMapperInterface
      */
     public function delete(WorkorderEntity $entity);
 }
+

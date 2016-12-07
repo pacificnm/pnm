@@ -43,4 +43,8 @@ INSERT INTO `cron` (`cron_id`, `cron_minute`, `cron_hour`, `cron_dom`, `cron_mon
 INSERT INTO `cron` (`cron_id`, `cron_minute`, `cron_hour`, `cron_dom`, `cron_month`, `cron_command`, `cron_run_once`, `cron_last_run`, `cron_status`, `cron_enabled`) VALUES
 (5, 0, 23, 0, 0, 'console.php subscription --create-invoices', 0, 0, 0, 1);
 
+
+INSERT INTO `cron` (`cron_id`, `cron_minute`, `cron_hour`, `cron_dom`, `cron_month`, `cron_command`, `cron_run_once`, `cron_last_run`, `cron_status`, `cron_enabled`) VALUES
+(6, 0, 6, 0, 0, 'console.php report-profit --run', 0, 0, 0, 1);
+
 SET FOREIGN_KEY_CHECKS=1;

@@ -37,7 +37,7 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'VendorBill\Service\BillServiceInterface' => 'VendorBill\Service\Factory\BillServiceFactory',
-            'VendorBill\Mapper\BillMapperInterface' => 'VendorBill\Mapper\Factory\BillMapperFactory'
+            'VendorBill\Mapper\MysqlMapperInterface' => 'VendorBill\Mapper\Factory\MysqlMapperFactory',
         )
     ),
     

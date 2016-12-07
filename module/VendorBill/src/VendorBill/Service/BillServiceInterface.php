@@ -28,6 +28,14 @@ interface BillServiceInterface
     
     /**
      *
+     * @param number $start
+     * @param number $end
+     * @return float
+     */
+    public function getTotalForMonth($start, $end);
+    
+    /**
+     *
      * @param BillEntity $entity            
      * @return BillEntity
      */

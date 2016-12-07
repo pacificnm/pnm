@@ -39,8 +39,9 @@ interface WorkorderServiceInterface
      * @param number $start
      * @param number $end
      * @param status $status
+     * @return WorkorderEntity
      */
-    public function getByDateRange($start, $end, $status);
+    public function getByDateRange($start, $end, $status, $paginator = true);
     
     /**
      *

@@ -39,8 +39,8 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
+            'Workorder\Mapper\MysqlMapperInterface' => 'Workorder\Mapper\Factory\MysqlMapperFactory',
             'Workorder\\Service\\WorkorderServiceInterface' => 'Workorder\\Service\\Factory\\WorkorderServiceFactory',
-            'Workorder\\Mapper\\WorkorderMapperInterface' => 'Workorder\\Mapper\\Factory\\WorkorderMapperFactory',
             'Workorder\\Form\\WorkorderForm' => 'Workorder\\Form\\Factory\\WorkorderFormFactory',
             'Workorder\\V1\\Rest\\ClientTotalCount\\ClientTotalCountResource' => 'Workorder\\V1\\Rest\\ClientTotalCount\\ClientTotalCountResourceFactory',
             'Workorder\\V1\\Rest\\ClientTotalLabor\\ClientTotalLaborResource' => 'Workorder\\V1\\Rest\\ClientTotalLabor\\ClientTotalLaborResourceFactory',
@@ -223,7 +223,7 @@ return array(
                                             array(
                                                 'label' => 'Print Work Order',
                                                 'route' => 'workorder-print',
-                                                'useRouteMatch' => true                                                                                                                                         
+                                                'useRouteMatch' => true
                                             )
                                         )
                                     )

@@ -193,7 +193,7 @@ return array(
                     'icon' => 'fa fa-dollar',
                     'route' => 'payroll-index',
                     'resource' => 'payroll-index',
-                    'order' => 12
+                    'order' => 5
                 )
             )
         )

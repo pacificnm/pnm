@@ -174,7 +174,7 @@ return array(
                     'icon' => 'fa fa-dollar',
                     'route' => 'payroll-tax-index',
                     'resource' => 'payroll-tax-index',
-                    'order' => 13
+                    'order' => 7
                 )
             )
         )

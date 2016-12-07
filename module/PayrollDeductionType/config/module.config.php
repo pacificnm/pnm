@@ -176,7 +176,7 @@ return array(
                     'icon' => 'fa fa-dollar',
                     'route' => 'payroll-deduction-type-index',
                     'resource' => 'payroll-deduction-type-index',
-                    'order' => 12
+                    'order' => 6
                 )
             )
         )

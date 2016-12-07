@@ -1,0 +1,95 @@
+<?php 
+/**
+ * Pacific NM (https://www.pacificnm.com)
+ *
+ * @link      https://github.com/pacificnm/pnm for the canonical source repository
+ * @copyright Copyright (c) 20011-2016 Pacific NM USA Inc. (https://www.pacificnm.com)
+ * @license
+ */
+?>
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<h3 class="box-title">
+					<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+					<?php echo $this->pageTitle; ?> <small><?php echo $this->pageSubTitle; ?></small>
+				</h3>
+				<div class="box-tools">
+					<a href="" title="<?php echo $this->translate('Search'); ?>" class="btn btn-box-tool">
+						<i class="fa fa-search"></i> <?php echo $this->translate('Search'); ?>
+						
+					</a>
+				</div>
+			</div>
+			<?php if($this->entitys->count() == 0):?>
+			<div class="box-body">
+				<div class="alert alert-info">
+					<p><i class="fa fa-info-circle"></i> <?php echo $this->translate('Nothing to report. Check that the cron is running for this service'); ?>
+				</div>
+			</div>
+			<?php else: ?>
+			<?php 
+			 $yearTotalLabor = 0;
+			 $yearTotalParts = 0;
+			 $yearTotalExpense = 0;
+			?>
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-bordered table-hover table-striped table-condensed">
+					<thead>
+						<tr>
+							<th><?php echo $this->translate('Month'); ?></th>
+							<th class="text-center"><?php echo $this->translate('Labor'); ?></th>
+							<th class="text-center"><?php echo $this->translate('Parts'); ?></th>
+							<th class="text-center"><?php echo $this->translate('Total'); ?></th>
+							<th class="text-center"><?php echo $this->translate('Expenses'); ?></th>
+							<th class="text-center"><?php echo $this->translate('Profit'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach($this->entitys as $entity): ?>
+    					<?php 
+    					   $monthTotal = $entity->getReportProfitLabor() + $entity->getReportProfitParts();
+    					   $monthProfit = $monthTotal - $entity->getReportProfitExpense();
+    					   $yearTotalLabor = $yearTotalLabor + $entity->getReportProfitLabor();
+    					   $yearTotalParts = $yearTotalParts + $entity->getReportProfitParts();
+    					   $yearTotalExpense = $yearTotalExpense + $entity->getReportProfitExpense();
+    					?>
+						<tr>
+							<td><?php echo $entity->getReportProfitMonth(); ?>/<?php echo $this->year; ?></td>
+							<td class="text-right"><?php echo $this->currencyFormat($entity->getReportProfitLabor(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+							<td class="text-right"><?php echo $this->currencyFormat($entity->getReportProfitParts(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+							<td class="text-right"><?php echo $this->currencyFormat($monthTotal, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+							<td class="text-right"><?php echo $this->currencyFormat($entity->getReportProfitExpense(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+							<td class="text-right">
+								<?php if($monthProfit < 0): ?>
+								<span class="text-danger"><?php echo $this->currencyFormat($monthProfit, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></span>
+								<?php else: ?>
+									<?php echo $this->currencyFormat($monthProfit, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
+								<?php endif; ?>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th><?php echo $this->translate('Totals'); ?></th>
+							<th class="text-right"><?php echo $this->currencyFormat($yearTotalLabor, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></th>
+							<th class="text-right"><?php echo $this->currencyFormat($yearTotalParts, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></th>
+							<th class="text-right"><?php echo $this->currencyFormat($yearTotalLabor + $yearTotalParts, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></th>
+							<th class="text-right"><?php echo $this->currencyFormat($yearTotalExpense, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></th>
+							<th class="text-right">
+								<?php if( ($yearTotalLabor + $yearTotalParts) - $yearTotalExpense < 0): ?>
+									<span class="text-danger"><?php echo $this->currencyFormat(($yearTotalLabor + $yearTotalParts) - $yearTotalExpense, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></span>
+								<?php else: ?>
+									<?php echo $this->currencyFormat(($yearTotalLabor + $yearTotalParts) - $yearTotalExpense, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?>
+								<?php endif; ?>
+							</th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>		
+			<?php endif; ?>
+		</div>
+	</div>
+</div>

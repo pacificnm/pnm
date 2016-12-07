@@ -158,7 +158,7 @@ return array(
                     'icon' => 'fa fa-cogs',
                     'route' => 'account-type-index',
                     'resource' => 'account-type-index',
-                    'order' => 5
+                    'order' => 3
                 )
             )
         )
