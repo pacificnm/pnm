@@ -32,12 +32,6 @@ class InstallMapper implements InstallMapperInterface
      */
     public function installTabel($sql)
     {
-        try {
-            $resultSet = $this->writeAdapter->query($sql, \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
-            return true;
-        } catch(\Exception $e) {
-            return false;
-        }
-            
+         $resultSet = $this->writeAdapter->query($sql, \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
     }
 }

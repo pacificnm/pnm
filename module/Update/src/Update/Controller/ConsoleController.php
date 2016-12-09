@@ -123,13 +123,12 @@ class ConsoleController extends AbstractActionController
                 
                 // $console->write("working on sql file {$file}\n");
                 
+                $console->write("Updating sql file {$file}\n");
+                
+                $this->logService->info("Updating sql file {$file}");
+                
                 $result = $this->installService->installTabel($sql);
                 
-                if ($result) {
-                    $console->write("Updating sql file {$file}\n");
-                    
-                    $this->logService->info("Updating sql file {$file}");
-                }
             }
         }
         
