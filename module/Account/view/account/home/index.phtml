@@ -321,11 +321,21 @@
     							<th><?php echo $this->translate('Work Order #'); ?></th>
     							<th><?php echo $this->translate('Client'); ?></th>
     							<th><?php echo $this->translate('Title'); ?></th>
-    							<th class="text-right"><?php echo $this->translate('Scheduled'); ?></th>	
+    							<th class="text-right"><?php echo $this->translate('Scheduled'); ?></th>
+    							<th><?php echo $this->translate('Parts'); ?></th>
+    							<th><?php echo $this->translate('Labor'); ?></th>
+    							<th><?php echo $this->translate('Total'); ?></th>	
     						</tr>
     					</thead>
     					<tbody>
+    					<?php $workorderLaborTotal = 0;?>
+    					<?php $workorderPartTotal = 0;?>
+    					
     					<?php foreach($this->openWorkorderEntitys as $workorderEntity): ?>
+    						<?php 
+    						  $workorderLaborTotal = $workorderLaborTotal + $workorderEntity->getWorkorderLabor();
+    						  $workorderPartTotal = $workorderPartTotal + $workorderEntity->getWorkorderParts();
+    						?>
     						<tr>
     							<td nowrap>
     								<?php if( $this->acl()->isAllowed($this->identity()->getAuthRole(), 'workorder-view') ):?>
@@ -341,11 +351,22 @@
     									<?php echo $workorderEntity->getClientEntity()->getClientName(); ?>
     								</a>
     							</td>
-    							<td><?php echo $workorderEntity->getWorkorderTitle(); ?></td>
+    							<td class="small"><?php echo $workorderEntity->getWorkorderTitle(); ?></td>
     							<td nowrap class="text-right"><?php echo date($this->appConfig()->getConfigDateLong(), $workorderEntity->getWorkorderDateScheduled()); ?></td>
+    							<td class="text-right"><?php echo $this->currencyFormat($workorderEntity->getWorkorderLabor(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+    							<td class="text-right"><?php echo $this->currencyFormat($workorderEntity->getWorkorderParts(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
+    							<td class="text-right"><?php echo $this->currencyFormat($workorderEntity->getWorkorderLabor() + $workorderEntity->getWorkorderParts(), $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></td>
     						</tr>
     					<?php endforeach;?>	
     					</tbody>
+    					<tfoot>
+    						<tr>
+        						<th colspan="4"><?php echo $this->translate('Total'); ?></th>
+        						<th><?php echo $this->currencyFormat($workorderPartTotal + $workorderLaborTotal, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></th>
+        						<th><?php echo $this->currencyFormat($workorderPartTotal, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></th>
+        						<th><?php echo $this->currencyFormat($workorderLaborTotal, $this->appConfig()->getConfigCurrency(), $this->appConfig()->getConfigLang()); ?></th>
+        					</tr>
+    					</tfoot>
     				</table>
     			</div>
 			<?php endif; ?>
