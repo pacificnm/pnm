@@ -94,13 +94,20 @@ class TaskReminderResource extends AbstractResourceListener
         $data = array();
         
         foreach ($taskEntitys as $taskEntity) {
+            if($taskEntity->getTaskDateEnd()) {
+                $taskDateEnd = date($configEntity->getConfigDateLong(), $taskEntity->getTaskDateEnd());
+            } else {
+                $taskDateEnd = 0;
+            }
+            
+            
             $data[] = array(
                 'taskId' => $taskEntity->getTaskId(),
                 'clientId' => $taskEntity->getClientId(),
                 'employeeId' => $taskEntity->getEmployeeId(),
                 'clientName' => $taskEntity->getClientEntity()->getClientName(),
                 'taskTitle' => $taskEntity->getTaskTitle(),
-                'taskDateEnd' => date($configEntity->getConfigDateLong(), $taskEntity->getTaskDateEnd()),
+                'taskDateEnd' => $taskDateEnd,
                 'taskStatus' => $taskEntity->getTaskStatus(),
                 'taskPriority' => $taskEntity->getPriorityEntity()->getTaskPriorityValue()
             );

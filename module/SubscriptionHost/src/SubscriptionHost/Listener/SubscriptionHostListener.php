@@ -42,31 +42,13 @@ class SubscriptionHostListener implements ListenerAggregateInterface
 
     /**
      *
-     * @param EventInterface $event            
-     */
-    public function subscriptionCreate(EventInterface $event)
-    {
-        $subscriptionEntity = $event->getParam('subscriptionEntity');
-        
-        $clientId = $subscriptionEntity->getClientId();
-        
-        
-    }
-
-    /**
-     *
      * {@inheritDoc}
      *
      * @see \Zend\EventManager\ListenerAggregateInterface::attach()
      */
     public function attach(\Zend\EventManager\EventManagerInterface $events)
     {
-        $this->listeners = array(
-            $events->attach('subscriptionCreate', array(
-                $this,
-                'subscriptionCreate'
-            ))
-        );
+        $this->listeners = array();
         
         return $this;
     }

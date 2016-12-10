@@ -367,7 +367,7 @@ class ConfigForm extends Form implements InputFilterProviderInterface
         // configSmtpPassword
         $this->add(array(
             'name' => 'configSmtpPassword',
-            'type' => 'Password',
+            'type' => 'Text',
             'options' => array(
                 'label' => 'SMTP Password:'
             ),
@@ -380,7 +380,7 @@ class ConfigForm extends Form implements InputFilterProviderInterface
         // configPanoramaKey
         $this->add(array(
             'name' => 'configPanoramaKey',
-            'type' => 'Password',
+            'type' => 'Text',
             'options' => array(
                 'label' => 'Panorama9 API Key:'
             ),

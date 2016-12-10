@@ -32,7 +32,7 @@ class UpdateController extends BaseController
      * 
      * @var ConfigForm
      */
-    protected $configForm;
+    protected $form;
     
     /**
      * 
@@ -42,17 +42,28 @@ class UpdateController extends BaseController
     
     /**
      * 
+     * @var BlockCipher
+     */
+    protected $blockCipher;
+    /**
+     * 
      * @param ConfigServiceInterface $configService
      * @param ConfigForm $configForm
      * @param array $config
      */
-    public function __construct(ConfigServiceInterface $configService, ConfigForm $configForm, array $config)
+    public function __construct(ConfigServiceInterface $configService, ConfigForm $form, array $config)
     {
         $this->configService = $configService;
         
-        $this->configForm = $configForm;
+        $this->form = $form;
         
         $this->config = $config;
+        
+        $this->blockCipher = BlockCipher::factory('mcrypt', array(
+            'algo' => 'aes'
+        ));
+        
+        $this->blockCipher->setKey($this->config['encryption-key']);
     }
     
     /**
@@ -63,55 +74,36 @@ class UpdateController extends BaseController
     public function indexAction()
     {
                
-        $configEntity = $this->configService->get(1);
+        $entity = $this->configService->get(1);
         
-        $this->configForm->bind($configEntity);
         
         $request = $this->getRequest();
         
-        $tempSmtpPassword = $configEntity->getConfigSmtpPassword();
         
-        $tempPanoramaKey = $configEntity->getConfigPanoramaKey();
         
         // if we have a post
         if ($request->isPost()) {
             // get post
             $postData = $request->getPost();
         
-            $this->configForm->setData($postData);
+            $this->form->setData($postData);
         
             // if we are valid
-            if ($this->configForm->isValid()) {
+            if ($this->form->isValid()) {
                 
-                $configEntity = $this->configForm->getData();
+                $entity = $this->form->getData();
                 
                 // check if smtp password is differnt
-                if($tempSmtpPassword != $configEntity->getConfigSmtpPassword()) {
-                    $blockCipher = BlockCipher::factory('mcrypt', array(
-                        'algo' => 'aes'
-                    ));
-                    
-                    $blockCipher->setKey($this->config['encryption-key']);
-                    
-                    $configEntity->setConfigSmtpPassword($blockCipher->encrypt($configEntity->getConfigSmtpPassword()));
-                } else {
-                    $configEntity->setConfigSmtpPassword($tempSmtpPassword);
-                }
+                if($entity->getConfigSmtpPassword()) {
+                    $entity->setConfigSmtpPassword($this->blockCipher->encrypt($entity->getConfigSmtpPassword()));
+                } 
                 
                 // check if we got a new panorama9 key
-                if($tempPanoramaKey != $configEntity->getConfigPanoramaKey()) {
-                    $blockCipher = BlockCipher::factory('mcrypt', array(
-                        'algo' => 'aes'
-                    ));
-                    
-                    $blockCipher->setKey($this->config['encryption-key']);
-                    
-                    $configEntity->setConfigPanoramaKey($blockCipher->encrypt($configEntity->getConfigPanoramaKey()));
-                } else {
-                    $configEntity->setConfigPanoramaKey($tempPanoramaKey);
+                if($entity->getConfigPanoramaKey()) {
+                    $entity->setConfigPanoramaKey($this->blockCipher->encrypt($entity->getConfigPanoramaKey()));
                 }
                 
-                $this->configService->save($configEntity);
+                $this->configService->save($entity);
                 
                 $this->flashmessenger()->addSuccessMessage('The config was saved');
                 
@@ -119,9 +111,15 @@ class UpdateController extends BaseController
             }
         }
         
+        $this->form->bind($entity);
+        
+        $this->form->get('configPanoramaKey')->setValue($this->blockCipher->decrypt($entity->getConfigPanoramaKey()));
+        
+        $this->form->get('configSmtpPassword')->setValue($this->blockCipher->decrypt($entity->getConfigSmtpPassword()));
+       
         // return view model
         return new ViewModel(array(
-            'form' => $this->configForm
+            'form' => $this->form
         ));
     }
     
