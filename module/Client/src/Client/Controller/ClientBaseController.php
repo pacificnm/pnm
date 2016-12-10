@@ -32,6 +32,7 @@ class ClientBaseController extends BaseController
         
         $clientId = $this->params()->fromRoute('clientId');
         
+        
         // get client
         $clientEntity = $this->getClient($clientId);
         

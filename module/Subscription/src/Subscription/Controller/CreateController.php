@@ -41,6 +41,8 @@ class CreateController extends ClientBaseController
      */
     public function indexAction()
     {
+        parent::indexAction();
+        
         $request = $this->getRequest();
         
         // if we have a post
